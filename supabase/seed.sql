@@ -1,0 +1,3 @@
+-- Seed vazio na fundação.
+-- Dados de políticos/votações serão sincronizados via APIs oficiais
+-- em sessões futuras (Câmara, Senado, Portal da Transparência).

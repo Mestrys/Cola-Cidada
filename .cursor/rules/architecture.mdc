@@ -1,0 +1,12 @@
+---
+description: Arquitetura do monorepo Cola Cidadã (clientes Supabase, cache, schemas)
+alwaysApply: true
+---
+
+# Arquitetura
+
+- O cliente Supabase `admin.ts` só pode ser importado em Route Handlers, Server Actions ou scripts server-side.
+- Componentes React usam apenas `client.ts` para auth e leitura pública; nunca para escrita de dados do usuário (isso deve passar por Server Actions / Route Handlers com `server.ts` ou `admin.ts` conforme o caso).
+- Dados públicos (políticos, votações) devem ser cacheados via `unstable_cache` ou `fetch` com `revalidate`.
+- Toda feature nova deve ter um schema Zod compartilhado em `packages/shared` ou `apps/web/src/lib/schemas`.
+- Não implementar features de negócio sem schema Zod e policies RLS correspondentes.

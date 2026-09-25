@@ -1,0 +1,13 @@
+---
+description: Convenções de código, naming e commits do Cola Cidadã
+alwaysApply: true
+---
+
+# Convenções
+
+- TypeScript strict, sem `any`. Preferir tipos explícitos e inferência do Zod.
+- Nomes de arquivos em kebab-case; componentes React em PascalCase.
+- Commits seguem Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`).
+- Testes com Vitest ao lado do arquivo (`*.test.ts` / `*.test.tsx`).
+- Preferir código explícito a abstrações prematuras.
+- Idioma do produto e da UI: português (Brasil). Código e identificadores: inglês, salvo nomes de domínio já definidos em PT (`politicos`, `cola_items`, etc.).

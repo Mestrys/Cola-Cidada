@@ -1,0 +1,19 @@
+{
+  "name": "cola-cidada",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev": "pnpm --filter @cola-cidada/web dev",
+    "build": "pnpm --filter @cola-cidada/web build",
+    "lint": "pnpm --filter @cola-cidada/web lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm --filter @cola-cidada/web test",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.14"
+  }
+}

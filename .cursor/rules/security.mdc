@@ -1,0 +1,13 @@
+---
+description: Regras de segurança do Cola Cidadã (Supabase, auth, secrets)
+alwaysApply: true
+---
+
+# Segurança
+
+- Toda nova tabela deve ter `ENABLE ROW LEVEL SECURITY` e policies explícitas imediatamente após o `CREATE TABLE`.
+- Nunca usar `SUPABASE_SERVICE_ROLE_KEY` no client-side. Apenas em `admin.ts`, Route Handlers, Server Actions ou scripts server-side.
+- Todo Route Handler que acessa dados de usuário deve validar `auth.getUser()` antes de qualquer operação.
+- Nunca commitar arquivos `.env*`. Usar `.env.example` como referência versionada.
+- Validar inputs com Zod em toda fronteira (API Route Handler, Server Action, formulário).
+- Não confiar em `user_metadata` / `raw_user_meta_data` para autorização (é editável pelo usuário).
