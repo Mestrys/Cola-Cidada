@@ -2,8 +2,7 @@ import type { Config } from 'tailwindcss'
 
 /**
  * Tailwind CSS v4 usa configuração majoritariamente via CSS (@theme).
- * Este arquivo mantém a superfície pedida pelo monorepo e documenta
- * content paths / dark mode para ferramentas e shadcn/ui.
+ * Design system: Material Design 3 + Google Sans Flex (ver globals.css).
  */
 const config: Config = {
   darkMode: 'class',
@@ -13,7 +12,17 @@ const config: Config = {
     './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: [
+          'Google Sans Flex Variable',
+          'Google Sans Flex',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
+      },
+    },
   },
   plugins: [],
 }

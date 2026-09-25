@@ -10,3 +10,4 @@ alwaysApply: true
 - Dados públicos (políticos, votações) devem ser cacheados via `unstable_cache` ou `fetch` com `revalidate`.
 - Toda feature nova deve ter um schema Zod compartilhado em `packages/shared` ou `apps/web/src/lib/schemas`.
 - Não implementar features de negócio sem schema Zod e policies RLS correspondentes.
+- UI e componentes seguem Material Design 3 com tipografia Google Sans Flex (ver `design.mdc`).

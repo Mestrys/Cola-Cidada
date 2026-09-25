@@ -4,26 +4,35 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 
+/**
+ * Botão no padrão Material Design 3 (Filled / Tonal / Outlined / Text / Elevated).
+ * Tipografia: label-large (Google Sans Flex).
+ */
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'md-label-large inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full transition-[background-color,box-shadow,color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-md-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-38 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        default:
+          'bg-md-primary text-md-on-primary shadow-[var(--md-sys-elevation-1)] hover:shadow-[var(--md-sys-elevation-2)] hover:brightness-110',
+        tonal:
+          'bg-md-secondary-container text-md-on-secondary-container hover:brightness-95',
         destructive:
-          'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+          'bg-md-error text-md-on-error shadow-[var(--md-sys-elevation-1)] hover:brightness-110',
         outline:
-          'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+          'border border-md-outline bg-transparent text-md-primary hover:bg-md-primary/8',
+        elevated:
+          'bg-md-surface-container-low text-md-primary shadow-[var(--md-sys-elevation-1)] hover:shadow-[var(--md-sys-elevation-2)] hover:bg-md-surface-container',
         secondary:
-          'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'bg-md-secondary-container text-md-on-secondary-container hover:brightness-95',
+        ghost: 'bg-transparent text-md-primary hover:bg-md-primary/8',
+        link: 'rounded-none text-md-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        lg: 'h-10 rounded-md px-8',
-        icon: 'h-9 w-9',
+        default: 'h-10 min-w-16 px-6',
+        sm: 'h-8 min-w-12 px-4 text-xs',
+        lg: 'h-12 min-w-20 px-8',
+        icon: 'h-10 w-10 min-w-10 px-0',
       },
     },
     defaultVariants: {

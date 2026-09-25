@@ -11,3 +11,4 @@ alwaysApply: true
 - Testes com Vitest ao lado do arquivo (`*.test.ts` / `*.test.tsx`).
 - Preferir código explícito a abstrações prematuras.
 - Idioma do produto e da UI: português (Brasil). Código e identificadores: inglês, salvo nomes de domínio já definidos em PT (`politicos`, `cola_items`, etc.).
+- UI: Material Design 3 + Google Sans Flex (ver `design.mdc`).

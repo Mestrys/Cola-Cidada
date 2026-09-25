@@ -11,7 +11,8 @@ Usa **apenas dados públicos oficiais**. Não há coleta de dados sensíveis do 
 | Camada | Tecnologia |
 | --- | --- |
 | Framework | Next.js 15 (App Router) + TypeScript strict |
-| UI | Tailwind CSS + shadcn/ui |
+| UI | Tailwind CSS + shadcn/ui + **Material Design 3** |
+| Tipografia | **Google Sans Flex** (toda a aplicação) |
 | Banco + Auth | Supabase (Postgres + RLS + Auth email/senha) |
 | Validação | Zod |
 | Qualidade | ESLint + Prettier + Vitest |

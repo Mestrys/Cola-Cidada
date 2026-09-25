@@ -1,0 +1,15 @@
+---
+description: Design system — Material Design 3 + Google Sans Flex
+alwaysApply: true
+---
+
+# Design (Material Design 3)
+
+- A UI do Cola Cidadã segue **Material Design 3** (https://m3.material.io/).
+- Tipografia padrão em **toda** a aplicação: **Google Sans Flex** (variável). Nunca usar Inter, Roboto, Arial, Geist ou system-ui como fonte principal.
+- Usar tokens CSS `--md-sys-color-*`, `--md-sys-shape-*`, `--md-sys-elevation-*` e utilitários tipográficos `.md-display-*`, `.md-headline-*`, `.md-title-*`, `.md-body-*`, `.md-label-*`.
+- Componentes novos devem mapear papéis MD3 (filled / tonal / outlined / text / elevated) em vez de inventar variantes ad hoc.
+- Preferir `rounded-full` (shape corner full) em botões e FABs; cards/superfícies usam corner medium/large.
+- Dark mode via classe `.dark`, com esquema tonal MD3 correspondente.
+- Manter a ponte shadcn (`--primary`, `--background`, etc.) alinhada aos tokens MD3 em `globals.css`.
+- Não reintroduzir temas genéricos (roxo/indigo, cream+terracotta, broadsheet). Seed de cor cívico teal já definido.
