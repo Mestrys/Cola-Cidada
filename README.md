@@ -12,6 +12,16 @@ Requer apenas Node 18+ (sem dependências):
 npm run dev   # http://localhost:5173
 ```
 
+## Testes
+
+```bash
+npm install
+npm test            # unitários (node:test) + navegador (Playwright, desktop e celular)
+npm run test:unit   # só lógica, dados e verificações estáticas
+```
+
+Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não dependem da Câmara ou do Senado. Com Chromium já instalado, use `PW_CHROMIUM_PATH=/caminho/do/chrome`. O CI (`.github/workflows/ci.yml`) roda tudo a cada PR.
+
 ## Arquitetura
 
 - `index.html` + módulos ES nativos (sem bundler) e CSS próprio com tema claro/escuro.

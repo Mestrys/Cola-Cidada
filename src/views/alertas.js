@@ -145,7 +145,7 @@ export function render(root) {
                 <span class="xs muted" style="line-height:1.4">${d}</span>
               </div>
               <label class="switch">
-                <input type="checkbox" data-pref="${k}" ${prefs[k] ? 'checked' : ''}>
+                <input type="checkbox" role="switch" data-pref="${k}" aria-label="${t}" ${prefs[k] ? 'checked' : ''}>
                 <i></i>
               </label>
             </div>`

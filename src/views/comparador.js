@@ -225,7 +225,7 @@ export async function render(root) {
           </div>
         </div>
 
-        <div class="row" style="gap:12px; overflow-x:auto; padding-bottom:6px; flex-wrap:nowrap">
+        <div class="row" tabindex="0" role="region" aria-label="Bancada monitorada (rolagem horizontal)" style="gap:12px; overflow-x:auto; padding-bottom:6px; flex-wrap:nowrap">
           ${politicians
             .map((p) => {
               return `

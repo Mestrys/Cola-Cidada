@@ -43,41 +43,40 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 - **Recomendação:** (a) com a fonte do sistema no corpo: zero download e melhor legibilidade em textos densos.
 - **Esforço:** meio dia, mais revisão visual das telas. **Quem decide:** design/marca.
 
-### 6. Fonte de ícones de cerca de 1 MB
+### 6. Fonte de ícones de cerca de 1 MB — ✅ feito
 - **Problema:** a Material Symbols é baixada inteira (woff2 de cerca de 975 KB, com quatro eixos variáveis) para uns 60 ícones.
 - **Ação:**
   - Listar os ícones usados, inclusive os dinâmicos (`routes`, `TOAST_ICONS`, ícones montados por expressão).
   - Pedir o subconjunto com `&icon_names=` e fixar só os eixos usados (FILL 0..1, wght 400..500).
   - Criar um teste que falha se aparecer um ícone fora da lista.
-- **Ganho estimado:** de cerca de 1 MB para menos de 50 KB no primeiro acesso, o que pesa nos dados móveis.
+- **Feito:** 64 ícones via `&icon_names=` e eixos fixos (opsz 24, wght 400–500, GRAD 0): de 975 KB para 17 KB. Testes unitários e de navegador falham se um ícone usado ficar fora da lista.
 - **Esforço:** meio dia.
 
-### 7. Testes automatizados e CI
+### 7. Testes automatizados e CI — ✅ feito
 - **Problema:** não há testes nem workflow de CI. As verificações deste PR foram scripts manuais em Playwright.
 - **Ação:**
   - Versionar os testes de fumaça: abrir cada tela, abas da ficha, folha arrastável, Esc e foco, Desfazer, CSP sem violações.
   - Validar o formato dos JSON de `src/data`.
   - Rodar tudo em GitHub Actions a cada PR.
-- **Esforço:** 1 dia.
+- **Feito:** `npm test` roda 66 testes unitários (lógica, dados do TSE, ícones, textos fictícios) e 30 de navegador em desktop e celular, com as APIs públicas bloqueadas para não depender delas. Workflow em `.github/workflows/ci.yml`.
 
-### 8. Auditoria de contraste (WCAG AA)
+### 8. Auditoria de contraste (WCAG AA) — ✅ feito
 - **Problema:** não fiz medição sistemática. Pontos suspeitos:
   - texto `on-surface-variant` sobre `surface-container`;
   - chips roxo e verde-azulado no escuro;
   - textos de 10–11 px.
-- **Ação:** rodar axe-core nas cinco telas, nos dois temas, e corrigir os tokens reprovados.
-- **Esforço:** meio dia.
+- **Feito:** axe-core (WCAG 2.1 AA) nas cinco telas e em três diálogos, nos dois temas, em desktop e celular. Contraste: nenhuma reprovação; o axe não consegue avaliar texto sobre gradiente e superfície translúcida (4 a 10 casos por tela). Corrigidos: interruptores sem rótulo (tema e preferências de alertas) e galeria rolável sem foco por teclado no Comparador. O teste roda no CI.
 
 ## P2 — quando houver tempo
 
-### 9. Tamanhos fixos e 617 estilos inline
+### 9. Tamanhos fixos e 617 estilos inline — 🟡 etapa 1 feita
 - **Problema:** tipografia e espaçamentos em `px` e 617 atributos `style=` espalhados pelas views.
 - **Efeitos:**
   - o app ignora o tamanho de fonte configurado no aparelho;
   - a CSP precisa de `'unsafe-inline'` em `style-src`;
   - qualquer ajuste visual vira caça a ocorrências.
 - **Ação, por etapas:**
-  1. Converter a escala tipográfica e os espaçamentos de `styles.css` para `rem`.
+  1. ✅ Converter a escala tipográfica e os espaçamentos de `styles.css` para `rem` (204 valores; visual idêntico no tamanho padrão). Com isso 66% do texto passa a acompanhar o tamanho de fonte do aparelho (antes 0%); o resto depende da etapa 2. Testado sem quebra de layout com fonte de 24 px.
   2. Extrair os padrões repetidos dos `style=` para classes utilitárias (`.stack-sm`, `.label-upper`, `.icon-16`…), uma view por PR, começando por `politicos.js` (109) e `comparador.js` (106).
   3. Quando não sobrar `style=`, tirar `'unsafe-inline'` da CSP.
 - **Esforço:** 3–5 dias, em PRs pequenos.
@@ -108,10 +107,10 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 | 3 | ~~Mandato estadual por UF~~ ✅ | P0 | feito | — |
 | 4 | ~~Domicílio no cadastro~~ ✅ | P0 | feito | — |
 | 5 | Fonte com pesos reais | P1 | meio dia | Sim (marca) |
-| 6 | Subconjunto da fonte de ícones | P1 | meio dia | Não |
-| 7 | Testes e CI | P1 | 1 dia | Não |
-| 8 | Contraste WCAG AA | P1 | meio dia | Não |
-| 9 | `rem` e fim dos estilos inline | P2 | 3–5 dias | Não |
+| 6 | ~~Subconjunto da fonte de ícones~~ ✅ | P1 | feito | — |
+| 7 | ~~Testes e CI~~ ✅ | P1 | feito | — |
+| 8 | ~~Contraste WCAG AA~~ ✅ | P1 | feito | — |
+| 9 | `rem` e fim dos estilos inline (etapa 1 ✅) | P2 | 2–4 dias restantes | Não |
 | 10 | ~~Validade do cache de presença~~ ✅ | P2 | feito | — |
 | 11 | Foto no card de compartilhamento | P2 | — | Sim |
 | 12 | ~~Atraso no onboarding~~ ✅ | P2 | feito | — |

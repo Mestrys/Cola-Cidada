@@ -93,7 +93,7 @@ function shell() {
                 <span class="sm" id="theme-label" style="font-weight:600">Tema Claro</span>
               </div>
               <label class="switch" title="Alternar entre Tema Claro e Escuro">
-                <input type="checkbox" id="theme-toggle-check">
+                <input type="checkbox" id="theme-toggle-check" role="switch" aria-label="Tema escuro">
                 <i></i>
               </label>
             </div>
