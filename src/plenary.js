@@ -1,7 +1,7 @@
 // Presença em sessões e fidelidade à orientação de bancada, calculadas a partir
 // da API de Dados Abertos da Câmara. Todos os números vêm de registros oficiais
 // das últimas sessões deliberativas e votações nominais do Plenário.
-import { senateNominalVotings, senateOrientations, legislatureBlocs, recentPlenarySessions, sessionAttendees, recentNominalVotings, votesOf, votingOrientations } from './api.js';
+import { senateWindow, SENATE_WINDOW_DAYS, senateNominalVotings, senateOrientations, legislatureBlocs, recentPlenarySessions, sessionAttendees, recentNominalVotings, votesOf, votingOrientations } from './api.js';
 
 const SESSIONS = 15; // sessões deliberativas encerradas mais recentes
 const VOTINGS = 20; // votações nominais mais recentes
@@ -141,7 +141,6 @@ export async function deputyPlenaryStats(camaraId) {
 const SEN_PRESENT = new Set(['Sim', 'Não', 'Abstenção', 'Votou', 'P-NRV', 'Presidente (art. 51 RISF)']);
 const SEN_JUSTIFIED = new Set(['AP', 'LS', 'MIS', 'LP', 'LAP']); // atividade parlamentar, licenças e missões
 const SEN_CAST = new Set(['Sim', 'Não', 'Abstenção']);
-const SENATE_WINDOW_DAYS = 180;
 
 let senatePromise = null;
 
@@ -151,10 +150,7 @@ export function senateDataset() {
 }
 
 async function buildSenateDataset() {
-  const iso = (d) => d.toISOString().slice(0, 10);
-  const now = new Date();
-  const since = iso(new Date(now.getTime() - SENATE_WINDOW_DAYS * 86400000));
-  const until = iso(now);
+  const { since, until } = senateWindow();
   const votings = await senateNominalVotings(since, until);
   const orientations = await senateOrientations(since, until).catch(() => []);
   const orientBy = new Map(

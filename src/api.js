@@ -198,22 +198,43 @@ export async function searchSenators(query) {
     .slice(0, 8);
 }
 
+// Janela padrão das consultas ao Senado: mesmas datas => mesma URL => resposta reaproveitada do cache.
+export const SENATE_WINDOW_DAYS = 180;
+export function senateWindow() {
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const now = new Date();
+  return { since: iso(new Date(now.getTime() - SENATE_WINDOW_DAYS * 86400000)), until: iso(now) };
+}
+
+const SENATE_RESULT = { A: 'Aprovado', R: 'Rejeitado' };
+
+// Votações nominais recentes de um senador (endpoint /votacao; o antigo /senador/{id}/votacoes está obsoleto).
 export async function senatorVotes(senadoId, limit = 10) {
   try {
-    const data = await getJson(`${SENADO_BASE}/senador/${senadoId}/votacoes.json`);
-    const raw = data?.VotacaoParlamentar?.Parlamentar?.Votacoes?.Votacao || [];
-    const list = Array.isArray(raw) ? raw : [raw];
-    return list.slice(0, limit).map((v) => ({
-      code: v.CodigoSessaoVotacao,
-      matter: v.Materia?.DescricaoIdentificacao || 'Matéria',
-      summary: v.Materia?.Ementa || v.DescricaoVotacao || '',
-      date: v.SessaoPlenaria?.DataSessao || v.Materia?.Data || '',
-      result: v.DescricaoResultado || '',
-      secret: v.IndicadorVotacaoSecreta === 'Sim',
-      vote: v.SiglaDescricaoVoto || 'Ausente',
-      yes: v.TotalVotosSim || 0,
-      no: v.TotalVotosNao || 0,
-    }));
+    const { since, until } = senateWindow();
+    const votings = await senateNominalVotings(since, until);
+    const id = Number(senadoId);
+    return votings
+      .map((v) => {
+        const mine = (v.votos || []).find((x) => x.codigoParlamentar === id);
+        if (!mine || mine.siglaVotoParlamentar === 'NA') return null;
+        const secret = v.votacaoSecreta === 'S';
+        const tally = (label) => (v.votos || []).filter((x) => x.siglaVotoParlamentar === label).length;
+        return {
+          code: v.codigoSessaoVotacao,
+          matter: v.identificacao || 'Matéria',
+          summary: v.ementa || v.descricaoVotacao || '',
+          date: v.dataSessao || '',
+          result: SENATE_RESULT[v.resultadoVotacao] || v.resultadoVotacao || '',
+          secret,
+          vote: secret && mine.siglaVotoParlamentar === 'Votou' ? 'Voto secreto' : mine.descricaoVotoParlamentar || mine.siglaVotoParlamentar,
+          yes: v.totalVotosSim ?? tally('Sim'),
+          no: v.totalVotosNao ?? tally('Não'),
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+      .slice(0, limit);
   } catch (err) {
     console.warn(`Erro ao carregar votações do senador ${senadoId}:`, err);
     return [];
