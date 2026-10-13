@@ -15,8 +15,8 @@ export async function openDossierModal(p) {
   const { el, close } = modal(`
     <div class="row between no-print">
       <div class="row">
-        <span class="mi" style="color:var(--primary); font-size:24px">description</span>
-        <h3 class="h2" style="font-size:16px">Dossiê Cívico de Prestação de Contas</h3>
+        <span class="mi u-c-primary u-fs-24">description</span>
+        <h3 class="h2 u-fs-16">Dossiê Cívico de Prestação de Contas</h3>
       </div>
       <div class="row">
         <button class="btn primary sm" id="btn-print-dossier"><span class="mi">print</span>Imprimir / Salvar PDF</button>
@@ -24,7 +24,7 @@ export async function openDossierModal(p) {
       </div>
     </div>
 
-    <div id="dossier-content" class="stack" style="margin-top:10px">
+    <div id="dossier-content" class="stack u-mt-10">
       <div class="row"><span class="spin"></span><span class="muted">Consolidando dados oficiais para o relatório…</span></div>
     </div>
   `);
@@ -75,26 +75,26 @@ export async function openDossierModal(p) {
     const totalSpent = expenses.reduce((acc, x) => acc + (x.value || 0), 0);
 
     dossierContent.innerHTML = `
-      <div class="dossier-paper stack" style="gap:16px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px">
+      <div class="dossier-paper stack u-gap-16 u-bg-card u-border-1-solid-line u-br-14 u-p-24">
         <!-- Cabeçalho Institucional -->
-        <div class="row between" style="border-bottom:2px solid var(--primary); padding-bottom:12px">
+        <div class="row between u-bb-2-solid-primary u-pb-12">
           <div>
-            <span class="sm" style="letter-spacing:1px; text-transform:uppercase; font-weight:700; color:var(--primary)">COLA-CIDADÃO · AUDITORIA CÍVICA</span>
-            <h2 style="font-size:20px; font-weight:800; margin-top:2px">Relatório de Desempenho & Fiscalização de Mandato</h2>
+            <span class="sm u-ls-1 u-tt-uppercase u-fw-700 u-c-primary">COLA-CIDADÃO · AUDITORIA CÍVICA</span>
+            <h2 class="u-fs-20 u-fw-800 u-mt-2">Relatório de Desempenho & Fiscalização de Mandato</h2>
             <span class="sm muted">Documento emitido diretamente pelo cidadão via Dados Abertos Oficiais</span>
           </div>
-          <div style="text-align:right">
+          <div class="u-ta-right">
             <span class="chip green">57ª Legislatura</span><br>
-            <span class="sm muted" style="display:inline-block; margin-top:4px">Emissão: ${new Date().toLocaleDateString('pt-BR')}</span>
+            <span class="sm muted u-d-inline-block u-mt-4">Emissão: ${new Date().toLocaleDateString('pt-BR')}</span>
           </div>
         </div>
 
         <!-- Identificação Parlamentar -->
-        <div class="row" style="gap:18px; align-items:flex-start">
+        <div class="row u-gap-18 u-ai-flex-start">
           ${avatar(p)}
-          <div style="flex:1">
-            <h3 style="font-size:18px; font-weight:700">${esc(p.name)}</h3>
-            <p class="sm muted" style="margin-top:2px">
+          <div class="u-flex-1">
+            <h3 class="u-fs-18 u-fw-700">${esc(p.name)}</h3>
+            <p class="sm muted u-mt-2">
               <b>Cargo:</b> ${ROLES[p.roleKey]?.label || 'Parlamentar'} · <b>Partido:</b> ${esc(p.party || '—')} · <b>Estado/UF:</b> ${esc(p.uf || 'SP')}
             </p>
             ${
@@ -102,7 +102,7 @@ export async function openDossierModal(p) {
                 ? `<p class="sm muted"><b>Nome Civil Registrado:</b> ${esc(profile.civilName)}</p>`
                 : ''
             }
-            <div class="row sm" style="margin-top:6px; gap:16px">
+            <div class="row sm u-mt-6 u-gap-16">
               <span><b>Mandato:</b> ${m.pct}% cumprido</span>
               <span><b>Término Previsto:</b> ${m.end}</span>
               <span><b>Dias Restantes:</b> ${m.label}</span>
@@ -114,19 +114,19 @@ export async function openDossierModal(p) {
         ${
           tse.available
             ? `
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
+        <div class="stack u-gap-8 u-bt-1-solid-line u-pt-12">
           <div class="row between">
-            <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Origem Eleitoral (TSE)</h4>
+            <h4 class="u-fs-14 u-tt-uppercase u-fw-700 u-c-text">Origem Eleitoral (TSE)</h4>
             <span class="chip gold sm">Eleição ${tse.electionYear}</span>
           </div>
-          <div class="row sm" style="gap:16px; flex-wrap:wrap">
-            <span><b>Número de Urna:</b> <code style="font-weight:700; color:var(--primary)">${esc(tse.ballotNumber)}</code></span>
+          <div class="row sm u-gap-16 u-fwrap-wrap">
+            <span><b>Número de Urna:</b> <code class="u-fw-700 u-c-primary">${esc(tse.ballotNumber)}</code></span>
             <span><b>Resultado:</b> ${esc(tse.status)}</span>
             <span><b>Coligação/Federação:</b> ${esc(tse.electoralCoalition || (tse.isolatedParty ? 'Partido isolado' : '—'))}</span>
           </div>
-          <div style="background:var(--s1); padding:10px; border-radius:8px">
-            <span class="sm muted" style="display:block">Patrimônio declarado no registro de candidatura:</span>
-            <b style="font-size:15px; color:var(--primary)">${tse.declaredAssets != null ? brl(tse.declaredAssets) : 'Não declarado'}</b>
+          <div class="u-bg-s1 u-p-10 u-br-8">
+            <span class="sm muted u-d-block">Patrimônio declarado no registro de candidatura:</span>
+            <b class="u-fs-15 u-c-primary">${tse.declaredAssets != null ? brl(tse.declaredAssets) : 'Não declarado'}</b>
           </div>
         </div>`
             : ''
@@ -136,8 +136,8 @@ export async function openDossierModal(p) {
         ${
           plenary
             ? `
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
-          <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Presença em Plenário & Fidelidade à Bancada</h4>
+        <div class="stack u-gap-8 u-bt-1-solid-line u-pt-12">
+          <h4 class="u-fs-14 u-tt-uppercase u-fw-700 u-c-text">Presença em Plenário & Fidelidade à Bancada</h4>
           ${plenaryPanelHtml(plenary)}
         </div>`
             : ''
@@ -147,19 +147,19 @@ export async function openDossierModal(p) {
         ${
           expenses.length
             ? `
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
+        <div class="stack u-gap-8 u-bt-1-solid-line u-pt-12">
           <div class="row between">
-            <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Auditoria Financeira da Cota (CEAP)</h4>
-            <span class="sm" style="font-weight:700; color:var(--primary)">Soma da amostra: ${brl(totalSpent)}</span>
+            <h4 class="u-fs-14 u-tt-uppercase u-fw-700 u-c-text">Auditoria Financeira da Cota (CEAP)</h4>
+            <span class="sm u-fw-700 u-c-primary">Soma da amostra: ${brl(totalSpent)}</span>
           </div>
           <p class="sm muted">Amostra recente dos últimos ${expenses.length} comprovantes emitidos pelo gabinete:</p>
-          <div class="stack" style="gap:4px">
+          <div class="stack u-gap-4">
             ${expenses
               .slice(0, 5)
               .map(
                 (ex) => `
-              <div class="row between sm" style="background:var(--s1); padding:6px 10px; border-radius:6px">
-                <span class="truncate" style="max-width:320px">${esc(ex.supplier || ex.type)}</span>
+              <div class="row between sm u-bg-s1 u-p-6-10 u-br-6">
+                <span class="truncate u-maxw-320">${esc(ex.supplier || ex.type)}</span>
                 <span class="muted">${fmtDate(ex.date)}</span>
                 <b>${brl(ex.value || 0)}</b>
               </div>`
@@ -174,19 +174,19 @@ export async function openDossierModal(p) {
         ${
           propositions.length
             ? `
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
-          <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Projetos Autorais Recentes (PLs & PECs)</h4>
-          <div class="stack" style="gap:6px">
+        <div class="stack u-gap-8 u-bt-1-solid-line u-pt-12">
+          <h4 class="u-fs-14 u-tt-uppercase u-fw-700 u-c-text">Projetos Autorais Recentes (PLs & PECs)</h4>
+          <div class="stack u-gap-6">
             ${propositions
               .slice(0, 4)
               .map(
                 (pr) => `
-              <div class="stack" style="gap:2px; background:var(--s1); padding:8px 10px; border-radius:6px">
+              <div class="stack u-gap-2 u-bg-s1 u-p-8-10 u-br-6">
                 <div class="row between sm">
                   <b>${esc(pr.type)} ${esc(pr.number)}/${esc(pr.year)}</b>
                   <span class="muted">${fmtDate(pr.date)}</span>
                 </div>
-                <p class="sm" style="color:var(--text); line-height:1.3">${esc(pr.summary)}</p>
+                <p class="sm u-c-text u-lh-1_3">${esc(pr.summary)}</p>
               </div>`
               )
               .join('')}
@@ -199,19 +199,19 @@ export async function openDossierModal(p) {
         ${
           votes.length
             ? `
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
-          <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Deliberações Nominais no Senado Federal</h4>
-          <div class="stack" style="gap:6px">
+        <div class="stack u-gap-8 u-bt-1-solid-line u-pt-12">
+          <h4 class="u-fs-14 u-tt-uppercase u-fw-700 u-c-text">Deliberações Nominais no Senado Federal</h4>
+          <div class="stack u-gap-6">
             ${votes
               .slice(0, 5)
               .map(
                 (v) => `
-              <div class="row between sm" style="background:var(--s1); padding:8px 10px; border-radius:6px">
-                <div style="flex:1">
+              <div class="row between sm u-bg-s1 u-p-8-10 u-br-6">
+                <div class="u-flex-1">
                   <b>${esc(v.matter)}</b>
-                  <p class="muted" style="margin-top:2px">${esc(v.summary.slice(0, 90))}…</p>
+                  <p class="muted u-mt-2">${esc(v.summary.slice(0, 90))}…</p>
                 </div>
-                <span class="chip ${v.vote === 'Sim' ? 'green' : v.vote === 'Não' ? 'red' : 'gold'}" style="font-weight:700">${esc(v.vote)}</span>
+                <span class="chip ${v.vote === 'Sim' ? 'green' : v.vote === 'Não' ? 'red' : 'gold'} u-fw-700">${esc(v.vote)}</span>
               </div>`
               )
               .join('')}
@@ -224,8 +224,8 @@ export async function openDossierModal(p) {
         ${
           (typeof p.source === 'string' && /^(al|cm)-/.test(p.source))
             ? `
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
-          <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">
+        <div class="stack u-gap-8 u-bt-1-solid-line u-pt-12">
+          <h4 class="u-fs-14 u-tt-uppercase u-fw-700 u-c-text">
             ${
               p.source.startsWith('al-')
                 ? `Atuação Estadual · ${esc(p.house || p.uf || '')}`
@@ -240,12 +240,12 @@ export async function openDossierModal(p) {
         }
 
         <!-- Selo Criptográfico de Integridade -->
-        <div style="border-top:1px dashed var(--line); padding-top:12px; margin-top:6px">
+        <div class="u-bt-1-dashed-line u-pt-12 u-mt-6">
           <div class="row between sm muted">
             <span>Código de conferência (SHA-256 do resumo deste relatório):</span>
             <span>Gerado neste dispositivo</span>
           </div>
-          <code class="sm" style="display:block; margin-top:4px; word-break:break-all; font-size:10px; color:var(--muted); background:var(--s2); padding:6px; border-radius:6px">
+          <code class="sm u-d-block u-mt-4 u-word-break-break-all u-fs-10 u-c-muted u-bg-s2 u-p-6 u-br-6">
             ${sha256Hex}
           </code>
         </div>

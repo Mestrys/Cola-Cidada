@@ -10,15 +10,15 @@ import { openAnalysisModal } from '../analysis.js';
 function renderExplanationBox(exp) {
   if (!exp) return '';
   return `
-  <div class="simple-language-box" style="margin:8px 0">
+  <div class="simple-language-box u-m-8-0">
     <div class="box-header">
-      <span class="mi" style="font-size:16px">translate</span>
+      <span class="mi u-fs-16">translate</span>
       <span>Linguagem Cidadã: O que significou este voto?</span>
     </div>
-    <p style="font-size:13px; line-height:1.45; margin-bottom:8px">${esc(exp.summary || exp.title)}</p>
-    <div class="stack xs" style="gap:4px">
-      <div style="color:var(--primary)"><b>Quem votou SIM:</b> ${esc(exp.yes)}</div>
-      <div style="color:var(--error)"><b>Quem votou NÃO:</b> ${esc(exp.no)}</div>
+    <p class="u-fs-13 u-lh-1_45 u-mb-8">${esc(exp.summary || exp.title)}</p>
+    <div class="stack xs u-gap-4">
+      <div class="u-c-primary"><b>Quem votou SIM:</b> ${esc(exp.yes)}</div>
+      <div class="u-c-error"><b>Quem votou NÃO:</b> ${esc(exp.no)}</div>
     </div>
   </div>`;
 }
@@ -30,9 +30,9 @@ function camaraVotingCard(v, deputies) {
   const isAprov = v.aprovacao === 1;
 
   return `
-  <article class="card stack" data-text="${esc((v.descricao || '').toLowerCase())}" data-category="${v.category || 'geral'}" style="gap:14px">
+  <article class="card stack u-gap-14" data-text="${esc((v.descricao || '').toLowerCase())}" data-category="${v.category || 'geral'}">
     <div class="row between">
-      <div class="row" style="gap:8px">
+      <div class="row u-gap-8">
         <span class="chip blue">${esc(v.siglaOrgao || 'Câmara dos Deputados')}</span>
         <span class="chip ${isAprov ? 'green' : 'red'}">${isAprov ? 'Aprovada' : 'Rejeitada'}</span>
         <span class="chip xs">Votação nominal</span>
@@ -41,31 +41,31 @@ function camaraVotingCard(v, deputies) {
     </div>
 
     <div>
-      <h3 style="font-size:16px; font-weight:700; line-height:1.35">${esc(v.descricao || 'Votação nominal no Plenário')}</h3>
+      <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.descricao || 'Votação nominal no Plenário')}</h3>
     </div>
     
     ${renderExplanationBox(v.explanation)}
 
     <!-- Barra de Quórum Oficial MD3 -->
-    <div class="card soft stack" style="gap:6px; padding:12px">
-      <div class="row between xs" style="font-weight:700">
-        <span style="color:var(--primary)">SIM: ${v.tally.Sim || 0} (${pctSim}%)</span>
-        <span style="color:var(--error)">NÃO: ${v.tally.Não || 0} (${pctNao}%)</span>
+    <div class="card soft stack u-gap-6 u-p-12">
+      <div class="row between xs u-fw-700">
+        <span class="u-c-primary">SIM: ${v.tally.Sim || 0} (${pctSim}%)</span>
+        <span class="u-c-error">NÃO: ${v.tally.Não || 0} (${pctNao}%)</span>
         <span class="muted">Outros / Abstenção: ${v.tally.Outros || 0}</span>
       </div>
       <div class="quorum-bar">
-        <i class="sim-part" style="width:${pctSim}%"></i>
-        <i class="nao-part" style="width:${pctNao}%"></i>
-        <i class="abs-part" style="width:${(100 - pctSim - pctNao).toFixed(1)}%"></i>
+        <i class="sim-part" data-w="${pctSim}"></i>
+        <i class="nao-part" data-w="${pctNao}"></i>
+        <i class="abs-part" data-w="${(100 - pctSim - pctNao).toFixed(1)}"></i>
       </div>
     </div>
 
     ${
       deputies.length
         ? `
-      <div class="stack" style="gap:8px">
-        <span class="xs muted" style="font-weight:700; text-transform:uppercase">Posicionamento da sua Bancada Monitorada:</span>
-        <div class="grid" style="grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:8px">
+      <div class="stack u-gap-8">
+        <span class="xs muted u-fw-700 u-tt-uppercase">Posicionamento da sua Bancada Monitorada:</span>
+        <div class="grid u-cols-f3095c u-gap-8">
           ${deputies
             .map((p) => {
               const t = v.byPol[p.id];
@@ -74,15 +74,15 @@ function camaraVotingCard(v, deputies) {
               const voteCls = isSim ? 'sim' : isNao ? 'nao' : 'abstencao';
 
               return `
-              <div class="card soft row between sm" style="padding:10px 12px; border-radius:var(--r-md); background:var(--s2)">
-                <div class="row nowrap" style="gap:10px">
+              <div class="card soft row between sm u-p-10-12 u-br-r-md u-bg-s2">
+                <div class="row nowrap u-gap-10">
                   ${avatar(p, 'sm')}
                   <div>
-                    <b style="font-size:13px">${esc(p.name.split(' ').slice(0, 2).join(' '))}</b><br>
+                    <b class="u-fs-13">${esc(p.name.split(' ').slice(0, 2).join(' '))}</b><br>
                     <span class="xs muted">${esc(p.party)}/${esc(p.uf)}</span>
                   </div>
                 </div>
-                <div style="text-align:right">
+                <div class="u-ta-right">
                   <span class="vote ${voteCls}">${t ? esc(t) : 'Ausente'}</span>
                 </div>
               </div>`;
@@ -99,9 +99,9 @@ function senadoVotingCard(v, senators) {
   const isAprov = (v.result || '').toLowerCase().includes('aprov');
 
   return `
-  <article class="card stack" data-text="${esc((v.matter + ' ' + v.summary).toLowerCase())}" data-category="${v.category || 'geral'}" style="gap:14px">
+  <article class="card stack u-gap-14" data-text="${esc((v.matter + ' ' + v.summary).toLowerCase())}" data-category="${v.category || 'geral'}">
     <div class="row between">
-      <div class="row" style="gap:8px">
+      <div class="row u-gap-8">
         <span class="chip blue">${esc(v.matter)}</span>
         <span class="chip ${isAprov ? 'green' : 'gold'}">${esc(v.result || 'Deliberado')}</span>
         <span class="chip xs">Senado Federal</span>
@@ -110,7 +110,7 @@ function senadoVotingCard(v, senators) {
     </div>
 
     <div>
-      <h3 style="font-size:16px; font-weight:700; line-height:1.35">${esc(v.summary || 'Deliberação no Senado Federal')}</h3>
+      <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.summary || 'Deliberação no Senado Federal')}</h3>
     </div>
     
     ${renderExplanationBox(v.explanation)}
@@ -118,23 +118,23 @@ function senadoVotingCard(v, senators) {
     ${
       v.yes > 0 || v.no > 0
         ? `
-      <div class="card soft stack" style="gap:6px; padding:12px">
-        <div class="row between xs" style="font-weight:700">
-          <span style="color:var(--primary)">SIM: ${v.yes}</span>
-          <span style="color:var(--error)">NÃO: ${v.no}</span>
+      <div class="card soft stack u-gap-6 u-p-12">
+        <div class="row between xs u-fw-700">
+          <span class="u-c-primary">SIM: ${v.yes}</span>
+          <span class="u-c-error">NÃO: ${v.no}</span>
           <span class="muted">Resultado: ${esc(v.result || 'Concluído')}</span>
         </div>
         <div class="quorum-bar">
-          <i class="sim-part" style="width:${Math.round((v.yes / (v.yes + v.no || 1)) * 100)}%"></i>
-          <i class="nao-part" style="width:${Math.round((v.no / (v.yes + v.no || 1)) * 100)}%"></i>
+          <i class="sim-part" data-w="${Math.round((v.yes / (v.yes + v.no || 1)) * 100)}"></i>
+          <i class="nao-part" data-w="${Math.round((v.no / (v.yes + v.no || 1)) * 100)}"></i>
         </div>
       </div>`
         : ''
     }
 
-    <div class="stack" style="gap:8px">
-      <span class="xs muted" style="font-weight:700; text-transform:uppercase">Voto dos Senadores Monitorados:</span>
-      <div class="grid" style="grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:8px">
+    <div class="stack u-gap-8">
+      <span class="xs muted u-fw-700 u-tt-uppercase">Voto dos Senadores Monitorados:</span>
+      <div class="grid u-cols-f3095c u-gap-8">
         ${senators
           .map((s) => {
             const vote = v.bySenator[s.id];
@@ -143,11 +143,11 @@ function senadoVotingCard(v, senators) {
             const voteCls = isSim ? 'sim' : isNao ? 'nao' : 'abstencao';
 
             return `
-            <div class="card soft row between sm" style="padding:10px 12px; border-radius:var(--r-md); background:var(--s2)">
-              <div class="row nowrap" style="gap:10px">
+            <div class="card soft row between sm u-p-10-12 u-br-r-md u-bg-s2">
+              <div class="row nowrap u-gap-10">
                 ${avatar(s, 'sm')}
                 <div>
-                  <b style="font-size:13px">${esc(s.name.split(' ').slice(0, 2).join(' '))}</b><br>
+                  <b class="u-fs-13">${esc(s.name.split(' ').slice(0, 2).join(' '))}</b><br>
                   <span class="xs muted">${esc(s.party)}/${esc(s.uf)} • Senador</span>
                 </div>
               </div>
@@ -162,17 +162,17 @@ function senadoVotingCard(v, senators) {
 
 function mpvCard(m) {
   return `
-  <article class="card stack" data-text="${esc((m.number + ' ' + m.summary).toLowerCase())}" data-category="executivo" style="gap:12px">
+  <article class="card stack u-gap-12" data-text="${esc((m.number + ' ' + m.summary).toLowerCase())}" data-category="executivo">
     <div class="row between">
-      <div class="row" style="gap:8px">
+      <div class="row u-gap-8">
         <span class="chip gold">Medida Provisória (Executivo)</span>
         <span class="chip blue">MPV ${esc(m.number)}/${esc(m.year)}</span>
       </div>
       <span class="xs muted">${m.date ? fmtDate(m.date) : ''}</span>
     </div>
-    <h3 style="font-weight:700; font-size:14.5px; line-height:1.4">${esc(m.summary)}</h3>
+    <h3 class="u-fw-700 u-fs-14_5 u-lh-1_4">${esc(m.summary)}</h3>
     
-    <div class="card soft stack" style="gap:6px; padding:12px; background:var(--s2)">
+    <div class="card soft stack u-gap-6 u-p-12 u-bg-s2">
       <div class="row between xs">
         <span class="muted">Competência:</span>
         <b>Presidência da República (Art. 62 da CF/88)</b>
@@ -184,8 +184,8 @@ function mpvCard(m) {
     </div>
 
     <div class="row">
-      <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer" class="btn primary sm" style="font-weight:600">
-        <span>Acompanhar Tramitação na Câmara</span><span class="mi" style="font-size:14px">open_in_new</span>
+      <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer" class="btn primary sm u-fw-600">
+        <span>Acompanhar Tramitação na Câmara</span><span class="mi u-fs-14">open_in_new</span>
       </a>
     </div>
   </article>`;
@@ -200,7 +200,7 @@ export async function render(root) {
     <!-- Top Header do Comparador (Estilo Stitch) -->
     <div class="top">
       <div>
-        <div class="row" style="gap:8px; margin-bottom:4px">
+        <div class="row u-gap-8 u-mb-4">
           <span class="chip blue xs">VOTAÇÕES NOMINAIS</span>
           <span class="xs muted">Plenários da Câmara e do Senado</span>
         </div>
@@ -217,22 +217,22 @@ export async function render(root) {
     ${
       politicians.length
         ? `
-      <div class="card stack" style="gap:12px; margin-bottom:16px; padding:16px">
+      <div class="card stack u-gap-12 u-mb-16 u-p-16">
         <div class="row between">
-          <div class="row" style="gap:8px">
-            <span class="mi" style="color:var(--primary); font-size:20px">group</span>
-            <b style="font-size:14px">Bancada Monitorada (${politicians.length} Representantes)</b>
+          <div class="row u-gap-8">
+            <span class="mi u-c-primary u-fs-20">group</span>
+            <b class="u-fs-14">Bancada Monitorada (${politicians.length} Representantes)</b>
           </div>
         </div>
 
-        <div class="row" tabindex="0" role="region" aria-label="Bancada monitorada (rolagem horizontal)" style="gap:12px; overflow-x:auto; padding-bottom:6px; flex-wrap:nowrap">
+        <div class="row u-gap-12 u-ovx-auto u-pb-6 u-fwrap-nowrap" tabindex="0" role="region" aria-label="Bancada monitorada (rolagem horizontal)">
           ${politicians
             .map((p) => {
               return `
-              <div class="card soft row nowrap sm" style="padding:8px 12px; border-radius:var(--r-md); min-width:210px; gap:10px">
+              <div class="card soft row nowrap sm u-p-8-12 u-br-r-md u-minw-210 u-gap-10">
                 ${avatar(p, 'sm')}
-                <div style="flex:1; overflow:hidden">
-                  <b class="truncate" style="display:block; font-size:12.5px">${esc(p.name)}</b>
+                <div class="u-flex-1 u-overflow-hidden">
+                  <b class="truncate u-d-block u-fs-12_5">${esc(p.name)}</b>
                   <span class="xs muted">${esc(p.party)}/${esc(p.uf)}</span>
                 </div>
               </div>`;
@@ -244,7 +244,7 @@ export async function render(root) {
     }
 
     <!-- Barra de Filtros Legislativos (Stitch) -->
-    <div class="card soft stack" style="margin-bottom:18px; padding:16px; gap:12px">
+    <div class="card soft stack u-mb-18 u-p-16 u-gap-12">
       <div class="row between">
         <div class="tabs" id="house-tabs">
           <button class="${deputies.length || (!deputies.length && !senators.length) ? 'on' : ''}" data-house="camara">
@@ -256,19 +256,19 @@ export async function render(root) {
           <button data-house="executivo">Atos do Executivo & Emendas</button>
           <button data-house="confronto">Confronto 1 vs 1</button>
         </div>
-        <div style="flex:1; max-width:320px">
-          <input class="input" id="search-filter" placeholder="Buscar por palavra-chave ou tema…" style="padding:8px 12px; font-size:13px">
+        <div class="u-flex-1 u-maxw-320">
+          <input class="input u-p-8-12 u-fs-13" id="search-filter" placeholder="Buscar por palavra-chave ou tema…">
         </div>
       </div>
 
       <!-- Chips Temáticos -->
-      <div class="row" id="theme-chips" style="gap:6px">
-        <button class="chip green" data-filter="all" style="cursor:pointer">Todas as Matérias</button>
-        <button class="chip" data-filter="economia" style="cursor:pointer">Economia & Tributos</button>
-        <button class="chip" data-filter="tecnologia" style="cursor:pointer">Tecnologia & Dados</button>
-        <button class="chip" data-filter="social-saude" style="cursor:pointer">Social & Saúde</button>
-        <button class="chip" data-filter="meio-ambiente" style="cursor:pointer">Meio Ambiente & Terras</button>
-        <button class="chip" data-filter="seguranca" style="cursor:pointer">Segurança</button>
+      <div class="row u-gap-6" id="theme-chips">
+        <button class="chip green u-cursor-pointer" data-filter="all">Todas as Matérias</button>
+        <button class="chip u-cursor-pointer" data-filter="economia">Economia & Tributos</button>
+        <button class="chip u-cursor-pointer" data-filter="tecnologia">Tecnologia & Dados</button>
+        <button class="chip u-cursor-pointer" data-filter="social-saude">Social & Saúde</button>
+        <button class="chip u-cursor-pointer" data-filter="meio-ambiente">Meio Ambiente & Terras</button>
+        <button class="chip u-cursor-pointer" data-filter="seguranca">Segurança</button>
       </div>
     </div>
 
@@ -276,7 +276,7 @@ export async function render(root) {
     <div id="camara-pane" class="stack ${deputies.length || (!deputies.length && !senators.length) ? '' : 'hidden'}">
       ${
         deputies.length
-          ? '<div id="camara-list" class="stack"><div class="card soft row" style="padding:16px"><span class="spin"></span><span class="muted">Auditando votações da Câmara dos Deputados…</span></div></div>'
+          ? '<div id="camara-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações da Câmara dos Deputados…</span></div></div>'
           : `
         <div class="card empty">
           <span class="mi">how_to_vote</span>
@@ -290,7 +290,7 @@ export async function render(root) {
     <div id="senado-pane" class="stack ${!deputies.length && senators.length ? '' : 'hidden'}">
       ${
         senators.length
-          ? '<div id="senado-list" class="stack"><div class="card soft row" style="padding:16px"><span class="spin"></span><span class="muted">Auditando votações do Senado Federal…</span></div></div>'
+          ? '<div id="senado-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações do Senado Federal…</span></div></div>'
           : `
         <div class="card empty">
           <span class="mi">account_balance</span>
@@ -303,71 +303,71 @@ export async function render(root) {
     <!-- PANE EXECUTIVO & EMENDAS PIX -->
     <div id="executivo-pane" class="stack hidden">
       <!-- Guia de Emendas Pix -->
-      <div class="card stack" style="gap:14px; padding:20px; border-left:4px solid var(--primary)">
+      <div class="card stack u-gap-14 u-p-20 u-bl-4-solid-primary">
         <div class="row between">
-          <div class="row" style="gap:10px">
-            <span class="mi" style="color:var(--primary); font-size:26px">account_balance_wallet</span>
+          <div class="row u-gap-10">
+            <span class="mi u-c-primary u-fs-26">account_balance_wallet</span>
             <div>
-              <h3 class="h2" style="font-size:16px">Guia Cívico: Emendas Orçamentárias & "Emendas Pix"</h3>
+              <h3 class="h2 u-fs-16">Guia Cívico: Emendas Orçamentárias & "Emendas Pix"</h3>
               <span class="xs muted">Emenda Constitucional 105/2019 • Transferências Especiais</span>
             </div>
           </div>
           <span class="chip green">Orçamento da União</span>
         </div>
-        <p style="font-size:13.5px; line-height:1.55">
+        <p class="u-fs-13_5 u-lh-1_55">
           As <b>Emendas Parlamentares</b> permitem que deputados e senadores direcionem fatias do Orçamento Geral da União (OGU) diretamente para seus municípios de base. Nas <b>Emendas Pix</b>, os recursos caem direto na conta corrente municipal sem celebração prévia de convênio formal, exigindo controle social rigoroso dos tribunais de contas (TCU e TCEs) e dos cidadãos locais.
         </p>
         
-        <div class="grid g3" style="gap:10px">
-          <div class="stat" style="padding:12px">
+        <div class="grid g3 u-gap-10">
+          <div class="stat u-p-12">
             <span>Agilidade vs Controle</span>
-            <b style="font-size:14px">Sem Convênio Prévio</b>
+            <b class="u-fs-14">Sem Convênio Prévio</b>
             <span class="xs muted">O recurso cai direto na conta corrente municipal</span>
           </div>
-          <div class="stat" style="padding:12px">
+          <div class="stat u-p-12">
             <span>Fiscalização</span>
-            <b style="font-size:14px">TCU, CGU & TCEs</b>
+            <b class="u-fs-14">TCU, CGU & TCEs</b>
             <span class="xs muted">Obrigação de plano de trabalho e transparência ativa</span>
           </div>
-          <div class="stat" style="padding:12px">
+          <div class="stat u-p-12">
             <span>Destinação Vedada</span>
-            <b style="font-size:14px">Proibido Pessoal & Dívida</b>
+            <b class="u-fs-14">Proibido Pessoal & Dívida</b>
             <span class="xs muted">Mínimo de 70% em investimento público estruturante</span>
           </div>
         </div>
 
-        <div class="row between" style="background:var(--s1); padding:12px 16px; border-radius:var(--r-md); margin-top:4px">
+        <div class="row between u-bg-s1 u-p-12-16 u-br-r-md u-mt-4">
           <div>
-            <b style="font-size:13px">Como fiscalizar as emendas enviadas à sua cidade?</b>
+            <b class="u-fs-13">Como fiscalizar as emendas enviadas à sua cidade?</b>
             <p class="xs muted">Consulte os portais oficiais de transparência orçamentária do Governo Federal e do Congresso:</p>
           </div>
-          <div class="row" style="gap:8px">
+          <div class="row u-gap-8">
             <a href="https://portaldatransparencia.gov.br/emendas" target="_blank" rel="noopener noreferrer" class="btn sm primary">
-              <span>Portal da Transparência</span><span class="mi" style="font-size:13px">open_in_new</span>
+              <span>Portal da Transparência</span><span class="mi u-fs-13">open_in_new</span>
             </a>
             <a href="https://www12.senado.leg.br/orcamento/sigabrasil" target="_blank" rel="noopener noreferrer" class="btn sm outlined">
-              <span>Siga Brasil (Senado)</span><span class="mi" style="font-size:13px">open_in_new</span>
+              <span>Siga Brasil (Senado)</span><span class="mi u-fs-13">open_in_new</span>
             </a>
           </div>
         </div>
       </div>
 
-      <div class="row between" style="margin-top:10px">
-        <h3 class="h2" style="font-size:16px">Medidas Provisórias em Tramitação (Atos do Poder Executivo)</h3>
+      <div class="row between u-mt-10">
+        <h3 class="h2 u-fs-16">Medidas Provisórias em Tramitação (Atos do Poder Executivo)</h3>
         <span class="xs muted">Fonte: API de Dados Abertos da Câmara dos Deputados</span>
       </div>
 
       <div id="mpv-list" class="stack">
-        <div class="card soft row" style="padding:16px"><span class="spin"></span><span class="muted">Carregando Medidas Provisórias…</span></div>
+        <div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Carregando Medidas Provisórias…</span></div>
       </div>
     </div>
 
     <!-- PANE CONFRONTO 1 VS 1 -->
     <div id="confronto-pane" class="stack hidden">
-      <div class="card stack" style="gap:16px; padding:20px">
+      <div class="card stack u-gap-16 u-p-20">
         <div class="row between">
           <div>
-            <h3 class="h2" style="font-size:16px">Matriz de Convergência & Confronto Direto 1 vs 1</h3>
+            <h3 class="h2 u-fs-16">Matriz de Convergência & Confronto Direto 1 vs 1</h3>
             <p class="sm muted">Selecione dois parlamentares para comparar seus votos nominais lado a lado e calcular o grau de alinhamento político.</p>
           </div>
           <span class="chip blue">Inteligência Cívica</span>
@@ -376,13 +376,13 @@ export async function render(root) {
         ${
           politicians.length < 2
             ? `
-          <div class="card empty" style="padding:28px">
+          <div class="card empty u-p-28">
             <span class="mi">compare_arrows</span>
             <h3>Necessário ao menos 2 parlamentares</h3>
             <p>Cadastre ao menos dois políticos na sua lista para calcular a matriz de convergência de votos.</p>
           </div>`
             : `
-          <div class="grid g2" style="gap:14px">
+          <div class="grid g2 u-gap-14">
             <div>
               <label class="label" for="sel-pol-a">Parlamentar A</label>
               <select class="input" id="sel-pol-a">
@@ -407,8 +407,8 @@ export async function render(root) {
             </div>
           </div>
 
-          <div id="confronto-results" class="stack" style="margin-top:8px">
-            <div class="card soft row" style="padding:14px"><span class="spin"></span><span class="muted">Calculando convergência de votos nominais…</span></div>
+          <div id="confronto-results" class="stack u-mt-8">
+            <div class="card soft row u-p-14"><span class="spin"></span><span class="muted">Calculando convergência de votos nominais…</span></div>
           </div>`
         }
       </div>
@@ -449,7 +449,7 @@ export async function render(root) {
     const selA = $('#sel-pol-a', root)?.value;
     const selB = $('#sel-pol-b', root)?.value;
     if (!selA || !selB || selA === selB) {
-      resEl.innerHTML = '<div class="card soft sm" style="padding:14px"><span class="mi" style="color:var(--secondary); font-size:18px">info</span> Selecione dois parlamentares diferentes para comparar.</div>';
+      resEl.innerHTML = '<div class="card soft sm u-p-14"><span class="mi u-c-secondary u-fs-18">info</span> Selecione dois parlamentares diferentes para comparar.</div>';
       return;
     }
 
@@ -457,7 +457,7 @@ export async function render(root) {
     const polB = politicians.find((p) => p.id === selB);
     if (!polA || !polB) return;
 
-    resEl.innerHTML = '<div class="card soft row" style="padding:14px"><span class="spin"></span><span class="muted">Cruzando histórico de votações nominais…</span></div>';
+    resEl.innerHTML = '<div class="card soft row u-p-14"><span class="spin"></span><span class="muted">Cruzando histórico de votações nominais…</span></div>';
 
     try {
       if (!camaraRowsCache) {
@@ -489,40 +489,38 @@ export async function render(root) {
       const pct = total > 0 ? Math.round((matches / total) * 100) : 0;
 
       resEl.innerHTML = `
-        <div class="card soft stack" style="gap:12px; padding:18px; background:var(--primary-soft)">
+        <div class="card soft stack u-gap-12 u-p-18 u-bg-primary-soft">
           <div class="row between">
             <div>
-              <span class="xs muted" style="text-transform:uppercase; font-weight:700">Taxa de Convergência Cívica</span>
-              <h2 style="font-size:28px; color:var(--primary); font-weight:800; margin-top:2px">${pct}% de Alinhamento</h2>
+              <span class="xs muted u-tt-uppercase u-fw-700">Taxa de Convergência Cívica</span>
+              <h2 class="u-fs-28 u-c-primary u-fw-800 u-mt-2">${pct}% de Alinhamento</h2>
               <span class="xs muted">Base: ${total} votações simultâneas (${matches} votos iguais, ${diffs} divergentes)</span>
             </div>
             <button class="btn primary sm" id="btn-share-confronto"><span class="mi">share</span>Card Social</button>
           </div>
-          <div class="bar" style="height:10px; margin:4px 0"><i style="width:${pct}%"></i></div>
+          <div class="bar u-height-10 u-m-4-0"><i data-w="${pct}"></i></div>
         </div>
 
-        <div class="stack" style="gap:8px; margin-top:10px">
-          <h4 class="xs muted" style="text-transform:uppercase; font-weight:700">Histórico de Votos Lado a Lado:</h4>
+        <div class="stack u-gap-8 u-mt-10">
+          <h4 class="xs muted u-tt-uppercase u-fw-700">Histórico de Votos Lado a Lado:</h4>
           ${
             commonVotes.length
               ? commonVotes
                   .map(
                     (cv) => `
-            <div class="card soft stack" style="gap:6px; padding:12px; border-left:3px solid ${
-              cv.isSame ? 'var(--primary)' : 'var(--error)'
-            }">
+            <div class="card soft stack u-gap-6 u-p-12 ${cv.isSame ? 'u-bl-3-solid-primary' : 'u-bl-3-solid-error'}">
               <div class="row between xs">
                 <span class="chip ${cv.isSame ? 'green' : 'red'}">${cv.isSame ? 'Votos Coincidentes' : 'Divergência'}</span>
                 <span class="muted">${fmtDate(cv.date)}</span>
               </div>
-              <p style="font-size:13.5px; font-weight:600">${esc(cv.matter)}</p>
-              <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px; margin-top:4px">
-                <div class="row between sm" style="background:var(--s2); padding:6px 12px; border-radius:var(--r-sm)">
-                  <span class="truncate" style="max-width:140px"><b>${esc(polA.name.split(' ')[0])}:</b></span>
+              <p class="u-fs-13_5 u-fw-600">${esc(cv.matter)}</p>
+              <div class="grid u-cols-1fr-1fr u-gap-8 u-mt-4">
+                <div class="row between sm u-bg-s2 u-p-6-12 u-br-r-sm">
+                  <span class="truncate u-maxw-140"><b>${esc(polA.name.split(' ')[0])}:</b></span>
                   <span class="vote ${VOTE_CLASS[cv.voteA] || ''}">${esc(cv.voteA)}</span>
                 </div>
-                <div class="row between sm" style="background:var(--s2); padding:6px 12px; border-radius:var(--r-sm)">
-                  <span class="truncate" style="max-width:140px"><b>${esc(polB.name.split(' ')[0])}:</b></span>
+                <div class="row between sm u-bg-s2 u-p-6-12 u-br-r-sm">
+                  <span class="truncate u-maxw-140"><b>${esc(polB.name.split(' ')[0])}:</b></span>
                   <span class="vote ${VOTE_CLASS[cv.voteB] || ''}">${esc(cv.voteB)}</span>
                 </div>
               </div>

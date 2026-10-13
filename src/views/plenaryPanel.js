@@ -9,9 +9,9 @@ export function plenaryPanelHtml({ attendance: a, fidelity: f, source = 'camara'
   const unit = a.unit || 'sessões do Plenário';
   const attendance = a.sessions
     ? `
-    <div class="stat" style="padding:10px">
+    <div class="stat u-p-10">
       <span>${senate ? 'Presença nas Votações Nominais' : 'Presença em Sessões Deliberativas'}</span>
-      <b style="font-size:22px; color:var(--primary)">${a.rate}%</b>
+      <b class="u-fs-22 u-c-primary">${a.rate}%</b>
       <span class="xs muted">${a.presences} de ${a.sessions} ${esc(unit)} (${esc(fmtDate(a.from))} a ${esc(fmtDate(a.to))})</span>
       ${
         senate
@@ -25,27 +25,27 @@ export function plenaryPanelHtml({ attendance: a, fidelity: f, source = 'camara'
     f.rate == null
       ? `<p class="muted sm">Não há votações recentes com orientação clara da bancada deste parlamentar (${f.voted} votos registrados em ${f.votings} votações nominais).</p>`
       : `
-    <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-      <div class="stat" style="padding:10px">
+    <div class="grid u-cols-1fr-1fr u-gap-8">
+      <div class="stat u-p-10">
         <span>Votos Alinhados à Bancada</span>
-        <b style="font-size:22px; color:var(--text)">${f.rate}%</b>
+        <b class="u-fs-22 u-c-text">${f.rate}%</b>
         <span class="xs muted">${f.aligned} de ${f.measured} votações com orientação clara</span>
       </div>
-      <div class="stat" style="padding:10px">
+      <div class="stat u-p-10">
         <span>Votos Contra a Orientação</span>
-        <b style="font-size:20px; color:${f.diverged ? 'var(--gold)' : 'var(--primary)'}">${f.diverged}</b>
+        <b class="u-fs-20 ${f.diverged ? 'u-c-gold' : 'u-c-primary'}">${f.diverged}</b>
         <span class="xs muted">${f.freed} com bancada liberada · ${f.unknown} sem orientação</span>
       </div>
     </div>`;
 
   const divergences = f.divergences.length
     ? `
-    <div class="stack" style="gap:6px">
-      <span class="xs muted" style="font-weight:700; text-transform:uppercase">Votos contra a orientação da bancada:</span>
+    <div class="stack u-gap-6">
+      <span class="xs muted u-fw-700 u-tt-uppercase">Votos contra a orientação da bancada:</span>
       ${f.divergences
         .map(
           (d) => `
-        <div class="card soft stack xs" style="gap:3px; background:var(--s2); padding:8px 10px; border-radius:var(--r-sm)">
+        <div class="card soft stack xs u-gap-3 u-bg-s2 u-p-8-10 u-br-r-sm">
           <div class="row between">
             <span class="muted">${esc(fmtDate(d.date))}</span>
             <span class="chip gold xs">Votou ${esc(d.vote)} (orientação: ${esc(d.orientation)})</span>
@@ -58,7 +58,7 @@ export function plenaryPanelHtml({ attendance: a, fidelity: f, source = 'camara'
     : '';
 
   return `
-  <div class="card soft stack" style="gap:12px; padding:16px">
+  <div class="card soft stack u-gap-12 u-p-16">
     <div class="row between">
       <span class="chip ${rateClass(a.rate)}">Presença em Plenário</span>
       <span class="xs muted">Registro oficial ${senate ? 'do Senado' : 'da Câmara'}</span>
@@ -67,14 +67,14 @@ export function plenaryPanelHtml({ attendance: a, fidelity: f, source = 'camara'
     ${
       f.participationRate == null
         ? ''
-        : `<div class="stat" style="padding:10px">
+        : `<div class="stat u-p-10">
       <span>Participação em Votações Nominais</span>
-      <b style="font-size:20px">${f.participationRate}%</b>
+      <b class="u-fs-20">${f.participationRate}%</b>
       <span class="xs muted">votou em ${f.voted} das ${f.votings} votações nominais mais recentes do Plenário</span>
     </div>`
     }
   </div>
-  <div class="card soft stack" style="gap:12px; padding:16px">
+  <div class="card soft stack u-gap-12 u-p-16">
     <div class="row between">
       <span class="chip ${rateClass(f.rate)}">Fidelidade à Orientação da Bancada</span>
       <span class="xs muted">Orientações da liderança (${senate ? 'Senado' : 'Câmara'})</span>

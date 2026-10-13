@@ -40,3 +40,20 @@ test('textos fictícios não voltaram', () => {
     assert.equal(hit, null, `${f}: "${hit?.[0]}"`);
   }
 });
+
+test('sem style= no HTML gerado: a CSP não aceita estilo inline', () => {
+  for (const f of sources.filter((f) => f.startsWith('src/'))) assert.doesNotMatch(read(f), /\sstyle=["']/, `${f} voltou a usar style=`);
+  assert.doesNotMatch(read('index.html'), /\sstyle=["']|<style/);
+  const csp = JSON.parse(read('vercel.json')).headers.flatMap((h) => h.headers).find((h) => h.key === 'Content-Security-Policy').value;
+  assert.doesNotMatch(csp.match(/style-src[^;]*/)[0], /unsafe-inline/);
+});
+
+test('toda classe utilitária u-* usada nas views existe em utilities.css', () => {
+  const css = read('src/utilities.css');
+  const defined = new Set([...css.matchAll(/\.(u-[\w-]+)\{/g)].map((m) => m[1]));
+  const missing = new Set();
+  for (const f of sources.filter((f) => f.startsWith('src/'))) {
+    for (const m of read(f).matchAll(/\b(u-[a-z0-9_-]+)/g)) if (!defined.has(m[1])) missing.add(`${m[1]} (${f})`);
+  }
+  assert.deepEqual([...missing], []);
+});

@@ -30,6 +30,21 @@ test.describe('telas', () => {
     }
   });
 
+  test('barras de progresso recebem a largura de data-w sem style no HTML', async ({ page }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    const bar = page.locator('.pol-card .bar > i').first();
+    const pct = parseInt((await page.locator('.pol-card b', { hasText: '% cumprido' }).first().innerText()), 10);
+    const [fill, track] = await bar.evaluate((i) => [i.getBoundingClientRect().width, i.parentElement.getBoundingClientRect().width]);
+    expect(Math.round((fill / track) * 100)).toBe(pct);
+    // elementos inseridos depois da primeira renderização também são cobertos
+    const w = await page.evaluate(() => {
+      document.body.insertAdjacentHTML('beforeend', '<div class="bar" id="t"><i data-w="25"></i></div>');
+      return new Promise((r) => queueMicrotask(() => queueMicrotask(() => r(document.querySelector('#t i').style.width))));
+    });
+    expect(w).toBe('25%');
+  });
+
   test('ícones usados estão no subconjunto da fonte', async ({ page }) => {
     await seed(page);
     const used = new Set();

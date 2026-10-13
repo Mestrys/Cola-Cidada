@@ -177,9 +177,9 @@ export function openAnalysisModal(item) {
   const { el } = modal(`
     <div class="row between no-print">
       <div class="row">
-        <span class="mi" style="color:var(--primary); font-size:24px">psychology</span>
+        <span class="mi u-c-primary u-fs-24">psychology</span>
         <div>
-          <h3 class="h2" style="font-size:16px">Inteligência Cívica & Análise Textual</h3>
+          <h3 class="h2 u-fs-16">Inteligência Cívica & Análise Textual</h3>
           <span class="sm muted">${esc(s.code)}</span>
         </div>
       </div>
@@ -187,47 +187,47 @@ export function openAnalysisModal(item) {
     </div>
 
     <!-- Navegação de Abas -->
-    <div class="row" style="gap:8px; margin-top:12px; border-bottom:1px solid var(--line); padding-bottom:8px">
+    <div class="row u-gap-8 u-mt-12 u-bb-1-solid-line u-pb-8">
       <button class="btn sm active" id="tab-summary-btn"><span class="mi">menu_book</span>Sumário Didático</button>
       <button class="btn sm ghost" id="tab-jabuti-btn"><span class="mi">pest_control</span>Scanner de Jabutis</button>
       <button class="btn sm ghost" id="tab-simulator-btn"><span class="mi">tune</span>Simulador de Texto</button>
     </div>
 
     <!-- Conteúdo da Aba 1: Sumário Didático -->
-    <div id="tab-summary-content" class="stack" style="gap:14px; margin-top:14px">
-      <div class="card stack" style="gap:8px; border-left:4px solid var(--primary)">
-        <span class="sm muted" style="font-weight:700; text-transform:uppercase">Ementa Oficial</span>
-        <p class="sm" style="line-height:1.4">${esc(s.summary)}</p>
-        <div class="row sm" style="margin-top:4px">
+    <div id="tab-summary-content" class="stack u-gap-14 u-mt-14">
+      <div class="card stack u-gap-8 u-bl-4-solid-primary">
+        <span class="sm muted u-fw-700 u-tt-uppercase">Ementa Oficial</span>
+        <p class="sm u-lh-1_4">${esc(s.summary)}</p>
+        <div class="row sm u-mt-4">
           <span class="chip blue">Tema: ${esc(s.centralLabel)}</span>
         </div>
       </div>
 
-      <p class="xs muted" style="display:flex; gap:6px; align-items:flex-start">
-        <span class="mi" style="font-size:16px">info</span>
+      <p class="xs muted u-d-flex u-gap-6 u-ai-flex-start">
+        <span class="mi u-fs-16">info</span>
         <span>Os quadros abaixo são uma estimativa automática a partir de palavras-chave da ementa, não uma análise do texto da proposição. Confira a ficha oficial antes de tirar conclusões.</span>
       </p>
 
-      <div class="grid" style="grid-template-columns:1fr; gap:10px">
-        <div class="card stack" style="gap:6px">
+      <div class="grid u-cols-1fr u-gap-10">
+        <div class="card stack u-gap-6">
           <div class="row">
-            <span class="mi" style="color:var(--primary)">lightbulb</span>
+            <span class="mi u-c-primary">lightbulb</span>
             <b>O que muda na prática (Linguagem Cidadã)</b>
           </div>
           <p class="sm muted">${esc(s.practicalEffect)}</p>
         </div>
 
-        <div class="card stack" style="gap:6px">
+        <div class="card stack u-gap-6">
           <div class="row">
-            <span class="mi" style="color:var(--gold)">payments</span>
+            <span class="mi u-c-gold">payments</span>
             <b>Impacto Financeiro & Orçamentário</b>
           </div>
           <p class="sm muted">${esc(s.financialEffect)}</p>
         </div>
 
-        <div class="card stack" style="gap:6px">
+        <div class="card stack u-gap-6">
           <div class="row">
-            <span class="mi" style="color:var(--green)">balance</span>
+            <span class="mi u-c-green">balance</span>
             <b>Quem Ganha e Quem Paga</b>
           </div>
           <p class="sm muted">${esc(s.winnersAndLosers)}</p>
@@ -236,14 +236,14 @@ export function openAnalysisModal(item) {
     </div>
 
     <!-- Conteúdo da Aba 2: Scanner de Jabutis -->
-    <div id="tab-jabuti-content" class="stack" style="gap:14px; margin-top:14px; display:none">
-      <div class="card stack" style="gap:8px; background:${s.analysis.hasJabuti ? 'rgba(239, 68, 68, 0.08)' : 'rgba(16, 185, 129, 0.08)'}; border:1px solid ${s.analysis.hasJabuti ? 'var(--red)' : 'var(--green)'}">
+    <div id="tab-jabuti-content" class="stack u-gap-14 u-mt-14 u-d-none">
+      <div class="card stack verdict${s.analysis.hasJabuti ? ' bad' : ''}">
         <div class="row between">
           <div class="row">
-            <span class="mi" style="color:${s.analysis.hasJabuti ? 'var(--red)' : 'var(--green)'}; font-size:24px">
+            <span class="mi u-fs-24 ${s.analysis.hasJabuti ? 'u-c-red' : 'u-c-green'}">
               ${s.analysis.hasJabuti ? 'warning' : 'check_circle'}
             </span>
-            <h4 style="font-size:15px; font-weight:700">
+            <h4 class="u-fs-15 u-fw-700">
               ${s.analysis.hasJabuti ? `Alerta de Potencial Jabuti (${s.analysis.risk} Risco)` : 'Nenhuma Matéria Estranha Detectada'}
             </h4>
           </div>
@@ -252,7 +252,7 @@ export function openAnalysisModal(item) {
           </span>
         </div>
 
-        <p class="sm" style="color:var(--text); line-height:1.4">
+        <p class="sm u-c-text u-lh-1_4">
           ${
             s.analysis.hasJabuti
               ? `O algoritmo identificou termos que destoam do núcleo temático ("${esc(s.centralLabel)}").`
@@ -264,18 +264,18 @@ export function openAnalysisModal(item) {
       ${
         s.analysis.foreignMatches.length
           ? `
-        <div class="stack" style="gap:8px">
-          <h4 class="h2" style="font-size:14px">Dispositivos / Desvios Temáticos Identificados:</h4>
+        <div class="stack u-gap-8">
+          <h4 class="h2 u-fs-14">Dispositivos / Desvios Temáticos Identificados:</h4>
           ${s.analysis.foreignMatches
             .map(
               (m) => `
-            <div class="card stack" style="gap:4px; border-left:3px solid var(--red)">
+            <div class="card stack u-gap-4 u-bl-3-solid-red">
               <div class="row between sm">
                 <b>Núcleo Alheio: ${esc(m.domainLabel)}</b>
                 <span class="chip red sm">Intensidade: ${m.intensity}</span>
               </div>
               <p class="sm muted">${esc(m.reason)}</p>
-              <span class="sm" style="font-size:11px; color:var(--muted)">Termo disparador: <code>${esc(m.keyword)}</code></span>
+              <span class="sm u-fs-11 u-c-muted">Termo disparador: <code>${esc(m.keyword)}</code></span>
             </div>`
             )
             .join('')}
@@ -283,28 +283,28 @@ export function openAnalysisModal(item) {
           : ''
       }
 
-      <div class="card stack" style="gap:6px; background:var(--s1)">
+      <div class="card stack u-gap-6 u-bg-s1">
         <div class="row sm">
-          <span class="mi" style="color:var(--primary)">gavel</span>
+          <span class="mi u-c-primary">gavel</span>
           <b>Entendimento Constitucional (STF)</b>
         </div>
-        <p class="sm muted" style="font-size:12px; line-height:1.4">
+        <p class="sm muted u-fs-12 u-lh-1_4">
           ${esc(s.analysis.stfSummary)}
         </p>
       </div>
     </div>
 
     <!-- Conteúdo da Aba 3: Simulador de Texto -->
-    <div id="tab-simulator-content" class="stack" style="gap:12px; margin-top:14px; display:none">
+    <div id="tab-simulator-content" class="stack u-gap-12 u-mt-14 u-d-none">
       <p class="sm muted">Cole qualquer parágrafo de projeto de lei, emenda ou artigo de medida provisória para auditar a coerência temática na hora (100% privado no seu navegador):</p>
       
-      <div class="stack" style="gap:4px">
-        <label class="sm" style="font-weight:700">Tema Principal do Projeto:</label>
+      <div class="stack u-gap-4">
+        <label class="sm u-fw-700">Tema Principal do Projeto:</label>
         <input type="text" class="input sm" id="sim-main-theme" value="${esc(s.centralLabel)}" placeholder="Ex: Saneamento Básico, Meio Ambiente">
       </div>
 
-      <div class="stack" style="gap:4px">
-        <label class="sm" style="font-weight:700">Texto da Emenda / Artigo para Escanear:</label>
+      <div class="stack u-gap-4">
+        <label class="sm u-fw-700">Texto da Emenda / Artigo para Escanear:</label>
         <textarea class="input" id="sim-text-input" rows="4" placeholder="Cole aqui o texto do artigo ou emenda legislativa..."></textarea>
       </div>
 
@@ -313,7 +313,7 @@ export function openAnalysisModal(item) {
         <button class="btn ghost sm" id="btn-sample-jabuti"><span class="mi">lightbulb</span>Carregar Exemplo Real de Jabuti</button>
       </div>
 
-      <div id="sim-result-container" style="display:none; margin-top:8px"></div>
+      <div id="sim-result-container" class="u-d-none u-mt-8"></div>
     </div>
   `);
 
@@ -362,14 +362,14 @@ export function openAnalysisModal(item) {
 
     if (!text) {
       simResult.style.display = 'block';
-      simResult.innerHTML = '<p class="sm" style="color:var(--red)">Por favor, insira algum texto para escanear.</p>';
+      simResult.innerHTML = '<p class="sm u-c-red">Por favor, insira algum texto para escanear.</p>';
       return;
     }
 
     const testRes = detectJabuti(mainTheme, mainTheme, text);
     simResult.style.display = 'block';
     simResult.innerHTML = `
-      <div class="card stack" style="gap:8px; border:1px solid ${testRes.hasJabuti ? 'var(--red)' : 'var(--green)'}; background:${testRes.hasJabuti ? 'rgba(239,68,68,0.06)' : 'rgba(16,185,129,0.06)'}">
+      <div class="card stack verdict faint${testRes.hasJabuti ? ' bad' : ''}">
         <div class="row between">
           <b>${testRes.hasJabuti ? `🚨 Jabuti Identificado! Risco ${testRes.risk}` : '✅ Texto Coerente (Sem Matéria Estranha)'}</b>
           <span class="chip ${testRes.hasJabuti ? 'red' : 'green'} sm">${testRes.hasJabuti ? 'Discrepância Alta' : 'Sem Anomalia'}</span>

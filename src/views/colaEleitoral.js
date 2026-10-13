@@ -6,29 +6,29 @@ import { openPoliticianModal } from './addPolitician.js';
 export function openColaEleitoralModal() {
   const { el, close } = modal(`
     <div class="row between no-print">
-      <div class="row" style="gap:8px">
-        <span class="mi" style="color:var(--primary); font-size:24px">how_to_vote</span>
+      <div class="row u-gap-8">
+        <span class="mi u-c-primary u-fs-24">how_to_vote</span>
         <div>
-          <h2 class="h2" style="font-size:17px">Minha Cola Eleitoral</h2>
+          <h2 class="h2 u-fs-17">Minha Cola Eleitoral</h2>
           <span class="sm muted">Cédula Cívica de Mandatos Ativos</span>
         </div>
       </div>
       <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
     </div>
 
-    <div class="card soft stack" style="gap:6px; background:var(--primary-soft); color:var(--on-primary-soft); padding:12px 14px; margin-top:10px">
-      <div class="row" style="gap:6px; font-weight:700; font-size:12.5px">
-        <span class="mi" style="font-size:16px">lock</span>
+    <div class="card soft stack u-gap-6 u-bg-primary-soft u-c-on-primary-soft u-p-12-14 u-mt-10">
+      <div class="row u-gap-6 u-fw-700 u-fs-12_5">
+        <span class="mi u-fs-16">lock</span>
         <span>Privacidade Garantida (LGPD)</span>
       </div>
-      <p style="font-size:12px; line-height:1.4">
+      <p class="u-fs-12 u-lh-1_4">
         Sua cola eleitoral fica 100% gravada neste navegador. Ninguém além de você sabe em quem você votou ou quem você fiscaliza.
       </p>
     </div>
 
-    <div id="cola-slots-container" class="stack" style="gap:10px; margin-top:12px"></div>
+    <div id="cola-slots-container" class="stack u-gap-10 u-mt-12"></div>
 
-    <div class="row between" style="margin-top:14px; padding-top:12px; border-top:1px solid var(--line)">
+    <div class="row between u-mt-14 u-pt-12 u-bt-1-solid-line">
       <span class="sm muted" id="cola-completion-stats"></span>
       <button class="btn primary sm" id="btn-add-any"><span class="mi">person_add</span>Adicionar Outro Representante</button>
     </div>
@@ -57,18 +57,18 @@ export function openColaEleitoralModal() {
         if (matched) filledCount++;
 
         return `
-        <div class="card stack" style="padding:12px 14px; background:${matched ? 'var(--card)' : 'var(--s1)'}; border: 1px solid ${matched ? 'var(--outline-variant)' : 'var(--line)'}; border-left: 4px solid ${matched ? 'var(--primary)' : 'var(--s3)'}">
-          <div class="row between" style="flex-wrap:nowrap">
-            <div class="row" style="gap:10px; flex-wrap:nowrap">
+        <div class="card stack cola-item${matched ? ' matched' : ''}">
+          <div class="row between u-fwrap-nowrap">
+            <div class="row u-gap-10 u-fwrap-nowrap">
               ${
                 matched
                   ? avatar(matched)
-                  : `<div style="width:42px; height:42px; border-radius:50%; background:var(--s2); display:grid; place-items:center; color:var(--muted)"><span class="mi" style="font-size:20px">person_outline</span></div>`
+                  : `<div class="u-width-42 u-height-42 u-br-50pct u-bg-s2 u-d-grid u-place-items-center u-c-muted"><span class="mi u-fs-20">person_outline</span></div>`
               }
               <div>
-                <span class="xs muted" style="font-weight:700; text-transform:uppercase; letter-spacing:0.3px">${role.label}</span>
-                <h4 style="font-size:14px; margin:2px 0 0; color:var(--text)">
-                  ${matched ? esc(matched.name) : '<span class="muted" style="font-weight:400; font-style:italic">Não cadastrado na cola</span>'}
+                <span class="xs muted u-fw-700 u-tt-uppercase u-ls-0_3">${role.label}</span>
+                <h4 class="u-fs-14 u-m-2-0-0 u-c-text">
+                  ${matched ? esc(matched.name) : '<span class="muted u-fw-400 u-font-style-italic">Não cadastrado na cola</span>'}
                 </h4>
                 <span class="xs muted">
                   ${
@@ -80,13 +80,13 @@ export function openColaEleitoralModal() {
               </div>
             </div>
 
-            <div class="row" style="gap:6px">
+            <div class="row u-gap-6">
               ${
                 matched
                   ? `
-                <button class="btn sm ghost icon" data-remove-slot="${matched.id}" title="Desvincular da cola" aria-label="Remover"><span class="mi" style="font-size:18px; color:var(--error)">delete</span></button>`
+                <button class="btn sm ghost icon" data-remove-slot="${matched.id}" title="Desvincular da cola" aria-label="Remover"><span class="mi u-fs-18 u-c-error">delete</span></button>`
                   : `
-                <button class="btn sm primary" data-fill-slot="${role.key}"><span class="mi" style="font-size:15px">add</span>Preencher</button>`
+                <button class="btn sm primary" data-fill-slot="${role.key}"><span class="mi u-fs-15">add</span>Preencher</button>`
               }
             </div>
           </div>

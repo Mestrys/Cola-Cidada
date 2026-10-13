@@ -69,7 +69,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 
 ## P2 — quando houver tempo
 
-### 9. Tamanhos fixos e 617 estilos inline — 🟡 etapa 1 feita
+### 9. Tamanhos fixos e 617 estilos inline — ✅ feito
 - **Problema:** tipografia e espaçamentos em `px` e 617 atributos `style=` espalhados pelas views.
 - **Efeitos:**
   - o app ignora o tamanho de fonte configurado no aparelho;
@@ -77,8 +77,8 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
   - qualquer ajuste visual vira caça a ocorrências.
 - **Ação, por etapas:**
   1. ✅ Converter a escala tipográfica e os espaçamentos de `styles.css` para `rem` (204 valores; visual idêntico no tamanho padrão). Com isso 66% do texto passa a acompanhar o tamanho de fonte do aparelho (antes 0%); o resto depende da etapa 2. Testado sem quebra de layout com fonte de 24 px.
-  2. Extrair os padrões repetidos dos `style=` para classes utilitárias (`.stack-sm`, `.label-upper`, `.icon-16`…), uma view por PR, começando por `politicos.js` (109) e `comparador.js` (106).
-  3. Quando não sobrar `style=`, tirar `'unsafe-inline'` da CSP.
+  2. ✅ Os 626 `style=` das views viraram classes atômicas em `src/utilities.css` (239 classes, `!important` para valer mais que os componentes, como o estilo inline valia). Os tamanhos de fonte, espaçamentos e `line-height` dessas classes já saem em `rem`, então o texto das views passa a acompanhar o tamanho de fonte do aparelho. Larguras de barra calculadas (`data-w="42"`) são aplicadas por `src/dynamic.js` pelo CSSOM, que a CSP permite. Cores condicionais viraram variantes de classe (`.verdict.bad`, `.step-dot.on`, `.cola-item.matched`…).
+  3. ✅ `'unsafe-inline'` saiu de `style-src` na CSP; o teste de CSP no navegador passa sem violações.
 - **Esforço:** 3–5 dias, em PRs pequenos.
 
 ### 10. Cache das estatísticas de presença — ✅ feito
@@ -110,7 +110,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 | 6 | ~~Subconjunto da fonte de ícones~~ ✅ | P1 | feito | — |
 | 7 | ~~Testes e CI~~ ✅ | P1 | feito | — |
 | 8 | ~~Contraste WCAG AA~~ ✅ | P1 | feito | — |
-| 9 | `rem` e fim dos estilos inline (etapa 1 ✅) | P2 | 2–4 dias restantes | Não |
+| 9 | ~~`rem` e fim dos estilos inline~~ ✅ | P2 | feito | — |
 | 10 | ~~Validade do cache de presença~~ ✅ | P2 | feito | — |
 | 11 | Foto no card de compartilhamento | P2 | — | Sim |
 | 12 | ~~Atraso no onboarding~~ ✅ | P2 | feito | — |
