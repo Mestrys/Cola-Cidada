@@ -91,6 +91,27 @@ test.describe('diálogos', () => {
     await expect(second).toHaveAttribute('aria-selected', 'true');
   });
 
+  test('modal de análise alterna as abas e mostra o resultado do simulador', async ({ page }) => {
+    await seed(page);
+    await go(page, 'inicio');
+    await page.evaluate(async () => {
+      const m = await import('/src/analysis.js');
+      m.openAnalysisModal({ type: 'PL', number: '1', year: '2024', summary: 'Dispõe sobre o saneamento básico.' });
+    });
+    const panes = { summary: '#tab-summary-content', jabuti: '#tab-jabuti-content', simulator: '#tab-simulator-content' };
+    for (const [tab, sel] of Object.entries(panes)) {
+      await page.locator(`#tab-${tab}-btn`).click();
+      for (const [other, osel] of Object.entries(panes)) {
+        await (other === tab ? expect(page.locator(osel)).toBeVisible() : expect(page.locator(osel)).toBeHidden());
+      }
+    }
+    await page.locator('#btn-run-sim').click();
+    await expect(page.locator('#sim-result-container')).toBeVisible();
+    await page.locator('#sim-text-input').fill('Art. 42-A. Prorroga o subsídio da usina termelétrica a carvão mineral.');
+    await page.locator('#btn-run-sim').click();
+    await expect(page.locator('#sim-result-container .verdict')).toBeVisible();
+  });
+
   test('Esc fecha, foco fica preso e volta ao botão de origem', async ({ page, isMobile }) => {
     test.skip(isMobile, 'teclado só no desktop');
     await seed(page);

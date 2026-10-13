@@ -334,9 +334,9 @@ export function openAnalysisModal(item) {
     tabSimulatorBtn.classList.toggle('active', which === 'simulator');
     tabSimulatorBtn.classList.toggle('ghost', which !== 'simulator');
 
-    contentSummary.style.display = which === 'summary' ? 'flex' : 'none';
-    contentJabuti.style.display = which === 'jabuti' ? 'flex' : 'none';
-    contentSimulator.style.display = which === 'simulator' ? 'flex' : 'none';
+    contentSummary.classList.toggle('u-d-none', which !== 'summary');
+    contentJabuti.classList.toggle('u-d-none', which !== 'jabuti');
+    contentSimulator.classList.toggle('u-d-none', which !== 'simulator');
   }
 
   tabSummaryBtn.onclick = () => showTab('summary');
@@ -361,13 +361,13 @@ export function openAnalysisModal(item) {
     const text = inputSimText.value.trim();
 
     if (!text) {
-      simResult.style.display = 'block';
+      simResult.classList.remove('u-d-none');
       simResult.innerHTML = '<p class="sm u-c-red">Por favor, insira algum texto para escanear.</p>';
       return;
     }
 
     const testRes = detectJabuti(mainTheme, mainTheme, text);
-    simResult.style.display = 'block';
+    simResult.classList.remove('u-d-none');
     simResult.innerHTML = `
       <div class="card stack verdict faint${testRes.hasJabuti ? ' bad' : ''}">
         <div class="row between">
