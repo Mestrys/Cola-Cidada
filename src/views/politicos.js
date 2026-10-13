@@ -54,27 +54,25 @@ export function politicianCard(p) {
   const m = mandateProgress(p);
 
   return `
-  <article class="card stack" style="gap:14px; position:relative">
+  <article class="card stack pol-card" style="gap:14px; position:relative">
     <!-- Header do Card com Avatar e Dados -->
-    <div class="row between nowrap">
-      <div class="row nowrap" style="gap:12px">
-        <div class="avatar-wrap">
-          ${avatar(p)}
-          <span class="avatar-badge-icon" title="Mandato Monitorado">
-            <span class="mi" style="font-size:11px">check</span>
-          </span>
-        </div>
-        <div>
-          <div class="row" style="gap:6px">
-            <h3 class="h2" style="font-size:15.5px; font-weight:700">${esc(p.name)}</h3>
-            <span class="chip ${sourceChipClass} xs">${esc(p.party || '—')}</span>
-          </div>
-          <span class="sm muted" style="display:block; margin-top:2px">
-            ${ROLES[p.roleKey]?.label || 'Parlamentar'} • ${esc(p.uf || 'BR')}
-          </span>
+    <div class="pol-head">
+      <div class="avatar-wrap">
+        ${avatar(p)}
+        <span class="avatar-badge-icon" title="Mandato Monitorado">
+          <span class="mi" style="font-size:11px">check</span>
+        </span>
+      </div>
+      <div class="pol-head-text">
+        <h3 class="h2" style="font-size:15.5px; font-weight:700">${esc(p.name)}</h3>
+        <span class="sm muted" style="display:block; margin-top:2px">
+          ${ROLES[p.roleKey]?.label || 'Parlamentar'} • ${esc(p.uf || 'BR')}
+        </span>
+        <div class="row" style="gap:6px; margin-top:8px">
+          <span class="chip ${sourceChipClass} xs">${esc(p.party || '—')}</span>
+          <span class="chip ${sourceChipClass} xs">${sourceLabel}</span>
         </div>
       </div>
-      <span class="chip ${sourceChipClass}">${sourceLabel}</span>
     </div>
 
     <!-- Barra de Mandato com Anos e Percentual -->
@@ -101,11 +99,12 @@ export function politicianCard(p) {
     </div>
 
     <!-- Ações do Card -->
-    <div class="row" style="gap:8px; border-top:1px solid var(--line); padding-top:10px">
-      <button class="btn primary sm" data-details="${p.id}" style="flex:1">
+    <div class="card-actions">
+      <button class="btn primary sm" data-details="${p.id}">
         <span class="mi" style="font-size:16px">analytics</span>
         <span>Auditar Mandato</span>
       </button>
+      <div class="icon-group">
       <button class="btn outlined sm icon" data-dossier="${p.id}" title="Gerar Dossiê Oficial em PDF" aria-label="Relatório PDF">
         <span class="mi" style="font-size:16px">description</span>
       </button>
@@ -118,6 +117,7 @@ export function politicianCard(p) {
       <button class="btn danger sm icon" data-remove="${p.id}" title="Parar de monitorar" aria-label="Remover">
         <span class="mi" style="font-size:16px">delete</span>
       </button>
+      </div>
     </div>
   </article>`;
 }
@@ -328,10 +328,18 @@ async function openPoliticianDetails(p) {
 
   // Alternância de abas do modal
   const tabs = el.querySelectorAll('#pol-tabs button');
+  el.querySelector('#pol-tabs')?.setAttribute('role', 'tablist');
   tabs.forEach((btn) => {
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', String(btn.classList.contains('on')));
     btn.onclick = () => {
-      tabs.forEach((b) => b.classList.remove('on'));
+      tabs.forEach((b) => {
+        b.classList.remove('on');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('on');
+      btn.setAttribute('aria-selected', 'true');
+      btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       const targetTab = btn.dataset.tab;
       el.querySelectorAll('.pol-pane').forEach((p) => p.classList.add('hidden'));
       const activePane = el.querySelector(`#tab-${targetTab}`);
@@ -576,11 +584,21 @@ export function bindPoliticianActions(root) {
 
   root.querySelectorAll('[data-remove]').forEach((b) => {
     b.onclick = () => {
-      const p = store.get().politicians.find((x) => x.id === b.dataset.remove);
-      if (confirm(`Parar de monitorar ${p?.name || 'este político'}?`)) {
-        store.removePolitician(b.dataset.remove);
-        toast('Político removido do monitoramento.');
-      }
+      const list = store.get().politicians;
+      const index = list.findIndex((x) => x.id === b.dataset.remove);
+      if (index < 0) return;
+      const removed = list[index];
+      store.removePolitician(removed.id);
+      toast(`${removed.name} removido do monitoramento.`, 'delete', {
+        action: {
+          label: 'Desfazer',
+          onClick: () => {
+            const now = store.get().politicians;
+            if (now.some((x) => x.id === removed.id)) return;
+            store.set({ politicians: [...now.slice(0, index), removed, ...now.slice(index)] });
+          },
+        },
+      });
     };
   });
 

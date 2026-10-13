@@ -10,22 +10,15 @@ import { openOnboardingModal } from './views/onboarding.js';
 import { openColaEleitoralModal } from './views/colaEleitoral.js';
 
 const routes = {
-  inicio: { icon: 'feed', label: 'Início', view: inicio },
-  'meus-politicos': { icon: 'how_to_vote', label: 'Meus Políticos', view: politicos },
-  comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', view: comparador },
-  alertas: { icon: 'notifications', label: 'Alertas', view: alertas },
-  perfil: { icon: 'person', label: 'Perfil', view: perfil },
+  inicio: { icon: 'feed', label: 'Início', short: 'Início', view: inicio },
+  'meus-politicos': { icon: 'how_to_vote', label: 'Meus Políticos', short: 'Políticos', view: politicos },
+  comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', short: 'Comparar', view: comparador },
+  alertas: { icon: 'notifications', label: 'Alertas', short: 'Alertas', view: alertas },
+  perfil: { icon: 'person', label: 'Perfil', short: 'Perfil', view: perfil },
 };
 
 const app = $('#app');
 let deferredPrompt = null;
-
-function formatSyncTime() {
-  const d = new Date();
-  const hh = String(d.getHours()).padStart(2, '0');
-  const mm = String(d.getMinutes()).padStart(2, '0');
-  return `Hoje, ${hh}:${mm}`;
-}
 
 function shell() {
   const unreadAlerts = store.get().alerts.length;
@@ -46,18 +39,10 @@ function shell() {
           </a>
         </div>
 
-        <div class="header-center">
-          <div class="live-pill" title="Fluxo de dados abertos conectado ao Congresso Nacional">
-            <span class="live-dot"></span>
-            <span>DADOS DO CONGRESSO AO VIVO</span>
-          </div>
-        </div>
-
         <div class="header-actions">
-          <div class="sync-status" title="Última sincronização com APIs oficiais">
-            <span class="mi" style="font-size:16px; color:var(--primary)">sync</span>
-            <span>Sincronizado: ${formatSyncTime()}</span>
-          </div>
+          <button class="btn icon ghost header-icon-btn" id="header-theme-btn" aria-label="Alternar tema claro/escuro">
+            <span class="mi" id="header-theme-icon">dark_mode</span>
+          </button>
 
           <a href="#/alertas" class="btn icon ghost" title="Central de Alertas" style="position:relative" aria-label="Alertas">
             <span class="mi">notifications</span>
@@ -72,34 +57,13 @@ function shell() {
             <div class="user-avatar">
               <span class="mi" style="font-size:18px">person</span>
             </div>
-            <div style="display:flex; flex-direction:column; line-height:1.2; padding-right:4px">
+            <div class="user-text">
               <b style="font-size:12px">Cidadão</b>
               <span class="xs muted">Eleitor Regular</span>
             </div>
           </a>
         </div>
       </header>
-
-      <!-- 2. Sub-Banner Cívico Institucional -->
-      <div class="sub-civic-bar no-print">
-        <div class="row" style="gap:12px">
-          <span class="civic-tag">
-            <span class="live-dot" style="background:#fff; width:6px; height:6px"></span>
-            TRANSMISSÃO CÍVICA CONTÍNUA
-          </span>
-          <span class="civic-sources">
-            <span class="mi" style="font-size:15px; color:var(--primary)">verified</span>
-            Fontes Oficiais: TSE • API Câmara dos Deputados • Senado Aberto
-          </span>
-        </div>
-
-        <div class="row" style="gap:8px">
-          <button class="chip green" id="sub-btn-cola" style="cursor:pointer; border:none"><span class="mi" style="font-size:14px">how_to_vote</span>Minha Cola</button>
-          <a href="#/inicio" class="chip" style="cursor:pointer; text-decoration:none"><span class="mi" style="font-size:14px">dashboard</span>Visão Geral</a>
-          <a href="#/comparador" class="chip" style="cursor:pointer; text-decoration:none"><span class="mi" style="font-size:14px">how_to_vote</span>Votações</a>
-          <a href="#/meus-politicos" class="chip" style="cursor:pointer; text-decoration:none"><span class="mi" style="font-size:14px">receipt_long</span>Auditoria CEAP</a>
-        </div>
-      </div>
 
       <!-- 3. Shell Principal (Sidebar + Content) -->
       <div class="shell">
@@ -149,8 +113,25 @@ function shell() {
           </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="content" id="view" role="main"></main>
+        <div class="main-col">
+          <!-- 2. Sub-Banner Cívico Institucional -->
+          <div class="sub-civic-bar no-print">
+            <span class="civic-sources">
+              <span class="mi" style="font-size:15px; color:var(--primary)">verified</span>
+              Fontes oficiais: TSE • Câmara dos Deputados • Senado Federal
+            </span>
+
+            <div class="row civic-chips" style="gap:8px">
+              <button class="chip green" id="sub-btn-cola" style="cursor:pointer; border:none"><span class="mi" style="font-size:14px">how_to_vote</span>Minha Cola</button>
+              <a href="#/inicio" class="chip" style="cursor:pointer; text-decoration:none"><span class="mi" style="font-size:14px">dashboard</span>Visão Geral</a>
+              <a href="#/comparador" class="chip" style="cursor:pointer; text-decoration:none"><span class="mi" style="font-size:14px">gavel</span>Votações</a>
+              <a href="#/meus-politicos" class="chip" style="cursor:pointer; text-decoration:none"><span class="mi" style="font-size:14px">receipt_long</span>Auditoria CEAP</a>
+            </div>
+          </div>
+
+          <!-- Main Content -->
+          <main class="content" id="view" role="main"></main>
+        </div>
       </div>
 
       <!-- 4. Mobile Bottom Navigation Bar (Material You MD3) -->
@@ -162,7 +143,7 @@ function shell() {
             <div class="nav-pill">
               <span class="mi">${r.icon}</span>
             </div>
-            <span>${r.label.split(' ')[0]}</span>
+            <span>${r.short}</span>
           </a>`
           )
           .join('')}
@@ -228,9 +209,9 @@ function shell() {
       </footer>
 
       <!-- Floating Action Button (FAB MD3 Stitch) -->
-      <button class="fab-btn no-print" id="global-fab" title="Seguir Político">
+      <button class="fab-btn no-print" id="global-fab" title="Seguir Político" aria-label="Seguir Político">
         <span class="mi">person_add</span>
-        <span>Seguir Político</span>
+        <span class="fab-label">Seguir Político</span>
       </button>
     </div>`;
 
@@ -242,11 +223,14 @@ function shell() {
 
   const themeCheck = $('#theme-toggle-check');
   if (themeCheck) {
-    themeCheck.checked = store.get().theme === 'dark';
+    themeCheck.checked = resolvedTheme() === 'dark';
     themeCheck.onchange = () => {
       store.set({ theme: themeCheck.checked ? 'dark' : 'light' });
     };
   }
+
+  const themeBtn = $('#header-theme-btn');
+  if (themeBtn) themeBtn.onclick = () => store.set({ theme: resolvedTheme() === 'dark' ? 'light' : 'dark' });
 
   const installBtn = $('#pwa-install');
   if (installBtn) {
@@ -270,20 +254,55 @@ window.addEventListener('beforeinstallprompt', (e) => {
   if (btn) btn.hidden = false;
 });
 
-function applyTheme() {
+// 'system' (padrão) segue a preferência do aparelho até o usuário escolher um tema.
+const darkQuery = matchMedia('(prefers-color-scheme: dark)');
+function resolvedTheme() {
   const t = store.get().theme;
+  return t === 'dark' || t === 'light' ? t : darkQuery.matches ? 'dark' : 'light';
+}
+
+function paintTheme() {
+  const t = resolvedTheme();
   document.documentElement.dataset.theme = t;
   const label = $('#theme-label'),
     icon = $('#theme-icon'),
-    check = $('#theme-toggle-check');
+    check = $('#theme-toggle-check'),
+    headerIcon = $('#header-theme-icon');
   if (label) {
     label.textContent = t === 'dark' ? 'Tema Escuro' : 'Tema Claro';
     icon.textContent = t === 'dark' ? 'dark_mode' : 'light_mode';
   }
-  if (check) {
-    check.checked = t === 'dark';
-  }
+  if (check) check.checked = t === 'dark';
+  if (headerIcon) headerIcon.textContent = t === 'dark' ? 'light_mode' : 'dark_mode';
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue('--md-sys-color-surface').trim();
 }
+
+// Troca de tema com crossfade suave (evita o salto brusco de brilho); instantânea com movimento reduzido.
+function applyTheme({ animate = false } = {}) {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (animate && !reduce && document.startViewTransition) document.startViewTransition(paintTheme);
+  else paintTheme();
+}
+
+darkQuery.addEventListener('change', () => {
+  if (store.get().theme === 'system') applyTheme({ animate: true });
+});
+
+// Divisória do cabeçalho só aparece quando há conteúdo rolando por baixo dele.
+let scrollTicking = false;
+window.addEventListener(
+  'scroll',
+  () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      $('.top-header')?.classList.toggle('scrolled', window.scrollY > 4);
+      scrollTicking = false;
+    });
+  },
+  { passive: true }
+);
 
 let cleanup;
 async function render() {
@@ -318,7 +337,7 @@ let lastTheme = store.get().theme;
 store.subscribe((s) => {
   if (s.theme !== lastTheme) {
     lastTheme = s.theme;
-    applyTheme();
+    applyTheme({ animate: true });
     return;
   }
   render();

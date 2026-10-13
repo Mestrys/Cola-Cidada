@@ -2,7 +2,7 @@
 const KEY = 'monitor-cidadao:v1';
 
 const defaults = () => ({
-  theme: 'light',
+  theme: 'system', // 'system' | 'light' | 'dark'
   politicians: [], // {id, source:'camara'|'manual', camaraId?, name, party, uf, role, photo?, mandateEnd}
   prefs: { rollcall: true, expenses: true, bills: true },
   alerts: [], // {id, ts, politicianId, text}

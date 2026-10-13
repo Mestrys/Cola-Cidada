@@ -101,6 +101,13 @@ npm run dev   # http://localhost:5173
 
 
 
+## Interação e acessibilidade
+
+- **Diálogos:** entram e saem pelo mesmo caminho, fecham com Esc, prendem o foco e devolvem-no ao botão que os abriu. Em telas estreitas viram folha inferior que pode ser arrastada para baixo para fechar (acompanha o dedo, resiste para cima, projeta a inércia e anima com mola — `src/motion.js`).
+- **Materiais:** cabeçalho e barra inferior translúcidos, com divisória só quando há conteúdo rolando por baixo.
+- **Feedback:** resposta no pressionar; hover só em dispositivos com ponteiro; remover político pode ser desfeito pelo snackbar.
+- **Preferências do sistema:** tema segue `prefers-color-scheme` até o usuário escolher; `prefers-reduced-motion` troca deslizamentos por crossfade; `prefers-reduced-transparency` e `prefers-contrast` deixam as superfícies sólidas e com contornos fortes.
+
 ## Dados que NÃO são exibidos (por falta de fonte implementada)
 
 Atuação como relator e financiamento de campanha foram removidos: eram valores simulados (fonte possível: prestação de contas do TSE). Presença e fidelidade existem para deputados federais e senadores (não para deputados estaduais e vereadores).
