@@ -4,13 +4,20 @@ const rateClass = (r) => (r == null ? 'blue' : r >= 90 ? 'green' : r >= 75 ? 'go
 const short = (t = '', n = 140) => (t.length > n ? t.slice(0, n - 1) + '…' : t);
 
 // Painel de presença em sessões e fidelidade à orientação da bancada (dados oficiais da Câmara).
-export function plenaryPanelHtml({ attendance: a, fidelity: f }) {
+export function plenaryPanelHtml({ attendance: a, fidelity: f, source = 'camara' }) {
+  const senate = source === 'senado';
+  const unit = a.unit || 'sessões do Plenário';
   const attendance = a.sessions
     ? `
     <div class="stat" style="padding:10px">
-      <span>Presença em Sessões Deliberativas</span>
+      <span>${senate ? 'Presença nas Votações Nominais' : 'Presença em Sessões Deliberativas'}</span>
       <b style="font-size:22px; color:var(--primary)">${a.rate}%</b>
-      <span class="xs muted">${a.presences} de ${a.sessions} sessões do Plenário (${esc(fmtDate(a.from))} a ${esc(fmtDate(a.to))})</span>
+      <span class="xs muted">${a.presences} de ${a.sessions} ${esc(unit)} (${esc(fmtDate(a.from))} a ${esc(fmtDate(a.to))})</span>
+      ${
+        senate
+          ? `<span class="xs muted">${a.justified} ausência(s) justificada(s) (licença, missão ou atividade parlamentar) · ${a.unjustified} sem comparecimento</span>`
+          : ''
+      }
     </div>`
     : '<p class="muted sm">Sem sessões deliberativas encerradas recentes na API da Câmara.</p>';
 
@@ -54,27 +61,37 @@ export function plenaryPanelHtml({ attendance: a, fidelity: f }) {
   <div class="card soft stack" style="gap:12px; padding:16px">
     <div class="row between">
       <span class="chip ${rateClass(a.rate)}">Presença em Plenário</span>
-      <span class="xs muted">Registro oficial da Câmara</span>
+      <span class="xs muted">Registro oficial ${senate ? 'do Senado' : 'da Câmara'}</span>
     </div>
     ${attendance}
-    <div class="stat" style="padding:10px">
+    ${
+      f.participationRate == null
+        ? ''
+        : `<div class="stat" style="padding:10px">
       <span>Participação em Votações Nominais</span>
-      <b style="font-size:20px">${f.participationRate ?? '—'}%</b>
+      <b style="font-size:20px">${f.participationRate}%</b>
       <span class="xs muted">votou em ${f.voted} das ${f.votings} votações nominais mais recentes do Plenário</span>
-    </div>
+    </div>`
+    }
   </div>
   <div class="card soft stack" style="gap:12px; padding:16px">
     <div class="row between">
       <span class="chip ${rateClass(f.rate)}">Fidelidade à Orientação da Bancada</span>
-      <span class="xs muted">Orientações da liderança (Câmara)</span>
+      <span class="xs muted">Orientações da liderança (${senate ? 'Senado' : 'Câmara'})</span>
     </div>
     ${fidelity}
     ${divergences}
   </div>
   <p class="xs muted">
-    Calculado sobre as últimas sessões deliberativas e votações nominais do Plenário, via API de Dados Abertos da Câmara.
+    ${
+      senate
+        ? `Calculado sobre as votações nominais do Plenário do Senado nos últimos 180 dias, via Dados Abertos do Senado.
+    Presença inclui votos secretos; licença, missão e atividade parlamentar contam como ausência justificada.
+    A fidelidade compara o voto com a orientação publicada para o partido; poucas votações têm orientação, e as com bancada liberada ou sem orientação não entram na taxa.`
+        : `Calculado sobre as últimas sessões deliberativas e votações nominais do Plenário, via API de Dados Abertos da Câmara.
     A presença é o registro oficial e não distingue falta justificada; quem assumiu o mandato há pouco tem taxa menor.
     A fidelidade compara o voto com a orientação do partido, ou do bloco/federação quando o partido não orienta isoladamente;
-    votações com bancada liberada ou sem orientação publicada não entram na taxa.
+    votações com bancada liberada ou sem orientação publicada não entram na taxa.`
+    }
   </p>`;
 }

@@ -74,7 +74,10 @@ npm run dev   # http://localhost:5173
 - **Presença & Fidelidade (deputados federais, API da Câmara):** `src/plenary.js` calcula, sobre as últimas sessões deliberativas e votações nominais do Plenário:
   - presença registrada (`/eventos/{id}/deputados`) e participação em votações nominais (`/votacoes/{id}/votos`);
   - fidelidade = votos iguais à orientação da bancada (`/votacoes/{id}/orientacoes`; usa o partido ou, se ele não orienta sozinho, o bloco/federação). Votações com bancada liberada ou sem orientação publicada não entram na taxa.
-  - Limitações: a presença não distingue falta justificada; o cálculo cobre só uma janela recente; para senadores, deputados estaduais e vereadores não há dado equivalente implementado. A resolução de blocos abreviados (`Bl UniPpPsd...`) é heurística.
+  - Limitações: a presença não distingue falta justificada; o cálculo cobre só uma janela recente; para deputados estaduais e vereadores não há dado equivalente implementado. A resolução de blocos abreviados (`Bl UniPpPsd...`) é heurística.
+- **Presença & Fidelidade (senadores, API do Senado):** `senatorPlenaryStats` em `src/plenary.js`, sobre as votações nominais do Plenário dos últimos 180 dias (`/votacao` e `/plenario/votacao/orientacaoBancada`):
+  - presença nas votações nominais, separando ausências justificadas (licença, missão, atividade parlamentar) de não comparecimento; votos secretos contam como presença;
+  - fidelidade à orientação publicada para o partido (votações com bancada liberada ou sem orientação ficam fora da taxa). Poucas votações têm orientação, então a amostra costuma ser pequena e o painel mostra quantas foram medidas.
 - **Agenda Legislativa:** próximos eventos oficiais da Câmara (API `/eventos`) na tela inicial.
 - **Detecção Inteligente de "Jabutis" & Sumarizador Cívico (Fase 8):**
   - **Scanner de Jabutis (Contrabando Legislativo):** Algoritmo semântico em linguagem natural (*client-side* no navegador, 100% privado e em conformidade estrita com a LGPD) que audita a coerência temática de emendas e artigos de Medidas Provisórias e Projetos de Lei. Emite alertas de risco (*Baixo, Médio, Alto*) e cita a jurisprudência vinculante do STF (ADI 5127).
@@ -100,7 +103,7 @@ npm run dev   # http://localhost:5173
 
 ## Dados que NÃO são exibidos (por falta de fonte implementada)
 
-Atuação como relator e financiamento de campanha foram removidos: eram valores simulados (fonte possível: prestação de contas do TSE). Presença e fidelidade existem apenas para deputados federais.
+Atuação como relator e financiamento de campanha foram removidos: eram valores simulados (fonte possível: prestação de contas do TSE). Presença e fidelidade existem para deputados federais e senadores (não para deputados estaduais e vereadores).
 
 ## Atualizando os dados regionais
 

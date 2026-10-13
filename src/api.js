@@ -220,6 +220,19 @@ export async function senatorVotes(senadoId, limit = 10) {
   }
 }
 
+// Votações nominais do Plenário do Senado com a situação de cada senador (voto, presença, licença...).
+export async function senateNominalVotings(sinceIso, untilIso) {
+  const list = await getJson(`${SENADO_BASE}/votacao?dataInicio=${sinceIso}&dataFim=${untilIso}`);
+  return Array.isArray(list) ? list : [];
+}
+
+// Orientações de bancada (liderança) por votação, para o mesmo período.
+export async function senateOrientations(sinceIso, untilIso) {
+  const compact = (d) => d.replaceAll('-', '');
+  const data = await getJson(`${SENADO_BASE}/plenario/votacao/orientacaoBancada/${compact(sinceIso)}/${compact(untilIso)}`);
+  return data?.votacoes || [];
+}
+
 /* ================= AGENDA LEGISLATIVA (CÂMARA) ================= */
 
 // Próximos eventos oficiais da Câmara (sessões e reuniões de comissão) nos próximos 7 dias.

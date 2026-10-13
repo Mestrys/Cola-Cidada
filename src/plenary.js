@@ -1,7 +1,7 @@
 // Presença em sessões e fidelidade à orientação de bancada, calculadas a partir
 // da API de Dados Abertos da Câmara. Todos os números vêm de registros oficiais
 // das últimas sessões deliberativas e votações nominais do Plenário.
-import { legislatureBlocs, recentPlenarySessions, sessionAttendees, recentNominalVotings, votesOf, votingOrientations } from './api.js';
+import { senateNominalVotings, senateOrientations, legislatureBlocs, recentPlenarySessions, sessionAttendees, recentNominalVotings, votesOf, votingOrientations } from './api.js';
 
 const SESSIONS = 15; // sessões deliberativas encerradas mais recentes
 const VOTINGS = 20; // votações nominais mais recentes
@@ -133,4 +133,96 @@ export async function deputyPlenaryStats(camaraId) {
     divergences: divergences.slice(0, 5),
   };
   return { attendance, fidelity };
+}
+
+/* ================= SENADO ================= */
+
+// Situações de um senador numa votação nominal (siglaVotoParlamentar).
+const SEN_PRESENT = new Set(['Sim', 'Não', 'Abstenção', 'Votou', 'P-NRV', 'Presidente (art. 51 RISF)']);
+const SEN_JUSTIFIED = new Set(['AP', 'LS', 'MIS', 'LP', 'LAP']); // atividade parlamentar, licenças e missões
+const SEN_CAST = new Set(['Sim', 'Não', 'Abstenção']);
+const SENATE_WINDOW_DAYS = 180;
+
+let senatePromise = null;
+
+export function senateDataset() {
+  if (!senatePromise) senatePromise = buildSenateDataset().catch((e) => ((senatePromise = null), Promise.reject(e)));
+  return senatePromise;
+}
+
+async function buildSenateDataset() {
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const now = new Date();
+  const since = iso(new Date(now.getTime() - SENATE_WINDOW_DAYS * 86400000));
+  const until = iso(now);
+  const votings = await senateNominalVotings(since, until);
+  const orientations = await senateOrientations(since, until).catch(() => []);
+  const orientBy = new Map(
+    orientations.map((o) => [`${o.numeroSessao}-${o.sequencialVotacao}`, o.orientacoesLideranca || []])
+  );
+  return { since, until, votings, orientBy };
+}
+
+// Presença (inclui ausências justificadas e não justificadas) e fidelidade de um senador.
+export async function senatorPlenaryStats(codigo) {
+  const { since, until, votings, orientBy } = await senateDataset();
+  const id = Number(codigo);
+
+  let listed = 0, present = 0, justified = 0, unjustified = 0, cast = 0;
+  let aligned = 0, diverged = 0, freed = 0, unknown = 0;
+  const divergences = [];
+  for (const v of votings) {
+    const mine = (v.votos || []).find((x) => x.codigoParlamentar === id);
+    if (!mine) continue;
+    const sit = mine.siglaVotoParlamentar;
+    if (sit === 'NA') continue; // dispositivo não citado: sem relação com presença
+    listed++;
+    if (SEN_PRESENT.has(sit)) present++;
+    else if (SEN_JUSTIFIED.has(sit)) justified++;
+    else unjustified++;
+    if (!SEN_CAST.has(sit)) continue;
+    cast++;
+    const orient = (orientBy.get(`${v.numeroSessao}-${v.sequencialVotacao}`) || []).find(
+      (o) => norm(o.partido) === norm(mine.siglaPartidoParlamentar)
+    );
+    const o = orient?.voto?.toLowerCase();
+    if (!o) unknown++;
+    else if (o === 'livre') freed++;
+    else {
+      const want = o === 'sim' ? 'Sim' : o === 'não' || o === 'nao' ? 'Não' : o.startsWith('abst') ? 'Abstenção' : null;
+      if (!want) unknown++;
+      else if (want === sit) aligned++;
+      else {
+        diverged++;
+        divergences.push({ id: v.sequencialVotacao, date: v.dataSessao, description: `${v.identificacao} — ${v.ementa || v.descricaoVotacao || ''}`, vote: sit, orientation: want });
+      }
+    }
+  }
+  const measured = aligned + diverged;
+  return {
+    source: 'senado',
+    attendance: {
+      unit: 'votações nominais',
+      sessions: listed,
+      presences: present,
+      absences: listed - present,
+      justified,
+      unjustified,
+      rate: listed ? Math.round((present / listed) * 100) : null,
+      from: since,
+      to: until,
+    },
+    fidelity: {
+      votings: votings.length,
+      voted: cast,
+      participationRate: null,
+      measured,
+      aligned,
+      diverged,
+      freed,
+      unknown,
+      rate: measured ? Math.round((aligned / measured) * 100) : null,
+      divergences: divergences.slice(0, 5),
+    },
+  };
 }

@@ -7,7 +7,7 @@ import {
   getTseElectoralProfile,
 } from '../api.js';
 import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast } from '../ui.js';
-import { deputyPlenaryStats } from '../plenary.js';
+import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
 import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openDossierModal } from '../dossier.js';
@@ -185,6 +185,7 @@ async function openPoliticianDetails(p) {
           : isSenator
           ? `
         <button class="on" data-tab="senado">Votações no Senado</button>
+        <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : `
         <button class="on" data-tab="local">${isCouncilor ? 'Mandato Municipal' : 'Mandato Estadual'}</button>
@@ -214,6 +215,9 @@ async function openPoliticianDetails(p) {
         ? `
       <div id="tab-senado" class="stack pol-pane" style="margin-top:4px">
         <div class="row"><span class="spin"></span><span class="muted">Carregando votações nominais no Senado…</span></div>
+      </div>
+      <div id="tab-plenario" class="stack pol-pane hidden" style="margin-top:4px">
+        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das votações oficiais do Senado…</span></div>
       </div>
     `
         : `
@@ -525,6 +529,10 @@ async function openPoliticianDetails(p) {
     }
   } else if (isSenator) {
     const paneSenator = el.querySelector('#tab-senado');
+    const panePlenario = el.querySelector('#tab-plenario');
+    senatorPlenaryStats(p.senadoId)
+      .then((stats) => (panePlenario.innerHTML = plenaryPanelHtml(stats)))
+      .catch((err) => (panePlenario.innerHTML = `<p class="muted">Não foi possível calcular agora: ${esc(err.message)}</p>`));
     try {
       const votes = await senatorVotes(p.senadoId, 12);
       if (!votes.length) {

@@ -6,7 +6,7 @@ import {
   senatorVotes,
   getTseElectoralProfile,
 } from './api.js';
-import { deputyPlenaryStats } from './plenary.js';
+import { deputyPlenaryStats, senatorPlenaryStats } from './plenary.js';
 import { plenaryPanelHtml } from './views/plenaryPanel.js';
 
 export async function openDossierModal(p) {
@@ -47,7 +47,10 @@ export async function openDossierModal(p) {
         deputyPlenaryStats(p.camaraId).catch(() => null),
       ]);
     } else if (p.source === 'senado') {
-      votes = await senatorVotes(p.senadoId, 15).catch(() => []);
+      [votes, plenary] = await Promise.all([
+        senatorVotes(p.senadoId, 15).catch(() => []),
+        senatorPlenaryStats(p.senadoId).catch(() => null),
+      ]);
     }
 
     // Cálculo do Hash SHA-256 de integridade local
