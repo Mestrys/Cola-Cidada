@@ -130,7 +130,7 @@ test.describe('diálogos', () => {
     expect(await page.evaluate(() => document.documentElement.classList.contains('modal-open'))).toBe(false);
   });
 
-  test('folha inferior: arrasto curto volta, lançamento fecha', async ({ page, isMobile, context }) => {
+  test('folha inferior: arrasto curto volta, arrasto longo fecha', async ({ page, isMobile, context }) => {
     test.skip(!isMobile, 'gesto só no celular');
     await seed(page);
     await go(page, 'meus-politicos');
@@ -150,7 +150,9 @@ test.describe('diálogos', () => {
     await drag(100, 12, 40);
     await page.waitForTimeout(800);
     await expect(page.locator('.overlay')).toHaveCount(1);
-    await drag(150, 4, 8);
+    // longo o bastante para fechar só pela posição: a inércia (velocityFrom/project) tem testes unitários
+    // e a entrega dos toques via CDP varia com a carga da máquina
+    await drag(240, 6, 8);
     await expect(page.locator('.overlay')).toHaveCount(0);
   });
 
