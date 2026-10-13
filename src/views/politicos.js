@@ -5,9 +5,6 @@ import {
   deputyProfile,
   senatorVotes,
   getTseElectoralProfile,
-  getParliamentaryAttendance,
-  getPartyFidelity,
-  getRelatorMatters,
 } from '../api.js';
 import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -52,8 +49,7 @@ export function politicianCard(p) {
       ? 'teal'
       : 'gold';
 
-  const att = getParliamentaryAttendance(p);
-  const fid = getPartyFidelity(p);
+  const m = mandateProgress(p);
 
   return `
   <article class="card stack" style="gap:14px; position:relative">
@@ -90,22 +86,11 @@ export function politicianCard(p) {
       </div>
       <div class="row between xs muted">
         <span>${m.label}</span>
-        <span class="chip ${att.statusClass} xs">${att.attendanceRate}% Assiduidade</span>
       </div>
     </div>
 
     <!-- Mini-Grid de Métricas Típicas do Stitch -->
-    <div class="grid" style="grid-template-columns:1fr 1fr 1fr; gap:8px">
-      <div class="stat" style="padding:8px 10px">
-        <span style="font-size:10px">Fidelidade</span>
-        <b style="font-size:15px; color:var(--primary)">${fid.alignmentRate}%</b>
-        <span class="xs muted" style="text-transform:none">com a bancada</span>
-      </div>
-      <div class="stat" style="padding:8px 10px">
-        <span style="font-size:10px">Presença</span>
-        <b style="font-size:15px; color:var(--text)">${att.attendanceRate}%</b>
-        <span class="xs muted" style="text-transform:none">${att.presences} sessões</span>
-      </div>
+    <div class="grid" style="grid-template-columns:1fr; gap:8px">
       <div class="stat" style="padding:8px 10px">
         <span style="font-size:10px">Auditoria</span>
         <b style="font-size:15px; color:var(--text)">${isDeputy ? 'CEAP' : isSenator ? 'CEAPS' : 'Gabinete'}</b>
@@ -149,9 +134,6 @@ async function openPoliticianDetails(p) {
     p.roleKey === 'dep-estadual' ||
     (typeof p.source === 'string' && p.source.startsWith('al-'));
   const tse = getTseElectoralProfile(p);
-  const att = getParliamentaryAttendance(p);
-  const fid = getPartyFidelity(p);
-  const relators = getRelatorMatters(p);
   const m = mandateProgress(p);
 
   const { el, close } = modal(`
@@ -184,8 +166,6 @@ async function openPoliticianDetails(p) {
         </div>
         <div class="bar" style="height:7px"><i style="width:${m.pct}%"></i></div>
         <div class="row" style="gap:8px; margin-top:4px">
-          <span class="chip green xs"><span class="mi" style="font-size:13px">trending_down</span>Gasto auditado em conformidade</span>
-          <span class="chip blue xs"><span class="mi" style="font-size:13px">event_available</span>${att.attendanceRate}% Assiduidade em Plenário</span>
         </div>
       </div>
     </div>
@@ -207,7 +187,6 @@ async function openPoliticianDetails(p) {
         <button class="on" data-tab="local">${isCouncilor ? 'Mandato Municipal' : 'Mandato Estadual'}</button>
       `
       }
-      <button data-tab="attendance">Assiduidade & Fidelidade</button>
       <button data-tab="tse">Ficha Eleitoral & TSE</button>
     </div>
 
@@ -303,8 +282,11 @@ async function openPoliticianDetails(p) {
       <div class="card soft stack" style="gap:12px; padding:16px">
         <div class="row between">
           <span class="chip green">Registro Eleitoral Oficial no TSE (DivulgaCandContas)</span>
-          <span class="xs muted">${esc(tse.status)}</span>
+          <span class="xs muted">${esc(tse.status || '')}</span>
         </div>
+        ${
+          tse.available
+            ? `
         <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
           <div class="stat" style="padding:10px">
             <span>Número na Urna</span>
@@ -313,144 +295,22 @@ async function openPoliticianDetails(p) {
           </div>
           <div class="stat" style="padding:10px">
             <span>Patrimônio Declarado</span>
-            <b style="font-size:18px">${brl(tse.declaredAssets)}</b>
-            <span class="xs muted">Bens declarados na posse</span>
+            <b style="font-size:18px">${tse.declaredAssets != null ? brl(tse.declaredAssets) : 'Não declarado'}</b>
+            <span class="xs muted">Bens declarados no registro de candidatura</span>
           </div>
         </div>
-
-        <div class="stat" style="padding:12px">
-          <div class="row between">
-            <span style="font-weight:600">Arrecadação e Prestação de Contas</span>
-            <b style="font-size:17px; color:var(--primary)">${brl(tse.totalRaised)}</b>
-          </div>
-          <div class="bar" style="height:8px; margin:8px 0; display:flex">
-            <i style="width:${tse.publicFundPct}%; background:var(--primary)" title="Fundo Eleitoral: ${tse.publicFundPct}%"></i>
-            <i style="width:${tse.privateDonationsPct}%; background:var(--secondary)" title="Doações Privadas: ${tse.privateDonationsPct}%"></i>
-          </div>
-          <div class="row between xs muted">
-            <span>Fundo Público (FEFC): <b>${tse.publicFundPct}%</b></span>
-            <span>Doações Privadas / PIX: <b>${tse.privateDonationsPct}%</b></span>
-          </div>
-        </div>
-
         <div class="row between sm" style="background:var(--s2); padding:8px 12px; border-radius:var(--r-sm)">
           <span class="muted">Coligação / Federação:</span>
-          <b>${esc(tse.electoralCoalition)}</b>
-        </div>
-
+          <b>${esc(tse.electoralCoalition || (tse.isolatedParty ? 'Partido isolado' : '—'))}</b>
+        </div>`
+            : `
+        <p class="sm muted">Os dados eleitorais deste mandato não estão carregados localmente. Consulte a ficha oficial no TSE.</p>`
+        }
+        <p class="xs muted">Prestação de contas de campanha (arrecadação e doadores): consulte a ficha oficial no TSE.</p>
         <div class="row" style="margin-top:4px">
           <a href="${esc(tse.tseUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm" style="width:100%; justify-content:center">
             <span>Consultar Ficha Eleitoral no TSE (DivulgaCandContas)</span><span class="mi" style="font-size:15px">open_in_new</span>
           </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABA ASSIDUIDADE & FIDELIDADE -->
-    <div id="tab-attendance" class="stack pol-pane hidden" style="margin-top:4px">
-      <!-- 1. Presença em Plenário -->
-      <div class="card soft stack" style="gap:12px; padding:16px">
-        <div class="row between">
-          <span class="chip ${att.statusClass}">Presença em Plenário & Comissões</span>
-          <span class="sm" style="font-weight:700">${esc(att.status)}</span>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-          <div class="stat" style="padding:10px">
-            <span>Taxa de Presença</span>
-            <b style="font-size:22px; color:var(--primary)">${att.attendanceRate}%</b>
-            <span class="xs muted">${att.presences} de ${att.totalSessions} sessões</span>
-          </div>
-          <div class="stat" style="padding:10px">
-            <span>Faltas Justificadas</span>
-            <b style="font-size:20px">${att.justifiedAbsences}</b>
-            <span class="xs muted">Com atestado / missão oficial</span>
-          </div>
-        </div>
-
-        <div class="stat" style="padding:12px">
-          <div class="row between sm">
-            <span>Distribuição de Sessões Convocadas</span>
-            <span>Total: <b>${att.totalSessions}</b></span>
-          </div>
-          <div class="bar" style="height:10px; margin:8px 0; display:flex; border-radius:6px; overflow:hidden">
-            <i style="width:${att.attendanceRate}%; background:var(--primary)" title="Presenças: ${att.presences}"></i>
-            <i style="width:${Math.round((att.justifiedAbsences / att.totalSessions) * 100)}%; background:var(--secondary)" title="Justificadas: ${att.justifiedAbsences}"></i>
-            <i style="width:${Math.round((att.unjustifiedAbsences / att.totalSessions) * 100)}%; background:var(--error)" title="Faltas não justificadas: ${att.unjustifiedAbsences}"></i>
-          </div>
-          <div class="row between xs muted">
-            <span>Presenças: <b>${att.presences}</b></span>
-            <span>Justificadas: <b>${att.justifiedAbsences}</b></span>
-            <span>Faltas Não Justificadas: <b style="color:var(--error)">${att.unjustifiedAbsences}</b></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Fidelidade Partidária -->
-      <div class="card soft stack" style="gap:12px; padding:16px">
-        <div class="row between">
-          <span class="chip ${fid.classificationClass}">Fidelidade Partidária (${esc(fid.party)})</span>
-          <span class="sm" style="font-weight:700">${esc(fid.classification)}</span>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-          <div class="stat" style="padding:10px">
-            <span>Votos com a Bancada</span>
-            <b style="font-size:22px; color:var(--text)">${fid.alignmentRate}%</b>
-            <span class="xs muted">${fid.alignedVotes} de ${fid.totalVotings} votações</span>
-          </div>
-          <div class="stat" style="padding:10px">
-            <span>Votos Dissidentes</span>
-            <b style="font-size:20px; color:${fid.divergentVotes > 0 ? 'var(--gold)' : 'var(--primary)'}">${fid.divergentVotes}</b>
-            <span class="xs muted">Contrários à liderança</span>
-          </div>
-        </div>
-
-        ${
-          fid.sampleDivergences.length
-            ? `
-          <div class="stack" style="gap:6px">
-            <span class="xs muted" style="font-weight:700; text-transform:uppercase">Amostra de Votações com Dissidência:</span>
-            ${fid.sampleDivergences
-              .map(
-                (d) => `
-              <div class="card soft stack xs" style="gap:3px; background:var(--s2); padding:8px 10px; border-radius:var(--r-sm)">
-                <div class="row between">
-                  <b>${esc(d.matter)}</b>
-                  <span class="chip gold xs">Voto: ${esc(d.parliamentaryVote)} (Bancada: ${esc(d.partyOrientation)})</span>
-                </div>
-                <p class="muted">${esc(d.description)}</p>
-              </div>`
-              )
-              .join('')}
-          </div>`
-            : ''
-        }
-      </div>
-
-      <!-- 3. Atuação como Relator -->
-      <div class="card soft stack" style="gap:10px; padding:16px">
-        <div class="row between">
-          <span class="chip blue">Atuação como Relator(a)</span>
-          <span class="xs muted">${relators.length} Matérias Atribuídas</span>
-        </div>
-        <div class="stack" style="gap:8px">
-          ${relators
-            .map(
-              (r) => `
-            <div class="card soft stack sm" style="gap:4px; border-left:3px solid var(--primary); padding:10px">
-              <div class="row between">
-                <b style="font-size:13px">${esc(r.code)}</b>
-                <span class="chip green xs">${esc(r.status)}</span>
-              </div>
-              <p style="font-size:12px; font-weight:600">${esc(r.theme)}</p>
-              <div class="row between xs muted">
-                <span>Comissão: ${esc(r.commission)}</span>
-                <span>Parecer: <b>${esc(r.verdict)}</b></span>
-              </div>
-            </div>`
-            )
-            .join('')}
         </div>
       </div>
     </div>

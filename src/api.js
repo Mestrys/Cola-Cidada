@@ -160,36 +160,33 @@ export async function senatorVotes(senadoId, limit = 10) {
   }
 }
 
-/* ================= ALESP (ASSEMBLEIA LEGISLATIVA DE SÃO PAULO) ================= */
+/* ================= AGENDA LEGISLATIVA (CÂMARA) ================= */
 
-let alespCache = null;
-
-export async function allAlespDeputies() {
-  if (alespCache) return alespCache;
-  const res = await fetch('/src/data/alesp.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status} para alesp.json`);
-  alespCache = await res.json();
-  return alespCache;
-}
-
-export async function searchAlespDeputies(query = '') {
-  const list = await allAlespDeputies();
-  const q = query.trim().toLowerCase();
-  if (!q) return list.slice(0, 12);
-  return list
-    .filter(
-      (d) =>
-        d.name.toLowerCase().includes(q) ||
-        d.party.toLowerCase().includes(q) ||
-        (d.baseEleitoral && d.baseEleitoral.toLowerCase().includes(q)) ||
-        (d.areaAtuacao && d.areaAtuacao.toLowerCase().includes(q))
-    )
-    .slice(0, 12);
-}
-
-export async function alespDeputyDetail(matricula) {
-  const list = await allAlespDeputies();
-  return list.find((d) => String(d.matricula) === String(matricula) || d.id === matricula);
+// Próximos eventos oficiais da Câmara (sessões e reuniões de comissão) nos próximos 7 dias.
+export async function upcomingAgenda(limit = 5) {
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const now = new Date();
+  const end = new Date(now.getTime() + 7 * 86400000);
+  const { dados } = await getJson(
+    `${CAMARA_BASE}/eventos?dataInicio=${iso(now)}&dataFim=${iso(end)}&ordem=ASC&ordenarPor=dataHoraInicio&itens=100`
+  );
+  const rank = (e) => (/Deliberativa/.test(e.descricaoTipo || '') && !/N[ãa]o/.test(e.descricaoTipo || '') ? 0 : 1);
+  return (dados || [])
+    .filter((e) => !/cancelad/i.test(e.situacao || ''))
+    .map((e, i) => ({ e, i }))
+    .sort((a, b) => rank(a.e) - rank(b.e) || a.i - b.i)
+    .slice(0, limit)
+    .map(({ e }) => ({
+      id: e.id,
+      start: e.dataHoraInicio,
+      type: e.descricaoTipo,
+      description: e.descricao,
+      organ: e.orgaos?.[0]?.sigla || '',
+      organName: e.orgaos?.[0]?.nome || '',
+      place: e.localCamara?.nome || e.localExterno || '',
+      url: `https://www.camara.leg.br/evento-legislativo/${e.id}`,
+    }))
+    .sort((a, b) => String(a.start).localeCompare(String(b.start)));
 }
 
 /* ================= ATOS DO EXECUTIVO / MEDIDAS PROVISÓRIAS ================= */
@@ -209,78 +206,6 @@ export async function recentProvisionalMeasures(limit = 10) {
   }));
 }
 
-/* ================= ALERJ (RIO DE JANEIRO) ================= */
-
-let alerjCache = null;
-
-export async function allAlerjDeputies() {
-  if (alerjCache) return alerjCache;
-  const res = await fetch('/src/data/alerj.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status} para alerj.json`);
-  alerjCache = await res.json();
-  return alerjCache;
-}
-
-export async function searchAlerjDeputies(query = '') {
-  const list = await allAlerjDeputies();
-  const q = query.trim().toLowerCase();
-  if (!q) return list;
-  return list.filter(
-    (d) =>
-      d.name.toLowerCase().includes(q) ||
-      d.party.toLowerCase().includes(q) ||
-      (d.baseEleitoral && d.baseEleitoral.toLowerCase().includes(q))
-  );
-}
-
-/* ================= ALMG (MINAS GERAIS) ================= */
-
-let almgCache = null;
-
-export async function allAlmgDeputies() {
-  if (almgCache) return almgCache;
-  const res = await fetch('/src/data/almg.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status} para almg.json`);
-  almgCache = await res.json();
-  return almgCache;
-}
-
-export async function searchAlmgDeputies(query = '') {
-  const list = await allAlmgDeputies();
-  const q = query.trim().toLowerCase();
-  if (!q) return list;
-  return list.filter(
-    (d) =>
-      d.name.toLowerCase().includes(q) ||
-      d.party.toLowerCase().includes(q) ||
-      (d.baseEleitoral && d.baseEleitoral.toLowerCase().includes(q))
-  );
-}
-
-/* ================= CMSP (CÂMARA MUNICIPAL DE SÃO PAULO - VEREADORES) ================= */
-
-let cmspCache = null;
-
-export async function allCmspCouncilors() {
-  if (cmspCache) return cmspCache;
-  const res = await fetch('/src/data/cmsp.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status} para cmsp.json`);
-  cmspCache = await res.json();
-  return cmspCache;
-}
-
-export async function searchCmspCouncilors(query = '') {
-  const list = await allCmspCouncilors();
-  const q = query.trim().toLowerCase();
-  if (!q) return list;
-  return list.filter(
-    (d) =>
-      d.name.toLowerCase().includes(q) ||
-      d.party.toLowerCase().includes(q) ||
-      (d.baseEleitoral && d.baseEleitoral.toLowerCase().includes(q))
-  );
-}
-
 /* ================= FEDERAÇÃO COMPLETA: 27 ASSEMBLEIAS & 26 CAPITAIS ================= */
 
 const stateDepCache = new Map();
@@ -298,9 +223,6 @@ export async function allStateDeputies(uf = 'SP') {
   } catch (err) {
     console.warn(`Fallback para estado ${key}:`, err);
   }
-  if (key === 'sp') return allAlespDeputies();
-  if (key === 'rj') return allAlerjDeputies();
-  if (key === 'mg') return allAlmgDeputies();
   return [];
 }
 
@@ -332,7 +254,6 @@ export async function allCapitalCouncilors(uf = 'SP') {
   } catch (err) {
     console.warn(`Fallback para capital ${key}:`, err);
   }
-  if (key === 'sp') return allCmspCouncilors();
   return [];
 }
 
@@ -352,202 +273,20 @@ export async function searchCapitalCouncilors(uf = 'SP', query = '') {
 
 /* ================= DADOS ELEITORAIS DO TSE (DIVULGACANDCONTAS) ================= */
 
+// Usa apenas dados reais vindos do TSE (p.tse, gerado por scripts/build-regional-data.mjs).
+// Para parlamentares sem registro local (Câmara/Senado/manual) os campos ficam nulos e a
+// interface aponta para a ficha oficial no DivulgaCandContas.
 export function getTseElectoralProfile(p) {
-  const isCouncilor = p.roleKey === 'vereador';
-  const isSenator = p.roleKey === 'senador';
-  const isFederal = p.roleKey === 'dep-federal';
-  const isState = p.roleKey === 'dep-estadual';
-
-  // Estimativa baseada nos limites legais de arrecadação do TSE e prestações padrão
-  const totalRaised = isSenator
-    ? 4850000
-    : isFederal
-    ? 2950000
-    : isState
-    ? 1180000
-    : 345000;
-
-  const declaredAssets = isSenator
-    ? 3850000
-    : isFederal
-    ? 1920000
-    : isState
-    ? 940000
-    : 480000;
-
-  const ballotNumber =
-    p.party === 'PL' ? '22' : p.party === 'PT' ? '13' : p.party === 'UNIÃO' ? '44' : p.party === 'PSOL' ? '50' : '10';
-
+  const t = p.tse || null;
+  const coalition = t?.coalition && t.coalition !== 'PARTIDO ISOLADO' ? t.coalition : null;
   return {
-    electionYear: isCouncilor ? 2024 : 2022,
-    status: 'Candidatura Deferida e Homologada',
-    ballotNumber: isCouncilor ? `${ballotNumber}000` : `${ballotNumber}123`,
-    electoralCoalition: `${p.party || 'PARTIDO'} / Federação Oficial`,
-    totalRaised,
-    declaredAssets,
-    publicFundPct: 82,
-    privateDonationsPct: 18,
-    topDonors: [
-      { name: 'Diretório Nacional / Fundo Eleitoral Especial (FEFC)', type: 'Público', share: '82%' },
-      { name: 'Doações de Pessoas Físicas (PIX / Cartão)', type: 'Privado', share: '18%' },
-    ],
-    tseUrl: `https://divulgacandcontas.tse.jus.br/divulga/#/candidato/${isCouncilor ? '2024' : '2022'}/${
-      isCouncilor ? '2045202024' : '2040602022'
-    }/${(p.uf || 'SP').toUpperCase()}/buscar`,
+    available: !!t,
+    electionYear: t?.year ?? null,
+    status: t?.status ?? null,
+    ballotNumber: t?.ballotNumber ?? null,
+    electoralCoalition: coalition,
+    isolatedParty: t?.coalition === 'PARTIDO ISOLADO',
+    declaredAssets: t?.declaredAssets ?? null,
+    tseUrl: p.pageUrl && p.pageUrl.includes('divulgacandcontas') ? p.pageUrl : 'https://divulgacandcontas.tse.jus.br/divulga/',
   };
 }
-
-/* ================= ASSIDUIDADE, PRESENÇA & FIDELIDADE PARTIDÁRIA ================= */
-
-export function getParliamentaryAttendance(p) {
-  const seed = (p.id || p.name || 'seed').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const totalSessions = 118 + (seed % 17); // ~118 a 134 sessões deliberativas
-  const unjustifiedAbsences = seed % 6; // 0 a 5 faltas não justificadas
-  const justifiedAbsences = 2 + (seed % 8); // 2 a 9 faltas justificadas com atestado/missão oficial
-  const presences = totalSessions - unjustifiedAbsences - justifiedAbsences;
-  const attendanceRate = Math.round((presences / totalSessions) * 100);
-  const legalComplianceRate = Math.round(((presences + justifiedAbsences) / totalSessions) * 100);
-
-  return {
-    totalSessions,
-    presences,
-    justifiedAbsences,
-    unjustifiedAbsences,
-    attendanceRate,
-    legalComplianceRate,
-    status: attendanceRate >= 90 ? 'Alta Assiduidade' : attendanceRate >= 80 ? 'Presença Regular' : 'Atenção / Faltas Recorrentes',
-    statusClass: attendanceRate >= 90 ? 'green' : attendanceRate >= 80 ? 'gold' : 'red',
-  };
-}
-
-export function getPartyFidelity(p) {
-  const seed = (p.id || p.name || 'seed').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const party = p.party || 'INDEP';
-  const alignmentRate = 78 + (seed % 21); // 78% a 98% de fidelidade
-  const totalVotings = 95 + (seed % 15);
-  const alignedVotes = Math.round((totalVotings * alignmentRate) / 100);
-  const divergentVotes = totalVotings - alignedVotes;
-  const freeVotes = 12 + (seed % 9);
-
-  const sampleDivergences = [
-    {
-      matter: 'PLP 93/2023 · Regime Fiscal Sustentável',
-      parliamentaryVote: alignmentRate > 85 ? 'Sim' : 'Não',
-      partyOrientation: 'Sim',
-      description: 'Divergiu da orientação da liderança no destaque sobre limites de despesas primárias.',
-    },
-    {
-      matter: 'PEC 45/2019 · Reforma Tributária sobre o Consumo',
-      parliamentaryVote: alignmentRate > 90 ? 'Sim' : 'Abstenção',
-      partyOrientation: 'Sim',
-      description: 'Posicionou-se de forma dissidente no destaque dos regimes automotivos regionais.',
-    },
-  ];
-
-  return {
-    party,
-    alignmentRate,
-    totalVotings,
-    alignedVotes,
-    divergentVotes,
-    freeVotes,
-    sampleDivergences: divergentVotes > 0 ? sampleDivergences.slice(0, Math.min(2, divergentVotes)) : [],
-    classification:
-      alignmentRate >= 92
-        ? 'Altamente Fiel à Liderança'
-        : alignmentRate >= 84
-        ? 'Perfil Moderado / Votos Independentes'
-        : 'Perfil Autônomo / Dissidências Frequentes',
-    classificationClass: alignmentRate >= 92 ? 'green' : alignmentRate >= 84 ? 'blue' : 'gold',
-  };
-}
-
-export function getRelatorMatters(p) {
-  const isSenator = p.roleKey === 'senador';
-  const isCouncilor = p.roleKey === 'vereador';
-  const isState = p.roleKey === 'dep-estadual';
-
-  if (isCouncilor) {
-    return [
-      {
-        code: 'PL 412/2024 (CMSP)',
-        theme: 'Mobilidade Urbana e Faixas Exclusivas',
-        commission: 'Comissão de Trânsito e Transportes',
-        verdict: 'Parecer Favorável com Substitutivo',
-        status: 'Aprovado na Comissão',
-      },
-      {
-        code: 'PL 108/2024 (CMSP)',
-        theme: 'Zoneamento e Revitalização de Espaços Públicos',
-        commission: 'Comissão de Política Urbana e Meio Ambiente',
-        verdict: 'Em Análise de Emendas Populares',
-        status: 'Tramitação Ativa',
-      },
-    ];
-  }
-
-  if (isState) {
-    return [
-      {
-        code: 'PL 523/2023 (Assembleia)',
-        theme: 'Incentivo à Saúde Mental na Rede Pública Estadual',
-        commission: 'Comissão de Constituição, Justiça e Redação',
-        verdict: 'Parecer pela Constitucionalidade e Aprovação',
-        status: 'Aguardando Ordem do Dia',
-      },
-      {
-        code: 'PDL 44/2024 (Assembleia)',
-        theme: 'Fiscalização de Concessões Rodoviárias Estaduais',
-        commission: 'Comissão de Transportes e Comunicações',
-        verdict: 'Parecer Favorável com Modificações',
-        status: 'Aprovado em 1º Turno',
-      },
-    ];
-  }
-
-  if (isSenator) {
-    return [
-      {
-        code: 'PL 1303/2022 (Senado)',
-        theme: 'Regulação do Mercado Brasileiro de Créditos de Carbono',
-        commission: 'Comissão de Meio Ambiente (CMA)',
-        verdict: 'Relatório Final Favorável com Emendas',
-        status: 'Enviado à Câmara dos Deputados',
-      },
-      {
-        code: 'PRS 18/2023 (Senado)',
-        theme: 'Regime Fiscal de Endividamento de Entes Subnacionais',
-        commission: 'Comissão de Assuntos Econômicos (CAE)',
-        verdict: 'Parecer pela Aprovação',
-        status: 'Pronto para Pauta no Plenário',
-      },
-    ];
-  }
-
-  return [
-    {
-      code: 'PL 2630/2020 (Câmara)',
-      theme: 'Marco Regulatório das Redes e Transparência Digital',
-      commission: 'Grupo de Trabalho Especial / Plenário',
-      verdict: 'Substitutivo Geral Apresentado',
-      status: 'Urgência Aprovada',
-    },
-    {
-      code: 'PL 3626/2023 (Câmara)',
-      theme: 'Tributação e Fiscalização de Loterias e Apostas',
-      commission: 'Comissão de Finanças e Tributação (CFT)',
-      verdict: 'Parecer Favorável com Adequações Fiscais',
-      status: 'Sancionado (Lei nº 14.790)',
-    },
-    {
-      code: 'PEC 9/2023 (Câmara)',
-      theme: 'Prestação de Contas Partidárias e Cotas Afirmativas',
-      commission: 'Comissão Especial',
-      verdict: 'Parecer com Modificações de Texto',
-      status: 'Promulgada',
-    },
-  ];
-}
-
-
-

@@ -5,6 +5,7 @@ import { politicianCard, bindPoliticianActions } from './politicos.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openAnalysisModal } from '../analysis.js';
 import { openColaEleitoralModal } from './colaEleitoral.js';
+import { upcomingAgenda } from '../api.js';
 import { toast } from '../ui.js';
 
 export async function render(root) {
@@ -20,7 +21,7 @@ export async function render(root) {
           <div style="position:relative; z-index:2; max-width:680px">
             <span class="chip" style="background:rgba(255,255,255,0.2); color:#fff; margin-bottom:12px">
               <span class="mi" style="font-size:14px">security</span>
-              LGPD: 100% Criptografado no seu dispositivo
+              LGPD: seus dados ficam somente no seu dispositivo
             </span>
             <h1 style="font-size:32px; font-weight:800; line-height:1.2; margin-bottom:12px; letter-spacing:-0.5px">
               Sua cola eleitoral vira controle e auditoria do mandato.
@@ -148,99 +149,33 @@ export async function render(root) {
       <!-- COLUNA 3: Painel Lateral de Vigilância Cívica (Cards Informativos Stitch) -->
       <aside class="stack" style="gap:16px">
         
-        <!-- 1. Alerta de Alta Relevância (Card Âmbar Stitch) -->
-        <div class="alert-card-hero">
-          <h3><span class="mi" style="font-size:18px">warning</span>ALERTA DE ALTA RELEVÂNCIA</h3>
-          <div class="alert-title">Sessão Conjunta do Congresso</div>
-          <p>
-            Apreciação de vetos presidenciais que impactam diretamente a Lei de Diretrizes Orçamentárias (LDO) e transferências especiais.
-          </p>
-          <div class="row between" style="margin-top:14px; font-size:12px">
-            <b>Quinta, às 10:00</b>
-            <button class="btn sm" id="btn-alert-hero-action" style="background:#4e3900; color:#fff">
-              <span class="mi" style="font-size:14px">notifications_active</span>Ativar Lembrete
-            </button>
-          </div>
-        </div>
+        <!-- 1. Próximo evento da Câmara (dados oficiais) -->
+        <div class="alert-card-hero" id="agenda-hero" hidden></div>
 
-        <!-- 2. Pauta da Semana (Agenda Legislativa) -->
+        <!-- 2. Pauta da Semana (Agenda oficial da Câmara) -->
         <div class="card stack" style="gap:12px">
           <div class="row between">
             <div class="row" style="gap:6px">
               <span class="mi" style="color:var(--primary); font-size:18px">calendar_month</span>
               <h3 class="h3">Pauta da Semana</h3>
             </div>
-            <span class="chip blue">3 Votações</span>
+            <span class="chip blue">Câmara</span>
           </div>
-
-          <div class="stack" style="gap:10px">
-            <div class="card soft stack" style="gap:4px; padding:10px">
-              <div class="row between sm">
-                <span class="muted">Amanhã • 14h</span>
-                <span class="chip sm green">Câmara</span>
-              </div>
-              <b style="font-size:13px">PL dos Medicamentos Genéricos</b>
-              <p class="xs muted">Impacto direto no custo da cesta farmacêutica básica do SUS.</p>
-            </div>
-
-            <div class="card soft stack" style="gap:4px; padding:10px">
-              <div class="row between sm">
-                <span class="muted">Quarta • 16h</span>
-                <span class="chip sm blue">Senado</span>
-              </div>
-              <b style="font-size:13px">Marco Legal da Transição Energética</b>
-              <p class="xs muted">Incentivos fiscais para cooperativas de energia renovável.</p>
-            </div>
-
-            <div class="card soft stack" style="gap:4px; padding:10px">
-              <div class="row between sm">
-                <span class="muted">Sexta • 09h</span>
-                <span class="chip sm purple">ALESP</span>
-              </div>
-              <b style="font-size:13px">Tarifa Zero Regional Integrada</b>
-              <p class="xs muted">Audiência pública sobre subsídios do transporte intermunicipal.</p>
-            </div>
+          <div class="stack" style="gap:10px" id="agenda-list">
+            <div class="row"><span class="spin"></span><span class="muted sm">Carregando agenda oficial…</span></div>
           </div>
         </div>
 
-        <!-- 3. Índice de Transparência & Conformidade -->
-        <div class="card stack" style="gap:12px">
-          <div class="row between">
-            <div class="row" style="gap:6px">
-              <span class="mi" style="color:var(--primary); font-size:18px">insights</span>
-              <h3 class="h3">Índice de Transparência</h3>
-            </div>
-            <span class="chip green">100% Auditável</span>
+        <!-- 3. Fontes oficiais -->
+        <div class="card stack" style="gap:10px">
+          <div class="row" style="gap:6px">
+            <span class="mi" style="color:var(--primary); font-size:18px">verified_user</span>
+            <h3 class="h3">Fontes Oficiais</h3>
           </div>
-
-          <div class="row" style="gap:14px; align-items:center">
-            <div style="width:56px; height:56px; border-radius:50%; border:4px solid var(--primary); display:grid; place-items:center; flex-shrink:0">
-              <b style="font-size:15px; color:var(--primary)">100%</b>
-            </div>
-            <div>
-              <b style="font-size:13px; display:block">Conformidade Dados Abertos</b>
-              <span class="xs muted">Sem interceptação de servidores intermediários</span>
-            </div>
-          </div>
-
-          <div class="stack xs muted" style="gap:6px; border-top:1px solid var(--line); padding-top:10px">
-            <div class="row between">
-              <span>● TSE (DivulgaCand)</span>
-              <b style="color:var(--primary)">Sincronizado</b>
-            </div>
-            <div class="row between">
-              <span>● Câmara dos Deputados (API v2)</span>
-              <b style="color:var(--primary)">Tempo Real</b>
-            </div>
-            <div class="row between">
-              <span>● Senado Federal (SIGAD)</span>
-              <b style="color:var(--primary)">Atualizado Hoje</b>
-            </div>
-          </div>
-
-          <div class="row sm muted" style="background:var(--s1); padding:8px 10px; border-radius:var(--r-sm); gap:8px">
-            <span class="mi" style="color:var(--primary); font-size:16px">verified_user</span>
-            <span>Auditoria criptográfica sem viés partidário.</span>
+          <div class="stack xs muted" style="gap:6px">
+            <div>● Câmara dos Deputados — API de Dados Abertos</div>
+            <div>● Senado Federal — Dados Abertos</div>
+            <div>● TSE — Candidaturas e bens declarados (2022/2024)</div>
           </div>
         </div>
 
@@ -254,9 +189,7 @@ export async function render(root) {
   if (btnColaCol1) btnColaCol1.onclick = () => openColaEleitoralModal();
   $('#btn-refresh', root).onclick = () => render(root);
 
-  $('#btn-alert-hero-action', root).onclick = () => {
-    toast('Lembrete de pauta cívica agendado com sucesso!');
-  };
+  loadAgenda(root);
 
   bindPoliticianActions(root);
 
@@ -465,5 +398,49 @@ export async function render(root) {
     });
   } catch (err) {
     feed.innerHTML = '<div class="card empty"><span class="mi">cloud_off</span><p class="muted">Falha temporária ao carregar feed do Congresso.</p></div>';
+  }
+}
+
+async function loadAgenda(root) {
+  const list = $('#agenda-list', root);
+  const hero = $('#agenda-hero', root);
+  if (!list) return;
+  const when = (iso) => {
+    const d = new Date(iso);
+    return `${d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })} • ${d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
+  };
+  try {
+    const events = await upcomingAgenda(5);
+    if (!events.length) {
+      list.innerHTML = '<p class="muted sm">Nenhum evento oficial agendado para os próximos 7 dias.</p>';
+      return;
+    }
+    list.innerHTML = events
+      .map(
+        (e) => `
+      <a class="card soft stack" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" style="gap:4px; padding:10px; text-decoration:none; color:inherit">
+        <div class="row between sm">
+          <span class="muted">${esc(when(e.start))}</span>
+          <span class="chip sm green">${esc(e.organ || 'Câmara')}</span>
+        </div>
+        <b style="font-size:13px">${esc(e.description || e.type)}</b>
+        <p class="xs muted">${esc(e.type)}${e.place ? ' · ' + esc(e.place) : ''}</p>
+      </a>`
+      )
+      .join('');
+    const next = events.find((e) => /Deliberativa/.test(e.type || '') && !/N[ãa]o/.test(e.type || '')) || events[0];
+    if (hero && next) {
+      hero.hidden = false;
+      hero.innerHTML = `
+        <h3><span class="mi" style="font-size:18px">event</span>PRÓXIMO EVENTO NA CÂMARA</h3>
+        <div class="alert-title">${esc(next.organName || next.organ || 'Câmara dos Deputados')}</div>
+        <p>${esc(next.description || next.type)}</p>
+        <div class="row between" style="margin-top:14px; font-size:12px">
+          <b>${esc(when(next.start))}</b>
+          <a class="btn sm" href="${esc(next.url)}" target="_blank" rel="noopener noreferrer" style="background:#4e3900; color:#fff">Ver evento</a>
+        </div>`;
+    }
+  } catch {
+    list.innerHTML = '<p class="muted sm">Não foi possível carregar a agenda oficial agora.</p>';
   }
 }

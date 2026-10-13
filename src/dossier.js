@@ -5,8 +5,6 @@ import {
   deputyPropositions,
   senatorVotes,
   getTseElectoralProfile,
-  getParliamentaryAttendance,
-  getPartyFidelity,
 } from './api.js';
 
 export async function openDossierModal(p) {
@@ -48,9 +46,6 @@ export async function openDossierModal(p) {
       votes = await senatorVotes(p.senadoId, 15).catch(() => []);
     }
 
-    const att = getParliamentaryAttendance(p);
-    const fid = getPartyFidelity(p);
-
     // Cálculo do Hash SHA-256 de integridade local
     const nowIso = new Date().toISOString();
     const payloadForHash = JSON.stringify({
@@ -59,8 +54,6 @@ export async function openDossierModal(p) {
       party: p.party,
       uf: p.uf,
       timestamp: nowIso,
-      attendanceRate: att.attendanceRate,
-      fidelityRate: fid.alignmentRate,
       expensesLength: expenses.length,
       propositionsLength: propositions.length,
       votesLength: votes.length,
@@ -109,53 +102,27 @@ export async function openDossierModal(p) {
           </div>
         </div>
 
-        <!-- Seção: Origem Eleitoral & Prestação de Contas (TSE) -->
+        <!-- Seção: Origem Eleitoral (TSE) -->
+        ${
+          tse.available
+            ? `
         <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
           <div class="row between">
-            <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Origem Eleitoral & Auditoria TSE</h4>
+            <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Origem Eleitoral (TSE)</h4>
             <span class="chip gold sm">Eleição ${tse.electionYear}</span>
           </div>
           <div class="row sm" style="gap:16px; flex-wrap:wrap">
             <span><b>Número de Urna:</b> <code style="font-weight:700; color:var(--primary)">${esc(tse.ballotNumber)}</code></span>
-            <span><b>Status no TSE:</b> ${esc(tse.status)}</span>
-            <span><b>Coligação:</b> ${esc(tse.electoralCoalition)}</span>
+            <span><b>Resultado:</b> ${esc(tse.status)}</span>
+            <span><b>Coligação/Federação:</b> ${esc(tse.electoralCoalition || (tse.isolatedParty ? 'Partido isolado' : '—'))}</span>
           </div>
-          <div class="row" style="gap:12px; margin-top:4px">
-            <div style="flex:1; background:var(--s1); padding:10px; border-radius:8px">
-              <span class="sm muted" style="display:block">Patrimônio Declarado (Bens):</span>
-              <b style="font-size:15px; color:var(--primary)">${brl(tse.declaredAssets)}</b>
-            </div>
-            <div style="flex:1; background:var(--s1); padding:10px; border-radius:8px">
-              <span class="sm muted" style="display:block">Financiamento de Campanha:</span>
-              <b style="font-size:15px; color:var(--text)">${brl(tse.totalRaised)}</b>
-              <span class="sm muted" style="display:block; font-size:11px; margin-top:2px">${tse.publicFundPct}% Fundo Eleitoral · ${tse.privateDonationsPct}% Doações Privadas</span>
-            </div>
+          <div style="background:var(--s1); padding:10px; border-radius:8px">
+            <span class="sm muted" style="display:block">Patrimônio declarado no registro de candidatura:</span>
+            <b style="font-size:15px; color:var(--primary)">${tse.declaredAssets != null ? brl(tse.declaredAssets) : 'Não declarado'}</b>
           </div>
-        </div>
-
-        <!-- Seção: Assiduidade & Fidelidade Partidária (Fase 7) -->
-        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
-          <div class="row between">
-            <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Assiduidade em Plenário & Disciplina Partidária</h4>
-            <span class="chip ${att.statusClass} sm">${esc(att.status)}</span>
-          </div>
-          <div class="row" style="gap:12px; margin-top:4px">
-            <div style="flex:1; background:var(--s1); padding:10px; border-radius:8px">
-              <span class="sm muted" style="display:block">Presença em Sessões:</span>
-              <b style="font-size:15px; color:var(--primary)">${att.attendanceRate}%</b>
-              <span class="sm muted" style="display:block; font-size:11px; margin-top:2px">
-                ${att.presences} presenças em ${att.totalSessions} sessões · ${att.justifiedAbsences} justificadas · ${att.unjustifiedAbsences} faltas
-              </span>
-            </div>
-            <div style="flex:1; background:var(--s1); padding:10px; border-radius:8px">
-              <span class="sm muted" style="display:block">Fidelidade à Bancada (${esc(fid.party)}):</span>
-              <b style="font-size:15px; color:var(--text)">${fid.alignmentRate}%</b>
-              <span class="sm muted" style="display:block; font-size:11px; margin-top:2px">
-                ${fid.alignedVotes} votos com a bancada · ${fid.divergentVotes} votos dissidentes
-              </span>
-            </div>
-          </div>
-        </div>
+        </div>`
+            : ''
+        }
 
         <!-- Seção: Despesas da Cota Parlamentar (CEAP) -->
         ${
@@ -236,18 +203,14 @@ export async function openDossierModal(p) {
 
         <!-- Seção: Dados de Gabinete Estadual / Municipal -->
         ${
-          ['alesp', 'alerj', 'almg', 'cmsp'].includes(p.source)
+          (typeof p.source === 'string' && /^(al|cm)-/.test(p.source))
             ? `
         <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
           <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">
             ${
-              p.source === 'alesp'
-                ? 'Atuação Estadual · ALESP (São Paulo)'
-                : p.source === 'alerj'
-                ? 'Atuação Estadual · ALERJ (Rio de Janeiro)'
-                : p.source === 'almg'
-                ? 'Atuação Estadual · ALMG (Minas Gerais)'
-                : 'Atuação Municipal · CMSP (Câmara de São Paulo)'
+              p.source.startsWith('al-')
+                ? `Atuação Estadual · ${esc(p.house || p.uf || '')}`
+                : `Atuação Municipal · ${esc(p.house || p.city || '')}`
             }
           </h4>
           <p class="sm"><b>Base Eleitoral / Domicílio:</b> ${esc(p.baseEleitoral || p.uf || 'Geral')}</p>

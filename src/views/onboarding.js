@@ -44,7 +44,7 @@ export function openOnboardingModal(force = false) {
       bullets: [
         { icon: 'account_balance', text: 'Câmara dos Deputados & Senado Federal (Votações Nominais e CEAP).' },
         { icon: 'how_to_reg', text: 'Tribunal Superior Eleitoral (TSE / DivulgaCandContas: patrimônio e financiamento).' },
-        { icon: 'domain', text: 'Assembleias Estaduais (ALESP, ALERJ, ALMG) e Câmaras Municipais (CMSP).' },
+        { icon: 'domain', text: 'Assembleias Legislativas dos 26 estados e do DF e Câmaras Municipais das capitais (dados oficiais do TSE).' },
       ],
       actionLabel: 'Começar a Monitorar Agora',
     },

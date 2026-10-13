@@ -51,7 +51,7 @@ export function openPoliticianModal({ replaceId } = {}) {
         <span class="mi" style="font-size:20px; color:var(--secondary)">lock</span>
         <div style="flex:1">
           <b style="display:block; font-size:12.5px">Sigilo Constitucional do Voto</b>
-          <span class="xs" style="line-height:1.4">Estes dados ficam criptografados exclusivamente no seu dispositivo para montar seu feed individual e alertas.</span>
+          <span class="xs" style="line-height:1.4">Estes dados ficam salvos exclusivamente no seu dispositivo para montar seu feed individual e alertas.</span>
         </div>
       </div>
     </div>
@@ -368,6 +368,7 @@ export function openPoliticianModal({ replaceId } = {}) {
             baseEleitoral: d.baseEleitoral,
             areaAtuacao: d.areaAtuacao,
             pageUrl: d.pageUrl,
+            tse: d.tse,
           });
         };
       });
@@ -447,6 +448,7 @@ export function openPoliticianModal({ replaceId } = {}) {
             baseEleitoral: c.baseEleitoral,
             areaAtuacao: c.areaAtuacao,
             pageUrl: c.pageUrl,
+            tse: c.tse,
           });
         };
       });

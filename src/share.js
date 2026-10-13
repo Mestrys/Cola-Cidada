@@ -87,7 +87,7 @@ export async function createCardImage({ politician, title, highlight, badge, bad
       : politician.roleKey === 'senador'
       ? 'Senador da República'
       : politician.roleKey === 'dep-estadual'
-      ? 'Deputado Estadual (ALESP)'
+      ? 'Deputado Estadual'
       : 'Parlamentar';
   ctx.fillText(`${roleLabel} · ${politician.party || ''}${politician.uf ? '/' + politician.uf : ''}`, textStartX, 340);
 
@@ -143,7 +143,7 @@ export async function createCardImage({ politician, title, highlight, badge, bad
   // 6. Rodapé Oficial
   ctx.fillStyle = '#718294';
   ctx.font = '500 22px "Actor", system-ui, sans-serif';
-  ctx.fillText('FONTE: DADOS ABERTOS OFICIAIS (CÂMARA / SENADO / ALESP)', 90, 900);
+  ctx.fillText('FONTE: DADOS ABERTOS OFICIAIS (CÂMARA / SENADO / TSE)', 90, 900);
   ctx.fillText(`GERADO EM ${new Date().toLocaleDateString('pt-BR')} · PRIVACIDADE TOTAL (LGPD)`, 90, 935);
 
   return canvas;

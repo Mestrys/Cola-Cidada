@@ -139,7 +139,7 @@ function shell() {
               <span class="mi citizen-shield">shield</span>
               <div style="flex:1">
                 <b style="font-size:11.5px; display:block">Ambiente Seguro LGPD</b>
-                <span class="xs muted">Criptografia Local 100% Offline</span>
+                <span class="xs muted">Dados salvos só neste dispositivo</span>
               </div>
             </div>
 

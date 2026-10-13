@@ -64,11 +64,6 @@ export function render(root) {
           <span class="xs muted" style="text-transform:none">${Math.round((polCount / 5) * 100)}% de cobertura eleitoral</span>
         </div>
         <div class="stat">
-          <span>Presença Mediana</span>
-          <b style="color:var(--primary)">94.2%</b>
-          <span class="xs muted" style="text-transform:none">Assiduidade em Plenário</span>
-        </div>
-        <div class="stat">
           <span>Alertas Registrados</span>
           <b>${alertCount}</b>
           <span class="xs muted" style="text-transform:none">Eventos nominais auditados</span>

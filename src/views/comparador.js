@@ -1,5 +1,5 @@
 import { store } from '../store.js';
-import { recentProvisionalMeasures, getParliamentaryAttendance, getPartyFidelity } from '../api.js';
+import { recentProvisionalMeasures } from '../api.js';
 import { loadComparison, loadSenateComparison } from '../votes.js';
 import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, $ } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -72,7 +72,6 @@ function camaraVotingCard(v, deputies) {
               const isSim = t && t.toLowerCase() === 'sim';
               const isNao = t && t.toLowerCase() === 'não';
               const voteCls = isSim ? 'sim' : isNao ? 'nao' : 'abstencao';
-              const fid = getPartyFidelity(p);
 
               return `
               <div class="card soft row between sm" style="padding:10px 12px; border-radius:var(--r-md); background:var(--s2)">
@@ -80,7 +79,7 @@ function camaraVotingCard(v, deputies) {
                   ${avatar(p, 'sm')}
                   <div>
                     <b style="font-size:13px">${esc(p.name.split(' ').slice(0, 2).join(' '))}</b><br>
-                    <span class="xs muted">${esc(p.party)}/${esc(p.uf)} • ${fid.alignmentRate}% fiel</span>
+                    <span class="xs muted">${esc(p.party)}/${esc(p.uf)}</span>
                   </div>
                 </div>
                 <div style="text-align:right">
@@ -230,17 +229,12 @@ export async function render(root) {
         <div class="row" style="gap:12px; overflow-x:auto; padding-bottom:6px; flex-wrap:nowrap">
           ${politicians
             .map((p) => {
-              const att = getParliamentaryAttendance(p);
               return `
               <div class="card soft row nowrap sm" style="padding:8px 12px; border-radius:var(--r-md); min-width:210px; gap:10px">
                 ${avatar(p, 'sm')}
                 <div style="flex:1; overflow:hidden">
                   <b class="truncate" style="display:block; font-size:12.5px">${esc(p.name)}</b>
                   <span class="xs muted">${esc(p.party)}/${esc(p.uf)}</span>
-                  <div class="row between xs" style="margin-top:2px">
-                    <span class="muted">Presença:</span>
-                    <b style="color:var(--primary)">${att.attendanceRate}%</b>
-                  </div>
                 </div>
               </div>`;
             })

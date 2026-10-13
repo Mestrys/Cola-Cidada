@@ -40,8 +40,8 @@ export function openColaEleitoralModal() {
   const electoralRoles = [
     { key: 'dep-federal', label: 'Deputado(a) Federal', sphere: 'Federal · Câmara', sourceTarget: 'camara' },
     { key: 'senador', label: 'Senador(a) da República', sphere: 'Federal · Senado', sourceTarget: 'senado' },
-    { key: 'dep-estadual', label: 'Deputado(a) Estadual', sphere: 'Estadual · Assembleia (ALESP/ALERJ/ALMG)', sourceTarget: 'alesp' },
-    { key: 'vereador', label: 'Vereador(a) Municipal', sphere: 'Municipal · Câmara Municipal (CMSP)', sourceTarget: 'cmsp' },
+    { key: 'dep-estadual', label: 'Deputado(a) Estadual', sphere: 'Estadual · Assembleia Legislativa', sourceTarget: 'estadual' },
+    { key: 'vereador', label: 'Vereador(a) Municipal', sphere: 'Municipal · Câmara Municipal da capital', sourceTarget: 'municipal' },
     { key: 'governador', label: 'Governador(a) do Estado', sphere: 'Executivo Estadual', sourceTarget: 'manual' },
     { key: 'presidente', label: 'Presidente da República', sphere: 'Executivo Federal', sourceTarget: 'manual' },
   ];
