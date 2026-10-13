@@ -150,7 +150,7 @@ export async function openDossierModal(p) {
         <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
           <div class="row between">
             <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Auditoria Financeira da Cota (CEAP)</h4>
-            <span class="sm" style="font-weight:700; color:var(--primary)">Total Auditado: ${brl(totalSpent)}</span>
+            <span class="sm" style="font-weight:700; color:var(--primary)">Soma da amostra: ${brl(totalSpent)}</span>
           </div>
           <p class="sm muted">Amostra recente dos últimos ${expenses.length} comprovantes emitidos pelo gabinete:</p>
           <div class="stack" style="gap:4px">
@@ -242,8 +242,8 @@ export async function openDossierModal(p) {
         <!-- Selo Criptográfico de Integridade -->
         <div style="border-top:1px dashed var(--line); padding-top:12px; margin-top:6px">
           <div class="row between sm muted">
-            <span>Selo Digital de Integridade SHA-256:</span>
-            <span>Base LGPD: Armazenamento 100% Local</span>
+            <span>Código de conferência (SHA-256 do resumo deste relatório):</span>
+            <span>Gerado neste dispositivo</span>
           </div>
           <code class="sm" style="display:block; margin-top:4px; word-break:break-all; font-size:10px; color:var(--muted); background:var(--s2); padding:6px; border-radius:6px">
             ${sha256Hex}

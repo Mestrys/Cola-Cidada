@@ -5,11 +5,14 @@ export { FEDERATION_UNITS };
 const CAMARA_BASE = 'https://dadosabertos.camara.leg.br/api/v2';
 const SENADO_BASE = 'https://legis.senado.leg.br/dadosabertos';
 
+// Respostas reaproveitadas por 5 minutos: evita rajadas, mas "Atualizar" e "Verificar agora" trazem dados novos.
 const cache = new Map();
+const CACHE_TTL_MS = 5 * 60 * 1000;
 
 // A API da Câmara derruba conexões sob rajadas de requisições: repete falhas de rede, 429 e 5xx com espera crescente.
 async function getJson(url, headers = {}) {
-  if (cache.has(url)) return cache.get(url);
+  const hit = cache.get(url);
+  if (hit && Date.now() - hit.at < CACHE_TTL_MS) return hit.json;
   let lastError;
   for (let attempt = 0; attempt < 4; attempt++) {
     if (attempt) await new Promise((r) => setTimeout(r, 600 * attempt));
@@ -21,7 +24,7 @@ async function getJson(url, headers = {}) {
       }
       if (!res.ok) throw Object.assign(new Error(`HTTP ${res.status} para ${url}`), { final: true });
       const json = await res.json();
-      cache.set(url, json);
+      cache.set(url, { json, at: Date.now() });
       return json;
     } catch (err) {
       if (err.final) throw err;

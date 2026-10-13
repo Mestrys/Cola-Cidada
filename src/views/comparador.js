@@ -35,7 +35,7 @@ function camaraVotingCard(v, deputies) {
       <div class="row" style="gap:8px">
         <span class="chip blue">${esc(v.siglaOrgao || 'Câmara dos Deputados')}</span>
         <span class="chip ${isAprov ? 'green' : 'red'}">${isAprov ? 'Aprovada' : 'Rejeitada'}</span>
-        <span class="chip xs">Quórum Nominal Oficial</span>
+        <span class="chip xs">Votação nominal</span>
       </div>
       <span class="xs muted">${fmtDate(v.data)}</span>
     </div>
@@ -201,8 +201,8 @@ export async function render(root) {
     <div class="top">
       <div>
         <div class="row" style="gap:8px; margin-bottom:4px">
-          <span class="chip blue xs">AUDITORIA PARLAMENTAR</span>
-          <span class="xs muted">Sessões Nominais Auditadas no Plenário</span>
+          <span class="chip blue xs">VOTAÇÕES NOMINAIS</span>
+          <span class="xs muted">Plenários da Câmara e do Senado</span>
         </div>
         <h1>Comparador Cívico de Votações</h1>
         <p>Analise a postura e fidelidade dos seus parlamentares frente às principais reformas e leis deliberadas no Congresso Nacional.</p>
@@ -223,7 +223,6 @@ export async function render(root) {
             <span class="mi" style="color:var(--primary); font-size:20px">group</span>
             <b style="font-size:14px">Bancada Monitorada (${politicians.length} Representantes)</b>
           </div>
-          <span class="chip green xs">Painel Ativo</span>
         </div>
 
         <div class="row" style="gap:12px; overflow-x:auto; padding-bottom:6px; flex-wrap:nowrap">

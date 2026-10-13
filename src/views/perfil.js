@@ -1,5 +1,5 @@
 import { store } from '../store.js';
-import { toast, esc, brl, $ } from '../ui.js';
+import { toast, esc, brl, $, ROLES } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openOnboardingModal } from './onboarding.js';
 import { openColaEleitoralModal } from './colaEleitoral.js';
@@ -9,7 +9,7 @@ export function render(root) {
   const polCount = s.politicians.length;
   const alertCount = s.alerts.length;
   const filledRoles = new Set(s.politicians.map((p) => p.roleKey || p.role)).size;
-  const civicScore = Math.min(100, Math.round((filledRoles / 5) * 50 + (s.alerts.length > 0 ? 25 : 0) + (s.auditCount > 0 ? 25 : 10)));
+  const civicScore = Math.min(100, Math.round((filledRoles / 5) * 75 + (s.alerts.length > 0 ? 25 : 0)));
 
   root.innerHTML = `
     <!-- Top Header do Perfil (Estilo Stitch) -->
@@ -39,13 +39,12 @@ export function render(root) {
           </div>
           <div>
             <div class="row" style="gap:8px">
-              <h2 style="font-size:20px; font-weight:800">Cidadão Conectado</h2>
-              <span class="chip green xs"><span class="mi" style="font-size:12px">verified</span>Eleitor(a) Biométrico Regular</span>
+              <h2 style="font-size:20px; font-weight:800">Seu Perfil</h2>
             </div>
             <p class="sm muted" style="margin-top:2px">
-              Domicílio Eleitoral: <b>${esc(s.domicile?.city || 'São Paulo')} - ${esc(s.domicile?.state || 'SP')}</b> • Jurisdição Estadual & Federal
+              Domicílio eleitoral: <b>${esc(s.domicile?.city || 'São Paulo')} - ${esc(s.domicile?.state || 'SP')}</b>
             </p>
-            <span class="xs muted" style="font-family:monospace">Identificador Cívico Local: MC-${Math.abs(s.politicians.length * 1047 + 73).toString(16).toUpperCase()}-LOCAL</span>
+            <span class="xs muted">Usado para sugerir a Assembleia e a Câmara Municipal da sua região.</span>
           </div>
         </div>
 
@@ -66,12 +65,7 @@ export function render(root) {
         <div class="stat">
           <span>Alertas Registrados</span>
           <b>${alertCount}</b>
-          <span class="xs muted" style="text-transform:none">Eventos nominais auditados</span>
-        </div>
-        <div class="stat">
-          <span>Protocolo Cívico</span>
-          <b style="color:var(--primary)">Ativo</b>
-          <span class="xs muted" style="text-transform:none">Legislatura 2023–2026</span>
+          <span class="xs muted" style="text-transform:none">Votações encontradas em "Verificar agora"</span>
         </div>
       </div>
 
@@ -80,14 +74,14 @@ export function render(root) {
         <div class="row between">
           <div class="row" style="gap:8px">
             <span class="mi" style="color:var(--primary); font-size:20px">verified_user</span>
-            <b style="font-size:13.5px">Score de Vigilância Cívica do Cidadão</b>
+            <b style="font-size:13.5px">Seu Acompanhamento</b>
           </div>
           <span class="chip green"><b>${civicScore}/100 pts</b> · ${civicScore >= 80 ? 'Vigilância Alta' : civicScore >= 50 ? 'Vigilância Moderada' : 'Iniciante'}</span>
         </div>
         <div class="bar" style="height:8px"><i style="width:${civicScore}%"></i></div>
         <div class="row between sm muted">
           <span>${filledRoles} de 5 esferas sob acompanhamento direto</span>
-          <span>${s.auditCount || 0} auditorias ativas realizadas</span>
+          <span>${alertCount ? 'Alertas verificados' : 'Verifique alertas para completar'}</span>
         </div>
       </div>
     </div>
@@ -97,20 +91,6 @@ export function render(root) {
       <!-- COLUNA 1: Votos Cadastrados & Ciclo de Mandato -->
       <div class="stack">
         
-        <!-- Política de Encerramento Automático (Stitch) -->
-        <div class="card soft stack" style="gap:8px; padding:16px; border-left:3px solid var(--secondary); background:var(--secondary-soft)">
-          <div class="row between">
-            <div class="row" style="gap:6px; color:var(--on-secondary-soft)">
-              <span class="mi" style="font-size:18px">history_edu</span>
-              <b style="font-size:13px">Política de Encerramento Automático de Mandato</b>
-            </div>
-            <span class="chip blue xs">Art. 14 CF/88</span>
-          </div>
-          <p class="xs" style="color:var(--on-secondary-soft); line-height:1.5">
-            Ao atingir a data oficial de término de cada mandato (Dezembro/2026 para deputados e governadores, e Dezembro/2030 para o Senado), este sistema encerra compulsoriamente a vinculação dos alertas, preservando o sigilo e abrindo espaço para a renovação da legislatura.
-          </p>
-        </div>
-
         <!-- Lista dos Votos Monitorados Atualmente -->
         <div class="card stack" style="gap:14px; padding:20px">
           <div class="row between">
@@ -118,7 +98,6 @@ export function render(root) {
               <h2 class="h2">Meus Votos Declarados e Cadastrados</h2>
               <span class="xs muted">${polCount} representantes vinculados para auditoria e alertas nominais</span>
             </div>
-            <span class="chip green xs">Sincronia Oficial Ativa</span>
           </div>
 
           ${
@@ -135,11 +114,11 @@ export function render(root) {
                     </div>
                     <div>
                       <b style="font-size:13.5px">${esc(p.name)}</b><br>
-                      <span class="xs muted">${esc(p.party)}/${esc(p.uf)} • ${p.roleKey?.toUpperCase() || 'MANDATO'}</span>
+                      <span class="xs muted">${esc(p.party)}/${esc(p.uf)} • ${esc(ROLES[p.roleKey]?.label || 'Mandato')}</span>
                     </div>
                   </div>
                   <div class="row" style="gap:6px">
-                    <span class="chip green xs"><span class="mi" style="font-size:12px">sync</span>Conectado</span>
+                    <span class="chip xs">${p.camaraId ? 'Câmara' : p.senadoId ? 'Senado' : p.tse ? 'TSE' : 'Manual'}</span>
                   </div>
                 </div>`
                 )
@@ -149,7 +128,7 @@ export function render(root) {
             <div class="empty" style="padding:28px">
               <span class="mi">how_to_vote</span>
               <h3 style="font-size:14px">Nenhum voto declarado ainda</h3>
-              <p class="xs muted">Cadastre seus votos para iniciar o monitoramento em tempo real.</p>
+              <p class="xs muted">Cadastre seus votos para começar a acompanhar os mandatos.</p>
             </div>`
           }
 
@@ -202,25 +181,13 @@ export function render(root) {
           <div class="row between">
             <div class="row" style="gap:8px">
               <span class="mi" style="color:var(--primary); font-size:22px">shield</span>
-              <h2 class="h2">Segurança & LGPD Cívica</h2>
+              <h2 class="h2">Privacidade & LGPD</h2>
             </div>
-            <span class="chip green xs">Ativa</span>
           </div>
 
           <p class="sm muted" style="line-height:1.5">
             O Monitor Cidadão opera sob o princípio da <b>minimização absoluta de dados</b> (Art. 6º, III da Lei 13.709/18). Suas escolhas eleitorais e histórico de auditoria são dados pessoais sensíveis e <b>nunca são transmitidos para servidores remotos</b>.
           </p>
-
-          <div class="card soft stack xs" style="gap:6px; padding:12px; background:var(--s2)">
-            <div class="row between">
-              <b>Chave Criptográfica Local:</b>
-              <span class="chip green xs">Ativa no Navegador</span>
-            </div>
-            <div style="font-family:monospace; word-break:break-all; color:var(--muted)">
-              SHA256: 7f3b89a1c890de502d991bfeaa40319409b8ce271e54a6db249ac8410e3d5bb0
-            </div>
-            <span class="muted" style="margin-top:2px">Assinatura de integridade e auditoria local gerada neste dispositivo.</span>
-          </div>
 
           <div class="stack" style="gap:8px; margin-top:4px">
             <b class="xs muted" style="text-transform:uppercase; font-weight:700">Backup & Portabilidade (Art. 18 LGPD):</b>
@@ -247,11 +214,11 @@ export function render(root) {
 
         <!-- Card de Conformidade Legal -->
         <div class="card soft stack" style="gap:10px; padding:16px">
-          <h3 class="h3">Estrutura de Conformidade</h3>
+          <h3 class="h3">De onde vêm os dados</h3>
           <div class="stack xs muted" style="gap:6px">
-            <div>• <b>LAI (Lei 12.527/11):</b> Acesso integral e transparente aos dados públicos.</div>
-            <div>• <b>Constituição Federal:</b> Art. 5º (Direito de Fiscalização) e Art. 37 (Publicidade).</div>
-            <div>• <b>PWA Offline:</b> Aplicativo resiliente a quedas de rede e sem rastreadores comerciais.</div>
+            <div>• <b>Dados abertos oficiais:</b> APIs da Câmara dos Deputados e do Senado Federal e arquivos públicos do TSE, disponibilizados com base na LAI (Lei 12.527/11).</div>
+            <div>• <b>Sem servidor próprio:</b> o app consulta essas fontes direto do seu navegador; seus cadastros ficam só neste dispositivo.</div>
+            <div>• <b>Funciona offline:</b> telas e dados já consultados ficam em cache no aparelho.</div>
           </div>
         </div>
 

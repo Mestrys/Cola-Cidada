@@ -119,14 +119,14 @@ export async function render(root) {
         </div>
       </section>
 
-      <!-- COLUNA 2: Linha do Tempo Cívica (Feed em Tempo Real) -->
+      <!-- COLUNA 2: Linha do Tempo Cívica (votações recentes) -->
       <section class="stack" aria-labelledby="feed-title">
         <div class="row between">
           <div class="row" style="gap:8px">
             <span class="mi" style="color:var(--primary); font-size:22px">timeline</span>
             <h2 id="feed-title" class="h2">Linha do Tempo Cívica</h2>
           </div>
-          <span class="sm muted">Atualizado a cada 5 min</span>
+          <span class="sm muted">Câmara e Senado</span>
         </div>
 
         <!-- Filtros Rápidos do Feed (Stitch) -->
@@ -140,8 +140,8 @@ export async function render(root) {
         <div id="feed" class="stack">
           ${
             deputies.length || senators.length
-              ? '<div class="card soft row" style="padding:16px"><span class="spin"></span><span class="muted">Carregando votações e atos em tempo real…</span></div>'
-              : '<div class="card empty"><p class="muted">Adicione deputados ou senadores para visualizar o fluxo ao vivo do Congresso.</p></div>'
+              ? '<div class="card soft row" style="padding:16px"><span class="spin"></span><span class="muted">Carregando votações recentes…</span></div>'
+              : '<div class="card empty"><p class="muted">Adicione deputados ou senadores para ver as votações recentes do Congresso.</p></div>'
           }
         </div>
       </section>

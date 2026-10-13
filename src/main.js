@@ -58,8 +58,8 @@ function shell() {
               <span class="mi" style="font-size:18px">person</span>
             </div>
             <div class="user-text">
-              <b style="font-size:12px">Cidadão</b>
-              <span class="xs muted">Eleitor Regular</span>
+              <b style="font-size:12px">Meu Perfil</b>
+              <span class="xs muted">Dados neste aparelho</span>
             </div>
           </a>
         </div>
@@ -102,7 +102,7 @@ function shell() {
             <div class="user-quick-card">
               <span class="mi citizen-shield">shield</span>
               <div style="flex:1">
-                <b style="font-size:11.5px; display:block">Ambiente Seguro LGPD</b>
+                <b style="font-size:11.5px; display:block">Privacidade LGPD</b>
                 <span class="xs muted">Dados salvos só neste dispositivo</span>
               </div>
             </div>
@@ -193,15 +193,11 @@ function shell() {
             <div class="footer-badges">
               <span class="footer-badge-item">
                 <span class="mi" style="font-size:14px; color:var(--primary)">lock</span>
-                Ambiente Seguro LGPD
+                Dados só neste dispositivo
               </span>
               <span class="footer-badge-item">
-                <span class="mi" style="font-size:14px; color:var(--primary)">gavel</span>
-                Aderência LAI (Lei 12.527/11)
-              </span>
-              <span class="footer-badge-item">
-                <span class="mi" style="font-size:14px; color:var(--primary)">security</span>
-                Framework Cívico Ver. 3.4.12
+                <span class="mi" style="font-size:14px; color:var(--primary)">database</span>
+                Dados abertos: Câmara • Senado • TSE
               </span>
             </div>
           </div>

@@ -13,11 +13,11 @@ export function openOnboardingModal(force = false) {
       icon: 'balance',
       tag: 'TRANSPARÊNCIA CÍVICA',
       title: 'Seja bem-vindo ao Monitor Cidadão',
-      desc: 'Transforme sua cola eleitoral em acompanhamento contínuo de mandato. Fiscalize quem você elegeu com dados 100% oficiais do Congresso Nacional e Tribunais.',
+      desc: 'Transforme sua cola eleitoral em acompanhamento contínuo de mandato. Fiscalize quem você elegeu com dados oficiais da Câmara, do Senado e do TSE.',
       bulletTitle: 'O que você vai poder fazer:',
       bullets: [
         { icon: 'how_to_vote', text: 'Cadastrar os candidatos que você votou ou deseja auditar.' },
-        { icon: 'receipt_long', text: 'Auditar notas fiscais e gastos da cota parlamentar (CEAP) em tempo real.' },
+        { icon: 'receipt_long', text: 'Consultar notas fiscais e gastos da cota parlamentar (CEAP) dos deputados federais.' },
         { icon: 'verified', text: 'Comparar votações nominais oficiais com a sua própria convicção.' },
       ],
       actionLabel: 'Continuar Apresentação',

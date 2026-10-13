@@ -203,10 +203,15 @@ export function openAnalysisModal(item) {
         </div>
       </div>
 
+      <p class="xs muted" style="display:flex; gap:6px; align-items:flex-start">
+        <span class="mi" style="font-size:16px">info</span>
+        <span>Os quadros abaixo são uma estimativa automática a partir de palavras-chave da ementa, não uma análise do texto da proposição. Confira a ficha oficial antes de tirar conclusões.</span>
+      </p>
+
       <div class="grid" style="grid-template-columns:1fr; gap:10px">
         <div class="card stack" style="gap:6px">
           <div class="row">
-            <span class="mi" style="color:var(--primary)">verified</span>
+            <span class="mi" style="color:var(--primary)">lightbulb</span>
             <b>O que muda na prática (Linguagem Cidadã)</b>
           </div>
           <p class="sm muted">${esc(s.practicalEffect)}</p>

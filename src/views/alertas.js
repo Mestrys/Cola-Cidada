@@ -18,7 +18,7 @@ export function render(root) {
     <div class="top">
       <div>
         <div class="row" style="gap:8px; margin-bottom:4px">
-          <span class="chip green xs">TEMPO REAL</span>
+          <span class="chip green xs">SOB DEMANDA</span>
           <span class="xs muted">Notificações e Avisos Oficiais</span>
         </div>
         <div class="row" style="gap:10px">
@@ -27,7 +27,7 @@ export function render(root) {
           </div>
           <h1>Central de Alertas</h1>
         </div>
-        <p>Atualizações em tempo real dos seus representantes monitorados no Congresso e Assembleias.</p>
+        <p>Votações recentes dos seus representantes no Congresso, consultadas quando você toca em "Verificar agora".</p>
       </div>
       <div class="row">
         <button class="btn primary" id="check"><span class="mi">sync</span>Verificar Agora</button>
@@ -112,10 +112,10 @@ export function render(root) {
             <b style="font-size:14px">Fiscalização Cívica Direcionada</b>
           </div>
           <p class="sm muted" style="line-height:1.5">
-            Você recebe notificações automáticas dos <b>${politicians.length} representantes</b> em quem declarou voto nas eleições gerais. O monitoramento deste mandato acompanha a legislatura atual até o encerramento do mandato constitucional.
+            Os alertas cobrem os <b>${politicians.length} representantes</b> que você cadastrou. A consulta acontece quando você toca em "Verificar agora"; com as notificações do aparelho ativadas, cada votação nova também aparece como notificação.
           </p>
           <div class="row between sm" style="margin-top:6px">
-            <span class="xs muted">↻ Sincronizado via TSE & APIs Oficiais</span>
+            <span class="xs muted">Fonte: APIs da Câmara e do Senado</span>
             <a href="#/perfil" class="btn sm outlined">Configurar Preferências</a>
           </div>
         </div>

@@ -89,15 +89,6 @@ export function politicianCard(p) {
       </div>
     </div>
 
-    <!-- Mini-Grid de Métricas Típicas do Stitch -->
-    <div class="grid" style="grid-template-columns:1fr; gap:8px">
-      <div class="stat" style="padding:8px 10px">
-        <span style="font-size:10px">Auditoria</span>
-        <b style="font-size:15px; color:var(--text)">${isDeputy ? 'CEAP' : isSenator ? 'CEAPS' : 'Gabinete'}</b>
-        <span class="xs muted" style="text-transform:none">Notas ativas</span>
-      </div>
-    </div>
-
     <!-- Ações do Card -->
     <div class="card-actions">
       <button class="btn primary sm" data-details="${p.id}">
@@ -376,7 +367,7 @@ async function openPoliticianDetails(p) {
         paneGastos.innerHTML = `
           <div class="card soft row between" style="padding:14px; background:var(--primary-soft)">
             <div>
-              <span class="xs muted" style="text-transform:uppercase; font-weight:700">Total Auditado no Mandato</span>
+              <span class="xs muted" style="text-transform:uppercase; font-weight:700">Soma dos Reembolsos Consultados</span>
               <h2 style="font-size:22px; color:var(--primary); font-weight:800; margin-top:2px">${brl(total)}</h2>
               <span class="xs muted">Base: Últimos ${expenses.length} reembolsos registrados na Câmara</span>
             </div>

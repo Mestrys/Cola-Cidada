@@ -69,7 +69,7 @@ function build(r, assets, extra) {
       sq: r.SQ_CANDIDATO,
       ballotNumber: r.NR_CANDIDATO,
       coalition: fed || (r.NM_COLIGACAO && !r.NM_COLIGACAO.startsWith('#') ? r.NM_COLIGACAO : null),
-      declaredAssets: assets.has(r.SQ_CANDIDATO) ? assets.get(r.SQ_CANDIDATO) : null,
+      declaredAssets: assets.has(r.SQ_CANDIDATO) ? Math.round(assets.get(r.SQ_CANDIDATO) * 100) / 100 : null,
       status: r.DS_SIT_TOT_TURNO,
     },
   };
