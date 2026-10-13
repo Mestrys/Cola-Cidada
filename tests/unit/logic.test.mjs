@@ -21,6 +21,8 @@ test('velocidade usa só as amostras dos últimos 100 ms', () => {
   const v = velocityFrom([{ v: 0, t: 0 }, { v: 0, t: 500 }, { v: 50, t: 550 }, { v: 100, t: 600 }]);
   assert.equal(Math.round(v), 1000);
   assert.equal(velocityFrom([{ v: 10, t: 0 }]), 0);
+  // quadro lento (>100 ms entre as duas últimas amostras): mantém a velocidade em vez de zerar
+  assert.equal(Math.round(velocityFrom([{ v: 0, t: 0 }, { v: 40, t: 108 }])), 370);
 });
 
 test('mandato estadual: SP começa em 15/03, demais em 01/02; todos terminam em 31/01/2027', () => {

@@ -14,10 +14,12 @@ export function rubberband(overshoot, dimension, constant = 0.55) {
 }
 
 // Velocidade (px/s) a partir das últimas amostras de posição {v, t}.
+// Usa a janela dos últimos 100 ms; se um quadro lento deixou só a última amostra nela,
+// recorre à anterior em vez de devolver 0 (senão o arremesso seria lido como "parou").
 export function velocityFrom(samples) {
   if (samples.length < 2) return 0;
   const last = samples[samples.length - 1];
-  const first = samples.find((s) => last.t - s.t <= 100) || samples[0];
+  const first = samples.find((s) => s !== last && last.t - s.t <= 100) || samples[samples.length - 2];
   const dt = last.t - first.t;
   return dt > 0 ? ((last.v - first.v) / dt) * 1000 : 0;
 }
