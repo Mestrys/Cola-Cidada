@@ -1,7 +1,7 @@
 // Módulo de Análise Textual Legislativa: Detecção de Jabutis (Contrabando Legislativo) e Sumarização Didática.
 // 100% Processado no Navegador (Client-side), sem envio para servidores externos (Conforme LGPD).
 
-import { modal, esc } from './ui.js';
+import { modal, esc, fmtDate } from './ui.js';
 
 /* ================= 1. DICIONÁRIO TEMÁTICO & CLASSIFICAÇÃO SEMÂNTICA ================= */
 
@@ -132,29 +132,6 @@ export function summarizeProposition(p) {
   const summary = p.summary || p.theme || 'Sem ementa disponível.';
   const central = detectCentralDomain(code, summary);
 
-  // Geração de síntese explicativa e impactos práticos
-  let practicalEffect = `Estabelece diretrizes e normas legais no âmbito de ${THEMATIC_DOMAINS[central.domain]?.label || 'administração pública'}.`;
-  let financialEffect = 'Sem previsão imediata de novos custos tributários diretos ao consumidor.';
-  let winnersAndLosers = 'Regulamenta relações entre o poder público e os setores afetados pela proposta.';
-
-  if (summary.toLowerCase().includes('imposto') || summary.toLowerCase().includes('tribut') || summary.toLowerCase().includes('fiscal')) {
-    practicalEffect = 'Altera regras fiscais ou tributárias, impactando alíquotas ou critérios de arrecadação do Estado.';
-    financialEffect = 'Pode gerar impacto direto no preço de mercadorias, serviços ou no orçamento público.';
-    winnersAndLosers = 'Beneficia setores contemplados com desoneração ou reforça o caixa arrecadatório público.';
-  } else if (summary.toLowerCase().includes('saude') || summary.toLowerCase().includes('sus') || summary.toLowerCase().includes('medicamento')) {
-    practicalEffect = 'Cria ou aperfeiçoa programas de assistência, fornecimento de tratamentos ou infraestrutura de saúde pública.';
-    financialEffect = 'Gera demandas orçamentárias de custeio para o Sistema Único de Saúde (SUS) e entes federativos.';
-    winnersAndLosers = 'Beneficia pacientes e usuários da rede pública; requer gestão orçamentária dos governos.';
-  } else if (summary.toLowerCase().includes('internet') || summary.toLowerCase().includes('redes') || summary.toLowerCase().includes('digital')) {
-    practicalEffect = 'Regula responsabilidades de plataformas digitais, direitos de usuários e transparência na internet.';
-    financialEffect = 'Custos de conformidade técnica para grandes empresas de tecnologia (Big Techs).';
-    winnersAndLosers = 'Usuários ganham salvaguardas contra abusos; plataformas enfrentam maiores exigências legais.';
-  } else if (summary.toLowerCase().includes('mobilidade') || summary.toLowerCase().includes('transito') || summary.toLowerCase().includes('transporte')) {
-    practicalEffect = 'Organiza a malha de transportes, tarifas ou regulamentação de vias e concessões.';
-    financialEffect = 'Afeta tarifas de transporte ou subsídios públicos a operadores de trânsito.';
-    winnersAndLosers = 'Usuários do transporte público ganham previsibilidade; operadores têm fiscalização ampliada.';
-  }
-
   const analysis = detectJabuti(code, summary, summary);
 
   return {
@@ -162,9 +139,8 @@ export function summarizeProposition(p) {
     summary,
     centralDomain: central.domain,
     centralLabel: THEMATIC_DOMAINS[central.domain]?.label || 'Matéria Geral',
-    practicalEffect,
-    financialEffect,
-    winnersAndLosers,
+    date: p.date || '',
+    url: /^https:\/\/(www\.)?(camara|senado)\.leg\.br\//.test(p.url || '') ? p.url : '',
     analysis,
   };
 }
@@ -188,7 +164,7 @@ export function openAnalysisModal(item) {
 
     <!-- Navegação de Abas -->
     <div class="row u-gap-8 u-mt-12 u-bb-1-solid-line u-pb-8">
-      <button class="btn sm active" id="tab-summary-btn"><span class="mi">menu_book</span>Sumário Didático</button>
+      <button class="btn sm active" id="tab-summary-btn"><span class="mi">menu_book</span>Resumo Oficial</button>
       <button class="btn sm ghost" id="tab-jabuti-btn"><span class="mi">pest_control</span>Scanner de Jabutis</button>
       <button class="btn sm ghost" id="tab-simulator-btn"><span class="mi">tune</span>Simulador de Texto</button>
     </div>
@@ -199,44 +175,32 @@ export function openAnalysisModal(item) {
         <span class="sm muted u-fw-700 u-tt-uppercase">Ementa Oficial</span>
         <p class="sm u-lh-1_4">${esc(s.summary)}</p>
         <div class="row sm u-mt-4">
-          <span class="chip blue">Tema: ${esc(s.centralLabel)}</span>
+          <span class="chip blue" title="Estimado por palavras-chave da ementa">Tema estimado: ${esc(s.centralLabel)}</span>
         </div>
       </div>
 
-      <p class="xs muted u-d-flex u-gap-6 u-ai-flex-start">
-        <span class="mi u-fs-16">info</span>
-        <span>Os quadros abaixo são uma estimativa automática a partir de palavras-chave da ementa, não uma análise do texto da proposição. Confira a ficha oficial antes de tirar conclusões.</span>
-      </p>
-
-      <div class="grid u-cols-1fr u-gap-10">
-        <div class="card stack u-gap-6">
-          <div class="row">
-            <span class="mi u-c-primary">lightbulb</span>
-            <b>O que muda na prática (Linguagem Cidadã)</b>
-          </div>
-          <p class="sm muted">${esc(s.practicalEffect)}</p>
+      <div class="card stack u-gap-6">
+        <div class="row">
+          <span class="mi u-c-primary">description</span>
+          <b>Dados oficiais da proposição</b>
         </div>
-
-        <div class="card stack u-gap-6">
-          <div class="row">
-            <span class="mi u-c-gold">payments</span>
-            <b>Impacto Financeiro & Orçamentário</b>
-          </div>
-          <p class="sm muted">${esc(s.financialEffect)}</p>
-        </div>
-
-        <div class="card stack u-gap-6">
-          <div class="row">
-            <span class="mi u-c-green">balance</span>
-            <b>Quem Ganha e Quem Paga</b>
-          </div>
-          <p class="sm muted">${esc(s.winnersAndLosers)}</p>
-        </div>
+        <p class="sm muted">${esc(s.code)}${s.date ? ` • apresentada em ${esc(fmtDate(s.date))}` : ''}</p>
+        ${
+          s.url
+            ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="sm u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
+                <span>Ficha de tramitação e inteiro teor</span><span class="mi u-fs-14">open_in_new</span>
+              </a>`
+            : '<p class="sm muted">Abra a ficha oficial no site da Câmara ou do Senado para ver a tramitação e o inteiro teor.</p>'
+        }
       </div>
     </div>
 
     <!-- Conteúdo da Aba 2: Scanner de Jabutis -->
     <div id="tab-jabuti-content" class="stack u-gap-14 u-mt-14 u-d-none">
+      <p class="xs muted u-d-flex u-gap-6 u-ai-flex-start">
+        <span class="mi u-fs-16">info</span>
+        <span>Estimativa automática por palavras-chave, não uma análise do texto da proposição. Confira a ficha oficial antes de tirar conclusões.</span>
+      </p>
       <div class="card stack verdict${s.analysis.hasJabuti ? ' bad' : ''}">
         <div class="row between">
           <div class="row">

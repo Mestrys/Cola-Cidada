@@ -1,6 +1,6 @@
 import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
-import { loadComparison, loadSenateComparison } from '../votes.js';
+import { loadComparison, loadSenateComparison, EXPLANATION_NOTE } from '../votes.js';
 import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, $ } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openGlossaryModal } from '../glossary.js';
@@ -20,6 +20,7 @@ function renderExplanationBox(exp) {
       <div class="u-c-primary"><b>Quem votou SIM:</b> ${esc(exp.yes)}</div>
       <div class="u-c-error"><b>Quem votou NÃO:</b> ${esc(exp.no)}</div>
     </div>
+    <p class="xs muted u-mt-6">${esc(EXPLANATION_NOTE)}</p>
   </div>`;
 }
 

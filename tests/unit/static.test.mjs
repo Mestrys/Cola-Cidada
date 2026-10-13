@@ -34,7 +34,7 @@ test('service worker guarda todos os módulos do app', () => {
 });
 
 test('textos fictícios não voltaram', () => {
-  const banned = /Eleitor\(a\) Biométrico|Identificador Cívico|Framework Cívico|Atualizado a cada|ao vivo|Sincronia Oficial|Painel Ativo|Quórum Nominal|Eleitor Regular|Cidadão Conectado|Protocolo Cívico|Chave Criptográfica|Encerramento Automático|Total Auditado|Selo Digital|Aderência LAI/i;
+  const banned = /Eleitor\(a\) Biométrico|Identificador Cívico|Framework Cívico|Atualizado a cada|ao vivo|Sincronia Oficial|Painel Ativo|Quórum Nominal|Eleitor Regular|Cidadão Conectado|Protocolo Cívico|Chave Criptográfica|Encerramento Automático|Total Auditado|Selo Digital|Aderência LAI|Impacto Financeiro|Quem Ganha e Quem Paga/i;
   for (const f of sources) {
     const hit = read(f).match(banned);
     assert.equal(hit, null, `${f}: "${hit?.[0]}"`);

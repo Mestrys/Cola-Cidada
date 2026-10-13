@@ -1,5 +1,5 @@
 import { store } from '../store.js';
-import { loadComparison, loadSenateComparison } from '../votes.js';
+import { loadComparison, loadSenateComparison, EXPLANATION_NOTE } from '../votes.js';
 import { esc, fmtDate, VOTE_CLASS, brl, $ } from '../ui.js';
 import { politicianCard, bindPoliticianActions } from './politicos.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -355,6 +355,7 @@ export async function render(root) {
                     <span class="u-c-primary"><b>SIM:</b> ${esc(it.explanation.yes)}</span>
                     <span class="u-c-error"><b>NÃO:</b> ${esc(it.explanation.no)}</span>
                   </div>
+                  <p class="xs muted u-mt-6">${esc(EXPLANATION_NOTE)}</p>
                 </div>`
                   : ''
               }

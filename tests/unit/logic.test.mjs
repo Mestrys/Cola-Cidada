@@ -59,3 +59,13 @@ test('orientação: partido próprio > federação > bloco; liberado e vazio', (
   assert.equal(orientationFor('PSD', orient, blocs), 'Não');
   assert.equal(orientationFor('NOVO', orient, blocs), null);
 });
+
+test('summarizeProposition só devolve dados oficiais e aceita apenas links da Câmara/Senado', async () => {
+  const { summarizeProposition } = await import('../../src/analysis.js');
+  const ok = summarizeProposition({ type: 'PL', number: 1, year: 2024, summary: 'Dispõe sobre saneamento.', date: '2024-03-01', url: 'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=1' });
+  assert.ok(ok.url.startsWith('https://www.camara.leg.br/'));
+  assert.equal(ok.date, '2024-03-01');
+  for (const k of ['practicalEffect', 'financialEffect', 'winnersAndLosers']) assert.equal(k in ok, false, `${k} voltou`);
+  assert.equal(summarizeProposition({ summary: 'x', url: 'javascript:alert(1)' }).url, '');
+  assert.equal(summarizeProposition({ summary: 'x', url: 'https://evil.example/camara.leg.br/' }).url, '');
+});

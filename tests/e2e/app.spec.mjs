@@ -98,6 +98,8 @@ test.describe('diálogos', () => {
       const m = await import('/src/analysis.js');
       m.openAnalysisModal({ type: 'PL', number: '1', year: '2024', summary: 'Dispõe sobre o saneamento básico.' });
     });
+    await expect(page.locator('#tab-summary-content')).toContainText('Dados oficiais da proposição');
+    await expect(page.locator('#tab-summary-content')).not.toContainText('Impacto Financeiro');
     const panes = { summary: '#tab-summary-content', jabuti: '#tab-jabuti-content', simulator: '#tab-simulator-content' };
     for (const [tab, sel] of Object.entries(panes)) {
       await page.locator(`#tab-${tab}-btn`).click();
