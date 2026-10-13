@@ -6,6 +6,8 @@ import {
   senatorVotes,
   getTseElectoralProfile,
 } from './api.js';
+import { deputyPlenaryStats } from './plenary.js';
+import { plenaryPanelHtml } from './views/plenaryPanel.js';
 
 export async function openDossierModal(p) {
   const m = mandateProgress(p);
@@ -35,12 +37,14 @@ export async function openDossierModal(p) {
     let expenses = [];
     let propositions = [];
     let votes = [];
+    let plenary = null;
 
     if (p.source === 'camara') {
-      [profile, expenses, propositions] = await Promise.all([
+      [profile, expenses, propositions, plenary] = await Promise.all([
         deputyProfile(p.camaraId).catch(() => null),
         deputyExpenses(p.camaraId, 80).catch(() => []),
         deputyPropositions(p.camaraId, 10).catch(() => []),
+        deputyPlenaryStats(p.camaraId).catch(() => null),
       ]);
     } else if (p.source === 'senado') {
       votes = await senatorVotes(p.senadoId, 15).catch(() => []);
@@ -57,6 +61,7 @@ export async function openDossierModal(p) {
       expensesLength: expenses.length,
       propositionsLength: propositions.length,
       votesLength: votes.length,
+      plenary: plenary && { a: plenary.attendance.rate, f: plenary.fidelity.rate },
     });
     const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(payloadForHash));
     const sha256Hex = Array.from(new Uint8Array(hashBuffer))
@@ -120,6 +125,17 @@ export async function openDossierModal(p) {
             <span class="sm muted" style="display:block">Patrimônio declarado no registro de candidatura:</span>
             <b style="font-size:15px; color:var(--primary)">${tse.declaredAssets != null ? brl(tse.declaredAssets) : 'Não declarado'}</b>
           </div>
+        </div>`
+            : ''
+        }
+
+        <!-- Seção: Presença & Fidelidade (Câmara) -->
+        ${
+          plenary
+            ? `
+        <div class="stack" style="gap:8px; border-top:1px solid var(--line); padding-top:12px">
+          <h4 style="font-size:14px; text-transform:uppercase; font-weight:700; color:var(--text)">Presença em Plenário & Fidelidade à Bancada</h4>
+          ${plenaryPanelHtml(plenary)}
         </div>`
             : ''
         }

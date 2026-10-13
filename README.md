@@ -71,6 +71,10 @@ npm run dev   # http://localhost:5173
   - Cada parlamentar traz número de urna, resultado, coligação/federação, patrimônio declarado e link para a ficha no DivulgaCandContas.
   - Limitações: o roster reflete **quem foi eleito**, não o exercício atual (suplentes que assumiram, cassações e afastamentos não aparecem); não há foto, e-mail ou telefone, pois o TSE não os publica.
   - Dados particionados por UF (`/src/data/states/{uf}.json`, `/src/data/capitais/{uf}.json`) e carregados sob demanda.
+- **Presença & Fidelidade (deputados federais, API da Câmara):** `src/plenary.js` calcula, sobre as últimas sessões deliberativas e votações nominais do Plenário:
+  - presença registrada (`/eventos/{id}/deputados`) e participação em votações nominais (`/votacoes/{id}/votos`);
+  - fidelidade = votos iguais à orientação da bancada (`/votacoes/{id}/orientacoes`; usa o partido ou, se ele não orienta sozinho, o bloco/federação). Votações com bancada liberada ou sem orientação publicada não entram na taxa.
+  - Limitações: a presença não distingue falta justificada; o cálculo cobre só uma janela recente; para senadores, deputados estaduais e vereadores não há dado equivalente implementado. A resolução de blocos abreviados (`Bl UniPpPsd...`) é heurística.
 - **Agenda Legislativa:** próximos eventos oficiais da Câmara (API `/eventos`) na tela inicial.
 - **Detecção Inteligente de "Jabutis" & Sumarizador Cívico (Fase 8):**
   - **Scanner de Jabutis (Contrabando Legislativo):** Algoritmo semântico em linguagem natural (*client-side* no navegador, 100% privado e em conformidade estrita com a LGPD) que audita a coerência temática de emendas e artigos de Medidas Provisórias e Projetos de Lei. Emite alertas de risco (*Baixo, Médio, Alto*) e cita a jurisprudência vinculante do STF (ADI 5127).
@@ -96,7 +100,7 @@ npm run dev   # http://localhost:5173
 
 ## Dados que NÃO são exibidos (por falta de fonte implementada)
 
-Presença/assiduidade, fidelidade partidária, atuação como relator e financiamento de campanha foram removidos: eram valores simulados. Fontes reais possíveis: Câmara (`/eventos`, orientações de bancada em `/votacoes/{id}/orientacoes`) e prestação de contas do TSE.
+Atuação como relator e financiamento de campanha foram removidos: eram valores simulados (fonte possível: prestação de contas do TSE). Presença e fidelidade existem apenas para deputados federais.
 
 ## Atualizando os dados regionais
 

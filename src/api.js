@@ -7,13 +7,28 @@ const SENADO_BASE = 'https://legis.senado.leg.br/dadosabertos';
 
 const cache = new Map();
 
+// A API da Câmara derruba conexões sob rajadas de requisições: repete falhas de rede, 429 e 5xx com espera crescente.
 async function getJson(url, headers = {}) {
   if (cache.has(url)) return cache.get(url);
-  const res = await fetch(url, { headers: { Accept: 'application/json', ...headers } });
-  if (!res.ok) throw new Error(`HTTP ${res.status} para ${url}`);
-  const json = await res.json();
-  cache.set(url, json);
-  return json;
+  let lastError;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    if (attempt) await new Promise((r) => setTimeout(r, 600 * attempt));
+    try {
+      const res = await fetch(url, { headers: { Accept: 'application/json', ...headers } });
+      if (res.status === 429 || res.status >= 500) {
+        lastError = new Error(`HTTP ${res.status} para ${url}`);
+        continue;
+      }
+      if (!res.ok) throw Object.assign(new Error(`HTTP ${res.status} para ${url}`), { final: true });
+      const json = await res.json();
+      cache.set(url, json);
+      return json;
+    } catch (err) {
+      if (err.final) throw err;
+      lastError = err;
+    }
+  }
+  throw lastError;
 }
 
 /* ================= CÂMARA DOS DEPUTADOS ================= */
@@ -97,6 +112,51 @@ export async function votesOf(votingId) {
 export async function votingDetail(votingId) {
   const { dados } = await getJson(`${CAMARA_BASE}/votacoes/${votingId}`);
   return dados;
+}
+
+export async function votingOrientations(votingId) {
+  const { dados } = await getJson(`${CAMARA_BASE}/votacoes/${votingId}/orientacoes`);
+  return dados || [];
+}
+
+// Votações nominais do Plenário (a descrição traz o placar "Sim: N; Não: N"), mais recentes primeiro.
+export async function recentNominalVotings(limit = 20) {
+  const since = new Date(Date.now() - 180 * 86400000).toISOString().slice(0, 10);
+  const out = [];
+  // Páginas em sequência: encerra assim que houver votações suficientes e evita rajadas de requisições.
+  for (let page = 1; page <= 6 && out.length < limit; page++) {
+    const url = `${CAMARA_BASE}/votacoes?ordem=DESC&ordenarPor=dataHoraRegistro&itens=100&pagina=${page}&idOrgao=180&dataInicio=${since}`;
+    const dados = await getJson(url)
+      .catch(() => new Promise((ok) => setTimeout(ok, 500)).then(() => getJson(url)))
+      .then((r) => r.dados || [], () => []);
+    if (!dados.length) break;
+    out.push(...dados.filter((v) => v.aprovacao !== null && /Sim:\s*\d+/.test(v.descricao || '')));
+  }
+  return out.slice(0, limit);
+}
+
+// Sessões deliberativas do Plenário já encerradas nos últimos 90 dias.
+export async function recentPlenarySessions(limit = 15) {
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const now = new Date();
+  const { dados } = await getJson(
+    `${CAMARA_BASE}/eventos?dataInicio=${iso(new Date(now.getTime() - 90 * 86400000))}&dataFim=${iso(now)}&codTipoEvento=110&itens=100&ordem=DESC&ordenarPor=dataHoraInicio`
+  );
+  return (dados || [])
+    .filter((e) => /encerrada/i.test(e.situacao || '') && e.orgaos?.some((o) => o.sigla === 'PLEN'))
+    .slice(0, limit)
+    .map((e) => ({ id: e.id, date: e.dataHoraInicio?.slice(0, 10), description: e.descricao }));
+}
+
+// Blocos e federações partidárias da legislatura atual (nome lista os partidos membros).
+export async function legislatureBlocs() {
+  const { dados } = await getJson(`${CAMARA_BASE}/blocos?idLegislatura=57&itens=50`);
+  return (dados || []).map((b) => ({ id: b.id, name: b.nome, federation: !!b.federacao }));
+}
+
+export async function sessionAttendees(eventId) {
+  const { dados } = await getJson(`${CAMARA_BASE}/eventos/${eventId}/deputados`);
+  return dados || [];
 }
 
 /* ================= SENADO FEDERAL ================= */

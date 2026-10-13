@@ -7,6 +7,8 @@ import {
   getTseElectoralProfile,
 } from '../api.js';
 import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast } from '../ui.js';
+import { deputyPlenaryStats } from '../plenary.js';
+import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openDossierModal } from '../dossier.js';
 import { openShareModal } from '../share.js';
@@ -178,6 +180,7 @@ async function openPoliticianDetails(p) {
         <button class="on" data-tab="gastos">Auditoria CEAP (Gastos)</button>
         <button data-tab="projetos">Projetos de Lei (PLs)</button>
         <button data-tab="perfil">Gabinete Oficial</button>
+        <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : isSenator
           ? `
@@ -202,6 +205,9 @@ async function openPoliticianDetails(p) {
       </div>
       <div id="tab-perfil" class="stack pol-pane hidden" style="margin-top:4px">
         <div class="row"><span class="spin"></span><span class="muted">Consultando dados do gabinete oficial…</span></div>
+      </div>
+      <div id="tab-plenario" class="stack pol-pane hidden" style="margin-top:4px">
+        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das sessões e votações oficiais…</span></div>
       </div>
     `
         : isSenator
@@ -333,6 +339,12 @@ async function openPoliticianDetails(p) {
     const paneGastos = el.querySelector('#tab-gastos');
     const paneProjetos = el.querySelector('#tab-projetos');
     const panePerfil = el.querySelector('#tab-perfil');
+    const panePlenario = el.querySelector('#tab-plenario');
+
+    // Presença e fidelidade (carrega em paralelo, sem bloquear as demais abas)
+    deputyPlenaryStats(p.camaraId)
+      .then((stats) => (panePlenario.innerHTML = plenaryPanelHtml(stats)))
+      .catch((err) => (panePlenario.innerHTML = `<p class="muted">Não foi possível calcular agora: ${esc(err.message)}</p>`));
 
     // 1. Carrega Gastos CEAP
     try {
