@@ -22,15 +22,15 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 - **Recomendação:** (b) para "Impacto/Quem ganha" e (a) para a Linguagem Cidadã, com revisão de cada texto.
 - **Esforço:** (a) 1–2 h de código, mais a revisão; (b) cerca de 1 dia.
 
-### 3. Data de início do mandato estadual
+### 3. Data de início do mandato estadual — ✅ feito
 - **Problema:** `defaultMandate('dep-estadual')` usa 15/03/2023 a 14/03/2027, que é a regra da ALESP, para todas as assembleias. A maioria começa em 01/02/2023.
 - **Efeito:** o percentual cumprido e os dias restantes aparecem errados fora de SP.
-- **Ação:** data por UF (SP em 15/03; demais em 01/02), conferida nos regimentos.
+- **Feito:** SP 15/03/2023–31/01/2027 (a PEC da Alesp antecipou a posse da 21ª legislatura para 01/02/2027); demais UFs 01/02/2023–31/01/2027. Cadastros antigos com a data errada são recalculados ao exibir. Só SP foi confirmada como exceção; as demais seguem a regra de 1º de fevereiro.
 - **Esforço:** 1–2 h.
 
-### 4. Domicílio eleitoral ignorado no cadastro
+### 4. Domicílio eleitoral ignorado no cadastro — ✅ feito
 - **Problema:** o store grava `domicile.state`, mas `addPolitician.js` lê `domicile.uf`. O cadastro sempre abre em SP, mesmo com outro estado configurado no Perfil.
-- **Ação:** ler `domicile.state`.
+- **Feito:** o cadastro lê `domicile.state`, e o seletor do Perfil passou de 9 para as 27 UFs.
 - **Esforço:** minutos, mais um teste.
 
 ## P1 — logo após o deploy
@@ -82,7 +82,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
   3. Quando não sobrar `style=`, tirar `'unsafe-inline'` da CSP.
 - **Esforço:** 3–5 dias, em PRs pequenos.
 
-### 10. Cache das estatísticas de presença
+### 10. Cache das estatísticas de presença — ✅ feito
 - **Problema:** `plenaryDataset()` e `senateDataset()` guardam a promessa pela sessão inteira. As respostas HTTP já expiram em 5 min, mas o conjunto calculado não.
 - **Ação:** mesma validade de 5 min, ou recálculo ao tocar em atualizar.
 - **Esforço:** 1 h.
@@ -94,7 +94,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
   - (b) Um proxy de imagem próprio, por exemplo uma função no Vercel. Contraria a proposta de não ter servidor.
 - **Recomendação:** (a), salvo pedido explícito.
 
-### 12. Atraso no onboarding
+### 12. Atraso no onboarding — ✅ feito
 - **Problema:** o onboarding abre com `setTimeout(500)` depois da tela. É meio segundo de espera e uma tela que "pula".
 - **Ação:** abrir junto da primeira renderização.
 - **Esforço:** minutos.
@@ -105,13 +105,13 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 |---|------|-----------|---------|---------------------|
 | 1 | Dados da empresa no rodapé | P0 | minutos | Sim (empresa) |
 | 2 | Conteúdo por palavras-chave | P0 | 2 h – 1 dia | Sim (editorial) |
-| 3 | Mandato estadual por UF | P0 | 1–2 h | Não |
-| 4 | Domicílio no cadastro | P0 | minutos | Não |
+| 3 | ~~Mandato estadual por UF~~ ✅ | P0 | feito | — |
+| 4 | ~~Domicílio no cadastro~~ ✅ | P0 | feito | — |
 | 5 | Fonte com pesos reais | P1 | meio dia | Sim (marca) |
 | 6 | Subconjunto da fonte de ícones | P1 | meio dia | Não |
 | 7 | Testes e CI | P1 | 1 dia | Não |
 | 8 | Contraste WCAG AA | P1 | meio dia | Não |
 | 9 | `rem` e fim dos estilos inline | P2 | 3–5 dias | Não |
-| 10 | Validade do cache de presença | P2 | 1 h | Não |
+| 10 | ~~Validade do cache de presença~~ ✅ | P2 | feito | — |
 | 11 | Foto no card de compartilhamento | P2 | — | Sim |
-| 12 | Atraso no onboarding | P2 | minutos | Não |
+| 12 | ~~Atraso no onboarding~~ ✅ | P2 | feito | — |

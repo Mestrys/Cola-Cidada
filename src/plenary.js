@@ -32,13 +32,25 @@ async function pool(items, fn) {
   return out;
 }
 
-let datasetPromise = null;
+// Conjuntos calculados valem 5 min (mesma validade do cache HTTP em api.js) e são
+// compartilhados por todos os parlamentares monitorados; falhas não ficam guardadas.
+const DATASET_TTL_MS = 5 * 60 * 1000;
 
-// Carrega uma vez e reaproveita para todos os parlamentares monitorados.
-export function plenaryDataset() {
-  if (!datasetPromise) datasetPromise = buildDataset().catch((e) => ((datasetPromise = null), Promise.reject(e)));
-  return datasetPromise;
+function memoized(build) {
+  let entry = null;
+  return () => {
+    if (!entry || Date.now() - entry.at > DATASET_TTL_MS) {
+      const promise = build().catch((e) => {
+        if (entry?.promise === promise) entry = null;
+        throw e;
+      });
+      entry = { promise, at: Date.now() };
+    }
+    return entry.promise;
+  };
 }
+
+export const plenaryDataset = memoized(() => buildDataset());
 
 async function buildDataset() {
   const sessions = await recentPlenarySessions(SESSIONS);
@@ -142,12 +154,7 @@ const SEN_PRESENT = new Set(['Sim', 'Não', 'Abstenção', 'Votou', 'P-NRV', 'Pr
 const SEN_JUSTIFIED = new Set(['AP', 'LS', 'MIS', 'LP', 'LAP']); // atividade parlamentar, licenças e missões
 const SEN_CAST = new Set(['Sim', 'Não', 'Abstenção']);
 
-let senatePromise = null;
-
-export function senateDataset() {
-  if (!senatePromise) senatePromise = buildSenateDataset().catch((e) => ((senatePromise = null), Promise.reject(e)));
-  return senatePromise;
-}
+export const senateDataset = memoized(() => buildSenateDataset());
 
 async function buildSenateDataset() {
   const { since, until } = senateWindow();

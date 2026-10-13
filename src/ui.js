@@ -26,22 +26,28 @@ export const ROLES = {
 
 // Mandatos eleitos em out/2022 começam em 1/jan/2023 (Presidente, Governadores)
 // ou 1/fev/2023 (Legislativo federal e estadual) e terminam 4 anos depois.
+// Exceção: a 20ª legislatura da ALESP tomou posse em 15/mar/2023; uma PEC da Alesp antecipou
+// a posse seguinte para 1/fev/2027, então o mandato atual termina em 31/jan/2027.
 // Senadores eleitos em 2018 terminam em 31/jan/2027; os de 2022, em 31/jan/2031.
 // Vereadores eleitos em 2024 iniciam mandato em 1/jan/2025 até 31/dez/2028.
-export function defaultMandate(role) {
+export function defaultMandate(role, uf) {
   const dates = {
     presidente: ['2023-01-01', '2026-12-31'],
     governador: ['2023-01-01', '2026-12-31'],
     'dep-federal': ['2023-02-01', '2027-01-31'],
-    'dep-estadual': ['2023-03-15', '2027-03-14'],
+    'dep-estadual': String(uf || '').toUpperCase() === 'SP' ? ['2023-03-15', '2027-01-31'] : ['2023-02-01', '2027-01-31'],
     senador: ['2023-02-01', '2031-01-31'],
     vereador: ['2025-01-01', '2028-12-31'],
   };
   return dates[role];
 }
 
+// Cadastros antigos gravaram a data da ALESP (15/03/2023–14/03/2027) para todas as assembleias.
+const LEGACY_STATE_MANDATE = '2023-03-15|2027-03-14';
+
 export function mandateProgress(p) {
-  const [start, end] = p.mandate || defaultMandate(p.roleKey) || [];
+  const stored = p.mandate && p.mandate.join('|') !== LEGACY_STATE_MANDATE ? p.mandate : null;
+  const [start, end] = stored || defaultMandate(p.roleKey, p.uf) || [];
   if (!start) return { pct: 0, label: '—' };
   const s = new Date(start), e = new Date(end), now = new Date();
   const pct = Math.max(0, Math.min(100, ((now - s) / (e - s)) * 100));

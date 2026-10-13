@@ -344,9 +344,6 @@ window.addEventListener('hashchange', () => {
   render();
 });
 
+// Onboarding no primeiro acesso: abre junto da primeira renderização, sem espera artificial.
 render();
-
-// Disparo automático do Onboarding para primeiros acessos
-if (!store.get().onboardingDone) {
-  setTimeout(() => openOnboardingModal(), 500);
-}
+if (!store.get().onboardingDone) openOnboardingModal();

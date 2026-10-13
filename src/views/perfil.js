@@ -1,5 +1,6 @@
 import { store } from '../store.js';
 import { toast, esc, brl, $, ROLES } from '../ui.js';
+import { FEDERATION_UNITS } from '../api.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openOnboardingModal } from './onboarding.js';
 import { openColaEleitoralModal } from './colaEleitoral.js';
@@ -151,15 +152,9 @@ export function render(root) {
             <div>
               <label class="label" for="dom-state">Estado (UF)</label>
               <select class="input" id="dom-state">
-                <option value="SP" ${(s.domicile?.state || 'SP') === 'SP' ? 'selected' : ''}>São Paulo (SP)</option>
-                <option value="RJ" ${(s.domicile?.state) === 'RJ' ? 'selected' : ''}>Rio de Janeiro (RJ)</option>
-                <option value="MG" ${(s.domicile?.state) === 'MG' ? 'selected' : ''}>Minas Gerais (MG)</option>
-                <option value="BA" ${(s.domicile?.state) === 'BA' ? 'selected' : ''}>Bahia (BA)</option>
-                <option value="RS" ${(s.domicile?.state) === 'RS' ? 'selected' : ''}>Rio Grande do Sul (RS)</option>
-                <option value="PR" ${(s.domicile?.state) === 'PR' ? 'selected' : ''}>Paraná (PR)</option>
-                <option value="PE" ${(s.domicile?.state) === 'PE' ? 'selected' : ''}>Pernambuco (PE)</option>
-                <option value="CE" ${(s.domicile?.state) === 'CE' ? 'selected' : ''}>Ceará (CE)</option>
-                <option value="DF" ${(s.domicile?.state) === 'DF' ? 'selected' : ''}>Distrito Federal (DF)</option>
+                ${FEDERATION_UNITS.map(
+                  (u) => `<option value="${u.uf}" ${(s.domicile?.state || 'SP') === u.uf ? 'selected' : ''}>${esc(u.name)} (${u.uf})</option>`
+                ).join('')}
               </select>
             </div>
             <div>

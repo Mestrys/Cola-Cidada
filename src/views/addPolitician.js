@@ -12,8 +12,8 @@ import { modal, esc, avatar, ROLES, defaultMandate, toast, $ } from '../ui.js';
 export function openPoliticianModal({ replaceId } = {}) {
   const currentCount = store.get().politicians.length;
   const targetTotal = 5;
-  const userDomicile = store.get().domicile || { uf: 'SP', city: 'São Paulo' };
-  const initialUf = userDomicile.uf?.toUpperCase() || 'SP';
+  const userDomicile = store.get().domicile || { state: 'SP', city: 'São Paulo' };
+  const initialUf = (userDomicile.state || userDomicile.uf || 'SP').toUpperCase();
   const initialCouncilUf = FEDERATION_UNITS.some((u) => u.uf === initialUf && u.hasCouncil) ? initialUf : 'SP';
 
   const { el, close } = modal(`
@@ -361,7 +361,7 @@ export function openPoliticianModal({ replaceId } = {}) {
             house: d.house,
             photo: d.photo,
             roleKey: 'dep-estadual',
-            mandate: defaultMandate('dep-estadual'),
+            mandate: defaultMandate('dep-estadual', d.state || activeStateUf),
             email: d.email,
             phone: d.phone,
             room: d.room,
