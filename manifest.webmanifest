@@ -1,0 +1,20 @@
+{
+  "name": "Monitor Cidadão",
+  "short_name": "Monitor Cidadão",
+  "description": "Fiscalize o mandato de quem você elegeu. Acompanhe votações, presença e gastos dos seus representantes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9f9fc",
+  "theme_color": "#006b26",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["government", "news", "productivity"]
+}

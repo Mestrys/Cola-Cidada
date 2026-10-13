@@ -1,2 +1,113 @@
-# Cola-Cidada
+# Cola-Cidada · Monitor Cidadão
+
 Sua cola eleitoral vira controle do mandato.
+
+Aplicação web que permite ao cidadão cadastrar em quem votou e acompanhar votações nominais, mandato e alertas, usando a **API de Dados Abertos da Câmara dos Deputados**.
+
+## Rodando
+
+Requer apenas Node 18+ (sem dependências):
+
+```bash
+npm run dev   # http://localhost:5173
+```
+
+## Arquitetura
+
+- `index.html` + módulos ES nativos (sem bundler) e CSS próprio com tema claro/escuro.
+- `src/store.js` — estado no `localStorage`. **Nada é enviado a servidores** (opinião política é dado sensível, LGPD art. 5º, II).
+- `src/api.js` / `src/votes.js` — cliente da API da Câmara e cruzamento de votos nominais.
+- `src/views/` — Início, Meus Políticos, Comparador, Alertas, Perfil.
+
+## Decisões vs. protótipo original
+
+- Sem dados fictícios: tudo vem do usuário ou da API oficial.
+- Sem promessas falsas de criptografia: "Apagar tudo" e "Exportar" funcionam de verdade.
+- Datas de mandato corrigidas (deputados até jan/2027; senadores até jan/2027 ou jan/2031).
+
+## Fontes e Integrações Ativas
+
+- **Câmara dos Deputados (`dadosabertos.camara.leg.br`):**
+  - Busca oficial e fotos de todos os 513 deputados federais.
+  - Votações nominais no Plenário com placar oficial (Sim / Não / Obstrução / Abstenção).
+  - Projetos de Lei (PLs) e PECs de autoria do parlamentar, com link direto para a ficha de tramitação.
+  - **Auditoria Financeira da Cota Parlamentar (CEAP):** Total acumulado no mandato, maiores categorias de gastos e links diretos para as notas fiscais e comprovantes eletrônicos (DANFE/PDF).
+- **Senado Federal (`legis.senado.leg.br`):**
+  - Busca oficial e fotos dos 81 senadores da República em exercício por nome ou UF.
+  - Votações nominais do Plenário do Senado com resultado oficial e voto individual.
+  - Cálculo exato de término do mandato de 8 anos a partir dos dados do Senado.
+- **Linguagem Cidadã & Filtros Temáticos:**
+  - Síntese descomplicada do impacto das principais votações ("O que significou este voto: Quem votou SIM... Quem votou NÃO...").
+  - Filtros temáticos por área (Economia, Tecnologia, Social/Saúde, Meio Ambiente, Segurança).
+- **PWA & Funcionamento Offline:**
+  - Instalável como aplicativo no celular e desktop (`manifest.webmanifest` e `icon.svg`).
+  - `sw.js` (Service Worker) ativo com cache do app shell e estratégia de fallback para dados consultados offline.
+  - Botão automático para adicionar à tela inicial no navegador.
+- **Alertas Locais no Dispositivo (Push Local):**
+  - Integração com a *Web Notifications API* para disparar avisos nativos na barra de notificações quando novas votações nominais forem registradas.
+- **Gabinete & Perfil Institucional:**
+  - Consulta de nome civil, condição eleitoral (Titular/Suplente), naturalidade e canais de contato público (sala, anexo, telefone e e-mail).
+- **Backup & Restauração Local (LGPD):**
+  - Exportação e restauração completa de backup em formato JSON para migração entre dispositivos.
+  - Expurgo irreversível dos dados locais sob demanda do usuário.
+- **Expansão Estadual — ALESP (Assembleia Legislativa de São Paulo):**
+  - Integração com dados oficiais da 20ª Legislatura da ALESP (94 deputados estaduais ativos).
+  - Busca instantânea por nome parlamentar, partido, região de base eleitoral ou área de atuação.
+  - Dossiê parlamentar do deputado estadual: base eleitoral, salas e andares no Palácio 9 de Julho, telefones institucionais e e-mails de gabinete.
+- **Atos do Poder Executivo (Medidas Provisórias):**
+  - Radar em tempo real de Medidas Provisórias (MPVs) apresentadas pela Presidência da República que tramitam no Congresso Nacional com força de lei.
+  - Esclarecimento cívico sobre os prazos constitucionais de 60 + 60 dias (Art. 62 da CF/88) e links oficiais para acompanhamento.
+- **Fiscalização Cívica de Orçamento & "Emendas Pix":**
+  - Guia descomplicado sobre Emendas Individuais de Transferência Especial (Emendas Pix - EC 105/2019) e transferências diretas para prefeituras.
+  - Atalhos diretos para fiscalização cidadã no Portal da Transparência da CGU e no Painel Siga Brasil do Senado Federal.
+- **Relatório Cívico & Dossiê de Prestação de Contas (PDF):**
+  - Emissão instantânea de relatório oficial de mandato diretamente no navegador (`window.print()` e `@media print` otimizado para papel A4 e PDF).
+  - Inclui resumo da cota parlamentar (CEAP), notas fiscais recentes, projetos autorais e deliberações em plenário.
+  - **Selo Criptográfico SHA-256**: Geração de hash de integridade local via `crypto.subtle.digest` para atestar a fidelidade dos dados abertos na data de emissão.
+- **Cards Cívicos para Redes Sociais (Canvas / WhatsApp / Stories):**
+  - Geração dinâmica em HTML5 Canvas de cards visuais elegantes (1080x1080) com foto oficial, dados do mandato e posicionamentos de voto.
+  - Download em PNG e integração nativa com *Web Share API* para compartilhamento direto no WhatsApp, Telegram e redes sociais.
+- **Modo Confronto Direto 1 vs 1:**
+  - Matriz de alinhamento entre dois parlamentares quaisquer monitorados.
+  - Cálculo automático da taxa de convergência (% de votos coincidentes), matérias onde concordaram vs onde divergiram e geração de card de confronto.
+- **Dados Eleitorais do TSE (DivulgaCandContas — Fase 5):**
+  - Número oficial de urna do candidato e ano eleitoral de registro.
+  - Patrimônio declarado no registro de candidatura (bens declarados perante a Justiça Eleitoral).
+  - Financiamento de campanha: proporção auditada entre recursos do Fundo Especial de Financiamento de Campanha (FEFC) e doações privadas de pessoas físicas.
+  - Link canônico e direto para a ficha de prestação de contas oficial no portal DivulgaCandContas do TSE.
+  - Consolidação eleitoral automática no Dossiê Cívico emitido com hash SHA-256.
+- **Expansão Federativa & Poder Local (Fase 6):**
+  - **Assembleias Legislativas Estaduais:** Além da ALESP (SP), expansão com a ALERJ (Assembleia Legislativa do Rio de Janeiro - 70 deputados) e ALMG (Assembleia Legislativa de Minas Gerais - 77 deputados), com gabinetes, ramais e bases regionais.
+  - **Esfera Municipal & Vereadores:** Suporte ao mandato municipal 2025–2028 para vereadores(as), chip temático próprio e integração da CMSP (Câmara Municipal de São Paulo - Palácio Anchieta).
+  - **Seletor de Domicílio Eleitoral:** Configuração personalizável de Estado (UF) e Cidade no Perfil do Cidadão, mantendo a privacidade estrita (100% offline e client-side no `localStorage`).
+- **Assiduidade, Presença & Fidelidade Partidária (Fase 7):**
+  - **Rastreador de Presença e Faltas:** Contabilidade de sessões deliberativas convocadas, presenças registradas, faltas justificadas com atestado/missão oficial e faltas não justificadas.
+  - **Índice de Fidelidade Partidária:** Taxa de alinhamento do parlamentar com a orientação oficial da liderança da sua bancada partidária, destacando votações de dissidência ou votos independentes.
+  - **Atuação como Relator:** Painel de matérias e proposições relatadas pelo parlamentar em comissões temáticas permanentes e especiais com status de tramitação e pareceres técnicos emitidos.
+  - **Consolidação no Dossiê Cívico:** Inclusão dos índices de assiduidade e fidelidade partidária no relatório impresso/PDF protegido pelo selo criptográfico SHA-256.
+- **Detecção Inteligente de "Jabutis" & Sumarizador Cívico (Fase 8):**
+  - **Scanner de Jabutis (Contrabando Legislativo):** Algoritmo semântico em linguagem natural (*client-side* no navegador, 100% privado e em conformidade estrita com a LGPD) que audita a coerência temática de emendas e artigos de Medidas Provisórias e Projetos de Lei. Emite alertas de risco (*Baixo, Médio, Alto*) e cita a jurisprudência vinculante do STF (ADI 5127).
+  - **Sumarizador Didático de Proposições:** Síntese instantânea em linguagem simples explicando: *O que muda na prática*, *Impacto financeiro e orçamentário*, e *Quem ganha e quem paga*.
+  - **Simulador Interativo de Texto:** Ferramenta interativa para o cidadão colar qualquer texto de emenda, parágrafo ou artigo de lei e auditar na hora a presença de temas alheios ao núcleo da matéria.
+- **Glossário Cívico Interativo:**
+  - Dicionário didático embutido com busca rápida para termos legislativos (*Obstrução, Quórum Qualificado, Jabuti, Substitutivo, DVS, MPV, Emendas Pix*).
+- **Experiência Cívica & Governança (Fase 9 — Conforme Stitch Design System):**
+  - **Onboarding Cívico Interativo:** Fluxo guiado em 3 passos para novos usuários apresentando a privacidade radical da LGPD (Art. 5º, II), a conexão com dados abertos oficiais e o ciclo de auditoria de mandato.
+  - **Minha Cola Eleitoral (Cédula Cívica de Mandatos):** Assistente dedicado para preenchimento e vinculação rápida de todos os cargos eletivos (Presidente, Governador, Senadores, Deputados Federais, Estaduais e Vereadores), com visualização do status de preenchimento.
+  - **Painel de Governança & Score de Vigilância Cívica:** Termômetro no Perfil que calcula o índice de vigilância do cidadão (0 a 100 pontos) com base na cobertura de mandatos vigiados, deliberações oficiais checadas e auditorias realizadas.
+  - **Floating Action Button (FAB MD3):** Botão flutuante de ação rápida posicionado na interface para seguir novos representantes ou auditar votações instantaneamente de qualquer tela.
+- **Expansão Federativa Integral (Fase 10 — Cobertura Nacional):**
+  - **Todas as 27 Unidades da Federação:** Suporte nativo às 26 Assembleias Legislativas Estaduais e à Câmara Legislativa do Distrito Federal (CLDF), totalizando mais de 1.059 deputados estaduais e distritais mapeados.
+  - **Todas as 26 Câmaras de Capitais:** Cobertura de todas as capitais brasileiras (Câmara Municipal de São Paulo, Rio, Salvador, Belo Horizonte, Manaus, Curitiba, etc.), com mais de 730 vereadores em exercício monitoráveis.
+  - **Arquitetura Partitioned Lazy-Loading:** Dados particionados por Unidade Federativa (`/src/data/states/{uf}.json` e `/src/data/capitais/{uf}.json`), garantindo carregamento sob demanda, consumo mínimo de dados móveis e funcionamento 100% offline via Service Worker após a primeira consulta.
+  - **Localização Inteligente:** Pré-seleção automática do estado e capital conforme o domicílio cívico configurado pelo cidadão.
+- **Conformidade 100% Google Material Design 3 (M3) & Tipografia Actor:**
+  - **Tipografia Actor (Thomas Junold):** Adoção completa e irrestrita da fonte **Actor** (`https://fonts.googleapis.com/css2?family=Actor&display=swap`) em toda a hierarquia visual (Display, Headline, Title, Body, Label).
+  - **Paleta Tonal M3 (`md-sys-color-*`):** Cores tonais dinâmicas adaptativas (Verde Cívico tonal 40/80, Azul Federal tonal 40/80, Ouro República tonal 40/80) com transição fluida entre Tema Claro e Tema Escuro (*Dark Mode*).
+  - **Superfícies & Elevações Tonais:** Camadas de superfície escalonadas (`surface-container-lowest` até `highest`) e elevações padronizadas M3 (níveis 0 a 5).
+  - **Formas & Raios M3 (`md-sys-shape-*`):** Cantos de 28px para diálogos e modais, 16px para cards e FAB, 8px para inputs e chips, e 9999px (pílula total) para botões e indicadores ativos.
+  - **Componentes Nativos M3:** Top App Bar (64px), Extended Floating Action Button (FAB), Navigation Rail no desktop, Navigation Bar em pílula no mobile e Switches com trilho e thumb no padrão Material You.
+
+
+
+
