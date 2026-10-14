@@ -297,6 +297,69 @@ test.describe('diálogos', () => {
   });
 });
 
+test.describe('navegação entre telas', () => {
+  const navLink = (page, route) => page.locator(`a[data-route="${route}"]:visible`).first();
+  const scrollY = (page) => page.evaluate(() => Math.round(window.scrollY));
+
+  test('Voltar devolve a rolagem; clicar num link abre do topo', async ({ page }) => {
+    await seed(page);
+    await go(page, 'perfil');
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await expect.poll(() => scrollY(page)).toBe(400);
+
+    await navLink(page, 'inicio').click();
+    await expect(page).toHaveURL(/#\/inicio$/);
+    await expect.poll(() => scrollY(page), 'link do app abre do topo').toBe(0);
+
+    await page.goBack();
+    await expect(page).toHaveURL(/#\/perfil$/);
+    await expect.poll(() => scrollY(page), 'Voltar restaura onde o usuário estava').toBe(400);
+
+    await page.goForward();
+    await expect(page).toHaveURL(/#\/inicio$/);
+    await navLink(page, 'perfil').click();
+    await expect.poll(() => scrollY(page), 'abrir a tela de novo por link volta ao topo').toBe(0);
+  });
+
+  test('o conteúdo desliza na direção do item da navegação e o nome da transição some depois', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' }); // não depende do que o sistema do CI informa
+    await seed(page);
+    await go(page, 'inicio');
+    const env = await page.evaluate(() => ({ vt: typeof document.startViewTransition, reduce: matchMedia('(prefers-reduced-motion: reduce)').matches }));
+    test.skip(env.vt !== 'function', 'navegador sem View Transitions: a troca é instantânea');
+    // espia a chamada à transição: registra a direção no instante em que ela começa (sem depender de pegar um atributo passageiro)
+    await page.evaluate(() => {
+      window.__vt = [];
+      const orig = document.startViewTransition.bind(document);
+      document.startViewTransition = (cb) => {
+        window.__vt.push(document.documentElement.dataset.navDir);
+        return orig(cb);
+      };
+    });
+    await navLink(page, 'comparador').click(); // adiante na navegação
+    await expect(page).toHaveURL(/#\/comparador$/);
+    await page.goBack(); // para trás
+    await expect(page).toHaveURL(/#\/inicio$/);
+    const diag = async () => `ambiente: ${JSON.stringify(env)} chamadas: ${JSON.stringify(await page.evaluate(() => window.__vt))} hash: ${await page.evaluate(() => location.hash)}`;
+    await expect.poll(() => page.evaluate(() => window.__vt.join(',')), await diag()).toBe('fwd,back');
+    await expect.poll(() => page.evaluate(() => 'navDir' in document.documentElement.dataset), 'marca some ao fim').toBe(false);
+  });
+
+  test('com movimento reduzido a troca é instantânea, sem transição', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await seed(page);
+    await go(page, 'inicio');
+    await page.evaluate(() => {
+      window.__dirs = [];
+      new MutationObserver(() => window.__dirs.push(document.documentElement.dataset.navDir)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-nav-dir'] });
+    });
+    await navLink(page, 'comparador').click();
+    await expect(page).toHaveURL(/#\/comparador$/);
+    await expect(page.locator('#view h1')).toContainText('Comparador');
+    expect(await page.evaluate(() => window.__dirs)).toEqual([]);
+  });
+});
+
 test.describe('fluxos', () => {
   test('remover político pode ser desfeito na mesma posição', async ({ page }) => {
     await seed(page);

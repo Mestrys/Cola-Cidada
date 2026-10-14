@@ -2157,3 +2157,39 @@ p {
     transition: transform 150ms ease-out;
   }
 }
+
+/* ==========================================================================
+   TRANSIÇÃO ENTRE TELAS
+   Só o conteúdo desliza (não a barra, o cabeçalho nem a navegação), na direção do item da navegação:
+   avançar entra pela direita, voltar pela esquerda. O nome da transição só existe durante ela,
+   porque view-transition-name vira bloco de contenção para elementos fixos do conteúdo.
+   ========================================================================== */
+html[data-nav-dir] .content {
+  view-transition-name: view;
+}
+
+/* Cabeçalho, menu lateral e barra inferior viram grupos próprios: ficam parados e só trocam o item ativo. */
+html[data-nav-dir] .top-header { view-transition-name: top-header; }
+html[data-nav-dir] .side { view-transition-name: side; }
+html[data-nav-dir] .mobile-nav { view-transition-name: mobile-nav; }
+
+html[data-nav-dir='fwd'] { --vt-x: 28px; }
+html[data-nav-dir='back'] { --vt-x: -28px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-nav-dir]::view-transition-old(view) {
+    animation: vt-out var(--dur-short) var(--ease-accelerate) both;
+  }
+
+  html[data-nav-dir]::view-transition-new(view) {
+    animation: vt-in var(--dur-medium) var(--ease-decelerate) both;
+  }
+
+  @keyframes vt-out {
+    to { opacity: 0; transform: translateX(calc(var(--vt-x) * -0.5)); }
+  }
+
+  @keyframes vt-in {
+    from { opacity: 0; transform: translateX(var(--vt-x)); }
+  }
+}
