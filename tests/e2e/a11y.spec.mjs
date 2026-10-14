@@ -168,6 +168,8 @@ test.describe('abas por teclado (padrão WAI-ARIA)', () => {
     const panelOf = async (t) => page.locator(`#${await t.getAttribute('aria-controls')}`);
     // Diálogos movem o foco para dentro ao abrir; só depois de assentar o teste foca a primeira aba.
     await page.waitForFunction(() => !document.querySelector('.overlay') || document.activeElement?.closest('.modal'));
+    // o cadastro move o foco para a busca 60 ms depois de abrir (addPolitician); espera passar para não competir com ele
+    if (await page.locator('.overlay').count()) await page.waitForTimeout(200);
     await tabs.first().focus();
     await page.keyboard.press('ArrowRight');
     await expect(tabs.nth(1)).toBeFocused();
