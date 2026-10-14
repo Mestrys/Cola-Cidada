@@ -1,28 +1,11 @@
 import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
-import { loadComparison, loadSenateComparison, EXPLANATION_NOTE } from '../votes.js';
-import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, $ } from '../ui.js';
+import { loadComparison, loadSenateComparison } from '../votes.js';
+import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $, skeleton } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openGlossaryModal } from '../glossary.js';
 import { openShareModal } from '../share.js';
 import { openAnalysisModal } from '../analysis.js';
-
-function renderExplanationBox(exp) {
-  if (!exp) return '';
-  return `
-  <div class="simple-language-box u-m-8-0">
-    <div class="box-header">
-      <span class="mi u-fs-16" aria-hidden="true">translate</span>
-      <span>Linguagem Cidadã: O que significou este voto?</span>
-    </div>
-    <p class="u-fs-13 u-lh-1_45 u-mb-8">${esc(exp.summary || exp.title)}</p>
-    <div class="stack xs u-gap-4">
-      <div class="u-c-primary"><b>Quem votou SIM:</b> ${esc(exp.yes)}</div>
-      <div class="u-c-error"><b>Quem votou NÃO:</b> ${esc(exp.no)}</div>
-    </div>
-    <p class="xs muted u-mt-6">${esc(EXPLANATION_NOTE)}</p>
-  </div>`;
-}
 
 function camaraVotingCard(v, deputies) {
   const total = (v.tally.Sim || 0) + (v.tally.Não || 0) + (v.tally.Outros || 0) || 1;
@@ -44,8 +27,6 @@ function camaraVotingCard(v, deputies) {
     <div>
       <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.descricao || 'Votação nominal no Plenário')}</h3>
     </div>
-    
-    ${renderExplanationBox(v.explanation)}
 
     <!-- Barra de Quórum Oficial MD3 -->
     <div class="card soft stack u-gap-6 u-p-12">
@@ -113,8 +94,6 @@ function senadoVotingCard(v, senators) {
     <div>
       <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.summary || 'Deliberação no Senado Federal')}</h3>
     </div>
-    
-    ${renderExplanationBox(v.explanation)}
 
     ${
       v.yes > 0 || v.no > 0
@@ -247,7 +226,7 @@ export async function render(root) {
     <!-- Barra de Filtros Legislativos (Stitch) -->
     <div class="card soft stack u-mb-18 u-p-16 u-gap-12">
       <div class="row between">
-        <div class="tabs" id="house-tabs">
+        <div class="tabs" id="house-tabs" aria-label="Casa legislativa">
           <button class="${deputies.length || (!deputies.length && !senators.length) ? 'on' : ''}" data-house="camara">
             Câmara dos Deputados (${deputies.length})
           </button>
@@ -277,7 +256,7 @@ export async function render(root) {
     <div id="camara-pane" class="stack ${deputies.length || (!deputies.length && !senators.length) ? '' : 'hidden'}">
       ${
         deputies.length
-          ? '<div id="camara-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações da Câmara dos Deputados…</span></div></div>'
+          ? `<div id="camara-list" class="stack">${skeleton('Auditando votações da Câmara dos Deputados…', 2)}</div>`
           : `
         <div class="card empty">
           <span class="mi" aria-hidden="true">how_to_vote</span>
@@ -291,7 +270,7 @@ export async function render(root) {
     <div id="senado-pane" class="stack ${!deputies.length && senators.length ? '' : 'hidden'}">
       ${
         senators.length
-          ? '<div id="senado-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações do Senado Federal…</span></div></div>'
+          ? `<div id="senado-list" class="stack">${skeleton('Auditando votações do Senado Federal…', 2)}</div>`
           : `
         <div class="card empty">
           <span class="mi" aria-hidden="true">account_balance</span>
@@ -359,7 +338,7 @@ export async function render(root) {
       </div>
 
       <div id="mpv-list" class="stack">
-        <div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Carregando Medidas Provisórias…</span></div>
+        ${skeleton('Carregando Medidas Provisórias…', 2)}
       </div>
     </div>
 
@@ -571,6 +550,7 @@ export async function render(root) {
       if (house === 'confronto') computeConfrontation();
     };
   });
+  tablist($('#house-tabs', root), (b) => $(`#${b.dataset.house}-pane`, root));
 
   // Filtros combinados
   let activeTheme = 'all';

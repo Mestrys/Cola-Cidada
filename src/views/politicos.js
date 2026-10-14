@@ -6,7 +6,7 @@ import {
   senatorVotes,
   getTseElectoralProfile,
 } from '../api.js';
-import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast } from '../ui.js';
+import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist, skeleton } from '../ui.js';
 import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
 import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -164,7 +164,7 @@ async function openPoliticianDetails(p) {
     </div>
 
     <!-- Navegação de Abas MD3 -->
-    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="pol-tabs">
+    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="pol-tabs" aria-label="Seções da ficha">
       ${
         isDeputy
           ? `
@@ -190,25 +190,25 @@ async function openPoliticianDetails(p) {
       isDeputy
         ? `
       <div id="tab-gastos" class="stack pol-pane u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Auditando cota parlamentar (CEAP)…</span></div>
+        ${skeleton('Auditando cota parlamentar (CEAP)…', 2)}
       </div>
       <div id="tab-projetos" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Consultando projetos de lei…</span></div>
+        ${skeleton('Consultando projetos de lei…', 2)}
       </div>
       <div id="tab-perfil" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Consultando dados do gabinete oficial…</span></div>
+        ${skeleton('Consultando dados do gabinete oficial…', 1)}
       </div>
       <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das sessões e votações oficiais…</span></div>
+        ${skeleton('Calculando presença e fidelidade a partir das sessões e votações oficiais…', 1)}
       </div>
     `
         : isSenator
         ? `
       <div id="tab-senado" class="stack pol-pane u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Carregando votações nominais no Senado…</span></div>
+        ${skeleton('Carregando votações nominais no Senado…', 2)}
       </div>
       <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das votações oficiais do Senado…</span></div>
+        ${skeleton('Calculando presença e fidelidade a partir das votações oficiais do Senado…', 1)}
       </div>
     `
         : `
@@ -319,17 +319,10 @@ async function openPoliticianDetails(p) {
 
   // Alternância de abas do modal
   const tabs = el.querySelectorAll('#pol-tabs button');
-  el.querySelector('#pol-tabs')?.setAttribute('role', 'tablist');
   tabs.forEach((btn) => {
-    btn.setAttribute('role', 'tab');
-    btn.setAttribute('aria-selected', String(btn.classList.contains('on')));
     btn.onclick = () => {
-      tabs.forEach((b) => {
-        b.classList.remove('on');
-        b.setAttribute('aria-selected', 'false');
-      });
+      tabs.forEach((b) => b.classList.remove('on'));
       btn.classList.add('on');
-      btn.setAttribute('aria-selected', 'true');
       btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       const targetTab = btn.dataset.tab;
       el.querySelectorAll('.pol-pane').forEach((p) => p.classList.add('hidden'));
@@ -337,6 +330,7 @@ async function openPoliticianDetails(p) {
       if (activePane) activePane.classList.remove('hidden');
     };
   });
+  tablist(el.querySelector('#pol-tabs'), (b) => el.querySelector(`#tab-${b.dataset.tab}`));
 
   if (isDeputy) {
     const paneGastos = el.querySelector('#tab-gastos');

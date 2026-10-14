@@ -30,19 +30,27 @@ test.describe('telas', () => {
     }
   });
 
-  test('barras de progresso recebem a largura de data-w sem style no HTML', async ({ page }) => {
+  // fração visível da pílula: ela ocupa a trilha toda e é deslocada para a esquerda por transform
+  const fillOf = (i) => {
+    const w = i.offsetWidth;
+    return Math.round(((w + new DOMMatrix(getComputedStyle(i).transform).m41) / w) * 100);
+  };
+
+  test('barras de progresso refletem data-w por transform, sem style de largura no HTML', async ({ page }) => {
     await seed(page);
     await go(page, 'meus-politicos');
     const bar = page.locator('.pol-card .bar > i').first();
     const pct = parseInt((await page.locator('.pol-card b', { hasText: '% cumprido' }).first().innerText()), 10);
-    const [fill, track] = await bar.evaluate((i) => [i.getBoundingClientRect().width, i.parentElement.getBoundingClientRect().width]);
-    expect(Math.round((fill / track) * 100)).toBe(pct);
-    // elementos inseridos depois da primeira renderização também são cobertos
-    const w = await page.evaluate(() => {
+    await expect.poll(() => bar.evaluate(fillOf), 'preenchimento final (após a transição)').toBe(pct);
+    expect(await bar.evaluate((i) => i.style.width), 'não usa width').toBe('');
+    // barra que chega depois da primeira exibição entra já no lugar, sem recomeçar do zero
+    await page.waitForTimeout(1200);
+    const late = await page.evaluate((fn) => {
       document.body.insertAdjacentHTML('beforeend', '<div class="bar" id="t"><i data-w="25"></i></div>');
-      return new Promise((r) => queueMicrotask(() => queueMicrotask(() => r(document.querySelector('#t i').style.width))));
-    });
-    expect(w).toBe('25%');
+      const i = document.querySelector('#t i');
+      return new Promise((r) => queueMicrotask(() => queueMicrotask(() => r(new Function('i', `return (${fn})(i)`)(i)))));
+    }, fillOf.toString());
+    expect(late).toBe(25);
   });
 
   test('ícones não herdam maiúsculas nem espaçamento (a ligadura se perderia)', async ({ page }) => {
@@ -96,7 +104,7 @@ test.describe('telas', () => {
     const collect = async () => (await page.$$eval('.mi', (els) => els.map((e) => e.textContent.trim()))).forEach((t) => t && used.add(t));
     for (const r of ROUTES) { await go(page, r); await collect(); }
     await go(page, 'meus-politicos');
-    for (const sel of ['[data-details]', '[data-dossier]', '[data-share]', '#global-fab']) {
+    for (const sel of ['[data-details]', '[data-dossier]', '[data-share]', '#add']) {
       await page.locator(sel).first().click();
       await page.waitForSelector('.overlay .modal');
       await collect();
@@ -168,8 +176,11 @@ test.describe('diálogos', () => {
     await page.keyboard.press('Enter');
     await expect(page.locator('.modal')).toHaveAttribute('aria-labelledby', /.+/);
     await expect(page.locator('.app-wrapper'), 'fundo fora do alcance do leitor de tela').toHaveAttribute('inert');
-    for (let i = 0; i < 30; i++) await page.keyboard.press('Tab');
-    expect(await page.evaluate(() => !!document.activeElement.closest('.modal'))).toBe(true);
+    // A cada Tab (e Shift+Tab) o foco segue dentro do diálogo; abas inativas (tabindex=-1) não contam como fim do ciclo.
+    for (const key of [...Array(15).fill('Tab'), ...Array(15).fill('Shift+Tab')]) {
+      await page.keyboard.press(key);
+      expect(await page.evaluate(() => !!document.activeElement.closest('.modal')), `foco escapou após ${key}`).toBe(true);
+    }
     await page.keyboard.press('Escape');
     await expect(page.locator('.overlay')).toHaveCount(0);
     await expect(trigger).toBeFocused();
@@ -204,12 +215,219 @@ test.describe('diálogos', () => {
     await expect(page.locator('.overlay')).toHaveCount(0);
   });
 
+  // Toques reais via CDP (geram Pointer Events na alça e eventos de toque no corpo).
+  const touchTools = async (page, context) => {
+    const cdp = await context.newCDPSession(page);
+    const send = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
+    const offset = () => page.locator('.modal').evaluate((m) => parseFloat(m.style.transform.match(/translateY\(([-\d.]+)px\)/)?.[1] ?? '0'));
+    return { send, offset };
+  };
+
+  test('folha: a alça fecha mesmo com o conteúdo rolado (o corpo só rola)', async ({ page, isMobile, context }) => {
+    test.skip(!isMobile, 'gesto só no celular');
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.waitForTimeout(600);
+    // em repouso a alça não cobre nada do conteúdo (a faixa é sólida: já cortou o avatar do cabeçalho)
+    const overlap = await page.locator('.modal').evaluate((m) => m.querySelector('.sheet-grabber').getBoundingClientRect().bottom - m.children[1].getBoundingClientRect().top);
+    expect(overlap, 'alça sobre o conteúdo').toBeLessThanOrEqual(0.5);
+    // conteúdo comprido e já rolado: antes, arrastar de cima rolava o conteúdo em vez de fechar a folha
+    await page.locator('.modal').evaluate((m) => {
+      const pad = document.createElement('div');
+      pad.style.height = '1500px';
+      m.append(pad);
+      m.scrollTop = 80;
+    });
+    const { send } = await touchTools(page, context);
+    const box = await page.locator('.sheet-grabber').boundingBox();
+    const x = box.x + box.width / 2, y = box.y + box.height / 2;
+    await send('touchStart', x, y);
+    for (let i = 1; i <= 8; i++) {
+      await send('touchMove', x, y + i * 40);
+      await page.waitForTimeout(10);
+    }
+    await send('touchEnd');
+    await expect(page.locator('.overlay')).toHaveCount(0);
+  });
+
+  test('folha: pode ser agarrada no meio da entrada e do fechamento', async ({ page, isMobile, context }) => {
+    test.skip(!isMobile, 'gesto só no celular');
+    await seed(page);
+    await go(page, 'meus-politicos');
+    // relógio parado: o tempo só anda com runFor, então "no meio da animação" é determinístico
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 60_000));
+    const { send, offset } = await touchTools(page, context);
+
+    // entrada: com o tempo parado a 60 ms, a folha ainda está bem abaixo do repouso
+    await page.locator('[data-details]').first().click();
+    await page.clock.runFor(100);
+    const mid = await offset();
+    expect(mid, 'folha ainda subindo').toBeGreaterThan(20);
+    const vh = page.viewportSize().height;
+    const box = await page.locator('.modal').boundingBox();
+    const x = box.x + box.width / 2, y = Math.min(box.y + 80, vh - 8); // dentro da folha e da tela
+    await send('touchStart', x, y);
+    await send('touchMove', x, y + 20);
+    await send('touchMove', x, y + 120);
+    // antes a animação (@keyframes) vencia o arrasto; agora o dedo continua de onde a folha estava
+    expect(await offset(), 'arrasto segue o dedo a partir do valor apresentado').toBeGreaterThan(mid + 60);
+    await send('touchEnd');
+    await page.clock.runFor(1500);
+    await expect(page.locator('.overlay')).toHaveCount(0);
+
+    // fechamento: agarrar a folha que desce a traz de volta, e ela continua fechável
+    await page.locator('[data-details]').first().click();
+    await page.clock.runFor(1000);
+    await page.locator('.modal').evaluate((m) => m.querySelector('[data-close]')?.click());
+    await page.clock.runFor(60);
+    const midClose = await offset();
+    expect(midClose, 'folha descendo').toBeGreaterThan(20);
+    const box2 = await page.locator('.modal').boundingBox();
+    const x2 = box2.x + box2.width / 2, y2 = Math.min(box2.y + 80, vh - 8);
+    await send('touchStart', x2, y2);
+    await send('touchMove', x2, y2 + 1);
+    await send('touchEnd');
+    await page.clock.runFor(1500);
+    await expect(page.locator('.overlay'), 'agarrada, a folha volta e fica').toHaveCount(1);
+    await page.keyboard.press('Escape');
+    await page.clock.runFor(1500);
+    await expect(page.locator('.overlay'), 'e ainda fecha depois').toHaveCount(0);
+  });
+
+  test('desfoque do fundo só em telas largas; no celular o fundo só escurece', async ({ page, isMobile }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.waitForSelector('.overlay .modal');
+    const f = await page.locator('.overlay').evaluate((o) => getComputedStyle(o).backdropFilter);
+    if (isMobile) expect(f, 'sem blur de tela inteira no celular').toBe('none');
+    else expect(f).toContain('blur');
+  });
+
   test('movimento reduzido troca deslizamento por esmaecimento', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await seed(page);
     await go(page, 'meus-politicos');
     await page.locator('[data-details]').first().click();
     expect(await page.locator('.modal').evaluate((m) => getComputedStyle(m).animationName)).toBe('fade');
+  });
+});
+
+test.describe('navegação entre telas', () => {
+  const navLink = (page, route) => page.locator(`a[data-route="${route}"]:visible`).first();
+  const scrollY = (page) => page.evaluate(() => Math.round(window.scrollY));
+
+  test('Voltar devolve a rolagem; clicar num link abre do topo', async ({ page }) => {
+    await seed(page);
+    await go(page, 'perfil');
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await expect.poll(() => scrollY(page)).toBe(400);
+
+    await navLink(page, 'inicio').click();
+    await expect(page).toHaveURL(/#\/inicio$/);
+    await expect.poll(() => scrollY(page), 'link do app abre do topo').toBe(0);
+
+    await page.goBack();
+    await expect(page).toHaveURL(/#\/perfil$/);
+    await expect.poll(() => scrollY(page), 'Voltar restaura onde o usuário estava').toBe(400);
+
+    await page.goForward();
+    await expect(page).toHaveURL(/#\/inicio$/);
+    await navLink(page, 'perfil').click();
+    await expect.poll(() => scrollY(page), 'abrir a tela de novo por link volta ao topo').toBe(0);
+  });
+
+  test('o conteúdo desliza na direção do item da navegação e o nome da transição some depois', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' }); // não depende do que o sistema do CI informa
+    await seed(page);
+    await go(page, 'inicio');
+    const env = await page.evaluate(() => ({ vt: typeof document.startViewTransition, reduce: matchMedia('(prefers-reduced-motion: reduce)').matches }));
+    test.skip(env.vt !== 'function', 'navegador sem View Transitions: a troca é instantânea');
+    // espia a chamada à transição: registra a direção no instante em que ela começa (sem depender de pegar um atributo passageiro)
+    await page.evaluate(() => {
+      window.__vt = [];
+      const orig = document.startViewTransition.bind(document);
+      document.startViewTransition = (cb) => {
+        window.__vt.push(document.documentElement.dataset.navDir);
+        return orig(cb);
+      };
+    });
+    await navLink(page, 'comparador').click(); // adiante na navegação
+    // espera a tela nova montar antes de voltar: com a página lenta os dois hashchange se acumulariam e o app,
+    // ao tratá-los, já leria o endereço final (inicio → inicio, sem transição)
+    await expect(page.locator('#view h1')).toContainText('Comparador');
+    await page.goBack(); // para trás
+    await expect(page.locator('#view h1')).toContainText('Painel');
+    const diag = async () => `ambiente: ${JSON.stringify(env)} chamadas: ${JSON.stringify(await page.evaluate(() => window.__vt))} hash: ${await page.evaluate(() => location.hash)}`;
+    await expect.poll(() => page.evaluate(() => window.__vt.join(',')), await diag()).toBe('fwd,back');
+    await expect.poll(() => page.evaluate(() => 'navDir' in document.documentElement.dataset), 'marca some ao fim').toBe(false);
+  });
+
+  test('com movimento reduzido a troca é instantânea, sem transição', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await seed(page);
+    await go(page, 'inicio');
+    await page.evaluate(() => {
+      window.__dirs = [];
+      new MutationObserver(() => window.__dirs.push(document.documentElement.dataset.navDir)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-nav-dir'] });
+    });
+    await navLink(page, 'comparador').click();
+    await expect(page).toHaveURL(/#\/comparador$/);
+    await expect(page.locator('#view h1')).toContainText('Comparador');
+    expect(await page.evaluate(() => window.__dirs)).toEqual([]);
+  });
+});
+
+test.describe('abas e carregamento', () => {
+  test('o indicador acompanha a aba ativa e desliza ao trocar; o painel entra com esmaecimento', async ({ page }) => {
+    await seed(page);
+    await go(page, 'comparador');
+    const tabs = page.locator('#house-tabs > button');
+    const ind = page.locator('#house-tabs > .tab-ind');
+    const gap = async (tab) => {
+      const [a, b] = await Promise.all([ind.boundingBox(), tab.boundingBox()]);
+      return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y), Math.abs(a.width - b.width), Math.abs(a.height - b.height));
+    };
+    await expect(ind).toHaveClass(/ready/);
+    expect(await gap(tabs.nth(0)), 'indicador sobre a aba ativa').toBeLessThanOrEqual(1);
+    // a pílula passa a ser o indicador, não o botão
+    expect(await tabs.nth(0).evaluate((b) => getComputedStyle(b).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+
+    const anim = await page.evaluate(() => {
+      const btn = document.querySelectorAll('#house-tabs > button')[1];
+      btn.click();
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      return getComputedStyle(panel).animationName;
+    });
+    expect(anim, 'painel novo entra com animação').toBe('tab-in');
+    await expect.poll(() => gap(tabs.nth(1)), 'indicador chega na aba nova').toBeLessThanOrEqual(1);
+    expect(await ind.evaluate((i) => getComputedStyle(i).transitionProperty)).toContain('transform');
+  });
+
+  test('carregamento mostra a forma do conteúdo, com a legenda anunciada como status', async ({ page }) => {
+    await seed(page);
+    // segura as respostas das APIs para flagrar o estado de carregamento
+    await page.route(/dadosabertos\.camara\.leg\.br|legis\.senado\.leg\.br/, () => {});
+    await go(page, 'inicio');
+    const sk = page.locator('#feed .skeleton');
+    await expect(sk).toBeVisible();
+    await expect(sk).toHaveAttribute('role', 'status');
+    await expect(sk).toContainText('Carregando votações recentes');
+    await expect(sk.locator('.sk-card')).toHaveCount(2);
+    await expect(sk.locator('.sk-card').first().locator('.sk-line')).toHaveCount(3);
+    expect(await page.locator('#feed .spin').count(), 'sem spinner na lista').toBe(0);
+  });
+
+  test('com movimento reduzido o brilho do espaço de carregamento fica parado', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await seed(page);
+    await page.route(/dadosabertos\.camara\.leg\.br|legis\.senado\.leg\.br/, () => {});
+    await go(page, 'inicio');
+    const line = page.locator('#feed .sk-line').first();
+    await expect(line).toBeVisible();
+    expect(await line.evaluate((l) => getComputedStyle(l, '::after').animationName)).toBe('none');
   });
 });
 
@@ -223,6 +441,70 @@ test.describe('fluxos', () => {
     await expect(page.locator('.pol-card')).toHaveCount(3);
     const ids = await page.evaluate(() => JSON.parse(localStorage.getItem('monitor-cidadao:v1')).politicians.map((p) => p.id));
     expect(ids[0]).toBe('camara-160561');
+  });
+
+  test('aviso: arrastar para o lado dispensa; arrasto curto volta e o aviso fica', async ({ page }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-remove]').first().click();
+    const toast = page.locator('.toast');
+    await expect(toast).toBeVisible();
+    await page.waitForTimeout(400); // fim da animação de entrada
+    const drag = async (dx, steps, ms) => {
+      const b = await toast.boundingBox();
+      const x = b.x + 24, y = b.y + b.height / 2; // fora do botão Desfazer
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      for (let i = 1; i <= steps; i++) {
+        await page.mouse.move(x + (dx * i) / steps, y);
+        await page.waitForTimeout(ms);
+      }
+      await page.mouse.up();
+    };
+    // curto e lento: volta ao lugar e continua ali
+    await drag(30, 6, 30);
+    await expect.poll(() => toast.evaluate((t) => t.style.transform), 'volta ao lugar').toMatch(/^$|translateX\(0(px)?\)|translateX\(-?0\.\d+px\)/);
+    await expect(toast).toBeVisible();
+    // longo: sai de cena e some, sem desfazer a remoção
+    await drag(500, 6, 8);
+    await expect(page.locator('.toast')).toHaveCount(0);
+    await expect(page.locator('.pol-card')).toHaveCount(2);
+  });
+
+  test('toque háptico curto ao remover e ao desfazer; nenhum com movimento reduzido', async ({ page }) => {
+    await page.addInitScript(() => {
+      window.__vib = [];
+      Object.defineProperty(navigator, 'vibrate', { configurable: true, value: (ms) => { window.__vib.push(ms); return true; } });
+    });
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-remove]').first().click();
+    await page.locator('.toast-action').click();
+    expect(await page.evaluate(() => window.__vib), 'remover (15) e desfazer (8)').toEqual([15, 8]);
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.evaluate(() => { window.__vib = []; });
+    await page.locator('[data-remove]').first().click();
+    await page.locator('.toast-action').click();
+    expect(await page.evaluate(() => window.__vib), 'sem háptico com movimento reduzido').toEqual([]);
+  });
+
+  test('pressão proporcional ao tamanho: ícones afundam mais, cartões menos', async ({ page }) => {
+    await seed(page);
+    await go(page, 'inicio');
+    const scale = (sel) => page.evaluate((sel) => {
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch { continue; } // folhas de outra origem (fontes) não são legíveis
+        for (const r of rules) {
+          if (r.selectorText === sel) return r.style.transform;
+        }
+      }
+      return null;
+    }, sel);
+    expect(await scale('.btn.icon:active, .header-user-btn:active')).toBe('scale(0.9)');
+    expect(await scale('button.chip:active, a.chip:active, .tabs button:active')).toBe('scale(0.95)');
+    expect(await scale('a.card:active')).toBe('scale(0.985)');
   });
 
   test('tema segue o sistema e o botão do cabeçalho alterna', async ({ page, isMobile }) => {
@@ -239,7 +521,7 @@ test.describe('fluxos', () => {
   test('cadastro abre no estado do domicílio e grava o mandato da UF', async ({ page }) => {
     await seed(page, { politicians: [], domicile: { state: 'MG', city: 'Belo Horizonte' } });
     await go(page, 'meus-politicos');
-    await page.locator('#global-fab').click();
+    await page.locator('#add').click();
     await expect(page.locator('#sel-state-uf')).toHaveValue('MG');
     await page.locator('#tabs button[data-tab=estadual]').click();
     await page.locator('.btn-select-est').first().click();

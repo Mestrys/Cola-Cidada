@@ -46,9 +46,7 @@ Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não 
   - Busca oficial e fotos dos 81 senadores da República em exercício por nome ou UF.
   - Votações nominais do Plenário do Senado com resultado oficial e voto individual.
   - Cálculo exato de término do mandato de 8 anos a partir dos dados do Senado.
-- **Linguagem Cidadã & Filtros Temáticos:**
-  - Síntese descomplicada do impacto das principais votações ("O que significou este voto: Quem votou SIM... Quem votou NÃO...").
-  - Filtros temáticos por área (Economia, Tecnologia, Social/Saúde, Meio Ambiente, Segurança).
+- **Filtros temáticos:** votações por área (Economia, Tecnologia, Social/Saúde, Meio Ambiente, Segurança).
 - **PWA & Funcionamento Offline:**
   - Instalável como aplicativo no celular e desktop (`manifest.webmanifest` e `icon.svg`).
   - `sw.js` (Service Worker) ativo com cache do app shell e estratégia de fallback para dados consultados offline.
@@ -117,7 +115,7 @@ Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não 
 - **Materiais:** cabeçalho e barra inferior translúcidos, com divisória só quando há conteúdo rolando por baixo.
 - **Feedback:** resposta no pressionar; hover só em dispositivos com ponteiro; remover político pode ser desfeito pelo snackbar.
 - **Preferências do sistema:** tema segue `prefers-color-scheme` até o usuário escolher; `prefers-reduced-motion` troca deslizamentos por crossfade; `prefers-reduced-transparency` e `prefers-contrast` deixam as superfícies sólidas e com contornos fortes.
-- **Leitor de tela e teclado:** ícones da fonte ficam com `aria-hidden` (o nome da ligadura não é lido); ao trocar de tela o foco vai para o título; o primeiro Tab mostra "Pular para o conteúdo"; com diálogo aberto o resto do app fica `inert`. No toque, chips e botões têm área clicável de 44px sem mudar o visual. Testes em `tests/e2e/a11y.spec.mjs`.
+- **Leitor de tela e teclado:** ícones da fonte ficam com `aria-hidden` (o nome da ligadura não é lido); ao trocar de tela o foco vai para o título; o primeiro Tab mostra "Pular para o conteúdo"; com diálogo aberto o resto do app fica `inert`. As abas (ficha, cadastro, Comparador e análise) seguem o padrão WAI-ARIA: um só ponto de Tab por grupo, setas/Home/End para trocar. No toque, chips e botões têm área clicável de 44px sem mudar o visual. Testes em `tests/e2e/a11y.spec.mjs`.
 
 ## Dados que NÃO são exibidos (por falta de fonte implementada)
 
