@@ -337,9 +337,11 @@ test.describe('navegação entre telas', () => {
       };
     });
     await navLink(page, 'comparador').click(); // adiante na navegação
-    await expect(page).toHaveURL(/#\/comparador$/);
+    // espera a tela nova montar antes de voltar: com a página lenta os dois hashchange se acumulariam e o app,
+    // ao tratá-los, já leria o endereço final (inicio → inicio, sem transição)
+    await expect(page.locator('#view h1')).toContainText('Comparador');
     await page.goBack(); // para trás
-    await expect(page).toHaveURL(/#\/inicio$/);
+    await expect(page.locator('#view h1')).toContainText('Painel');
     const diag = async () => `ambiente: ${JSON.stringify(env)} chamadas: ${JSON.stringify(await page.evaluate(() => window.__vt))} hash: ${await page.evaluate(() => location.hash)}`;
     await expect.poll(() => page.evaluate(() => window.__vt.join(',')), await diag()).toBe('fwd,back');
     await expect.poll(() => page.evaluate(() => 'navDir' in document.documentElement.dataset), 'marca some ao fim').toBe(false);

@@ -436,7 +436,7 @@ a {
 
 .label-small, .xs {
   font-family: var(--md-sys-typescale-font);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1rem;
   letter-spacing: 0.5px;
 }
@@ -510,7 +510,7 @@ a {
 }
 
 .header-brand .brand-subtitle {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--md-sys-color-on-surface-variant);
   letter-spacing: 0.5px;
 }
@@ -1259,7 +1259,7 @@ a {
 .vote {
   padding: 0.25rem 0.75rem;
   border-radius: var(--md-sys-shape-corner-small);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   background: var(--md-sys-color-surface-container);
@@ -1298,7 +1298,7 @@ a {
 }
 
 .stat > span {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--md-sys-color-on-surface-variant);
   letter-spacing: 0.3px;
 }
@@ -1440,7 +1440,7 @@ a {
   justify-content: space-between;
   padding-top: 1.125rem;
   border-top: 1px solid var(--md-sys-color-outline-variant);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
@@ -1523,7 +1523,7 @@ a {
     gap: 0.25rem;
     font-family: var(--md-sys-typescale-font);
     /* rótulos da barra inferior crescem pouco: com fonte grande, cinco itens ainda cabem */
-    font-size: clamp(11px, 0.6875rem, 13px);
+    font-size: clamp(12px, 0.75rem, 13px);
     letter-spacing: 0.5px;
     color: var(--md-sys-color-on-surface-variant);
     flex: 1 1 0;
@@ -1900,7 +1900,7 @@ button.chip:active, a.chip:active,
 
   .modal {
     max-width: none;
-    max-height: 92dvh;
+    max-height: min(92dvh, calc(var(--vv-h, 100dvh) - 0.5rem));
     border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 0 0;
     border-bottom: 0;
     padding: 0.75rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));

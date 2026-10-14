@@ -116,10 +116,35 @@ export function modal(html) {
     m.setAttribute('aria-labelledby', heading.id);
   }
 
+  // Teclado virtual: o diálogo acompanha a área realmente visível (o iOS não encolhe a viewport de layout),
+  // então a folha encosta no teclado em vez de ficar escondida atrás dele.
+  const vv = window.visualViewport;
+  const fit = () => {
+    const zoomed = vv.scale > 1.01;
+    o.style.top = zoomed ? '' : `${vv.offsetTop}px`;
+    o.style.height = zoomed ? '' : `${vv.height}px`;
+    o.style.setProperty('--vv-h', zoomed ? '100dvh' : `${vv.height}px`);
+  };
+  const reveal = (e) => {
+    // com o teclado abrindo, o campo focado vai para o meio da área visível
+    if (!e.target.matches('input, textarea, select')) return;
+    setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' }), 300);
+  };
+  if (vv) {
+    vv.addEventListener('resize', fit);
+    vv.addEventListener('scroll', fit);
+    fit();
+  }
+  o.addEventListener('focusin', reveal);
+
   let closed = false;
   let sheet = null;
   const finish = () => {
     if (!o.isConnected) return;
+    if (vv) {
+      vv.removeEventListener('resize', fit);
+      vv.removeEventListener('scroll', fit);
+    }
     o.remove();
     document.removeEventListener('keydown', onKey, true);
     if (--scrollLocks === 0) setBackgroundInert(false);
