@@ -1709,6 +1709,11 @@ button.chip:active, a.chip:active,
   scroll-snap-align: start;
 }
 
+/* A alça só existe na folha inferior (telas estreitas). */
+.sheet-grabber {
+  display: none;
+}
+
 /* --- Diálogo: itens não encolhem (as abas sumiam), rolagem contida --- */
 .modal > * {
   flex-shrink: 0;
@@ -1899,33 +1904,38 @@ button.chip:active, a.chip:active,
     border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 0 0;
     border-bottom: 0;
     padding: 0.75rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
-    animation: sheet-in var(--dur-medium) var(--ease-decelerate);
   }
 
-  .modal::before {
-    content: '';
+  /* Entrada e saída são movidas por mola em ui.js (createSheet); nada de @keyframes aqui. */
+  .overlay.sheet-mode,
+  .overlay.sheet-mode .modal {
+    animation: none;
+  }
+
+  /* Alça: faixa sólida e fixa no topo da folha. Arrasta sempre, mesmo com o conteúdo rolado. */
+  .sheet-grabber {
+    display: block;
     position: sticky;
-    top: 0;
+    top: -0.75rem; /* o sticky mede a partir do conteúdo; sobe o valor do padding da folha */
     z-index: 2;
-    align-self: center;
+    height: 1.75rem;
+    margin: -0.75rem -1.25rem -1.0625rem;
+    background: var(--md-sys-color-surface-container-high);
+    touch-action: none;
+    cursor: grab;
+  }
+
+  .sheet-grabber::before {
+    content: '';
+    position: absolute;
+    top: 0.75rem;
+    left: 50%;
     width: 36px;
     height: 5px;
-    margin-bottom: -6px;
+    transform: translateX(-50%);
     border-radius: var(--md-sys-shape-corner-full);
     background: var(--md-sys-color-outline);
     opacity: 0.55;
-  }
-
-  .overlay.closing .modal {
-    animation: sheet-out var(--dur-short) var(--ease-accelerate) forwards;
-  }
-
-  @keyframes sheet-in {
-    from { transform: translateY(100%); }
-  }
-
-  @keyframes sheet-out {
-    to { transform: translateY(100%); }
   }
 }
 
