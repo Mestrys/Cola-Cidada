@@ -241,8 +241,11 @@ test.describe('navegação entre telas', () => {
   });
 
   test('o conteúdo desliza na direção do item da navegação e o nome da transição some depois', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' }); // não depende do que o sistema do CI informa
     await seed(page);
     await go(page, 'inicio');
+    const env = await page.evaluate(() => ({ vt: typeof document.startViewTransition, reduce: matchMedia('(prefers-reduced-motion: reduce)').matches }));
+    test.skip(env.vt !== 'function', 'navegador sem View Transitions: a troca é instantânea');
     await page.evaluate(() => {
       window.__dirs = [];
       new MutationObserver(() => {
@@ -254,7 +257,7 @@ test.describe('navegação entre telas', () => {
     await expect(page).toHaveURL(/#\/comparador$/);
     await page.goBack(); // para trás
     await expect(page).toHaveURL(/#\/inicio$/);
-    await expect.poll(() => page.evaluate(() => window.__dirs.join(','))).toBe('fwd,back');
+    await expect.poll(() => page.evaluate(() => window.__dirs.join(',')), `ambiente: ${JSON.stringify(env)}`).toBe('fwd,back');
     await expect.poll(() => page.evaluate(() => 'navDir' in document.documentElement.dataset), 'marca some ao fim').toBe(false);
   });
 
