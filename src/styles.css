@@ -154,7 +154,9 @@
   /* ==========================================================================
      M3 TIPOGRAFIA — FONTE ACTOR (Thomas Junold)
      ========================================================================== */
-  --md-sys-typescale-font: 'Actor', sans-serif;
+  /* Corpo e controles: fonte do sistema, com pesos reais. Actor só nos títulos e na marca (--font-display). */
+  --md-sys-typescale-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Actor', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-family: var(--md-sys-typescale-font);
   color-scheme: light;
 
@@ -2117,6 +2119,17 @@ p {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
+}
+
+/* --- Títulos de página e marca em Actor ---
+   A Actor só existe no peso 400; font-synthesis: none impede o negrito sintético (borrado e mais largo).
+   Fica restrita aos títulos grandes, onde o peso regular funciona como display. Títulos de card e rótulos
+   (h2–h4) usam a fonte do sistema, com negrito real, para manter a hierarquia sobre o texto de apoio. */
+h1, .h1,
+.display-large, .display-medium, .display-small, .headline-large,
+.header-brand .brand-title {
+  font-family: var(--font-display);
+  font-synthesis: none;
 }
 
 /* ==========================================================================
