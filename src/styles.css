@@ -436,7 +436,7 @@ a {
 
 .label-small, .xs {
   font-family: var(--md-sys-typescale-font);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1rem;
   letter-spacing: 0.5px;
 }
@@ -510,7 +510,7 @@ a {
 }
 
 .header-brand .brand-subtitle {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--md-sys-color-on-surface-variant);
   letter-spacing: 0.5px;
 }
@@ -1261,7 +1261,7 @@ a {
 .vote {
   padding: 0.25rem 0.75rem;
   border-radius: var(--md-sys-shape-corner-small);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   background: var(--md-sys-color-surface-container);
@@ -1300,7 +1300,7 @@ a {
 }
 
 .stat > span {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--md-sys-color-on-surface-variant);
   letter-spacing: 0.3px;
 }
@@ -1442,7 +1442,7 @@ a {
   justify-content: space-between;
   padding-top: 1.125rem;
   border-top: 1px solid var(--md-sys-color-outline-variant);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
@@ -1525,7 +1525,7 @@ a {
     gap: 0.25rem;
     font-family: var(--md-sys-typescale-font);
     /* rótulos da barra inferior crescem pouco: com fonte grande, cinco itens ainda cabem */
-    font-size: clamp(11px, 0.6875rem, 13px);
+    font-size: clamp(12px, 0.75rem, 13px);
     letter-spacing: 0.5px;
     color: var(--md-sys-color-on-surface-variant);
     flex: 1 1 0;
@@ -1916,7 +1916,7 @@ button.chip:active, a.chip:active,
 
   .modal {
     max-width: none;
-    max-height: 92dvh;
+    max-height: min(92dvh, calc(var(--vv-h, 100dvh) - 0.5rem));
     border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 0 0;
     border-bottom: 0;
     padding: 0.75rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
@@ -2208,4 +2208,97 @@ html[data-nav-dir='back'] { --vt-x: -28px; }
   @keyframes vt-in {
     from { opacity: 0; transform: translateX(var(--vt-x)); }
   }
+}
+
+/* ==========================================================================
+   ESPAÇO RESERVADO DE CARREGAMENTO
+   Forma do conteúdo que vai chegar, com brilho que corre por transform (sem repintar).
+   ========================================================================== */
+.skeleton {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sk-card {
+  display: grid;
+  gap: 0.625rem;
+  padding: 1rem;
+  border-radius: var(--md-sys-shape-corner-medium);
+  background: var(--md-sys-color-surface-container);
+}
+
+.sk-line {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  height: 0.75rem;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-surface-container-highest);
+}
+
+.sk-line:nth-child(1) { width: 55%; }
+.sk-line:nth-child(2) { width: 92%; }
+.sk-line:nth-child(3) { width: 72%; }
+
+.sk-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--md-sys-color-surface) 60%, transparent), transparent);
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes sk-shimmer {
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-line::after { animation: none !important; }
+}
+
+/* --- Abas: indicador que desliza e painel que entra com esmaecimento --- */
+.tabs.has-ind {
+  position: relative;
+}
+
+.tabs.has-ind button {
+  position: relative;
+  z-index: 1;
+}
+
+/* com o indicador, a "pílula" da aba ativa é ele, não o botão */
+.tabs.has-ind button.on {
+  background: none;
+  box-shadow: none;
+}
+
+.tab-ind {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 0;
+  height: 0;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-surface-container-lowest);
+  box-shadow: var(--md-sys-elevation-1);
+  pointer-events: none;
+}
+
+.tab-ind.ready {
+  transition: transform var(--dur-medium) var(--ease-standard), width var(--dur-medium) var(--ease-standard);
+}
+
+.tab-enter {
+  animation: tab-in var(--dur-short) var(--ease-decelerate);
+}
+
+@keyframes tab-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-ind.ready { transition: none; }
+  .tab-enter { animation: none; }
 }

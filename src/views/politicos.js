@@ -6,7 +6,7 @@ import {
   senatorVotes,
   getTseElectoralProfile,
 } from '../api.js';
-import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist } from '../ui.js';
+import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist, skeleton } from '../ui.js';
 import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
 import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -190,25 +190,25 @@ async function openPoliticianDetails(p) {
       isDeputy
         ? `
       <div id="tab-gastos" class="stack pol-pane u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Auditando cota parlamentar (CEAP)…</span></div>
+        ${skeleton('Auditando cota parlamentar (CEAP)…', 2)}
       </div>
       <div id="tab-projetos" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Consultando projetos de lei…</span></div>
+        ${skeleton('Consultando projetos de lei…', 2)}
       </div>
       <div id="tab-perfil" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Consultando dados do gabinete oficial…</span></div>
+        ${skeleton('Consultando dados do gabinete oficial…', 1)}
       </div>
       <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das sessões e votações oficiais…</span></div>
+        ${skeleton('Calculando presença e fidelidade a partir das sessões e votações oficiais…', 1)}
       </div>
     `
         : isSenator
         ? `
       <div id="tab-senado" class="stack pol-pane u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Carregando votações nominais no Senado…</span></div>
+        ${skeleton('Carregando votações nominais no Senado…', 2)}
       </div>
       <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
-        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das votações oficiais do Senado…</span></div>
+        ${skeleton('Calculando presença e fidelidade a partir das votações oficiais do Senado…', 1)}
       </div>
     `
         : `

@@ -4,6 +4,7 @@ import { test, expect, seed, go, ROUTES, ICONS } from './fixtures.mjs';
 // WCAG 2.1 AA (e boas práticas do axe nas telas): contraste e regras básicas em todas as telas, nos dois temas.
 for (const theme of ['light', 'dark']) {
   test(`acessibilidade WCAG AA (${theme})`, async ({ page, isMobile }) => {
+    test.setTimeout(60_000); // cinco telas e três diálogos com axe: ~17 s sozinho, folga para CI lento
     await seed(page, { theme });
     const report = [];
     for (const r of ROUTES) {
@@ -94,6 +95,44 @@ test.describe('leitor de tela e teclado', () => {
     }
   });
 
+  test('nenhum texto abaixo de 12px (telas e ficha do político)', async ({ page }) => {
+    await seed(page);
+    const small = () => page.evaluate(() => {
+      const out = [];
+      document.querySelectorAll('body *').forEach((e) => {
+        if (e.closest('.mi, .avatar, script, style') || e.closest('[aria-hidden=true]')) return; // ícones e iniciais decorativas
+        const own = [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+        if (own && parseFloat(getComputedStyle(e).fontSize) < 12) out.push(`${e.tagName.toLowerCase()}.${e.className} "${e.textContent.trim().slice(0, 24)}"`);
+      });
+      return out;
+    });
+    for (const r of ROUTES) {
+      await go(page, r);
+      expect(await small(), `${r} tem texto abaixo de 12px`).toEqual([]);
+    }
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.waitForSelector('.modal');
+    expect(await small(), 'ficha do político tem texto abaixo de 12px').toEqual([]);
+  });
+
+  test('teclado virtual: a folha acompanha a área visível e o viewport pede redimensionar', async ({ page, isMobile, context }) => {
+    test.skip(!isMobile, 'teclado virtual só no celular');
+    await seed(page);
+    expect(await page.locator('meta[name=viewport]').getAttribute('content')).toContain('interactive-widget=resizes-content');
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.waitForTimeout(700);
+    // simula o teclado ocupando a parte de baixo: a área visível cai para 400px
+    const cdp = await context.newCDPSession(page);
+    const { w, dpr } = await page.evaluate(() => ({ w: innerWidth, dpr: devicePixelRatio }));
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: w, height: 400, deviceScaleFactor: dpr, mobile: true });
+    await expect.poll(() => page.evaluate(() => Math.round(document.querySelector('.overlay').getBoundingClientRect().height)), 'overlay acompanha a área visível').toBe(400);
+    const m = await page.locator('.modal').evaluate((el) => { const r = el.getBoundingClientRect(); return { top: Math.round(r.top), bottom: Math.round(r.bottom) }; });
+    expect(m.bottom, 'folha encostada no fim da área visível').toBeLessThanOrEqual(400);
+    expect(m.top, 'folha não passa do topo da área visível').toBeGreaterThanOrEqual(0);
+  });
+
   test('barra de fontes e atalhos aparece só no desktop (no celular repete a navegação inferior)', async ({ page, isMobile }) => {
     await seed(page);
     await go(page, 'inicio');
@@ -130,6 +169,8 @@ test.describe('abas por teclado (padrão WAI-ARIA)', () => {
     const panelOf = async (t) => page.locator(`#${await t.getAttribute('aria-controls')}`);
     // Diálogos movem o foco para dentro ao abrir; só depois de assentar o teste foca a primeira aba.
     await page.waitForFunction(() => !document.querySelector('.overlay') || document.activeElement?.closest('.modal'));
+    // o cadastro move o foco para a busca 60 ms depois de abrir (addPolitician); espera passar para não competir com ele
+    if (await page.locator('.overlay').count()) await page.waitForTimeout(200);
     await tabs.first().focus();
     await page.keyboard.press('ArrowRight');
     await expect(tabs.nth(1)).toBeFocused();

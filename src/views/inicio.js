@@ -1,6 +1,6 @@
 import { store } from '../store.js';
 import { loadComparison, loadSenateComparison } from '../votes.js';
-import { esc, fmtDate, VOTE_CLASS, brl, $ } from '../ui.js';
+import { esc, fmtDate, VOTE_CLASS, brl, $, skeleton } from '../ui.js';
 import { politicianCard, bindPoliticianActions } from './politicos.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openAnalysisModal } from '../analysis.js';
@@ -140,7 +140,7 @@ export async function render(root) {
         <div id="feed" class="stack">
           ${
             deputies.length || senators.length
-              ? '<div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Carregando votações recentes…</span></div>'
+              ? skeleton('Carregando votações recentes…', 2)
               : '<div class="card empty"><p class="muted">Adicione deputados ou senadores para ver as votações recentes do Congresso.</p></div>'
           }
         </div>
@@ -162,7 +162,7 @@ export async function render(root) {
             <span class="chip blue">Câmara</span>
           </div>
           <div class="stack u-gap-10" id="agenda-list">
-            <div class="row"><span class="spin"></span><span class="muted sm">Carregando agenda oficial…</span></div>
+            ${skeleton('Carregando agenda oficial…', 1)}
           </div>
         </div>
 
