@@ -71,6 +71,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
   - chips roxo e verde-azulado no escuro;
   - textos de 10–11 px.
 - **Feito:** axe-core (WCAG 2.1 AA) nas cinco telas e em três diálogos, nos dois temas, em desktop e celular. Contraste: nenhuma reprovação; o axe não consegue avaliar texto sobre gradiente e superfície translúcida (4 a 10 casos por tela). Corrigidos: interruptores sem rótulo (tema e preferências de alertas) e galeria rolável sem foco por teclado no Comparador. O teste roda no CI.
+- **Segunda rodada (leitor de tela, teclado e toque):** nomes de ícone lidos em voz alta (47 por tela), foco perdido ao trocar de tela, falta de link de pulo, busca do Comparador sem rótulo, títulos pulando de h1 para h3, landmarks (`aside` com role de navegação, faixa de fontes fora de landmark), fundo dos diálogos sem `inert` e alvos de toque de 32–40px. O axe passou a checar também as boas práticas nas telas.
 
 ## P2 — quando houver tempo
 

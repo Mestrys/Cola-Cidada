@@ -117,6 +117,7 @@ Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não 
 - **Materiais:** cabeçalho e barra inferior translúcidos, com divisória só quando há conteúdo rolando por baixo.
 - **Feedback:** resposta no pressionar; hover só em dispositivos com ponteiro; remover político pode ser desfeito pelo snackbar.
 - **Preferências do sistema:** tema segue `prefers-color-scheme` até o usuário escolher; `prefers-reduced-motion` troca deslizamentos por crossfade; `prefers-reduced-transparency` e `prefers-contrast` deixam as superfícies sólidas e com contornos fortes.
+- **Leitor de tela e teclado:** ícones da fonte ficam com `aria-hidden` (o nome da ligadura não é lido); ao trocar de tela o foco vai para o título; o primeiro Tab mostra "Pular para o conteúdo"; com diálogo aberto o resto do app fica `inert`. No toque, chips e botões têm área clicável de 44px sem mudar o visual. Testes em `tests/e2e/a11y.spec.mjs`.
 
 ## Dados que NÃO são exibidos (por falta de fonte implementada)
 

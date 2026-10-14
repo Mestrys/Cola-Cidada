@@ -26,12 +26,13 @@ function shell() {
 
   app.innerHTML = `
     <div class="app-wrapper">
+      <a href="#view" class="skip-link">Pular para o conteúdo</a>
       <!-- 1. Top Global Header (Conforme Stitch) -->
       <header class="top-header" role="banner">
         <div class="header-brand">
           <a href="#/inicio" class="u-d-flex u-ai-center u-gap-10 u-c-inherit">
             <div class="u-width-36 u-height-36 u-br-10 u-bg-f4e9bb u-d-grid u-place-items-center u-c-fff">
-              <span class="mi fill u-fs-22">balance</span>
+              <span class="mi fill u-fs-22" aria-hidden="true">balance</span>
             </div>
             <div class="brand-badge">
               <span class="brand-title">Monitor Cidadão</span>
@@ -42,11 +43,11 @@ function shell() {
 
         <div class="header-actions">
           <button class="btn icon ghost header-icon-btn" id="header-theme-btn" aria-label="Alternar tema claro/escuro">
-            <span class="mi" id="header-theme-icon">dark_mode</span>
+            <span class="mi" aria-hidden="true" id="header-theme-icon">dark_mode</span>
           </button>
 
           <a href="#/alertas" class="btn icon ghost u-position-relative" title="Central de Alertas" aria-label="Alertas">
-            <span class="mi">notifications</span>
+            <span class="mi" aria-hidden="true">notifications</span>
             ${
               unreadAlerts > 0
                 ? `<span class="u-position-absolute u-top-4 u-right-4 u-width-8 u-height-8 u-br-50pct u-bg-primary-c"></span>`
@@ -56,7 +57,7 @@ function shell() {
 
           <a href="#/perfil" class="header-user-btn" title="Perfil do Cidadão">
             <div class="user-avatar">
-              <span class="mi u-fs-18">person</span>
+              <span class="mi u-fs-18" aria-hidden="true">person</span>
             </div>
             <div class="user-text">
               <b class="u-fs-12">Meu Perfil</b>
@@ -68,13 +69,13 @@ function shell() {
 
       <!-- 3. Shell Principal (Sidebar + Content) -->
       <div class="shell">
-        <aside class="side" role="navigation" aria-label="Navegação Lateral">
-          <nav class="nav">
+        <aside class="side" aria-label="Menu lateral">
+          <nav class="nav" aria-label="Navegação principal">
             ${Object.entries(routes)
               .map(
                 ([k, r]) => `
               <a href="#/${k}" data-route="${k}">
-                <span class="mi">${r.icon}</span>
+                <span class="mi" aria-hidden="true">${r.icon}</span>
                 <span>${r.label}</span>
               </a>`
               )
@@ -83,14 +84,14 @@ function shell() {
 
           <div class="side-foot">
             <button class="btn outlined sm u-width-100pct u-jc-flex-start" id="pwa-install" hidden>
-              <span class="mi">install_mobile</span>
+              <span class="mi" aria-hidden="true">install_mobile</span>
               <span>Instalar Aplicativo</span>
             </button>
 
             <!-- Toggle Claro / Escuro -->
             <div class="row between u-p-4-6">
               <div class="row u-gap-8">
-                <span class="mi u-fs-18 u-c-muted" id="theme-icon">light_mode</span>
+                <span class="mi u-fs-18 u-c-muted" aria-hidden="true" id="theme-icon">light_mode</span>
                 <span class="sm u-fw-600" id="theme-label">Tema Claro</span>
               </div>
               <label class="switch" title="Alternar entre Tema Claro e Escuro">
@@ -101,7 +102,7 @@ function shell() {
 
             <!-- Card de Segurança LGPD -->
             <div class="user-quick-card">
-              <span class="mi citizen-shield">shield</span>
+              <span class="mi citizen-shield" aria-hidden="true">shield</span>
               <div class="u-flex-1">
                 <b class="u-fs-11_5 u-d-block">Privacidade LGPD</b>
                 <span class="xs muted">Dados salvos só neste dispositivo</span>
@@ -116,19 +117,19 @@ function shell() {
 
         <div class="main-col">
           <!-- 2. Sub-Banner Cívico Institucional -->
-          <div class="sub-civic-bar no-print">
+          <aside class="sub-civic-bar no-print" aria-label="Fontes oficiais e atalhos">
             <span class="civic-sources">
-              <span class="mi u-fs-15 u-c-primary">verified</span>
+              <span class="mi u-fs-15 u-c-primary" aria-hidden="true">verified</span>
               Fontes oficiais: TSE • Câmara dos Deputados • Senado Federal
             </span>
 
             <div class="row civic-chips u-gap-8">
-              <button class="chip green u-cursor-pointer u-border-none" id="sub-btn-cola"><span class="mi u-fs-14">how_to_vote</span>Minha Cola</button>
-              <a href="#/inicio" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14">dashboard</span>Visão Geral</a>
-              <a href="#/comparador" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14">gavel</span>Votações</a>
-              <a href="#/meus-politicos" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14">receipt_long</span>Auditoria CEAP</a>
+              <button class="chip green u-cursor-pointer u-border-none" id="sub-btn-cola"><span class="mi u-fs-14" aria-hidden="true">how_to_vote</span>Minha Cola</button>
+              <a href="#/inicio" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">dashboard</span>Visão Geral</a>
+              <a href="#/comparador" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">gavel</span>Votações</a>
+              <a href="#/meus-politicos" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">receipt_long</span>Auditoria CEAP</a>
             </div>
-          </div>
+          </aside>
 
           <!-- Main Content -->
           <main class="content" id="view" role="main"></main>
@@ -142,7 +143,7 @@ function shell() {
             ([k, r]) => `
           <a href="#/${k}" data-route="${k}">
             <div class="nav-pill">
-              <span class="mi">${r.icon}</span>
+              <span class="mi" aria-hidden="true">${r.icon}</span>
             </div>
             <span>${r.short}</span>
           </a>`
@@ -157,7 +158,7 @@ function shell() {
             <div>
               <div class="row u-gap-8 u-mb-8">
                 <div class="u-width-24 u-height-24 u-br-6 u-bg-primary u-d-grid u-place-items-center u-c-fff">
-                  <span class="mi fill u-fs-15">balance</span>
+                  <span class="mi fill u-fs-15" aria-hidden="true">balance</span>
                 </div>
                 <b class="u-fs-14 u-c-text">Mestry's Tecnologia</b>
               </div>
@@ -193,11 +194,11 @@ function shell() {
 
             <div class="footer-badges">
               <span class="footer-badge-item">
-                <span class="mi u-fs-14 u-c-primary">lock</span>
+                <span class="mi u-fs-14 u-c-primary" aria-hidden="true">lock</span>
                 Dados só neste dispositivo
               </span>
               <span class="footer-badge-item">
-                <span class="mi u-fs-14 u-c-primary">database</span>
+                <span class="mi u-fs-14 u-c-primary" aria-hidden="true">database</span>
                 Dados abertos: Câmara • Senado • TSE
               </span>
             </div>
@@ -207,7 +208,7 @@ function shell() {
 
       <!-- Floating Action Button (FAB MD3 Stitch) -->
       <button class="fab-btn no-print" id="global-fab" title="Seguir Político" aria-label="Seguir Político">
-        <span class="mi">person_add</span>
+        <span class="mi" aria-hidden="true">person_add</span>
         <span class="fab-label">Seguir Político</span>
       </button>
     </div>`;
@@ -217,6 +218,12 @@ function shell() {
 
   const btnCola = $('#sub-btn-cola');
   if (btnCola) btnCola.onclick = () => openColaEleitoralModal();
+
+  // O roteamento usa o hash, então o link de pulo move o foco em vez de navegar.
+  $('.skip-link').onclick = (e) => {
+    e.preventDefault();
+    focusViewHeading({ scroll: true });
+  };
 
   const themeCheck = $('#theme-toggle-check');
   if (themeCheck) {
@@ -301,8 +308,16 @@ window.addEventListener(
   { passive: true }
 );
 
+// Leva o foco ao título da tela, para o leitor de tela anunciar onde o usuário chegou.
+function focusViewHeading({ scroll = false } = {}) {
+  const target = $('#view h1') || $('#view');
+  target.setAttribute('tabindex', '-1');
+  target.classList.add('focus-target');
+  target.focus({ preventScroll: !scroll });
+}
+
 let cleanup;
-async function render() {
+async function render({ moveFocus = false } = {}) {
   const key = location.hash.replace('#/', '') || 'inicio';
   const route = routes[key] || routes.inicio;
 
@@ -315,6 +330,7 @@ async function render() {
   if (typeof cleanup === 'function') cleanup();
   document.title = `${route.label} · Monitor Cidadão`;
   cleanup = await route.view.render(root);
+  if (moveFocus && !document.querySelector('.overlay')) focusViewHeading();
 }
 
 // Registro do Service Worker (Offline & PWA)
@@ -343,7 +359,7 @@ store.subscribe((s) => {
 
 window.addEventListener('hashchange', () => {
   window.scrollTo(0, 0);
-  render();
+  render({ moveFocus: true });
 });
 
 // Onboarding no primeiro acesso: abre junto da primeira renderização, sem espera artificial.

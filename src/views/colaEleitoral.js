@@ -7,18 +7,18 @@ export function openColaEleitoralModal() {
   const { el, close } = modal(`
     <div class="row between no-print">
       <div class="row u-gap-8">
-        <span class="mi u-c-primary u-fs-24">how_to_vote</span>
+        <span class="mi u-c-primary u-fs-24" aria-hidden="true">how_to_vote</span>
         <div>
           <h2 class="h2 u-fs-17">Minha Cola Eleitoral</h2>
           <span class="sm muted">Cédula Cívica de Mandatos Ativos</span>
         </div>
       </div>
-      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
     </div>
 
     <div class="card soft stack u-gap-6 u-bg-primary-soft u-c-on-primary-soft u-p-12-14 u-mt-10">
       <div class="row u-gap-6 u-fw-700 u-fs-12_5">
-        <span class="mi u-fs-16">lock</span>
+        <span class="mi u-fs-16" aria-hidden="true">lock</span>
         <span>Privacidade Garantida (LGPD)</span>
       </div>
       <p class="u-fs-12 u-lh-1_4">
@@ -30,7 +30,7 @@ export function openColaEleitoralModal() {
 
     <div class="row between u-mt-14 u-pt-12 u-bt-1-solid-line">
       <span class="sm muted" id="cola-completion-stats"></span>
-      <button class="btn primary sm" id="btn-add-any"><span class="mi">person_add</span>Adicionar Outro Representante</button>
+      <button class="btn primary sm" id="btn-add-any"><span class="mi" aria-hidden="true">person_add</span>Adicionar Outro Representante</button>
     </div>
   `);
 
@@ -63,7 +63,7 @@ export function openColaEleitoralModal() {
               ${
                 matched
                   ? avatar(matched)
-                  : `<div class="u-width-42 u-height-42 u-br-50pct u-bg-s2 u-d-grid u-place-items-center u-c-muted"><span class="mi u-fs-20">person_outline</span></div>`
+                  : `<div class="u-width-42 u-height-42 u-br-50pct u-bg-s2 u-d-grid u-place-items-center u-c-muted"><span class="mi u-fs-20" aria-hidden="true">person_outline</span></div>`
               }
               <div>
                 <span class="xs muted u-fw-700 u-tt-uppercase u-ls-0_3">${role.label}</span>
@@ -84,9 +84,9 @@ export function openColaEleitoralModal() {
               ${
                 matched
                   ? `
-                <button class="btn sm ghost icon" data-remove-slot="${matched.id}" title="Desvincular da cola" aria-label="Remover"><span class="mi u-fs-18 u-c-error">delete</span></button>`
+                <button class="btn sm ghost icon" data-remove-slot="${matched.id}" title="Desvincular da cola" aria-label="Remover"><span class="mi u-fs-18 u-c-error" aria-hidden="true">delete</span></button>`
                   : `
-                <button class="btn sm primary" data-fill-slot="${role.key}"><span class="mi u-fs-15">add</span>Preencher</button>`
+                <button class="btn sm primary" data-fill-slot="${role.key}"><span class="mi u-fs-15" aria-hidden="true">add</span>Preencher</button>`
               }
             </div>
           </div>

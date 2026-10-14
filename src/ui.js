@@ -94,6 +94,12 @@ export function toast(msg, icon = 'check_circle', { action, duration } = {}) {
 let scrollLocks = 0;
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
 
+// Enquanto houver diálogo aberto, o resto do app sai da árvore de acessibilidade e não recebe foco nem cliques.
+function setBackgroundInert(on) {
+  document.documentElement.classList.toggle('modal-open', on);
+  document.querySelector('.app-wrapper')?.toggleAttribute('inert', on);
+}
+
 // Diálogo modal: entra e sai pelo mesmo caminho, fecha com Esc, prende o foco e devolve-o ao gatilho.
 // Em telas estreitas vira folha inferior que pode ser arrastada para baixo para fechar.
 export function modal(html) {
@@ -113,7 +119,7 @@ export function modal(html) {
     if (!o.isConnected) return;
     o.remove();
     document.removeEventListener('keydown', onKey, true);
-    if (--scrollLocks === 0) document.documentElement.classList.remove('modal-open');
+    if (--scrollLocks === 0) setBackgroundInert(false);
     const nothingFocused = !document.activeElement || document.activeElement === document.body;
     if (nothingFocused && opener?.isConnected) opener.focus({ preventScroll: true });
   };
@@ -149,7 +155,7 @@ export function modal(html) {
   o.addEventListener('mousedown', (e) => { if (e.target === o) close(); });
   o.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) close(); });
   document.addEventListener('keydown', onKey, true);
-  if (scrollLocks++ === 0) document.documentElement.classList.add('modal-open');
+  if (scrollLocks++ === 0) setBackgroundInert(true);
   document.body.append(o);
   m.focus({ preventScroll: true });
   enableSheetDrag(o, m, () => {

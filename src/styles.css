@@ -1368,10 +1368,12 @@ a {
   opacity: 0.8;
 }
 
+.empty h2,
 .empty h3 {
   color: var(--md-sys-color-on-surface);
   margin: 0.75rem 0 0.375rem;
   font-size: 1.125rem;
+  line-height: 2rem;
 }
 
 /* ==========================================================================
@@ -1384,7 +1386,8 @@ a {
 }
 
 .g3 {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  /* min(): em telas de 320px a coluna encolhe em vez de estourar a largura (WCAG 1.4.10) */
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
 }
 
 .g2 {
@@ -1878,8 +1881,9 @@ button.chip:active, a.chip:active,
     flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-width: none;
-    margin: 0 -16px;
-    padding: 0 1rem;
+    /* Folga vertical para a área de toque de 44px dos chips não ser cortada pela rolagem. */
+    margin: -0.375rem -16px;
+    padding: 0.375rem 1rem;
     width: calc(100% + 32px);
   }
 
@@ -2134,4 +2138,59 @@ h1, .h1,
 .header-brand .brand-title {
   font-family: var(--font-display);
   font-synthesis: none;
+}
+
+/* ==========================================================================
+   ACESSIBILIDADE
+   Link de pulo, alvo de foco das trocas de tela e área de toque mínima de 44px.
+   ========================================================================== */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  border-radius: var(--md-sys-shape-corner-small);
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* O título recebe foco por script ao trocar de tela; o anel ficaria pendurado no h1. */
+.focus-target:focus {
+  outline: none;
+}
+
+/* No toque, chips e botões menores ganham área clicável invisível até 44px de altura, sem mudar o visual. */
+@media (pointer: coarse) {
+  .btn,
+  button.chip,
+  a.chip,
+  .header-user-btn {
+    position: relative;
+  }
+
+  .btn::after,
+  button.chip::after,
+  a.chip::after,
+  .header-user-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: max(100%, 2.75rem);
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link {
+    transition: transform 150ms ease-out;
+  }
 }
