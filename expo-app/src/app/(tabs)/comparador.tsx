@@ -279,9 +279,9 @@ export default function ComparadorScreen() {
       {!all.length ? (
         <Card>
           <ThemedText type="small" themeColor="textSecondary">
-            Acompanhe deputados ou senadores para ver como votaram.
+            Para ver como votaram, acompanhe deputados ou senadores: abra o perfil deles no Painel público e toque em “Acompanhar”.
           </ThemedText>
-          <Button label="Seguir novo político" onPress={() => router.push('/adicionar')} />
+          <Button label="Abrir o Painel público" onPress={() => router.navigate('/')} />
         </Card>
       ) : (
         <>

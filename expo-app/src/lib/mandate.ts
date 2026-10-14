@@ -2,7 +2,9 @@ import type { Politician, RoleKey } from './types';
 
 export const ROLES: Record<RoleKey, { label: string; term: number }> = {
   presidente: { label: 'Presidente', term: 4 },
+  'ministro-stf': { label: 'Ministro(a) do STF', term: 0 },
   governador: { label: 'Governador(a)', term: 4 },
+  prefeito: { label: 'Prefeito(a)', term: 4 },
   senador: { label: 'Senador(a)', term: 8 },
   'dep-federal': { label: 'Deputado(a) Federal', term: 4 },
   'dep-estadual': { label: 'Deputado(a) Estadual', term: 4 },
@@ -15,9 +17,11 @@ export const ROLES: Record<RoleKey, { label: string; term: number }> = {
  * 31/jan/2027 e os de 2022, em 31/jan/2031. Vereadores eleitos em 2024: 1/jan/2025 a 31/dez/2028.
  */
 export function defaultMandate(role: RoleKey, uf?: string): [string, string] | undefined {
-  const dates: Record<RoleKey, [string, string]> = {
-    presidente: ['2023-01-01', '2026-12-31'],
-    governador: ['2023-01-01', '2026-12-31'],
+  // a posse seguinte de Presidente e governadores passa a 6/jan (EC 111/2021): o mandato atual vai até 5/jan/2027
+  const dates: Partial<Record<RoleKey, [string, string]>> = {
+    presidente: ['2023-01-01', '2027-01-05'],
+    governador: ['2023-01-01', '2027-01-05'],
+    prefeito: ['2025-01-01', '2028-12-31'],
     'dep-federal': ['2023-02-01', '2027-01-31'],
     // a ALESP tomou posse em 15/mar/2023 e antecipou a posse seguinte para 1/fev/2027
     'dep-estadual': String(uf || '').toUpperCase() === 'SP' ? ['2023-03-15', '2027-01-31'] : ['2023-02-01', '2027-01-31'],
@@ -41,11 +45,14 @@ export interface MandateProgress {
   label: string;
   end?: string;
   ended?: boolean;
+  /** sem mandato com fim (ministros do STF): a barra não se aplica */
+  open?: boolean;
 }
 
 export function mandateProgress(p: Pick<Politician, 'mandate' | 'roleKey' | 'uf'>, now: Date = new Date()): MandateProgress {
   const [start, end] = p.mandate ?? defaultMandate(p.roleKey, p.uf) ?? [];
-  if (!start || !end) return { pct: 0, label: '—' };
+  // ministros do STF não têm mandato: o cargo é vitalício, até a aposentadoria compulsória aos 75 anos
+  if (!start || !end) return { pct: 0, label: p.roleKey === 'ministro-stf' ? 'Cargo vitalício (até os 75 anos)' : '—', open: true };
   const s = new Date(start).getTime();
   const e = new Date(end).getTime();
   const pct = Math.max(0, Math.min(100, ((now.getTime() - s) / (e - s)) * 100));

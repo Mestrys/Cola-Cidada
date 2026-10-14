@@ -1,18 +1,48 @@
-export type RoleKey = 'presidente' | 'governador' | 'senador' | 'dep-federal' | 'dep-estadual' | 'vereador';
+export type RoleKey = 'presidente' | 'ministro-stf' | 'governador' | 'prefeito' | 'senador' | 'dep-federal' | 'dep-estadual' | 'vereador';
 
-/** Político acompanhado. Mesmo formato do PWA, para um dia poder importar e exportar os mesmos dados. */
+/** Ficha eleitoral do TSE (só de quem foi eleito; sucessores e ministros do STF não têm). */
+export interface TseRecord {
+  year: number;
+  sq: string;
+  ballotNumber: string;
+  coalition: string | null;
+  declaredAssets: number | null;
+  status: string;
+}
+
+/**
+ * Agente público no formato do PWA: o mesmo objeto aparece no Painel e, se a pessoa quiser, é guardado ao
+ * acompanhar. Os campos opcionais existem só para alguns cargos (Executivo, STF, assembleias, câmaras).
+ */
 export interface Politician {
-  id: string; // 'camara-160561' | 'senado-5012' | 'manual-…'
-  source: 'camara' | 'senado' | 'manual' | string;
+  id: string; // 'camara-160561' | 'senado-5012' | 'exe-gov-sp' | 'stf-…' | 'sp-…' | 'cm-sp-…'
+  source: 'camara' | 'senado' | 'executivo' | 'stf' | string;
   camaraId?: number;
   senadoId?: number;
   name: string;
+  fullName?: string;
   party: string;
   uf: string;
+  city?: string;
   photo?: string;
   roleKey: RoleKey;
   /** [início, fim] do mandato em AAAA-MM-DD */
-  mandate?: [string, string];
+  mandate?: [string, string] | null;
+  house?: string;
+  situacao?: string;
+  pageUrl?: string;
+  tse?: TseRecord;
+  // Executivo: ocupante atual (titulares.json do PWA)
+  vice?: { name: string; party?: string };
+  condicao?: string;
+  desde?: string;
+  nota?: string;
+  eleitoPeloTse?: { name: string; party: string; year: number };
+  // STF
+  cargo?: string | null;
+  posse?: string;
+  indicadoPor?: string;
+  aposentadoriaCompulsoria?: number;
 }
 
 export interface Alert {

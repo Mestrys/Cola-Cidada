@@ -5,7 +5,7 @@ describe('defaultMandate', () => {
     expect(defaultMandate('dep-federal')).toEqual(['2023-02-01', '2027-01-31']);
     expect(defaultMandate('senador')).toEqual(['2023-02-01', '2031-01-31']);
     expect(defaultMandate('vereador')).toEqual(['2025-01-01', '2028-12-31']);
-    expect(defaultMandate('governador')).toEqual(['2023-01-01', '2026-12-31']);
+    expect(defaultMandate('governador')).toEqual(['2023-01-01', '2027-01-05']);
   });
 
   it('deputado estadual de SP começa em 15/03/2023 (posse da ALESP); os demais, em 01/02/2023', () => {
@@ -14,11 +14,18 @@ describe('defaultMandate', () => {
     expect(defaultMandate('dep-estadual', 'MG')).toEqual(['2023-02-01', '2027-01-31']);
   });
 
-  it('todo cargo tem rótulo e mandato', () => {
+  it('todo cargo tem rótulo; todos, menos ministro do STF, têm mandato', () => {
     for (const k of Object.keys(ROLES) as (keyof typeof ROLES)[]) {
       expect(ROLES[k].label).toBeTruthy();
-      expect(defaultMandate(k)).toBeDefined();
+      if (k === 'ministro-stf') expect(defaultMandate(k)).toBeUndefined();
+      else expect(defaultMandate(k)).toBeDefined();
     }
+  });
+
+  it('ministro do STF não tem barra de mandato: o cargo é vitalício', () => {
+    const m = mandateProgress({ roleKey: 'ministro-stf', uf: 'BR', mandate: null });
+    expect(m.open).toBe(true);
+    expect(m.label).toMatch(/vitalício/);
   });
 });
 

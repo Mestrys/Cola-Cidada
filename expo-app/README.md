@@ -12,19 +12,21 @@ src/
     _layout.tsx           raiz: tema, splash e uma pilha (Stack)
     (tabs)/               grupo das abas; "(tabs)" não aparece na URL
       _layout.tsx         monta a barra de abas
-      index.tsx           Início        → /
-      politicos.tsx       Políticos     → /politicos
+      index.tsx           Painel        → /             todos os cargos abertos, sem cadastro (Presidência, STF, Senado,
+                                                        Câmara, governadores, assembleias, prefeitos e vereadores das capitais)
+      politicos.tsx       Acompanho     → /politicos    quem a pessoa escolheu acompanhar depois de ver o perfil
       comparador.tsx      Comparador    → /comparador   votações da Câmara e do Senado, filtros e confronto 1 contra 1
-      alertas.tsx         Alertas       → /alertas      votações da Câmara e do Senado, filtros e confronto 1 contra 1
+      alertas.tsx         Alertas       → /alertas
       perfil.tsx          Perfil        → /perfil
-    adicionar.tsx         modal de busca e cadastro de políticos
-    politico/[id].tsx     ficha (dados oficiais e projetos de lei)
+    politico/[id].tsx     perfil: dados oficiais, cargo, TSE e o botão Acompanhar
   components/
     app-tabs.tsx          barra de abas nativa (iOS e Android)
     app-tabs.web.tsx      barra de abas da web
     themed-text.tsx, themed-view.tsx, ui/…   componentes compartilhados
   lib/                    dados e regras, sem dependência de tela
     api.ts                APIs de Dados Abertos da Câmara e do Senado (retry e cache)
+    directory.ts          diretório do Painel (APIs + dados locais do TSE, Executivo e STF)
+  data/                   cópia dos dados públicos do PWA (../src/data): rode `node scripts/sync-data.mjs` ao atualizá-los
     state.ts, store.tsx   estado (reducer) e persistência no AsyncStorage
     mandate.ts            mandatos padrão e progresso
     __tests__/            testes (npm test)
@@ -40,6 +42,11 @@ assets/                   ícones, splash e imagens
 - **Tela com parâmetro:** `src/app/item/[id].tsx`.
 - Rotas tipadas (`typedRoutes`) estão ligadas: `href` é conferido pelo TypeScript depois que o servidor gera os tipos em `.expo/types`.
 - As abas nativas usam `expo-router/unstable-native-tabs` (SDK 55 a 57); no SDK 58 o caminho passa a ser `expo-router/native-tabs`.
+
+## Privacidade (LGPD)
+
+Nada é escolhido antes de ver: o Painel abre direto, com todos os cargos. "Acompanhar" é opcional, fica dentro do perfil e não
+declara voto; a lista fica só no aparelho (AsyncStorage, mesma chave e formato do PWA).
 
 ## Scripts
 

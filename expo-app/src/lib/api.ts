@@ -10,6 +10,7 @@ const cache = new Map<string, { json: unknown; at: number }>();
 export function clearApiCache() {
   cache.clear();
   senatorsCache = null;
+  deputiesCache = null;
 }
 
 /**
@@ -82,6 +83,21 @@ export async function deputyPropositions(camaraId: number, limit = 8): Promise<P
     date: p.dataApresentacao,
     url: `https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=${p.id}`,
   }));
+}
+
+let deputiesCache: DeputyResult[] | null = null;
+
+/** Todos os deputados em exercício: a API entrega até 100 por página (≈ 6 páginas), então a lista é montada uma vez. */
+export async function allDeputies(): Promise<DeputyResult[]> {
+  if (deputiesCache) return deputiesCache;
+  const list: any[] = [];
+  for (let page = 1; page <= 10; page++) {
+    const { dados } = await getJson(`${CAMARA_BASE}/deputados?itens=100&pagina=${page}&ordem=ASC&ordenarPor=nome`);
+    list.push(...(dados || []));
+    if (!dados || dados.length < 100) break;
+  }
+  deputiesCache = list.map((d) => ({ camaraId: d.id, name: d.nome, party: d.siglaPartido, uf: d.siglaUf, photo: d.urlFoto }));
+  return deputiesCache;
 }
 
 /* ================= SENADO FEDERAL ================= */

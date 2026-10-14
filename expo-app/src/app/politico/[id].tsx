@@ -12,22 +12,53 @@ import { useAsync } from '@/hooks/use-async';
 import { useTheme } from '@/hooks/use-theme';
 import { deputyProfile, deputyPropositions } from '@/lib/api';
 import { formatDate, mandateProgress, ROLES } from '@/lib/mandate';
+import { findSeen, placeOf } from '@/lib/directory';
 import { useStore } from '@/lib/store';
+import type { Politician } from '@/lib/types';
 
-const officialPage = (p: { camaraId?: number; senadoId?: number }) =>
+const officialPage = (p: Politician) =>
   p.camaraId
     ? `https://www.camara.leg.br/deputados/${p.camaraId}`
     : p.senadoId
       ? `https://www25.senado.leg.br/web/senadores/senador/-/perfil/${p.senadoId}`
-      : undefined;
+      : p.roleKey === 'ministro-stf'
+        ? 'https://portal.stf.jus.br/'
+        : undefined;
+
+const brl = (v: number) => `R$ ${v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
+
+// Ficha do cargo para quem não é parlamentar federal: Executivo, STF e o que o TSE registrou.
+function officeRows(p: Politician): [string, string | undefined][] {
+  if (p.roleKey === 'ministro-stf')
+    return [
+      ['Cargo', p.cargo || 'Ministro(a)'],
+      ['Nome completo', p.fullName],
+      ['No STF desde', formatDate(p.posse)],
+      ['Indicado(a) por', p.indicadoPor],
+      ['Aposentadoria compulsória (75 anos)', p.aposentadoriaCompulsoria ? String(p.aposentadoriaCompulsoria) : undefined],
+    ];
+  const viceLabel = p.roleKey === 'prefeito' ? 'Vice-prefeito(a)' : p.roleKey === 'governador' ? 'Vice-governador(a)' : 'Vice-presidente';
+  return [
+    ['Órgão', p.house],
+    ['Nome completo', p.fullName],
+    ['Situação', p.situacao],
+    ['No cargo desde', formatDate(p.desde)],
+    ...(['presidente', 'governador', 'prefeito'].includes(p.roleKey)
+      ? ([[viceLabel, p.vice?.name ?? 'Não há (o cargo de vice está vago)']] as [string, string][])
+      : []),
+    ['Eleito(a) na chapa original', p.eleitoPeloTse ? `${p.eleitoPeloTse.name} (${p.eleitoPeloTse.party}), em ${p.eleitoPeloTse.year}` : undefined],
+  ];
+}
 
 export default function PoliticoScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const theme = useTheme();
   const snackbar = useSnackbar();
-  const { state, remove } = useStore();
-  const p = state.politicians.find((x) => x.id === id);
+  const { state, add, remove } = useStore();
+  const followed = state.politicians.find((x) => x.id === id);
+  // quem a pessoa acompanha está no aparelho; os demais vêm do Painel aberto nesta sessão
+  const p = followed ?? findSeen(id);
   const camaraId = p?.camaraId;
 
   // A API da Câmara derruba conexões sob rajadas: perfil e projetos são consultados em sequência, e a
@@ -47,7 +78,7 @@ export default function PoliticoScreen() {
       <Screen title="Político não encontrado">
         <Stack.Screen options={{ title: 'Ficha' }} />
         <ThemedText type="small" themeColor="textSecondary">
-          Este político não está mais na sua lista.
+          Abra o perfil a partir do Painel público.
         </ThemedText>
         <Button label="Voltar" variant="secondary" onPress={() => router.back()} />
       </Screen>
@@ -69,21 +100,81 @@ export default function PoliticoScreen() {
             {p.name}
           </ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
-            {ROLES[p.roleKey]?.label} • {p.party} / {p.uf}
+            {[ROLES[p.roleKey]?.label, p.party && p.party !== '—' ? p.party : '', placeOf(p)].filter(Boolean).join(' • ')}
           </ThemedText>
         </View>
       </View>
 
-      <View style={card}>
-        <View style={styles.between}>
-          <ThemedText type="smallBold">Mandato{m.end ? ` até ${m.end}` : ''}</ThemedText>
-          <ThemedText type="smallBold">{m.pct}%</ThemedText>
-        </View>
-        <ProgressBar pct={m.pct} label={`Mandato de ${p.name}`} />
+      <View style={styles.gap}>
+        <Button
+          label={followed ? 'Acompanhando · deixar de acompanhar' : 'Acompanhar'}
+          variant={followed ? 'secondary' : 'primary'}
+          accessibilityState={{ selected: !!followed }}
+          onPress={() => {
+            if (followed) {
+              const undo = remove(p.id);
+              snackbar.show(`Você deixou de acompanhar ${p.name}.`, { label: 'Desfazer', onPress: undo });
+            } else {
+              add(p);
+              snackbar.show(`Você passou a acompanhar ${p.name}.`);
+            }
+          }}
+        />
         <ThemedText type="small" themeColor="textSecondary">
-          {m.label}
+          Opcional. A lista de quem você acompanha fica só neste aparelho e não diz em quem você votou.
         </ThemedText>
       </View>
+
+      <View style={card}>
+        {m.open ? (
+          <ThemedText type="smallBold">{m.label}</ThemedText>
+        ) : (
+          <>
+            <View style={styles.between}>
+              <ThemedText type="smallBold">Mandato{m.end ? ` até ${m.end}` : ''}</ThemedText>
+              <ThemedText type="smallBold">{m.pct}%</ThemedText>
+            </View>
+            <ProgressBar pct={m.pct} label={`Mandato de ${p.name}`} />
+            <ThemedText type="small" themeColor="textSecondary">
+              {m.label}
+            </ThemedText>
+          </>
+        )}
+      </View>
+
+      {!camaraId && !p.senadoId ? (
+        <View style={card}>
+          <ThemedText type="smallBold" accessibilityRole="header">
+            {p.roleKey === 'ministro-stf' ? 'No Supremo' : 'No cargo'}
+          </ThemedText>
+          {officeRows(p).map(([label, value]) => (
+            <Row key={label} label={label} value={value} />
+          ))}
+          {p.nota ? (
+            <ThemedText type="small" themeColor="textSecondary">
+              {p.nota}
+            </ThemedText>
+          ) : null}
+          <ThemedText type="small" themeColor="textSecondary">
+            {p.roleKey === 'ministro-stf'
+              ? 'Ministros do STF não são eleitos: são indicados pelo Presidente e aprovados pelo Senado.'
+              : 'Ocupante atual conferido com registros públicos; a ficha eleitoral do TSE é de quem venceu a eleição.'}
+          </ThemedText>
+        </View>
+      ) : null}
+
+      {p.tse ? (
+        <View style={card}>
+          <ThemedText type="smallBold" accessibilityRole="header">
+            Ficha eleitoral (TSE)
+          </ThemedText>
+          <Row label="Eleição" value={`${p.tse.year} · ${p.tse.status}`} />
+          <Row label="Número na urna" value={p.tse.ballotNumber} />
+          <Row label="Coligação ou federação" value={p.tse.coalition && p.tse.coalition !== 'PARTIDO ISOLADO' ? p.tse.coalition : 'Partido isolado'} />
+          <Row label="Patrimônio declarado" value={p.tse.declaredAssets != null ? brl(p.tse.declaredAssets) : 'Não declarado'} />
+          {p.pageUrl ? <Button label="Ver ficha no TSE" variant="secondary" onPress={() => Linking.openURL(p.pageUrl!)} /> : null}
+        </View>
+      ) : null}
 
       {camaraId ? (
         <View style={card}>
@@ -150,15 +241,6 @@ export default function PoliticoScreen() {
       ) : null}
 
       {url ? <Button label="Ver página oficial" variant="secondary" onPress={() => Linking.openURL(url)} /> : null}
-      <Button
-        label="Parar de acompanhar"
-        variant="danger"
-        onPress={() => {
-          const undo = remove(p.id);
-          snackbar.show(`${p.name} removido do monitoramento.`, { label: 'Desfazer', onPress: undo });
-          router.back();
-        }}
-      />
     </Screen>
   );
 }

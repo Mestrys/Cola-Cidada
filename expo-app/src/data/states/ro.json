@@ -1,0 +1,482 @@
+[
+ {
+  "id": "ro-220001713754",
+  "name": "Dep. Affonso Candido",
+  "fullName": "Affonso Antonio Candido",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001713754",
+   "ballotNumber": "22123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 329065.61,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001713754"
+ },
+ {
+  "id": "ro-220001713671",
+  "name": "Dep. Alan Queiroz",
+  "fullName": "Alan Kuelson Queiroz Feder",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001713671",
+   "ballotNumber": "19123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 918099.25,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001713671"
+ },
+ {
+  "id": "ro-220001635562",
+  "name": "Dep. Alex Redano",
+  "fullName": "Alex Mendonça Alves",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001635562",
+   "ballotNumber": "10100",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2796172.05,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001635562"
+ },
+ {
+  "id": "ro-220001643229",
+  "name": "Dep. Cássio Gois",
+  "fullName": "José Cassiano Gois de Freitas",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001643229",
+   "ballotNumber": "55100",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 444128.63,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001643229"
+ },
+ {
+  "id": "ro-220001600704",
+  "name": "Dep. Cirone Deiró",
+  "fullName": "Elcirone Moreira Deiró",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001600704",
+   "ballotNumber": "44333",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 354326.48,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001600704"
+ },
+ {
+  "id": "ro-220001643480",
+  "name": "Dep. Cláudia de Jesus",
+  "fullName": "Claudia Regina Abreu",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001643480",
+   "ballotNumber": "13123",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 225146.08,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001643480"
+ },
+ {
+  "id": "ro-220001609401",
+  "name": "Dep. Delegado Lucas Torres",
+  "fullName": "Lucas Torres Ribeiro",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001609401",
+   "ballotNumber": "11000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 110923.32,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001609401"
+ },
+ {
+  "id": "ro-220001635546",
+  "name": "Dep. Delegado Rodrigo Camargo",
+  "fullName": "Rodrigo Camargo Ribeiro",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001635546",
+   "ballotNumber": "10222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 569317.55,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001635546"
+ },
+ {
+  "id": "ro-220001609488",
+  "name": "Dep. Dr Luis do Hospital",
+  "fullName": "Luis Eduardo Schincaglia",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001609488",
+   "ballotNumber": "15000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 812992.71,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001609488"
+ },
+ {
+  "id": "ro-220001596834",
+  "name": "Dep. Dr.. Taíssa Sousa",
+  "fullName": "Taíssa da Silva Sousa",
+  "party": "PSC",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001596834",
+   "ballotNumber": "20222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 366907.22,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001596834"
+ },
+ {
+  "id": "ro-220001614419",
+  "name": "Dep. Edevaldo Neves",
+  "fullName": "Edevaldo Marcolino Neves",
+  "party": "PATRIOTA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001614419",
+   "ballotNumber": "51100",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 262000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001614419"
+ },
+ {
+  "id": "ro-220001605542",
+  "name": "Dep. Ezequiel Neiva",
+  "fullName": "Isequiel Neiva de Carvalho",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001605542",
+   "ballotNumber": "44789",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 350000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001605542"
+ },
+ {
+  "id": "ro-220001605538",
+  "name": "Dep. Gislaine Lebrinha",
+  "fullName": "Gislaine Clemente",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001605538",
+   "ballotNumber": "44429",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 200000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001605538"
+ },
+ {
+  "id": "ro-220001605539",
+  "name": "Dep. Ieda Chaves",
+  "fullName": "Ieda Pacheco Chaves",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001605539",
+   "ballotNumber": "44123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 39108115.61,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001605539"
+ },
+ {
+  "id": "ro-220001614399",
+  "name": "Dep. Ismael Crispin",
+  "fullName": "Ismael Crispin Dias",
+  "party": "PSB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001614399",
+   "ballotNumber": "40777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2885000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001614399"
+ },
+ {
+  "id": "ro-220001713749",
+  "name": "Dep. Jean Mendonça",
+  "fullName": "Jean Henrique Gerolomo de Mendonça",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001713749",
+   "ballotNumber": "22222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 736999.88,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001713749"
+ },
+ {
+  "id": "ro-220001609500",
+  "name": "Dep. Jean Oliveira",
+  "fullName": "Jean Carlos Scheffer Oliveira",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001609500",
+   "ballotNumber": "15140",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 578192.71,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001609500"
+ },
+ {
+  "id": "ro-220001643234",
+  "name": "Dep. Laerte Gomes",
+  "fullName": "Laerte Gomes",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001643234",
+   "ballotNumber": "55123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 742393.27,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001643234"
+ },
+ {
+  "id": "ro-220001596847",
+  "name": "Dep. Luizinho Goebel",
+  "fullName": "Luiz Alberto Goebel",
+  "party": "PSC",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001596847",
+   "ballotNumber": "20123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1254304.9,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001596847"
+ },
+ {
+  "id": "ro-220001614408",
+  "name": "Dep. Marcelo Cruz",
+  "fullName": "Marcelo Cruz da Silva",
+  "party": "PATRIOTA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001614408",
+   "ballotNumber": "51500",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 323000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001614408"
+ },
+ {
+  "id": "ro-220001643243",
+  "name": "Dep. Nim Barroso",
+  "fullName": "Alexandro Barroso Duarte Santana",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001643243",
+   "ballotNumber": "55800",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001643243"
+ },
+ {
+  "id": "ro-220001600356",
+  "name": "Dep. Pedro Fernandes",
+  "fullName": "Pedro Marcelo Fernandes Pereira",
+  "party": "PTB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001600356",
+   "ballotNumber": "14111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 622852.58,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001600356"
+ },
+ {
+  "id": "ro-220001614428",
+  "name": "Dep. Ribeiro do Sinpol",
+  "fullName": "José Ribeiro Pinto Filho",
+  "party": "PATRIOTA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001614428",
+   "ballotNumber": "51197",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 60206,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001614428"
+ },
+ {
+  "id": "ro-220001605549",
+  "name": "Dep. Rosangela Donadon",
+  "fullName": "Rosangela Henrique Pereira Donadon",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Rondônia (ALERO)",
+  "source": "al-ro",
+  "state": "RO",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "220001605549",
+   "ballotNumber": "44321",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 59386.93,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RO/220001605549"
+ }
+]

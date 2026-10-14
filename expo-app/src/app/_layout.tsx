@@ -15,7 +15,7 @@ export const unstable_settings = {
   anchor: '(tabs)',
 };
 
-// Raiz do app: uma pilha. As abas ficam no grupo (tabs); telas fora da barra (ficha, cadastro) são irmãs dele.
+// Raiz do app: uma pilha. As abas ficam no grupo (tabs); a ficha do político, fora da barra, é irmã dele.
 export default function RootLayout() {
   const dark = useColorScheme() === 'dark';
   const c = Colors[dark ? 'dark' : 'light'];
@@ -29,7 +29,6 @@ export default function RootLayout() {
           <AnimatedSplashOverlay />
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="adicionar" options={{ presentation: 'modal', title: 'Seguir político' }} />
             <Stack.Screen name="politico/[id]" options={{ title: 'Ficha' }} />
           </Stack>
         </SnackbarProvider>

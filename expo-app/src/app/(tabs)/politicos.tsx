@@ -27,18 +27,21 @@ export default function PoliticosScreen() {
           contentContainerStyle={screenContent}
           ListHeaderComponent={
             <View style={styles.header}>
-              <ScreenHeader title="Meus Políticos" subtitle="Representantes que você fiscaliza, com dados abertos da Câmara e do Senado." />
-              <Button label="Seguir novo político" onPress={() => router.push('/adicionar')} />
+              <ScreenHeader
+                title="Quem acompanho"
+                subtitle="Atalhos para quem você escolheu acompanhar depois de ver o perfil. A lista fica só neste aparelho e não diz em quem você votou."
+              />
+              <Button label="Abrir o Painel público" variant="secondary" onPress={() => router.navigate('/')} />
             </View>
           }
           ListEmptyComponent={
             ready ? (
               <View style={[styles.empty, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
                 <ThemedText type="smallBold" accessibilityRole="header">
-                  Nenhum representante acompanhado
+                  Você ainda não acompanha ninguém
                 </ThemedText>
                 <ThemedText type="small" themeColor="textSecondary">
-                  Toque em “Seguir novo político” para buscar deputados federais e senadores.
+                  Todos os cargos estão abertos no Painel público. Abra um perfil e toque em “Acompanhar”, se quiser.
                 </ThemedText>
               </View>
             ) : null
@@ -49,7 +52,7 @@ export default function PoliticosScreen() {
               onPress={() => router.push({ pathname: '/politico/[id]', params: { id: item.id } })}
               onRemove={() => {
                 const undo = remove(item.id);
-                snackbar.show(`${item.name} removido do monitoramento.`, { label: 'Desfazer', onPress: undo });
+                snackbar.show(`Você deixou de acompanhar ${item.name}.`, { label: 'Desfazer', onPress: undo });
               }}
             />
           )}

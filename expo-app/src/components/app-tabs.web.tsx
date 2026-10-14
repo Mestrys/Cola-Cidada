@@ -19,10 +19,10 @@ export default function AppTabs() {
       <TabList asChild>
         <CustomTabList>
           <TabTrigger name="index" href="/" asChild>
-            <TabButton>Início</TabButton>
+            <TabButton>Painel</TabButton>
           </TabTrigger>
           <TabTrigger name="politicos" href="/politicos" asChild>
-            <TabButton>Políticos</TabButton>
+            <TabButton>Acompanho</TabButton>
           </TabTrigger>
           <TabTrigger name="comparador" href="/comparador" asChild>
             <TabButton>Comparar</TabButton>

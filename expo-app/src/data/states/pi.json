@@ -1,0 +1,602 @@
+[
+ {
+  "id": "pi-180001604053",
+  "name": "Dep. Aldo Gil",
+  "fullName": "Aldo Gil de Medeiros",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604053",
+   "ballotNumber": "11222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1892731.6,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604053"
+ },
+ {
+  "id": "pi-180001605751",
+  "name": "Dep. Ana Paula",
+  "fullName": "Ana Paula Mendes de Araujo Santana",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605751",
+   "ballotNumber": "15110",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2428937.63,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605751"
+ },
+ {
+  "id": "pi-180001604042",
+  "name": "Dep. Barbara do Firmino",
+  "fullName": "Barbara Carvalho da Silveira Soares Macêdo",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604042",
+   "ballotNumber": "11456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 240900,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604042"
+ },
+ {
+  "id": "pi-180001605754",
+  "name": "Dep. Cel Carlos Augusto",
+  "fullName": "Carlos Augusto Gomes de Souza",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605754",
+   "ballotNumber": "15444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1669323.13,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605754"
+ },
+ {
+  "id": "pi-180001605762",
+  "name": "Dep. Dr Felipe Sampaio",
+  "fullName": "Felipe de Souza Rezende Sampaio",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605762",
+   "ballotNumber": "15111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 601642.6,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605762"
+ },
+ {
+  "id": "pi-180001605769",
+  "name": "Dep. Dr Pablo Santos",
+  "fullName": "Pablo Dantas de Moura Santos",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605769",
+   "ballotNumber": "15199",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2041920.53,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605769"
+ },
+ {
+  "id": "pi-180001605680",
+  "name": "Dep. Dr. Gil Carlos ",
+  "fullName": "Gil Carlos Modesto Alves",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605680",
+   "ballotNumber": "13555",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1783358.61,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605680"
+ },
+ {
+  "id": "pi-180001605766",
+  "name": "Dep. Dr. Hélio",
+  "fullName": "Jose Helio de Carvalho Oliveira",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605766",
+   "ballotNumber": "15222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2074870.68,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605766"
+ },
+ {
+  "id": "pi-180001604044",
+  "name": "Dep. Dr. Thales",
+  "fullName": "Thales Coelho Pimentel",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604044",
+   "ballotNumber": "11333",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 812716.61,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604044"
+ },
+ {
+  "id": "pi-180001605683",
+  "name": "Dep. Dr. Vinicius",
+  "fullName": "Vinicius Pontes do Nascimento",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605683",
+   "ballotNumber": "13121",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 543111.84,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605683"
+ },
+ {
+  "id": "pi-180001601308",
+  "name": "Dep. Evaldo Gomes",
+  "fullName": "Evaldo Gomes da Silva",
+  "party": "SOLIDARIEDADE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001601308",
+   "ballotNumber": "77789",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2301000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001601308"
+ },
+ {
+  "id": "pi-180001605676",
+  "name": "Dep. Fábio Novo",
+  "fullName": "Fábio Núñez Novo",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605676",
+   "ballotNumber": "13111",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 865845.12,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605676"
+ },
+ {
+  "id": "pi-180001605682",
+  "name": "Dep. Fabio Xavier",
+  "fullName": "Fabio Henrique Mendonça Xavier de Oliveira",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605682",
+   "ballotNumber": "13777",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1525900,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605682"
+ },
+ {
+  "id": "pi-180001605687",
+  "name": "Dep. Firmino Paulo",
+  "fullName": "Firmino Soares Paulo",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605687",
+   "ballotNumber": "13789",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 807340.86,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605687"
+ },
+ {
+  "id": "pi-180001605669",
+  "name": "Dep. Flávio Júnior",
+  "fullName": "Flávio Rodrigues Nogueira Júnior",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605669",
+   "ballotNumber": "13258",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 3323043.94,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605669"
+ },
+ {
+  "id": "pi-180001605670",
+  "name": "Dep. Franzé Silva",
+  "fullName": "Francisco José Alves da Silva",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605670",
+   "ballotNumber": "13333",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 803149.48,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605670"
+ },
+ {
+  "id": "pi-180001605763",
+  "name": "Dep. Georgiano",
+  "fullName": "Georgiano Fernandes Lima Neto",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605763",
+   "ballotNumber": "15789",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1683971.86,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605763"
+ },
+ {
+  "id": "pi-180001604037",
+  "name": "Dep. Gracinha Mão Santa",
+  "fullName": "Maria das Gracas de Moraes Souza Nunes",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604037",
+   "ballotNumber": "11130",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 426988.34,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604037"
+ },
+ {
+  "id": "pi-180001604038",
+  "name": "Dep. Gustavo Neiva",
+  "fullName": "Gustavo Sousa de Neiva",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604038",
+   "ballotNumber": "11111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 622148.9,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604038"
+ },
+ {
+  "id": "pi-180001605673",
+  "name": "Dep. Hélio Isaias",
+  "fullName": "Hélio Isaias da Silva",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605673",
+   "ballotNumber": "13454",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605673"
+ },
+ {
+  "id": "pi-180001605752",
+  "name": "Dep. Henrique Pires",
+  "fullName": "Antonio Henrique de Carvalho Pires",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605752",
+   "ballotNumber": "15123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2690112.54,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605752"
+ },
+ {
+  "id": "pi-180001605692",
+  "name": "Dep. Janainna Marques",
+  "fullName": "Janainna Pinto Marques Tavares",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605692",
+   "ballotNumber": "13456",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1681659.57,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605692"
+ },
+ {
+  "id": "pi-180001612884",
+  "name": "Dep. Jeová Alencar",
+  "fullName": "Jeova Barbosa de Carvalho Alencar",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001612884",
+   "ballotNumber": "10456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001612884"
+ },
+ {
+  "id": "pi-180001605765",
+  "name": "Dep. João Madison",
+  "fullName": "João Madison Nogueira",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605765",
+   "ballotNumber": "15555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1078020.07,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605765"
+ },
+ {
+  "id": "pi-180001605693",
+  "name": "Dep. Limma",
+  "fullName": "Francisco das Chagas Limma",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605693",
+   "ballotNumber": "13123",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1411010.15,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605693"
+ },
+ {
+  "id": "pi-180001604051",
+  "name": "Dep. Marden Menezes",
+  "fullName": "Marden Luis Brito Cavalcante e Meneses",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604051",
+   "ballotNumber": "11555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2627697.9,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604051"
+ },
+ {
+  "id": "pi-180001605695",
+  "name": "Dep. Nerinho",
+  "fullName": "José Icemar Lavôr Néri",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605695",
+   "ballotNumber": "13000",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1021196.1,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605695"
+ },
+ {
+  "id": "pi-180001605668",
+  "name": "Dep. Rubens Vieira",
+  "fullName": "Rubens de Sousa Vieira",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605668",
+   "ballotNumber": "13888",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 745000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605668"
+ },
+ {
+  "id": "pi-180001605756",
+  "name": "Dep. Severo Eulálio",
+  "fullName": "Severo Maria Eulalio Neto",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001605756",
+   "ballotNumber": "15101",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 901458.13,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001605756"
+ },
+ {
+  "id": "pi-180001604045",
+  "name": "Dep. Wilson Brandão",
+  "fullName": "Wilson Nunes Brandão",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Piauí (ALEPI)",
+  "source": "al-pi",
+  "state": "PI",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "180001604045",
+   "ballotNumber": "11140",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 3415444.18,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604045"
+ }
+]

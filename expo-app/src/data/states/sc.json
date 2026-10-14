@@ -1,0 +1,802 @@
+[
+ {
+  "id": "sc-240001644767",
+  "name": "Dep. Altair Silva",
+  "fullName": "Altair da Silva",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001644767",
+   "ballotNumber": "11130",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2256548.25,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001644767"
+ },
+ {
+  "id": "sc-240001614348",
+  "name": "Dep. Ana Campagnolo",
+  "fullName": "Ana Caroline Campagnolo Galvao",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614348",
+   "ballotNumber": "22822",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1082020.98,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614348"
+ },
+ {
+  "id": "sc-240001605916",
+  "name": "Dep. Antídio Lunelli",
+  "fullName": "Antidio Aleixo Lunelli",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001605916",
+   "ballotNumber": "15222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 390033568.89,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001605916"
+ },
+ {
+  "id": "sc-240001614335",
+  "name": "Dep. Berlanda",
+  "fullName": "Nilso Jose Berlanda",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614335",
+   "ballotNumber": "22022",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 46612300.31,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614335"
+ },
+ {
+  "id": "sc-240001610835",
+  "name": "Dep. Camilo Martins",
+  "fullName": "Camilo Nazareno Pagani Martins",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001610835",
+   "ballotNumber": "19369",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1445467.6,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001610835"
+ },
+ {
+  "id": "sc-240001614337",
+  "name": "Dep. Carlos Humberto",
+  "fullName": "Carlos Humberto Metzner Silva",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614337",
+   "ballotNumber": "22444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 8525356.31,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614337"
+ },
+ {
+  "id": "sc-240001614282",
+  "name": "Dep. Delegado Egidio Ferrari",
+  "fullName": "Egidio Maciel Ferrari",
+  "party": "PTB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614282",
+   "ballotNumber": "14181",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 212376.68,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614282"
+ },
+ {
+  "id": "sc-240001612510",
+  "name": "Dep. Dr. Vicente",
+  "fullName": "Vicente Augusto Caropreso",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001612510",
+   "ballotNumber": "45999",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 3436170.28,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001612510"
+ },
+ {
+  "id": "sc-240001679627",
+  "name": "Dep. Fabiano da Luz",
+  "fullName": "Fabiano da Luz",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001679627",
+   "ballotNumber": "13500",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 617789.4,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001679627"
+ },
+ {
+  "id": "sc-240001605919",
+  "name": "Dep. Fernando Krelling",
+  "fullName": "Fernando Krelling",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001605919",
+   "ballotNumber": "15655",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1983286.4,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001605919"
+ },
+ {
+  "id": "sc-240001614356",
+  "name": "Dep. Ivan Naatz",
+  "fullName": "Ivan Naatz",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614356",
+   "ballotNumber": "22555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 4398950.29,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614356"
+ },
+ {
+  "id": "sc-240001616203",
+  "name": "Dep. Jair Miotto",
+  "fullName": "Jair Antonio Miotto",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001616203",
+   "ballotNumber": "44104",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2301812.52,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001616203"
+ },
+ {
+  "id": "sc-240001605920",
+  "name": "Dep. Jerry Comper",
+  "fullName": "Jerry Edson Comper",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001605920",
+   "ballotNumber": "15010",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1093856.25,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001605920"
+ },
+ {
+  "id": "sc-240001614350",
+  "name": "Dep. Jessé Lopes",
+  "fullName": "Jessé de Faria Lopes",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614350",
+   "ballotNumber": "22456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 770771.59,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614350"
+ },
+ {
+  "id": "sc-240001614390",
+  "name": "Dep. Julio Garcia",
+  "fullName": "Julio César Garcia",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614390",
+   "ballotNumber": "55111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 57635.2,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614390"
+ },
+ {
+  "id": "sc-240001610819",
+  "name": "Dep. Lucas Neves",
+  "fullName": "Lucas Felipe Melo Neves",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001610819",
+   "ballotNumber": "19282",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001610819"
+ },
+ {
+  "id": "sc-240001679643",
+  "name": "Dep. Luciane Carminatti",
+  "fullName": "Luciane Maria Carminatti",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001679643",
+   "ballotNumber": "13601",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 749266.13,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001679643"
+ },
+ {
+  "id": "sc-240001614339",
+  "name": "Dep. Marcius Machado",
+  "fullName": "Marcius da Silva Machado",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614339",
+   "ballotNumber": "22123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 529124.75,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614339"
+ },
+ {
+  "id": "sc-240001616186",
+  "name": "Dep. Marcos da Rosa",
+  "fullName": "Marcos da Rosa",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001616186",
+   "ballotNumber": "44022",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 461470,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001616186"
+ },
+ {
+  "id": "sc-240001612502",
+  "name": "Dep. Marcos Vieira",
+  "fullName": "Marcos Luiz Vieira",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001612502",
+   "ballotNumber": "45699",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 2545430.42,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001612502"
+ },
+ {
+  "id": "sc-240001614375",
+  "name": "Dep. Mario Motta",
+  "fullName": "Mario Pinto da Motta Junior",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614375",
+   "ballotNumber": "55555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1031943.14,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614375"
+ },
+ {
+  "id": "sc-240001610066",
+  "name": "Dep. Marquito Marcos José Abreu",
+  "fullName": "Marcos José de Abreu",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001610066",
+   "ballotNumber": "50150",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": 218553.62,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001610066"
+ },
+ {
+  "id": "sc-240001614342",
+  "name": "Dep. Massocco",
+  "fullName": "Edilson Massocco",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614342",
+   "ballotNumber": "22150",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2958496.65,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614342"
+ },
+ {
+  "id": "sc-240001597559",
+  "name": "Dep. Matheus Cadorin",
+  "fullName": "Matheus Andreis Cadorin",
+  "party": "NOVO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001597559",
+   "ballotNumber": "30001",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 416000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001597559"
+ },
+ {
+  "id": "sc-240001614331",
+  "name": "Dep. Mauricio Eskudlark",
+  "fullName": "Mauricio Jose Eskudlark",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614331",
+   "ballotNumber": "22222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1570672.25,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614331"
+ },
+ {
+  "id": "sc-240001605913",
+  "name": "Dep. Mauro de Nadal",
+  "fullName": "Mauro de Nadal",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001605913",
+   "ballotNumber": "15220",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2420506.29,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001605913"
+ },
+ {
+  "id": "sc-240001614384",
+  "name": "Dep. Napoleão Bernardes",
+  "fullName": "Napoleão Bernardes Neto",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614384",
+   "ballotNumber": "55777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 819274.96,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614384"
+ },
+ {
+  "id": "sc-240001679646",
+  "name": "Dep. Neodi Saretta",
+  "fullName": "Neodi Saretta",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001679646",
+   "ballotNumber": "13120",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1957309.84,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001679646"
+ },
+ {
+  "id": "sc-240001614346",
+  "name": "Dep. Oscar Gutz",
+  "fullName": "Oscar Gutz",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614346",
+   "ballotNumber": "22470",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1959230.13,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614346"
+ },
+ {
+  "id": "sc-240001679648",
+  "name": "Dep. Padre Pedro",
+  "fullName": "Pedro Baldissera",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001679648",
+   "ballotNumber": "13987",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1864116.69,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001679648"
+ },
+ {
+  "id": "sc-240001610824",
+  "name": "Dep. Paulinha",
+  "fullName": "Ana Paula da Silva",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001610824",
+   "ballotNumber": "19010",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001610824"
+ },
+ {
+  "id": "sc-240001644772",
+  "name": "Dep. Pepê Collaço",
+  "fullName": "Felippe Luiz Collaço",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001644772",
+   "ballotNumber": "11223",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1847643.59,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001644772"
+ },
+ {
+  "id": "sc-240001616196",
+  "name": "Dep. Repórter Sérgio Guimarães",
+  "fullName": "Sergio da Rosa Guimaraes",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001616196",
+   "ballotNumber": "44500",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 681000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001616196"
+ },
+ {
+  "id": "sc-240001644398",
+  "name": "Dep. Rodrigo Minotto",
+  "fullName": "Rodrigo Minotto",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001644398",
+   "ballotNumber": "12345",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 523686.56,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001644398"
+ },
+ {
+  "id": "sc-240001614329",
+  "name": "Dep. Sargento Lima",
+  "fullName": "Carlos Henrique de Lima",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614329",
+   "ballotNumber": "22122",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 393000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614329"
+ },
+ {
+  "id": "sc-240001610226",
+  "name": "Dep. Sergio Motta",
+  "fullName": "Sergio Motta Ribeiro",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001610226",
+   "ballotNumber": "10123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1259273.54,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001610226"
+ },
+ {
+  "id": "sc-240001614334",
+  "name": "Dep. Soratto",
+  "fullName": "Estener Soratto da Silva Junior",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001614334",
+   "ballotNumber": "22500",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1597489.54,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001614334"
+ },
+ {
+  "id": "sc-240001605911",
+  "name": "Dep. Tiago Zilli",
+  "fullName": "Tiago Zilli",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001605911",
+   "ballotNumber": "15789",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 356123.64,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001605911"
+ },
+ {
+  "id": "sc-240001605921",
+  "name": "Dep. Volnei Weber",
+  "fullName": "Volnei Weber",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001605921",
+   "ballotNumber": "15000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 6165702.45,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001605921"
+ },
+ {
+  "id": "sc-240001644756",
+  "name": "Dep. Zé Milton",
+  "fullName": "José Milton Scheffer",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Santa Catarina (ALESC)",
+  "source": "al-sc",
+  "state": "SC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "240001644756",
+   "ballotNumber": "11234",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1657424.07,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SC/240001644756"
+ }
+]

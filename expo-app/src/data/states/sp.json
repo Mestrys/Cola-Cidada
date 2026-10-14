@@ -1,0 +1,1882 @@
+[
+ {
+  "id": "sp-250001610117",
+  "name": "Dep. Agente Federal Danilo Balas",
+  "fullName": "Danilo Mascarenhas de Balas",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610117",
+   "ballotNumber": "22007",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2192524,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610117"
+ },
+ {
+  "id": "sp-250001610129",
+  "name": "Dep. Alex de Madureira",
+  "fullName": "Alexander Muniz de Oliveira",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610129",
+   "ballotNumber": "22777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 722859.69,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610129"
+ },
+ {
+  "id": "sp-250001639600",
+  "name": "Dep. Altair Moraes",
+  "fullName": "Altair Moraes de Oliveira",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639600",
+   "ballotNumber": "10333",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 327710.17,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639600"
+ },
+ {
+  "id": "sp-250001611505",
+  "name": "Dep. Ana Carolina Serra",
+  "fullName": "Ana Carolina Rossi Barreto Serra",
+  "party": "CIDADANIA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611505",
+   "ballotNumber": "23023",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 1277172.35,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611505"
+ },
+ {
+  "id": "sp-250001611809",
+  "name": "Dep. Ana Perugini",
+  "fullName": "Ana Lucia Lippaus Perugini",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611809",
+   "ballotNumber": "13121",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 418919.97,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611809"
+ },
+ {
+  "id": "sp-250001611452",
+  "name": "Dep. Analice Fernandes",
+  "fullName": "Analice Fernandes",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611452",
+   "ballotNumber": "45400",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 699448.88,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611452"
+ },
+ {
+  "id": "sp-250001610161",
+  "name": "Dep. André do Prado",
+  "fullName": "Andre Luis do Prado",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610161",
+   "ballotNumber": "22999",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 381820.82,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610161"
+ },
+ {
+  "id": "sp-250001620622",
+  "name": "Dep. Andréa Werner",
+  "fullName": "Andréa Werner Silva Bonoli",
+  "party": "PSB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001620622",
+   "ballotNumber": "40000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 725000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001620622"
+ },
+ {
+  "id": "sp-250001606292",
+  "name": "Dep. Atila Jacomussi",
+  "fullName": "Átila Cesar Monteiro Jacomussi",
+  "party": "SOLIDARIEDADE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001606292",
+   "ballotNumber": "77000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1061957.43,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001606292"
+ },
+ {
+  "id": "sp-250001611768",
+  "name": "Dep. Barba",
+  "fullName": "Teonílio Monteiro da Costa",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611768",
+   "ballotNumber": "13110",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 372978.51,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611768"
+ },
+ {
+  "id": "sp-250001611434",
+  "name": "Dep. Barros Munhoz",
+  "fullName": "Jose Antonio Barros Munhoz",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611434",
+   "ballotNumber": "45545",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 1305926,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611434"
+ },
+ {
+  "id": "sp-250001611798",
+  "name": "Dep. Beth Sahão",
+  "fullName": "Elisabeth Sahão",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611798",
+   "ballotNumber": "13456",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1542310.09,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611798"
+ },
+ {
+  "id": "sp-250001611444",
+  "name": "Dep. Bruna Furlan",
+  "fullName": "Bruna Dias Furlan Vicente",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611444",
+   "ballotNumber": "45000",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 8084982.83,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611444"
+ },
+ {
+  "id": "sp-250001610121",
+  "name": "Dep. Bruno Zambelli",
+  "fullName": "Bruno Zambelli Salgado",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610121",
+   "ballotNumber": "22100",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 350290.87,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610121"
+ },
+ {
+  "id": "sp-250001620641",
+  "name": "Dep. Caio França",
+  "fullName": "Caio França de Gouvêa Gomes",
+  "party": "PSB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001620641",
+   "ballotNumber": "40640",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 665729.73,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001620641"
+ },
+ {
+  "id": "sp-250001610141",
+  "name": "Dep. Capitão Conte Lopes",
+  "fullName": "Roberval Conte Lopes Lima",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610141",
+   "ballotNumber": "22138",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2224406.87,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610141"
+ },
+ {
+  "id": "sp-250001612252",
+  "name": "Dep. Capitão Telhada",
+  "fullName": "Rafael Henrique Cano Telhada",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001612252",
+   "ballotNumber": "11190",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1381788.17,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001612252"
+ },
+ {
+  "id": "sp-250001611446",
+  "name": "Dep. Carla Morando",
+  "fullName": "Carla Sardano Morando",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611446",
+   "ballotNumber": "45680",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 6458055.19,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611446"
+ },
+ {
+  "id": "sp-250001611488",
+  "name": "Dep. Carlão Pignatari",
+  "fullName": "Carlos Eduardo Pignatari",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611488",
+   "ballotNumber": "45232",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 3773190.5,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611488"
+ },
+ {
+  "id": "sp-250001610158",
+  "name": "Dep. Carlos Cezar",
+  "fullName": "Carlos Cezar da Silva",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610158",
+   "ballotNumber": "22112",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1273187.96,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610158"
+ },
+ {
+  "id": "sp-250001619320",
+  "name": "Dep. Carlos Giannazi",
+  "fullName": "Carlos Alberto Giannasi",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001619320",
+   "ballotNumber": "50789",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": 1030397.16,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001619320"
+ },
+ {
+  "id": "sp-250001609973",
+  "name": "Dep. Caruso",
+  "fullName": "Jorge Luis Caruso",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001609973",
+   "ballotNumber": "15000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2953102.75,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001609973"
+ },
+ {
+  "id": "sp-250001610528",
+  "name": "Dep. Clarice Ganem",
+  "fullName": "Clarice Carassol Arevalo Ganem",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610528",
+   "ballotNumber": "19101",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 138684.86,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610528"
+ },
+ {
+  "id": "sp-250001611436",
+  "name": "Dep. Dalben",
+  "fullName": "Antonio Dirceu Dalben",
+  "party": "CIDADANIA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611436",
+   "ballotNumber": "23456",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 769848.68,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611436"
+ },
+ {
+  "id": "sp-250001610113",
+  "name": "Dep. Dani Alonso",
+  "fullName": "Daniele Mazuqueli Alonso",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610113",
+   "ballotNumber": "22322",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 716668.44,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610113"
+ },
+ {
+  "id": "sp-250001602098",
+  "name": "Dep. Daniel Soares",
+  "fullName": "Daniel Bezerra Ribeiro Soares",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602098",
+   "ballotNumber": "44111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 250639.85,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602098"
+ },
+ {
+  "id": "sp-250001610201",
+  "name": "Dep. Delegada Graciela",
+  "fullName": "Graciela de Lourdes David Ambrosio",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610201",
+   "ballotNumber": "22888",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 583396.6,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610201"
+ },
+ {
+  "id": "sp-250001612298",
+  "name": "Dep. Delegado Olim",
+  "fullName": "Antonio Assunção de Olim",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001612298",
+   "ballotNumber": "11777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 30780.26,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001612298"
+ },
+ {
+  "id": "sp-250001611791",
+  "name": "Dep. Donato",
+  "fullName": "Antonio Donato Madormo",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611791",
+   "ballotNumber": "13700",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 5088918.87,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611791"
+ },
+ {
+  "id": "sp-250001610496",
+  "name": "Dep. Dr Eduardo Nóbrega",
+  "fullName": "Carlos Eduardo Nobrega",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610496",
+   "ballotNumber": "19714",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 778933.79,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610496"
+ },
+ {
+  "id": "sp-250001620599",
+  "name": "Dep. Dr Valdomiro Lopes",
+  "fullName": "Valdomiro Lopes da Silva Junior",
+  "party": "PSB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001620599",
+   "ballotNumber": "40211",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 3337883.78,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001620599"
+ },
+ {
+  "id": "sp-250001643810",
+  "name": "Dep. Dr. Elton",
+  "fullName": "Elton Alves Ribeiro de Carvalho Junior",
+  "party": "PSC",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001643810",
+   "ballotNumber": "20012",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1721409.08,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001643810"
+ },
+ {
+  "id": "sp-250001611773",
+  "name": "Dep. Dr. Jorge do Carmo",
+  "fullName": "Jorge do Carmo Silva",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611773",
+   "ballotNumber": "13800",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 342754.24,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611773"
+ },
+ {
+  "id": "sp-250001619350",
+  "name": "Dep. Ediane Maria",
+  "fullName": "Ediane Maria do Nascimento",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001619350",
+   "ballotNumber": "50110",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001619350"
+ },
+ {
+  "id": "sp-250001602151",
+  "name": "Dep. Edmir Chedid",
+  "fullName": "Edmir Jose Abi Chedid",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602151",
+   "ballotNumber": "44118",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 6148962.83,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602151"
+ },
+ {
+  "id": "sp-250001639574",
+  "name": "Dep. Edna Macedo",
+  "fullName": "Edna Bezerra Sampaio Fernandes",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639574",
+   "ballotNumber": "10456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639574"
+ },
+ {
+  "id": "sp-250001611797",
+  "name": "Dep. Eduardo Suplicy",
+  "fullName": "Eduardo Matarazzo Suplicy",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611797",
+   "ballotNumber": "13133",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 3864438.58,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611797"
+ },
+ {
+  "id": "sp-250001611811",
+  "name": "Dep. Emídio de Souza",
+  "fullName": "Emidio Pereira de Souza",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611811",
+   "ballotNumber": "13131",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 780036.06,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611811"
+ },
+ {
+  "id": "sp-250001611799",
+  "name": "Dep. Enio Tatto",
+  "fullName": "Enio Francisco Tatto",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611799",
+   "ballotNumber": "13114",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1945717.64,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611799"
+ },
+ {
+  "id": "sp-250001610130",
+  "name": "Dep. Fabiana B.",
+  "fullName": "Fabiana de Lima Barroso",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610130",
+   "ballotNumber": "22051",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 21582.05,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610130"
+ },
+ {
+  "id": "sp-250001602160",
+  "name": "Dep. Felipe Franco",
+  "fullName": "Felipe Souza Murakami de Franco",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602160",
+   "ballotNumber": "44007",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 705637.11,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602160"
+ },
+ {
+  "id": "sp-250001610498",
+  "name": "Dep. Gerson Pessoa",
+  "fullName": "Gerson Dias Pessoa",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610498",
+   "ballotNumber": "19019",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1193300.28,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610498"
+ },
+ {
+  "id": "sp-250001610109",
+  "name": "Dep. Gil Diniz",
+  "fullName": "Gildevanio Ilso dos Santos Diniz",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610109",
+   "ballotNumber": "22120",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 417512.22,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610109"
+ },
+ {
+  "id": "sp-250001639568",
+  "name": "Dep. Gilmaci Santos",
+  "fullName": "Gilmaci dos Santos Barbosa",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639568",
+   "ballotNumber": "10123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 13900,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639568"
+ },
+ {
+  "id": "sp-250001619401",
+  "name": "Dep. Guilherme Cortez",
+  "fullName": "Guilherme da Costa Aguiar Cortez",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001619401",
+   "ballotNumber": "50005",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": 9918.38,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001619401"
+ },
+ {
+  "id": "sp-250001602177",
+  "name": "Dep. Guto Zacarias",
+  "fullName": "Augusto Zacarias Correa Leite",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602177",
+   "ballotNumber": "44777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 500,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602177"
+ },
+ {
+  "id": "sp-250001643762",
+  "name": "Dep. Helinho Zanatta",
+  "fullName": "Helio Donizete Zanatta",
+  "party": "PSC",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001643762",
+   "ballotNumber": "20123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 430397.72,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001643762"
+ },
+ {
+  "id": "sp-250001610018",
+  "name": "Dep. Itamar Borges",
+  "fullName": "Itamar Francisco Machado Borges",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610018",
+   "ballotNumber": "15300",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 3101003.19,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610018"
+ },
+ {
+  "id": "sp-250001639542",
+  "name": "Dep. Jorge Wilson Xerife Consumidor",
+  "fullName": "Jorge Wilson Gonçalves de Mattos",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639542",
+   "ballotNumber": "10000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2282150,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639542"
+ },
+ {
+  "id": "sp-250001611813",
+  "name": "Dep. Leci Brandão",
+  "fullName": "Leci Brandão da Silva",
+  "party": "PC do B",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611813",
+   "ballotNumber": "65035",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 432469.15,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611813"
+ },
+ {
+  "id": "sp-250001610005",
+  "name": "Dep. Leo Oliveira",
+  "fullName": "Ocimar Donizeti Leo Oliveira",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610005",
+   "ballotNumber": "15123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1473612.96,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610005"
+ },
+ {
+  "id": "sp-250001597775",
+  "name": "Dep. Leo Siqueira",
+  "fullName": "Leonardo de Siqueira Lima",
+  "party": "NOVO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001597775",
+   "ballotNumber": "30600",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 265567.7,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001597775"
+ },
+ {
+  "id": "sp-250001612280",
+  "name": "Dep. Letícia Aguiar",
+  "fullName": "Leticia Aguiar Resende Alves",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001612280",
+   "ballotNumber": "11022",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 476317.63,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001612280"
+ },
+ {
+  "id": "sp-250001610124",
+  "name": "Dep. Lucas Bove",
+  "fullName": "Lucas Diez Bove",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610124",
+   "ballotNumber": "22500",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1965800,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610124"
+ },
+ {
+  "id": "sp-250001611732",
+  "name": "Dep. Luiz Claudio Marcolino",
+  "fullName": "Luiz Claudio Marcolino",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611732",
+   "ballotNumber": "13310",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 450141.14,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611732"
+ },
+ {
+  "id": "sp-250001611733",
+  "name": "Dep. Luiz Fernando",
+  "fullName": "Luiz Fernando Teixeira Ferreira",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611733",
+   "ballotNumber": "13134",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 6519212.19,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611733"
+ },
+ {
+  "id": "sp-250001610181",
+  "name": "Dep. Major Mecca",
+  "fullName": "Dimas Mecca Sampaio",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610181",
+   "ballotNumber": "22000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 324291.06,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610181"
+ },
+ {
+  "id": "sp-250001611775",
+  "name": "Dep. Marcia Lia",
+  "fullName": "Marcia Aparecida Ovejaneda Lia",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611775",
+   "ballotNumber": "13113",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 263393.35,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611775"
+ },
+ {
+  "id": "sp-250001643626",
+  "name": "Dep. Marcio Nakashima",
+  "fullName": "Márcio Massami Nakashima",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001643626",
+   "ballotNumber": "12345",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 510000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001643626"
+ },
+ {
+  "id": "sp-250001610193",
+  "name": "Dep. Marcos Damasio",
+  "fullName": "Marcos Roberto Damasio da Silva",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610193",
+   "ballotNumber": "22222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 947000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610193"
+ },
+ {
+  "id": "sp-250001611490",
+  "name": "Dep. Maria Lucia Amary",
+  "fullName": "Maria Lucia Cardoso Pinto Amary",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611490",
+   "ballotNumber": "45114",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 1633647.22,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611490"
+ },
+ {
+  "id": "sp-250001619311",
+  "name": "Dep. Marina Helou",
+  "fullName": "Marina Medeiros Helou",
+  "party": "REDE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001619311",
+   "ballotNumber": "18000",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": 2387649.8,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001619311"
+ },
+ {
+  "id": "sp-250001605001",
+  "name": "Dep. Marta Costa",
+  "fullName": "Marta Maria Freire da Costa",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001605001",
+   "ballotNumber": "55400",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 3211956,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001605001"
+ },
+ {
+  "id": "sp-250001611754",
+  "name": "Dep. Maurici",
+  "fullName": "Mario Maurici de Lima Morais",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611754",
+   "ballotNumber": "13011",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1574087.77,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611754"
+ },
+ {
+  "id": "sp-250001611484",
+  "name": "Dep. Mauro Bragato",
+  "fullName": "Mauro Bragato",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611484",
+   "ballotNumber": "45125",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 45842.43,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611484"
+ },
+ {
+  "id": "sp-250001602142",
+  "name": "Dep. Milton Leite Filho",
+  "fullName": "Milton Leite da Silva Filho",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602142",
+   "ballotNumber": "44250",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1859440.62,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602142"
+ },
+ {
+  "id": "sp-250001619379",
+  "name": "Dep. Monica do Movimento Pretas",
+  "fullName": "Mônica Cristina Seixas Bonfim",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001619379",
+   "ballotNumber": "50900",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001619379"
+ },
+ {
+  "id": "sp-250001605013",
+  "name": "Dep. Oseias de Madureira",
+  "fullName": "Oseias Santos da Silva",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001605013",
+   "ballotNumber": "55777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001605013"
+ },
+ {
+  "id": "sp-250001619328",
+  "name": "Dep. Paula da Bancada Feminista",
+  "fullName": "Paula Nunes dos Santos",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001619328",
+   "ballotNumber": "50000",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001619328"
+ },
+ {
+  "id": "sp-250001605044",
+  "name": "Dep. Paulo Corrêa Jr",
+  "fullName": "Paulo Alves Corrêa Junior",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001605044",
+   "ballotNumber": "55699",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2189303,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001605044"
+ },
+ {
+  "id": "sp-250001611759",
+  "name": "Dep. Paulo Fiorilo",
+  "fullName": "Paulo Roberto Fiorilo",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611759",
+   "ballotNumber": "13613",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 995786.09,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611759"
+ },
+ {
+  "id": "sp-250001610126",
+  "name": "Dep. Paulo Mansur",
+  "fullName": "Paulo Jorge Mansur Neto",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610126",
+   "ballotNumber": "22422",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2063984.74,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610126"
+ },
+ {
+  "id": "sp-250001620642",
+  "name": "Dep. Prof. Camila Godoi",
+  "fullName": "Camila Godoi da Silva Rodrigues",
+  "party": "PSB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001620642",
+   "ballotNumber": "40123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 578854.15,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001620642"
+ },
+ {
+  "id": "sp-250001611800",
+  "name": "Dep. Professora Bebel",
+  "fullName": "Maria Izabel Azevedo Noronha",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611800",
+   "ballotNumber": "13123",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 865580.99,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611800"
+ },
+ {
+  "id": "sp-250001611460",
+  "name": "Dep. Rafa Zimbaldi",
+  "fullName": "Rafael Fernando Zimbaldi",
+  "party": "CIDADANIA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611460",
+   "ballotNumber": "23000",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 761753.86,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611460"
+ },
+ {
+  "id": "sp-250001602101",
+  "name": "Dep. Rafael Saraiva",
+  "fullName": "Rafael Saraiva Gaia",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602101",
+   "ballotNumber": "44077",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 4601982.86,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602101"
+ },
+ {
+  "id": "sp-250001605053",
+  "name": "Dep. Rafael Silva",
+  "fullName": "Rafael Antonio da Silva",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001605053",
+   "ballotNumber": "55123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1327683,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001605053"
+ },
+ {
+  "id": "sp-250001611758",
+  "name": "Dep. Reis",
+  "fullName": "Paulo Batista dos Reis",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611758",
+   "ballotNumber": "13651",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 987034.97,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611758"
+ },
+ {
+  "id": "sp-250001610539",
+  "name": "Dep. Ricardo França",
+  "fullName": "Ricardo Longatti França",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610539",
+   "ballotNumber": "19100",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 54745.07,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610539"
+ },
+ {
+  "id": "sp-250001610138",
+  "name": "Dep. Ricardo Madalena",
+  "fullName": "Ricardo Rossi Madalena",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610138",
+   "ballotNumber": "22123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1409314.39,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610138"
+ },
+ {
+  "id": "sp-250001610140",
+  "name": "Dep. Rodrigo Moraes",
+  "fullName": "Rodrigo Augusto Moraes",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610140",
+   "ballotNumber": "22541",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1987487.77,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610140"
+ },
+ {
+  "id": "sp-250001611431",
+  "name": "Dep. Rogério Nogueira",
+  "fullName": "Rogerio Nogueira Lopes Cruz",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611431",
+   "ballotNumber": "45123",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 8237277.16,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611431"
+ },
+ {
+  "id": "sp-250001609993",
+  "name": "Dep. Rogério Santos",
+  "fullName": "José Rogerio Soares dos Santos",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001609993",
+   "ballotNumber": "15363",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 428145.68,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001609993"
+ },
+ {
+  "id": "sp-250001611805",
+  "name": "Dep. Rômulo Fernandes",
+  "fullName": "Romulo Cesar Fernandes",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611805",
+   "ballotNumber": "13789",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 296432.22,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611805"
+ },
+ {
+  "id": "sp-250001639572",
+  "name": "Dep. Rui Alves",
+  "fullName": "Rui Alves Souza Junior",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639572",
+   "ballotNumber": "10111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639572"
+ },
+ {
+  "id": "sp-250001639573",
+  "name": "Dep. Sebastião Santos",
+  "fullName": "Sebastião dos Santos Filho",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639573",
+   "ballotNumber": "10321",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 103687.03,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639573"
+ },
+ {
+  "id": "sp-250001602162",
+  "name": "Dep. Solange Freitas",
+  "fullName": "Solange Cristina de Freitas",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001602162",
+   "ballotNumber": "44044",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 466481.99,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001602162"
+ },
+ {
+  "id": "sp-250001610136",
+  "name": "Dep. Tenente Coimbra",
+  "fullName": "Matheus Coimbra Martins de Aguiar",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610136",
+   "ballotNumber": "22444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 312557.5,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610136"
+ },
+ {
+  "id": "sp-250001611769",
+  "name": "Dep. Thainara Faria",
+  "fullName": "Thainara Karoline Faria",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611769",
+   "ballotNumber": "13016",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 45000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611769"
+ },
+ {
+  "id": "sp-250001610134",
+  "name": "Dep. Thiago Auricchio",
+  "fullName": "Thiago Reis Auricchio",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610134",
+   "ballotNumber": "22343",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 786586.2,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610134"
+ },
+ {
+  "id": "sp-250001639557",
+  "name": "Dep. Tomé Abduch",
+  "fullName": "Tome Abduch",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639557",
+   "ballotNumber": "10550",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1896230.28,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639557"
+ },
+ {
+  "id": "sp-250001610167",
+  "name": "Dep. Valeria Bolsonaro",
+  "fullName": "Valeria Muller Ramos Bolsonaro",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001610167",
+   "ballotNumber": "22922",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 28545.4,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001610167"
+ },
+ {
+  "id": "sp-250001611455",
+  "name": "Dep. Vinicius Camarinha",
+  "fullName": "Vinicius Almeida Camarinha",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001611455",
+   "ballotNumber": "45789",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 776613.63,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001611455"
+ },
+ {
+  "id": "sp-250001639551",
+  "name": "Dep. Vitão do Cachorrão",
+  "fullName": "Vitor Alexandre Rodrigues",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de São Paulo (ALESP)",
+  "source": "al-sp",
+  "state": "SP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "250001639551",
+   "ballotNumber": "10555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 460000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SP/250001639551"
+ }
+]

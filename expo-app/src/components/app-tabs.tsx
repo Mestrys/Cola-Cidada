@@ -15,12 +15,12 @@ export default function AppTabs() {
       iconColor={{ default: colors.textSecondary, selected: colors.primary }}
       labelStyle={{ selected: { color: colors.primary } }}>
       <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Label>Início</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="house.fill" md="home" />
+        <NativeTabs.Trigger.Label>Painel</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="building.columns.fill" md="account_balance" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="politicos">
-        <NativeTabs.Trigger.Label>Políticos</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="person.3.fill" md="groups" />
+        <NativeTabs.Trigger.Label>Acompanho</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="bookmark.fill" md="bookmark" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="comparador">
         <NativeTabs.Trigger.Label>Comparar</NativeTabs.Trigger.Label>
