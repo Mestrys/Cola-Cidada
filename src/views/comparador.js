@@ -1,12 +1,47 @@
 import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
-import { loadComparison, loadSenateComparison } from '../votes.js';
+import { loadComparison, loadSenatePublic, partyBreakdown } from '../votes.js';
 import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $, skeleton } from '../ui.js';
 import { openGlossaryModal } from '../glossary.js';
 import { openShareModal } from '../share.js';
 import { openAnalysisModal } from '../analysis.js';
 
-function camaraVotingCard(v, deputies) {
+const VOTE_TONE = (t) => (t === 'Sim' ? 'sim' : t === 'Não' ? 'nao' : 'abstencao');
+
+function allVotesDetails(house, i, count) {
+  const who = house === 'camara' ? 'deputado' : 'senador';
+  return `
+    <details class="vote-details" data-house="${house}" data-i="${i}">
+      <summary>Ver como votou cada partido e cada ${who} (${count})</summary>
+      <div class="vote-details-body"></div>
+    </details>`;
+}
+
+function allVotesBody(votes, house, i) {
+  const parties = partyBreakdown(votes);
+  const sorted = [...votes].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+  return `
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Votos por partido">
+      <table class="party-table">
+        <caption class="sr-only">Votos por partido</caption>
+        <thead><tr><th scope="col">Partido</th><th scope="col">Sim</th><th scope="col">Não</th><th scope="col">Outros</th></tr></thead>
+        <tbody>${parties
+          .map((p) => `<tr><th scope="row">${esc(p.party)}</th><td>${p.Sim}</td><td>${p.Não}</td><td>${p.Outros}</td></tr>`)
+          .join('')}</tbody>
+      </table>
+    </div>
+    <label class="label" for="vote-q-${house}-${i}">Procurar ${house === 'camara' ? 'deputado' : 'senador'} nesta votação</label>
+    <input class="input vote-q" id="vote-q-${house}-${i}" type="search" autocomplete="off">
+    <ul class="vote-list" tabindex="0" aria-label="Voto de cada ${house === 'camara' ? 'deputado' : 'senador'}">${sorted
+      .map(
+        (v) => `<li data-name="${esc(`${v.name} ${v.party} ${v.uf}`.toLowerCase())}">
+          <span>${esc(v.name)} <span class="xs muted">${esc(v.party)}/${esc(v.uf)}</span></span>
+          <span class="vote ${VOTE_TONE(v.vote)}">${esc(v.vote)}</span></li>`
+      )
+      .join('')}</ul>`;
+}
+
+function camaraVotingCard(v, deputies, i) {
   const total = (v.tally.Sim || 0) + (v.tally.Não || 0) + (v.tally.Outros || 0) || 1;
   const pctSim = (((v.tally.Sim || 0) / total) * 100).toFixed(1);
   const pctNao = (((v.tally.Não || 0) / total) * 100).toFixed(1);
@@ -24,7 +59,7 @@ function camaraVotingCard(v, deputies) {
     </div>
 
     <div>
-      <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.descricao || 'Votação nominal no Plenário')}</h3>
+      <h2 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.descricao || 'Votação nominal no Plenário')}</h2>
     </div>
 
     <!-- Barra de Quórum Oficial MD3 -->
@@ -41,11 +76,13 @@ function camaraVotingCard(v, deputies) {
       </div>
     </div>
 
+    ${allVotesDetails('camara', i, v.votes.length)}
+
     ${
       deputies.length
         ? `
       <div class="stack u-gap-8">
-        <span class="xs muted u-fw-700 u-tt-uppercase">Posicionamento da sua Bancada Monitorada:</span>
+        <span class="xs muted u-fw-700 u-tt-uppercase">Quem você acompanha:</span>
         <div class="grid u-cols-f3095c u-gap-8">
           ${deputies
             .map((p) => {
@@ -76,7 +113,7 @@ function camaraVotingCard(v, deputies) {
   </article>`;
 }
 
-function senadoVotingCard(v, senators) {
+function senadoVotingCard(v, senators, i) {
   const isAprov = (v.result || '').toLowerCase().includes('aprov');
 
   return `
@@ -91,7 +128,7 @@ function senadoVotingCard(v, senators) {
     </div>
 
     <div>
-      <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.summary || 'Deliberação no Senado Federal')}</h3>
+      <h2 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.summary || 'Deliberação no Senado Federal')}</h2>
     </div>
 
     ${
@@ -111,8 +148,11 @@ function senadoVotingCard(v, senators) {
         : ''
     }
 
-    <div class="stack u-gap-8">
-      <span class="xs muted u-fw-700 u-tt-uppercase">Voto dos Senadores Monitorados:</span>
+    ${v.secret ? '<p class="sm muted">Votação secreta: a lista mostra quem votou, não como votou.</p>' : ''}
+    ${allVotesDetails('senado', i, v.votes.length)}
+
+    ${senators.length ? `<div class="stack u-gap-8">
+      <span class="xs muted u-fw-700 u-tt-uppercase">Quem você acompanha:</span>
       <div class="grid u-cols-f3095c u-gap-8">
         ${senators
           .map((s) => {
@@ -135,7 +175,7 @@ function senadoVotingCard(v, senators) {
           })
           .join('')}
       </div>
-    </div>
+    </div>` : ''}
   </article>`;
 }
 
@@ -184,7 +224,7 @@ export async function render(root) {
           <span class="xs muted">Plenários da Câmara e do Senado</span>
         </div>
         <h1>Comparador Cívico de Votações</h1>
-        <p>Veja como votaram os parlamentares que você acompanha frente às principais reformas e leis deliberadas no Congresso Nacional.</p>
+        <p>Votações nominais recentes da Câmara e do Senado, abertas: placar, voto por partido e voto de cada parlamentar. Quem você acompanha aparece em destaque.</p>
       </div>
       <div class="row page-actions">
         <button class="btn outlined" id="btn-glossary"><span class="mi" aria-hidden="true">menu_book</span>Glossário Cívico</button>
@@ -226,12 +266,8 @@ export async function render(root) {
     <div class="card soft stack u-mb-18 u-p-16 u-gap-12">
       <div class="row between">
         <div class="tabs" id="house-tabs" aria-label="Casa legislativa">
-          <button class="${deputies.length || (!deputies.length && !senators.length) ? 'on' : ''}" data-house="camara">
-            Câmara dos Deputados (${deputies.length})
-          </button>
-          <button class="${!deputies.length && senators.length ? 'on' : ''}" data-house="senado">
-            Senado Federal (${senators.length})
-          </button>
+          <button class="on" data-house="camara">Câmara dos Deputados</button>
+          <button data-house="senado">Senado Federal</button>
           <button data-house="executivo">Atos do Executivo & Emendas</button>
           <button data-house="confronto">Confronto 1 vs 1</button>
         </div>
@@ -252,31 +288,13 @@ export async function render(root) {
     </div>
 
     <!-- PANE CÂMARA -->
-    <div id="camara-pane" class="stack ${deputies.length || (!deputies.length && !senators.length) ? '' : 'hidden'}">
-      ${
-        deputies.length
-          ? `<div id="camara-list" class="stack">${skeleton('Auditando votações da Câmara dos Deputados…', 2)}</div>`
-          : `
-        <div class="card empty">
-          <span class="mi" aria-hidden="true">how_to_vote</span>
-          <h3>Nenhum deputado federal acompanhado</h3>
-          <p>Abra o perfil de deputados no <a href="#/painel">Painel Público</a> e toque em Acompanhar para cruzar como votaram em cada matéria do Plenário.</p>
-        </div>`
-      }
+    <div id="camara-pane" class="stack">
+      <div id="camara-list" class="stack">${skeleton('Carregando votações da Câmara dos Deputados…', 2)}</div>
     </div>
 
     <!-- PANE SENADO -->
-    <div id="senado-pane" class="stack ${!deputies.length && senators.length ? '' : 'hidden'}">
-      ${
-        senators.length
-          ? `<div id="senado-list" class="stack">${skeleton('Auditando votações do Senado Federal…', 2)}</div>`
-          : `
-        <div class="card empty">
-          <span class="mi" aria-hidden="true">account_balance</span>
-          <h3>Nenhum senador acompanhado</h3>
-          <p>Abra o perfil de senadores no <a href="#/painel">Painel Público</a> e toque em Acompanhar para ver as deliberações deles em Plenário.</p>
-        </div>`
-      }
+    <div id="senado-pane" class="stack hidden">
+      <div id="senado-list" class="stack">${skeleton('Carregando votações do Senado Federal…', 2)}</div>
     </div>
 
     <!-- PANE EXECUTIVO & EMENDAS PIX -->
@@ -347,49 +365,12 @@ export async function render(root) {
         <div class="row between">
           <div>
             <h3 class="h2 u-fs-16">Matriz de Convergência & Confronto Direto 1 vs 1</h3>
-            <p class="sm muted">Selecione dois parlamentares para comparar seus votos nominais lado a lado e calcular o grau de alinhamento político.</p>
+            <p class="sm muted">Escolha dois deputados federais quaisquer para comparar os votos nas votações nominais recentes e ver o grau de alinhamento.</p>
           </div>
           <span class="chip blue">Inteligência Cívica</span>
         </div>
 
-        ${
-          politicians.length < 2
-            ? `
-          <div class="card empty u-p-28">
-            <span class="mi" aria-hidden="true">compare_arrows</span>
-            <h3>Necessário ao menos 2 parlamentares</h3>
-            <p>Acompanhe ao menos dois parlamentares (pelo perfil deles no Painel Público) para calcular a convergência de votos.</p>
-          </div>`
-            : `
-          <div class="grid g2 u-gap-14">
-            <div>
-              <label class="label" for="sel-pol-a">Parlamentar A</label>
-              <select class="input" id="sel-pol-a">
-                ${politicians
-                  .map(
-                    (p, idx) =>
-                      `<option value="${p.id}" ${idx === 0 ? 'selected' : ''}>${esc(p.name)} (${esc(p.party || '—')}/${esc(p.uf || '')})</option>`
-                  )
-                  .join('')}
-              </select>
-            </div>
-            <div>
-              <label class="label" for="sel-pol-b">Parlamentar B</label>
-              <select class="input" id="sel-pol-b">
-                ${politicians
-                  .map(
-                    (p, idx) =>
-                      `<option value="${p.id}" ${idx === 1 ? 'selected' : ''}>${esc(p.name)} (${esc(p.party || '—')}/${esc(p.uf || '')})</option>`
-                  )
-                  .join('')}
-              </select>
-            </div>
-          </div>
-
-          <div id="confronto-results" class="stack u-mt-8">
-            <div class="card soft row u-p-14"><span class="spin"></span><span class="muted">Calculando convergência de votos nominais…</span></div>
-          </div>`
-        }
+        <div id="confronto-form" class="stack u-gap-14">${skeleton('Carregando a lista de deputados das votações recentes…', 1)}</div>
       </div>
     </div>
   `;
@@ -404,7 +385,6 @@ export async function render(root) {
   const confrontoPane = $('#confronto-pane', root);
 
   let mpvLoaded = false;
-  let camaraRowsCache = null;
 
   async function loadMpvList() {
     if (mpvLoaded) return;
@@ -431,24 +411,20 @@ export async function render(root) {
       return;
     }
 
-    const polA = politicians.find((p) => p.id === selA);
-    const polB = politicians.find((p) => p.id === selB);
+    const rows = await camaraRows;
+    const nameOf = (id) => rows.flatMap((r) => r.votes).find((x) => String(x.id) === id);
+    const polA = nameOf(selA);
+    const polB = nameOf(selB);
     if (!polA || !polB) return;
 
-    resEl.innerHTML = '<div class="card soft row u-p-14"><span class="spin"></span><span class="muted">Cruzando histórico de votações nominais…</span></div>';
-
     try {
-      if (!camaraRowsCache) {
-        camaraRowsCache = await loadComparison(politicians, 16);
-      }
-
       let matches = 0;
       let diffs = 0;
       const commonVotes = [];
 
-      for (const row of camaraRowsCache) {
-        const vA = row.byPol[polA.id];
-        const vB = row.byPol[polB.id];
+      for (const row of rows) {
+        const vA = row.votes.find((x) => String(x.id) === selA)?.vote;
+        const vB = row.votes.find((x) => String(x.id) === selB)?.vote;
         if (vA && vB) {
           const isSame = vA.toLowerCase() === vB.toLowerCase();
           if (isSame) matches++;
@@ -514,7 +490,7 @@ export async function render(root) {
       if (btnShareConf) {
         btnShareConf.onclick = () => {
           openShareModal({
-            politician: polA,
+            politician: { name: polA.name, party: polA.party, uf: polA.uf },
             title: 'Confronto Cívico 1 vs 1',
             highlight: `${polA.name} vs ${polB.name}: ${pct}% de alinhamento em votações`,
             badge: `${pct}% CONVERGÊNCIA`,
@@ -528,12 +504,6 @@ export async function render(root) {
     }
   }
 
-  const selAEl = $('#sel-pol-a', root);
-  const selBEl = $('#sel-pol-b', root);
-  if (selAEl && selBEl) {
-    selAEl.onchange = computeConfrontation;
-    selBEl.onchange = computeConfrontation;
-  }
 
   tabButtons.forEach((btn) => {
     btn.onclick = () => {
@@ -576,32 +546,89 @@ export async function render(root) {
     };
   });
 
-  // Carrega Câmara
-  if (deputies.length) {
-    const camaraList = $('#camara-list', root);
-    try {
-      const rows = await loadComparison(politicians, 14);
-      camaraRowsCache = rows;
+  // Lista completa de votos: montada só quando a pessoa abre (centenas de nomes por votação)
+  const rowsByHouse = { camara: [], senado: [] };
+  root.addEventListener(
+    'toggle',
+    (e) => {
+      const d = e.target;
+      if (!d.matches?.('details.vote-details') || !d.open) return;
+      const body = d.querySelector('.vote-details-body');
+      if (body.childElementCount) return;
+      const row = rowsByHouse[d.dataset.house][Number(d.dataset.i)];
+      body.innerHTML = allVotesBody(row.votes, d.dataset.house, d.dataset.i);
+      const q = body.querySelector('.vote-q');
+      q.oninput = () => {
+        const term = q.value.toLowerCase().trim();
+        body.querySelectorAll('.vote-list li').forEach((li) => (li.hidden = !!term && !li.dataset.name.includes(term)));
+      };
+    },
+    true
+  );
+
+  // Câmara: todas as votações, abertas a qualquer pessoa
+  const camaraList = $('#camara-list', root);
+  const camaraRows = loadComparison(politicians, 14);
+  camaraRows
+    .then((rows) => {
+      rowsByHouse.camara = rows;
       camaraList.innerHTML = rows.length
-        ? rows.map((v) => camaraVotingCard(v, deputies)).join('')
+        ? rows.map((v, i) => camaraVotingCard(v, deputies, i)).join('')
         : '<div class="card empty"><p class="muted">Sem votações nominais recentes na Câmara.</p></div>';
-    } catch {
+      applyFilters();
+      fillConfrontoForm(rows);
+    })
+    .catch(() => {
       camaraList.innerHTML =
         '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao consultar a Câmara dos Deputados.</p></div>';
+      $('#confronto-form', root).innerHTML = '<p class="muted">Sem as votações da Câmara não há o que comparar agora.</p>';
+    });
+
+  // Confronto: qualquer deputado que votou nas votações carregadas; quem a pessoa acompanha vem primeiro
+  function fillConfrontoForm(rows) {
+    const form = $('#confronto-form', root);
+    const all = new Map();
+    for (const r of rows) for (const v of r.votes) if (v.id && !all.has(v.id)) all.set(v.id, v);
+    const list = [...all.values()].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+    if (list.length < 2) {
+      form.innerHTML = '<p class="muted">Ainda não há votações suficientes para comparar.</p>';
+      return;
     }
+    const followed = deputies.map((d) => all.get(d.camaraId)).filter(Boolean);
+    const opt = (v, sel) => `<option value="${v.id}" ${sel ? 'selected' : ''}>${esc(v.name)} (${esc(v.party)}/${esc(v.uf)})</option>`;
+    const [a, b] = followed.length >= 2 ? followed : [list[0], list[1]];
+    const options = (pick) =>
+      (followed.length ? `<optgroup label="Quem você acompanha">${followed.map((v) => opt(v, v === pick)).join('')}</optgroup>` : '') +
+      `<optgroup label="Todos os deputados (A–Z)">${list.map((v) => opt(v, !followed.includes(pick) && v === pick)).join('')}</optgroup>`;
+    form.innerHTML = `
+      <div class="grid g2 u-gap-14">
+        <div>
+          <label class="label" for="sel-pol-a">Deputado(a) A</label>
+          <select class="input" id="sel-pol-a">${options(a)}</select>
+        </div>
+        <div>
+          <label class="label" for="sel-pol-b">Deputado(a) B</label>
+          <select class="input" id="sel-pol-b">${options(b)}</select>
+        </div>
+      </div>
+      <div id="confronto-results" class="stack u-mt-8" aria-live="polite"></div>`;
+    $('#sel-pol-a', root).onchange = computeConfrontation;
+    $('#sel-pol-b', root).onchange = computeConfrontation;
+    if (!confrontoPane.classList.contains('hidden')) computeConfrontation();
   }
 
-  // Carrega Senado
-  if (senators.length) {
-    const senadoList = $('#senado-list', root);
-    try {
-      const rows = await loadSenateComparison(politicians, 14);
-      senadoList.innerHTML = rows.length
-        ? rows.map((v) => senadoVotingCard(v, senators)).join('')
-        : '<div class="card empty"><p class="muted">Sem registros de votação recente para os senadores selecionados.</p></div>';
-    } catch {
-      senadoList.innerHTML =
-        '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao consultar o Senado Federal.</p></div>';
-    }
+  // Senado: todas as votações nominais do período, com o voto de cada senador presente
+  const senadoList = $('#senado-list', root);
+  try {
+    const rows = await loadSenatePublic(politicians, 14);
+    rowsByHouse.senado = rows;
+    senadoList.innerHTML = rows.length
+      ? rows.map((v, i) => senadoVotingCard(v, senators, i)).join('')
+      : '<div class="card empty"><p class="muted">Sem votações nominais recentes no Senado.</p></div>';
+    applyFilters();
+  } catch {
+    senadoList.innerHTML =
+      '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao consultar o Senado Federal.</p></div>';
   }
+  await camaraRows.catch(() => {});
 }

@@ -2492,3 +2492,70 @@ a.card:active {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* ===== Comparador: votos de todos ===== */
+.vote-details {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+.vote-details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--md-sys-color-primary);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.vote-details-body {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+.table-wrap {
+  overflow-x: auto;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+.party-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+.party-table th,
+.party-table td {
+  padding: 6px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+}
+.party-table th:first-child {
+  text-align: left;
+}
+.party-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--s2);
+}
+.vote-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 360px;
+  overflow-y: auto;
+  display: grid;
+  gap: 4px;
+}
+.vote-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+.vote-list li[hidden] {
+  display: none;
+}
