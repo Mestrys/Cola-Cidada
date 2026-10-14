@@ -30,19 +30,27 @@ test.describe('telas', () => {
     }
   });
 
-  test('barras de progresso recebem a largura de data-w sem style no HTML', async ({ page }) => {
+  // fração visível da pílula: ela ocupa a trilha toda e é deslocada para a esquerda por transform
+  const fillOf = (i) => {
+    const w = i.offsetWidth;
+    return Math.round(((w + new DOMMatrix(getComputedStyle(i).transform).m41) / w) * 100);
+  };
+
+  test('barras de progresso refletem data-w por transform, sem style de largura no HTML', async ({ page }) => {
     await seed(page);
     await go(page, 'meus-politicos');
     const bar = page.locator('.pol-card .bar > i').first();
     const pct = parseInt((await page.locator('.pol-card b', { hasText: '% cumprido' }).first().innerText()), 10);
-    const [fill, track] = await bar.evaluate((i) => [i.getBoundingClientRect().width, i.parentElement.getBoundingClientRect().width]);
-    expect(Math.round((fill / track) * 100)).toBe(pct);
-    // elementos inseridos depois da primeira renderização também são cobertos
-    const w = await page.evaluate(() => {
+    await expect.poll(() => bar.evaluate(fillOf), 'preenchimento final (após a transição)').toBe(pct);
+    expect(await bar.evaluate((i) => i.style.width), 'não usa width').toBe('');
+    // barra que chega depois da primeira exibição entra já no lugar, sem recomeçar do zero
+    await page.waitForTimeout(1200);
+    const late = await page.evaluate((fn) => {
       document.body.insertAdjacentHTML('beforeend', '<div class="bar" id="t"><i data-w="25"></i></div>');
-      return new Promise((r) => queueMicrotask(() => queueMicrotask(() => r(document.querySelector('#t i').style.width))));
-    });
-    expect(w).toBe('25%');
+      const i = document.querySelector('#t i');
+      return new Promise((r) => queueMicrotask(() => queueMicrotask(() => r(new Function('i', `return (${fn})(i)`)(i)))));
+    }, fillOf.toString());
+    expect(late).toBe(25);
   });
 
   test('ícones não herdam maiúsculas nem espaçamento (a ligadura se perderia)', async ({ page }) => {
@@ -286,6 +294,16 @@ test.describe('diálogos', () => {
     await page.keyboard.press('Escape');
     await page.clock.runFor(1500);
     await expect(page.locator('.overlay'), 'e ainda fecha depois').toHaveCount(0);
+  });
+
+  test('desfoque do fundo só em telas largas; no celular o fundo só escurece', async ({ page, isMobile }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.waitForSelector('.overlay .modal');
+    const f = await page.locator('.overlay').evaluate((o) => getComputedStyle(o).backdropFilter);
+    if (isMobile) expect(f, 'sem blur de tela inteira no celular').toBe('none');
+    else expect(f).toContain('blur');
   });
 
   test('movimento reduzido troca deslizamento por esmaecimento', async ({ page }) => {
