@@ -1,0 +1,97 @@
+# Welcome to your Expo app 👋
+
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+## Estrutura de pastas
+
+Expo SDK 57, TypeScript (`strict`) e Expo Router com navegação por abas.
+
+```
+src/
+  app/                    rotas (cada arquivo vira uma tela)
+    _layout.tsx           raiz: tema, splash e uma pilha (Stack)
+    (tabs)/               grupo das abas; "(tabs)" não aparece na URL
+      _layout.tsx         monta a barra de abas
+      index.tsx           aba Home      → /
+      explore.tsx         aba Explore   → /explore
+  components/
+    app-tabs.tsx          barra de abas nativa (iOS e Android)
+    app-tabs.web.tsx      barra de abas da web
+    themed-text.tsx, themed-view.tsx, ui/…   componentes compartilhados
+  constants/theme.ts      cores, espaçamentos
+  hooks/                  use-color-scheme, use-theme
+assets/                   ícones, splash e imagens
+```
+
+### Como acrescentar
+
+- **Nova aba:** crie `src/app/(tabs)/perfil.tsx` e registre-a em `src/components/app-tabs.tsx` (um `NativeTabs.Trigger name="perfil"` com rótulo e ícone) e em `app-tabs.web.tsx` (um `TabTrigger`).
+- **Tela fora da barra** (detalhe, modal): crie-a ao lado de `(tabs)`, por exemplo `src/app/modal.tsx`, e declare-a na pilha de `src/app/_layout.tsx` com `<Stack.Screen name="modal" options={{ presentation: 'modal' }} />`.
+- **Tela com parâmetro:** `src/app/item/[id].tsx`.
+- Rotas tipadas (`typedRoutes`) estão ligadas: `href` é conferido pelo TypeScript depois que o servidor gera os tipos em `.expo/types`.
+- As abas nativas usam `expo-router/unstable-native-tabs` (SDK 55 a 57); no SDK 58 o caminho passa a ser `expo-router/native-tabs`.
+
+## Scripts
+
+```bash
+npm run start       # servidor de desenvolvimento
+npm run android     # abre no Android
+npm run ios         # abre no iOS (exige macOS)
+npm run web         # abre na web
+npm run lint        # expo lint
+npx tsc --noEmit    # checagem de tipos
+npx expo-doctor     # diagnóstico de dependências e configuração
+```
+
+## Get started
+
+1. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+2. Start the app
+
+   ```bash
+   npx expo start
+   ```
+
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+
+### Other setup steps
+
+- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
+- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
+- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
