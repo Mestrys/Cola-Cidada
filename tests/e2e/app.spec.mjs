@@ -168,8 +168,11 @@ test.describe('diálogos', () => {
     await page.keyboard.press('Enter');
     await expect(page.locator('.modal')).toHaveAttribute('aria-labelledby', /.+/);
     await expect(page.locator('.app-wrapper'), 'fundo fora do alcance do leitor de tela').toHaveAttribute('inert');
-    for (let i = 0; i < 30; i++) await page.keyboard.press('Tab');
-    expect(await page.evaluate(() => !!document.activeElement.closest('.modal'))).toBe(true);
+    // A cada Tab (e Shift+Tab) o foco segue dentro do diálogo; abas inativas (tabindex=-1) não contam como fim do ciclo.
+    for (const key of [...Array(15).fill('Tab'), ...Array(15).fill('Shift+Tab')]) {
+      await page.keyboard.press(key);
+      expect(await page.evaluate(() => !!document.activeElement.closest('.modal')), `foco escapou após ${key}`).toBe(true);
+    }
     await page.keyboard.press('Escape');
     await expect(page.locator('.overlay')).toHaveCount(0);
     await expect(trigger).toBeFocused();

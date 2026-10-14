@@ -6,7 +6,7 @@ import {
   senatorVotes,
   getTseElectoralProfile,
 } from '../api.js';
-import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast } from '../ui.js';
+import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist } from '../ui.js';
 import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
 import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -164,7 +164,7 @@ async function openPoliticianDetails(p) {
     </div>
 
     <!-- Navegação de Abas MD3 -->
-    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="pol-tabs">
+    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="pol-tabs" aria-label="Seções da ficha">
       ${
         isDeputy
           ? `
@@ -319,17 +319,10 @@ async function openPoliticianDetails(p) {
 
   // Alternância de abas do modal
   const tabs = el.querySelectorAll('#pol-tabs button');
-  el.querySelector('#pol-tabs')?.setAttribute('role', 'tablist');
   tabs.forEach((btn) => {
-    btn.setAttribute('role', 'tab');
-    btn.setAttribute('aria-selected', String(btn.classList.contains('on')));
     btn.onclick = () => {
-      tabs.forEach((b) => {
-        b.classList.remove('on');
-        b.setAttribute('aria-selected', 'false');
-      });
+      tabs.forEach((b) => b.classList.remove('on'));
       btn.classList.add('on');
-      btn.setAttribute('aria-selected', 'true');
       btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       const targetTab = btn.dataset.tab;
       el.querySelectorAll('.pol-pane').forEach((p) => p.classList.add('hidden'));
@@ -337,6 +330,7 @@ async function openPoliticianDetails(p) {
       if (activePane) activePane.classList.remove('hidden');
     };
   });
+  tablist(el.querySelector('#pol-tabs'), (b) => el.querySelector(`#tab-${b.dataset.tab}`));
 
   if (isDeputy) {
     const paneGastos = el.querySelector('#tab-gastos');
