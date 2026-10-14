@@ -1166,7 +1166,6 @@ a {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
   display: grid;
   place-items: center;
   padding: 1rem;
@@ -1220,10 +1219,13 @@ a {
 
 .bar > i {
   display: block;
+  width: 100%;
   height: 100%;
   background: var(--md-sys-color-primary);
   border-radius: var(--md-sys-shape-corner-full);
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* --p (0 a 1) vem de src/dynamic.js; deslocar a pílula inteira mantém as pontas redondas e não força layout */
+  transform: translateX(calc((var(--p, 0) - 1) * 100%));
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Spinner M3 */
@@ -1727,7 +1729,21 @@ button.chip:active, a.chip:active,
 
 .overlay {
   background: rgb(0 0 0 / calc(0.4 * var(--scrim, 1)));
-  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Desfoque do fundo só em telas largas. No celular um blur de tela inteira pesa durante o arrasto da folha;
+   lá o fundo só escurece (um pouco mais, para compensar) e o escurecimento acompanha o dedo (--scrim). */
+@media (min-width: 601px) {
+  .overlay {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+
+@media (max-width: 600px) {
+  .overlay {
+    background: rgb(0 0 0 / calc(0.5 * var(--scrim, 1)));
+  }
 }
 
 /* Sai pelo mesmo caminho por onde entrou, com curva de aceleração espelhada */
