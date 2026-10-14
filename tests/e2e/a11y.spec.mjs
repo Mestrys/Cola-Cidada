@@ -118,6 +118,8 @@ test.describe('abas por teclado (padrão WAI-ARIA)', () => {
     expect(count).toBeGreaterThan(1);
     await expect(page.locator(`${tablist} [role=tab][tabindex="0"]`)).toHaveCount(1);
     const panelOf = async (t) => page.locator(`#${await t.getAttribute('aria-controls')}`);
+    // Diálogos movem o foco para dentro ao abrir; só depois de assentar o teste foca a primeira aba.
+    await page.waitForFunction(() => !document.querySelector('.overlay') || document.activeElement?.closest('.modal'));
     await tabs.first().focus();
     await page.keyboard.press('ArrowRight');
     await expect(tabs.nth(1)).toBeFocused();

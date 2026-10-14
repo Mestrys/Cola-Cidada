@@ -11,7 +11,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 - **Ação:** a empresa confirma cada dado. O que não for real sai do rodapé.
 - **Esforço:** minutos. **Quem decide:** a empresa.
 
-### 2. Conteúdo editorial gerado por palavras-chave — 🟡 parcialmente feito
+### 2. Conteúdo editorial gerado por palavras-chave — ✅ feito
 - **Problema:** dois recursos geram textos que parecem análise do caso específico, mas são frases prontas escolhidas por palavras-chave.
   - `src/analysis.js` (Sumário, "Impacto financeiro", "Quem ganha e quem paga", Scanner de Jabutis): o mesmo parágrafo genérico aparece para qualquer proposição do mesmo tema. Já ganhou um aviso de "estimativa automática".
   - `src/votes.js` (`getCitizenExplanation`, "Linguagem Cidadã"): textos fixos de "Votou SIM para…/Votou NÃO…" que atribuem motivações ao voto. Num app apartidário, isso é posicionamento editorial.
@@ -23,7 +23,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 - **Feito:**
   - (b) Os quadros "O que muda na prática", "Impacto Financeiro" e "Quem Ganha e Quem Paga" saíram. A aba virou "Resumo Oficial": ementa, número, data de apresentação e link para a ficha de tramitação e o inteiro teor (só links de camara.leg.br e senado.leg.br). O tema segue estimado por palavras-chave e está rotulado assim; o aviso de estimativa automática foi para o Scanner de Jabutis.
   - (a) A Linguagem Cidadã ganhou um aviso visível (`EXPLANATION_NOTE` em `src/votes.js`) nos dois lugares em que aparece: texto fixo por tema, não é declaração do parlamentar.
-- **Falta:** alguém com critério editorial revisar as quatro sínteses de `getCitizenExplanation` (Reforma Tributária, IA, Marco Temporal, Urgência), em especial os trechos "Votou SIM para…/Votou NÃO alegando…", ou decidir removê-las. Itens vindos do feed do Início não trazem link (a API do feed não devolve o id da proposição).
+- **Decisão final:** a Linguagem Cidadã foi removida por inteiro (`getCitizenExplanation`, `EXPLANATION_NOTE`, os quadros do Início e do Comparador e o CSS). Os quatro textos atribuíam motivos aos votos e eram frases fixas por palavra-chave. Votações seguem com resultado oficial, placar e voto individual. Itens vindos do feed do Início não trazem link (a API do feed não devolve o id da proposição).
 - **Esforço:** (a) 1–2 h de código, mais a revisão; (b) cerca de 1 dia.
 
 ### 3. Data de início do mandato estadual — ✅ feito
@@ -108,7 +108,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 | # | Item | Prioridade | Esforço | Precisa de decisão? |
 |---|------|-----------|---------|---------------------|
 | 1 | Dados da empresa no rodapé | P0 | minutos | Sim (empresa) |
-| 2 | Conteúdo por palavras-chave (código feito; falta revisão editorial) | P0 | revisão | Sim (editorial) |
+| 2 | ~~Conteúdo por palavras-chave~~ ✅ (Linguagem Cidadã removida) | P0 | feito | — |
 | 3 | ~~Mandato estadual por UF~~ ✅ | P0 | feito | — |
 | 4 | ~~Domicílio no cadastro~~ ✅ | P0 | feito | — |
 | 5 | Fonte com pesos reais | P1 | meio dia | Sim (marca) |

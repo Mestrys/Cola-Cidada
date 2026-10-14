@@ -46,9 +46,7 @@ Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não 
   - Busca oficial e fotos dos 81 senadores da República em exercício por nome ou UF.
   - Votações nominais do Plenário do Senado com resultado oficial e voto individual.
   - Cálculo exato de término do mandato de 8 anos a partir dos dados do Senado.
-- **Linguagem Cidadã & Filtros Temáticos:**
-  - Síntese descomplicada do impacto das principais votações ("O que significou este voto: Quem votou SIM... Quem votou NÃO...").
-  - Filtros temáticos por área (Economia, Tecnologia, Social/Saúde, Meio Ambiente, Segurança).
+- **Filtros temáticos:** votações por área (Economia, Tecnologia, Social/Saúde, Meio Ambiente, Segurança).
 - **PWA & Funcionamento Offline:**
   - Instalável como aplicativo no celular e desktop (`manifest.webmanifest` e `icon.svg`).
   - `sw.js` (Service Worker) ativo com cache do app shell e estratégia de fallback para dados consultados offline.
