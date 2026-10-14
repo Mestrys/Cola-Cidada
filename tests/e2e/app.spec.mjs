@@ -360,6 +360,57 @@ test.describe('navegação entre telas', () => {
   });
 });
 
+test.describe('abas e carregamento', () => {
+  test('o indicador acompanha a aba ativa e desliza ao trocar; o painel entra com esmaecimento', async ({ page }) => {
+    await seed(page);
+    await go(page, 'comparador');
+    const tabs = page.locator('#house-tabs > button');
+    const ind = page.locator('#house-tabs > .tab-ind');
+    const gap = async (tab) => {
+      const [a, b] = await Promise.all([ind.boundingBox(), tab.boundingBox()]);
+      return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y), Math.abs(a.width - b.width), Math.abs(a.height - b.height));
+    };
+    await expect(ind).toHaveClass(/ready/);
+    expect(await gap(tabs.nth(0)), 'indicador sobre a aba ativa').toBeLessThanOrEqual(1);
+    // a pílula passa a ser o indicador, não o botão
+    expect(await tabs.nth(0).evaluate((b) => getComputedStyle(b).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+
+    const anim = await page.evaluate(() => {
+      const btn = document.querySelectorAll('#house-tabs > button')[1];
+      btn.click();
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      return getComputedStyle(panel).animationName;
+    });
+    expect(anim, 'painel novo entra com animação').toBe('tab-in');
+    await expect.poll(() => gap(tabs.nth(1)), 'indicador chega na aba nova').toBeLessThanOrEqual(1);
+    expect(await ind.evaluate((i) => getComputedStyle(i).transitionProperty)).toContain('transform');
+  });
+
+  test('carregamento mostra a forma do conteúdo, com a legenda anunciada como status', async ({ page }) => {
+    await seed(page);
+    // segura as respostas das APIs para flagrar o estado de carregamento
+    await page.route(/dadosabertos\.camara\.leg\.br|legis\.senado\.leg\.br/, () => {});
+    await go(page, 'inicio');
+    const sk = page.locator('#feed .skeleton');
+    await expect(sk).toBeVisible();
+    await expect(sk).toHaveAttribute('role', 'status');
+    await expect(sk).toContainText('Carregando votações recentes');
+    await expect(sk.locator('.sk-card')).toHaveCount(2);
+    await expect(sk.locator('.sk-card').first().locator('.sk-line')).toHaveCount(3);
+    expect(await page.locator('#feed .spin').count(), 'sem spinner na lista').toBe(0);
+  });
+
+  test('com movimento reduzido o brilho do espaço de carregamento fica parado', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await seed(page);
+    await page.route(/dadosabertos\.camara\.leg\.br|legis\.senado\.leg\.br/, () => {});
+    await go(page, 'inicio');
+    const line = page.locator('#feed .sk-line').first();
+    await expect(line).toBeVisible();
+    expect(await line.evaluate((l) => getComputedStyle(l, '::after').animationName)).toBe('none');
+  });
+});
+
 test.describe('fluxos', () => {
   test('remover político pode ser desfeito na mesma posição', async ({ page }) => {
     await seed(page);
