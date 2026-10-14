@@ -4,7 +4,7 @@ const KEY = 'monitor-cidadao:v1';
 const defaults = () => ({
   theme: 'system', // 'system' | 'light' | 'dark'
   politicians: [], // {id, source:'camara'|'manual', camaraId?, name, party, uf, role, photo?, mandateEnd}
-  prefs: { rollcall: true, expenses: true, bills: true },
+  prefs: { plenario: true, rollcall: true, expenses: true, bills: true },
   alerts: [], // {id, ts, politicianId, text}
   domicile: { state: 'SP', city: 'São Paulo' },
   onboardingDone: false,

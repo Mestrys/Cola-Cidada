@@ -1,4 +1,4 @@
-const CACHE_NAME = 'monitor-cidadao-v23';
+const CACHE_NAME = 'monitor-cidadao-v24';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -25,6 +25,7 @@ const APP_SHELL = [
   '/src/data/entes.json',
   '/src/directory.js',
   '/src/contas.js',
+  '/src/alerts.js',
   '/src/views/painel.js',
   '/src/views/alertas.js',
   '/src/views/comparador.js',

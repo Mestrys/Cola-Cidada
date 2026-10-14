@@ -2559,3 +2559,7 @@ a.card:active {
 .vote-list li[hidden] {
   display: none;
 }
+/* o display do cartão vence o atributo hidden; sem isto o filtro de alertas não esconde nada */
+.alert-item[hidden] {
+  display: none;
+}

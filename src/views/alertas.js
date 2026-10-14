@@ -1,17 +1,33 @@
 import { store } from '../store.js';
-import { loadComparison, loadSenateComparison } from '../votes.js';
+import { collectAlerts, prefOn, EXPENSE_THRESHOLD } from '../alerts.js';
 import { esc, fmtDate, toast, $ } from '../ui.js';
+
+const KINDS = {
+  plenario: { label: 'Plenário', icon: 'gavel', chip: 'blue', link: '' },
+  votacao: { label: 'Voto de quem acompanho', icon: 'how_to_vote', chip: 'green', link: '' },
+  gasto: { label: 'Gasto da cota', icon: 'receipt_long', chip: 'gold', link: 'Ver nota fiscal' },
+  proposicao: { label: 'Projeto de lei', icon: 'description', chip: 'purple', link: 'Ver tramitação' },
+};
+// alertas gravados antes desta versão não têm tipo: eram todos votos de quem a pessoa acompanha
+const kindOf = (a) => (KINDS[a.kind] ? a.kind : 'votacao');
+
+// O filtro escolhido continua valendo enquanto a tela é refeita (verificar, mudar preferência).
+let activeFilter = 'all';
 
 export function render(root) {
   const { prefs, alerts, politicians } = store.get();
   const hasNotificationSupport = 'Notification' in window;
   const isNotificationGranted = hasNotificationSupport && Notification.permission === 'granted';
 
+  const limiar = EXPENSE_THRESHOLD.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
   const toggles = [
-    ['rollcall', 'Votações Nominais no Plenário', 'Emissão instantânea quando um deputado ou senador monitorado votar.'],
-    ['expenses', 'Despesas CEAP > R$ 5.000', 'Alerta imediato para notas fiscais atípicas, combustíveis e consultorias.'],
-    ['bills', 'Novas Proposições & Relatorias', 'Apresentação de novos projetos de lei, emendas à constituição ou pareceres.'],
+    ['plenario', 'Votações do Plenário', 'Novas votações nominais na Câmara e no Senado, para qualquer pessoa, sem acompanhar ninguém.'],
+    ['rollcall', 'Votos de quem você acompanha', 'Como cada deputado ou senador que você acompanha votou nessas votações.'],
+    ['expenses', `Gastos da cota acima de ${limiar}`, 'Notas da cota parlamentar (CEAP) dos deputados federais que você acompanha.'],
+    ['bills', 'Projetos de lei apresentados', 'PLs e PECs de autoria dos deputados federais que você acompanha.'],
   ];
+  const counts = Object.fromEntries(Object.keys(KINDS).map((k) => [k, alerts.filter((a) => kindOf(a) === k).length]));
+  if (activeFilter !== 'all' && !KINDS[activeFilter]) activeFilter = 'all';
 
   root.innerHTML = `
     <!-- Top Header da Central de Alertas (Stitch) -->
@@ -27,7 +43,7 @@ export function render(root) {
           </div>
           <h1>Central de Alertas</h1>
         </div>
-        <p>Votações recentes dos seus representantes no Congresso, consultadas quando você toca em "Verificar agora".</p>
+        <p>Novas votações do Congresso e, se você acompanha alguém, os votos, gastos e projetos dessas pessoas. A consulta acontece quando você toca em "Verificar agora".</p>
       </div>
       <div class="row page-actions">
         <button class="btn primary" id="check"><span class="mi" aria-hidden="true">sync</span>Verificar Agora</button>
@@ -36,18 +52,16 @@ export function render(root) {
 
     <!-- Filtros de Alerta (Conforme Stitch) -->
     <div class="row u-gap-8 u-mb-20" id="alert-filters">
-      <button class="chip green u-cursor-pointer u-p-6-14 u-fs-12" data-filter="all">
-        ✔ Todas (${alerts.length})
+      <button class="chip ${activeFilter === 'all' ? 'green' : ''} u-cursor-pointer u-p-6-14 u-fs-12" data-filter="all" aria-pressed="${activeFilter === 'all'}">
+        Todos (${alerts.length})
       </button>
-      <button class="chip u-cursor-pointer u-p-6-14 u-fs-12" data-filter="votacao">
-        Votações Nominais
-      </button>
-      <button class="chip u-cursor-pointer u-p-6-14 u-fs-12" data-filter="gasto">
-        Gastos & Notas
-      </button>
-      <button class="chip u-cursor-pointer u-p-6-14 u-fs-12" data-filter="proposicao">
-        Projetos de Lei
-      </button>
+      ${Object.entries(KINDS)
+        .map(
+          ([k, v]) => `<button class="chip ${activeFilter === k ? 'green' : ''} u-cursor-pointer u-p-6-14 u-fs-12" data-filter="${k}" aria-pressed="${activeFilter === k}">
+        ${v.label} (${counts[k]})
+      </button>`
+        )
+        .join('')}
     </div>
 
     <div class="grid g2 u-ai-start">
@@ -77,31 +91,31 @@ export function render(root) {
               <span>● Registros Mais Recentes</span>
               <span>${alerts.length} eventos monitorados</span>
             </div>
+            <p class="sm muted" id="alerts-empty-filter" hidden>Nenhum alerta deste tipo ainda.</p>
             ${alerts
-              .map(
-                (a) => `
-              <article class="card stack u-gap-10 u-bl-4-solid-primary">
+              .map((a) => {
+                const k = KINDS[kindOf(a)];
+                return `
+              <article class="card stack u-gap-10 u-bl-4-solid-primary alert-item" data-kind="${kindOf(a)}">
                 <div class="row between">
-                  <div class="row u-gap-6">
-                    <span class="chip green xs"><span class="mi u-fs-12" aria-hidden="true">how_to_vote</span>Nominal</span>
-                    <span class="xs muted">Deliberação em Plenário</span>
-                  </div>
+                  <span class="chip ${k.chip} xs"><span class="mi u-fs-12" aria-hidden="true">${k.icon}</span>${k.label}</span>
                   <span class="xs muted">${fmtDate(a.ts)}</span>
                 </div>
                 <p class="u-fs-14 u-fw-600 u-lh-1_45">${esc(a.text)}</p>
-                <div class="row between xs muted u-bg-s1 u-p-8-12 u-br-r-sm">
-                  <span>Auditoria direta via API oficial</span>
-                  <span class="chip green xs"><span class="mi u-fs-12" aria-hidden="true">check</span>Verificado</span>
-                </div>
-              </article>`
-              )
+                ${
+                  a.url && k.link
+                    ? `<a class="btn outlined sm u-align-self-flex-start" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${k.link}<span class="sr-only"> (abre em nova aba)</span><span class="mi u-fs-14" aria-hidden="true">open_in_new</span></a>`
+                    : ''
+                }
+              </article>`;
+              })
               .join('')}
           </div>`
             : `
           <div class="card empty">
             <span class="mi" aria-hidden="true">notifications_off</span>
-            <h2>Nenhum alerta pendente</h2>
-            <p>Acompanhe deputados ou senadores (pelo perfil deles no <a href="#/painel">Painel Público</a>) e toque em "Verificar agora" para ver as deliberações recentes do Congresso.</p>
+            <h2>Nenhum alerta ainda</h2>
+            <p>Toque em "Verificar agora" para ver as votações recentes do Plenário. Para receber também votos, gastos e projetos de alguém, acompanhe essa pessoa pelo perfil no <a href="#/painel">Painel Público</a>.</p>
           </div>`
         }
 
@@ -109,10 +123,14 @@ export function render(root) {
         <div class="card stack u-gap-10 u-p-18 u-bg-s1 u-border-1-solid-line u-mt-10">
           <div class="row u-gap-8">
             <span class="mi u-c-primary u-fs-22" aria-hidden="true">verified</span>
-            <b class="u-fs-14">Fiscalização Cívica Direcionada</b>
+            <b class="u-fs-14">Como os alertas funcionam</b>
           </div>
           <p class="sm muted u-lh-1_5">
-            Os alertas cobrem os <b>${politicians.length} representantes</b> que você acompanha. A consulta acontece quando você toca em "Verificar agora"; com as notificações do aparelho ativadas, cada votação nova também aparece como notificação.
+            As votações do Plenário valem para todo mundo. ${
+              politicians.length
+                ? `Votos, gastos e projetos cobrem as <b>${politicians.length} pessoas</b> que você acompanha (gastos e projetos só existem para deputados federais).`
+                : 'Votos, gastos e projetos aparecem quando você acompanha alguém.'
+            } A consulta acontece quando você toca em "Verificar agora"; com as notificações do aparelho ativadas, o primeiro alerta novo também aparece como notificação.
           </p>
           <div class="row between sm u-mt-6">
             <span class="xs muted">Fonte: APIs da Câmara e do Senado</span>
@@ -145,7 +163,7 @@ export function render(root) {
                 <span class="xs muted u-lh-1_4">${d}</span>
               </div>
               <label class="switch">
-                <input type="checkbox" role="switch" data-pref="${k}" aria-label="${t}" ${prefs[k] ? 'checked' : ''}>
+                <input type="checkbox" role="switch" data-pref="${k}" aria-label="${t}" ${prefOn(prefs, k) ? 'checked' : ''}>
                 <i></i>
               </label>
             </div>`
@@ -184,73 +202,47 @@ export function render(root) {
     };
   });
 
+  const applyFilter = () => {
+    let shown = 0;
+    root.querySelectorAll('.alert-item').forEach((el) => {
+      el.hidden = activeFilter !== 'all' && el.dataset.kind !== activeFilter;
+      if (!el.hidden) shown++;
+    });
+    const none = $('#alerts-empty-filter', root);
+    if (none) none.hidden = shown > 0;
+  };
+  root.querySelectorAll('#alert-filters [data-filter]').forEach((b) => {
+    b.onclick = () => {
+      activeFilter = b.dataset.filter;
+      root.querySelectorAll('#alert-filters [data-filter]').forEach((x) => {
+        const on = x === b;
+        x.classList.toggle('green', on);
+        x.setAttribute('aria-pressed', String(on));
+      });
+      applyFilter();
+    };
+  });
+  applyFilter();
+
   $('#check', root).onclick = async (e) => {
-    const deputies = politicians.filter((p) => p.camaraId);
-    const senators = politicians.filter((p) => p.senadoId);
-
-    if (!deputies.length && !senators.length) {
-      return toast('Adicione ao menos um deputado ou senador para monitorar.', 'info');
-    }
-
     const btn = e.currentTarget;
     btn.disabled = true;
     btn.innerHTML = '<span class="spin"></span><span>Consultando Congresso…</span>';
 
     try {
-      const freshAlerts = [];
-
-      // 1. Votações da Câmara
-      if (deputies.length && store.get().prefs.rollcall) {
-        const rows = await loadComparison(politicians, 10);
-        for (const v of rows) {
-          for (const d of deputies) {
-            const vote = v.byPol[d.id];
-            if (vote) {
-              freshAlerts.push({
-                id: `camara:${v.id}:${d.id}`,
-                ts: v.data || new Date().toISOString(),
-                politicianId: d.id,
-                text: `${d.name} (${d.party}/${d.uf}) votou ${vote.toUpperCase()} na Câmara — ${v.descricao || 'Votação nominal no Plenário'}`,
-              });
-            }
-          }
-        }
+      const { alerts: fresh, failures } = await collectAlerts(store.get());
+      const count = store.addAlerts(fresh);
+      const found = count > 0 ? `${count} ${count === 1 ? 'alerta novo' : 'alertas novos'}.` : 'Nada novo desde a última verificação.';
+      // um aviso só: o toast seguinte apagaria o anterior antes de ser lido
+      if (failures.length) toast(`${found} Não foi possível consultar: ${failures.join(', ')}.`, 'error');
+      else toast(found, count > 0 ? 'check_circle' : 'info');
+      if (count > 0 && 'Notification' in window && Notification.permission === 'granted') {
+        const first = fresh.find((a) => !alerts.some((old) => old.id === a.id));
+        if (first) new Notification('Monitor Cidadão', { body: first.text, icon: '/icon.svg' });
       }
-
-      // 2. Votações do Senado
-      if (senators.length && store.get().prefs.rollcall) {
-        const rowsSen = await loadSenateComparison(politicians, 10);
-        for (const v of rowsSen) {
-          for (const s of senators) {
-            const vote = v.bySenator[s.id];
-            if (vote && vote !== 'Ausente') {
-              freshAlerts.push({
-                id: `senado:${v.matter}:${s.id}`,
-                ts: v.date || new Date().toISOString(),
-                politicianId: s.id,
-                text: `${s.name} (${s.party}/${s.uf}) votou ${vote.toUpperCase()} no Senado — ${v.matter}: ${v.summary.slice(0, 90)}`,
-              });
-            }
-          }
-        }
-      }
-
-      const count = store.addAlerts(freshAlerts);
-      if (count > 0) {
-        toast(`${count} novo(s) alerta(s) de votação encontrado(s)!`);
-        if ('Notification' in window && Notification.permission === 'granted' && freshAlerts.length > 0) {
-          new Notification('Monitor Cidadão: Novo Voto no Congresso', {
-            body: freshAlerts[0].text,
-            icon: '/icon.svg',
-          });
-        }
-      } else {
-        toast('Nenhuma nova deliberação registrada recentemente.', 'info');
-      }
-      render(root);
     } catch {
-      toast('Erro temporário ao consultar bases de dados abertas.', 'error');
-      render(root);
+      toast('Erro temporário ao consultar as bases de dados abertas.', 'error');
     }
+    render(root);
   };
 }
