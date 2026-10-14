@@ -162,6 +162,27 @@ export async function sessionAttendees(eventId) {
   return dados || [];
 }
 
+let deputiesCache = null;
+
+// Todos os deputados em exercício: a API entrega até 100 por página (≈ 6 páginas), então a lista é montada uma vez.
+export async function allDeputies() {
+  if (deputiesCache) return deputiesCache;
+  const list = [];
+  for (let page = 1; page <= 10; page++) {
+    const { dados } = await getJson(`${CAMARA_BASE}/deputados?itens=100&pagina=${page}&ordem=ASC&ordenarPor=nome`);
+    list.push(...(dados || []));
+    if (!dados || dados.length < 100) break;
+  }
+  deputiesCache = list.map((d) => ({
+    camaraId: d.id,
+    name: d.nome,
+    party: d.siglaPartido,
+    uf: d.siglaUf,
+    photo: d.urlFoto,
+  }));
+  return deputiesCache;
+}
+
 /* ================= SENADO FEDERAL ================= */
 
 let senatorsCache = null;
@@ -367,6 +388,22 @@ export async function searchCapitalCouncilors(uf = 'SP', query = '') {
       (c.areaAtuacao && c.areaAtuacao.toLowerCase().includes(q))
   ).slice(0, 16);
 }
+
+/* ================= EXECUTIVO E STF (arquivos estáticos) ================= */
+
+const staticCache = new Map();
+async function staticJson(path) {
+  if (staticCache.has(path)) return staticCache.get(path);
+  const res = await fetch(path);
+  if (!res.ok) throw new Error(`Falha ao carregar ${path}`);
+  const data = await res.json();
+  staticCache.set(path, data);
+  return data;
+}
+
+// Presidente, governadores e prefeitos das capitais (TSE, com os ocupantes atuais por cima: scripts/build-executive-data.mjs).
+export const loadExecutive = () => staticJson('/src/data/executivo.json');
+export const loadStf = () => staticJson('/src/data/stf.json');
 
 /* ================= DADOS ELEITORAIS DO TSE (DIVULGACANDCONTAS) ================= */
 

@@ -101,7 +101,7 @@ export function render(root) {
           <div class="card empty">
             <span class="mi" aria-hidden="true">notifications_off</span>
             <h2>Nenhum alerta pendente</h2>
-            <p>Cadastre deputados ou senadores e clique em "Verificar agora" para rastrear deliberações recentes do Congresso.</p>
+            <p>Acompanhe deputados ou senadores (pelo perfil deles no <a href="#/painel">Painel Público</a>) e toque em "Verificar agora" para ver as deliberações recentes do Congresso.</p>
           </div>`
         }
 
@@ -112,7 +112,7 @@ export function render(root) {
             <b class="u-fs-14">Fiscalização Cívica Direcionada</b>
           </div>
           <p class="sm muted u-lh-1_5">
-            Os alertas cobrem os <b>${politicians.length} representantes</b> que você cadastrou. A consulta acontece quando você toca em "Verificar agora"; com as notificações do aparelho ativadas, cada votação nova também aparece como notificação.
+            Os alertas cobrem os <b>${politicians.length} representantes</b> que você acompanha. A consulta acontece quando você toca em "Verificar agora"; com as notificações do aparelho ativadas, cada votação nova também aparece como notificação.
           </p>
           <div class="row between sm u-mt-6">
             <span class="xs muted">Fonte: APIs da Câmara e do Senado</span>

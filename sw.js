@@ -1,4 +1,4 @@
-const CACHE_NAME = 'monitor-cidadao-v22';
+const CACHE_NAME = 'monitor-cidadao-v23';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -20,14 +20,17 @@ const APP_SHELL = [
   '/src/glossary.js',
   '/src/analysis.js',
   '/src/data/federation.js',
-  '/src/views/addPolitician.js',
+  '/src/data/executivo.json',
+  '/src/data/stf.json',
+  '/src/data/entes.json',
+  '/src/directory.js',
+  '/src/contas.js',
+  '/src/views/painel.js',
   '/src/views/alertas.js',
   '/src/views/comparador.js',
   '/src/views/inicio.js',
   '/src/views/perfil.js',
   '/src/views/politicos.js',
-  '/src/views/onboarding.js',
-  '/src/views/colaEleitoral.js',
 ];
 
 self.addEventListener('install', (e) => {

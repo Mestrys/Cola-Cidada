@@ -1,16 +1,11 @@
 import { store } from '../store.js';
 import { toast, esc, brl, $, ROLES } from '../ui.js';
 import { FEDERATION_UNITS } from '../api.js';
-import { openPoliticianModal } from './addPolitician.js';
-import { openOnboardingModal } from './onboarding.js';
-import { openColaEleitoralModal } from './colaEleitoral.js';
 
 export function render(root) {
   const s = store.get();
   const polCount = s.politicians.length;
   const alertCount = s.alerts.length;
-  const filledRoles = new Set(s.politicians.map((p) => p.roleKey || p.role)).size;
-  const civicScore = Math.min(100, Math.round((filledRoles / 5) * 75 + (s.alerts.length > 0 ? 25 : 0)));
 
   root.innerHTML = `
     <!-- Top Header do Perfil (Estilo Stitch) -->
@@ -24,10 +19,8 @@ export function render(root) {
         <p>Garantia de soberania de dados pessoais (Art. 5º da LGPD) e fiscalização do ciclo eleitoral em vigor.</p>
       </div>
       <div class="row page-actions two">
-        <button class="btn outlined" id="btn-rever-onboarding"><span class="mi" aria-hidden="true">help_outline</span>Guia Inicial</button>
-        <button class="btn outlined" id="btn-cola-eleitoral"><span class="mi" aria-hidden="true">how_to_vote</span>Minha Cola</button>
         <button class="btn outlined" id="btn-export-top"><span class="mi" aria-hidden="true">download</span>Backup JSON</button>
-        <button class="btn primary" id="btn-retificar"><span class="mi" aria-hidden="true">person_add</span>Seguir Político</button>
+        <a class="btn primary" href="#/painel"><span class="mi" aria-hidden="true">account_balance</span>Painel Público</a>
       </div>
     </div>
 
@@ -59,9 +52,9 @@ export function render(root) {
       <!-- Métricas Cívicas do Cidadão (Stitch) -->
       <div class="grid u-cols-3760d4 u-gap-10 u-bt-1-solid-line u-pt-16">
         <div class="stat">
-          <span>Mandatos Vigiados</span>
-          <b>${polCount} / 5</b>
-          <span class="xs muted u-tt-none">${Math.round((polCount / 5) * 100)}% de cobertura eleitoral</span>
+          <span>Pessoas acompanhadas</span>
+          <b>${polCount}</b>
+          <span class="xs muted u-tt-none">Escolha opcional, feita no perfil de cada uma</span>
         </div>
         <div class="stat">
           <span>Alertas Registrados</span>
@@ -69,35 +62,19 @@ export function render(root) {
           <span class="xs muted u-tt-none">Votações encontradas em "Verificar agora"</span>
         </div>
       </div>
-
-      <!-- Termômetro de Vigilância Cívica e Metas -->
-      <div class="card stack u-gap-10 u-bg-s1 u-p-16 u-br-r u-border-1-solid-line u-mt-4">
-        <div class="row between">
-          <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-20" aria-hidden="true">verified_user</span>
-            <b class="u-fs-13_5">Seu Acompanhamento</b>
-          </div>
-          <span class="chip green"><b>${civicScore}/100 pts</b> · ${civicScore >= 80 ? 'Vigilância Alta' : civicScore >= 50 ? 'Vigilância Moderada' : 'Iniciante'}</span>
-        </div>
-        <div class="bar u-height-8"><i data-w="${civicScore}"></i></div>
-        <div class="row between sm muted">
-          <span>${filledRoles} de 5 esferas sob acompanhamento direto</span>
-          <span>${alertCount ? 'Alertas verificados' : 'Verifique alertas para completar'}</span>
-        </div>
-      </div>
     </div>
 
     <div class="grid g2 u-ai-start">
       
-      <!-- COLUNA 1: Votos Cadastrados & Ciclo de Mandato -->
+      <!-- COLUNA 1: Quem a pessoa acompanha e domicílio -->
       <div class="stack">
         
-        <!-- Lista dos Votos Monitorados Atualmente -->
+        <!-- Lista de quem a pessoa acompanha -->
         <div class="card stack u-gap-14 u-p-20">
           <div class="row between">
             <div>
-              <h2 class="h2">Meus Votos Declarados e Cadastrados</h2>
-              <span class="xs muted">${polCount} representantes vinculados para auditoria e alertas nominais</span>
+              <h2 class="h2">Quem você acompanha</h2>
+              <span class="xs muted">Acompanhar não diz em quem você votou: é só uma lista de atalhos, guardada neste aparelho.</span>
             </div>
           </div>
 
@@ -119,7 +96,7 @@ export function render(root) {
                     </div>
                   </div>
                   <div class="row u-gap-6">
-                    <span class="chip xs">${p.camaraId ? 'Câmara' : p.senadoId ? 'Senado' : p.tse ? 'TSE' : 'Manual'}</span>
+                    <span class="chip xs">${p.camaraId ? 'Câmara' : p.senadoId ? 'Senado' : p.roleKey === 'ministro-stf' ? 'STF' : p.tse ? 'TSE' : 'Registro público'}</span>
                   </div>
                 </div>`
                 )
@@ -127,16 +104,12 @@ export function render(root) {
             </div>`
               : `
             <div class="empty u-p-28">
-              <span class="mi" aria-hidden="true">how_to_vote</span>
-              <h3 class="u-fs-14">Nenhum voto declarado ainda</h3>
-              <p class="xs muted">Cadastre seus votos para começar a acompanhar os mandatos.</p>
+              <span class="mi" aria-hidden="true">bookmark_add</span>
+              <h3 class="u-fs-14">Você ainda não acompanha ninguém</h3>
+              <p class="xs muted">Tudo continua aberto no Painel Público. Para acompanhar alguém, abra o perfil e toque em Acompanhar.</p>
             </div>`
           }
 
-          <div class="row between sm u-bg-s1 u-p-10-14 u-br-r-sm u-mt-6">
-            <span class="muted">Deseja alterar ou substituir algum representante?</span>
-            <button class="btn sm primary" id="btn-substituir-pol">Substituir Político</button>
-          </div>
         </div>
 
         <!-- Domicílio Eleitoral Form -->
@@ -212,7 +185,7 @@ export function render(root) {
           <h3 class="h3">De onde vêm os dados</h3>
           <div class="stack xs muted u-gap-6">
             <div>• <b>Dados abertos oficiais:</b> APIs da Câmara dos Deputados e do Senado Federal e arquivos públicos do TSE, disponibilizados com base na LAI (Lei 12.527/11).</div>
-            <div>• <b>Sem servidor próprio:</b> o app consulta essas fontes direto do seu navegador; seus cadastros ficam só neste dispositivo.</div>
+            <div>• <b>Sem servidor próprio:</b> o app consulta essas fontes direto do seu navegador; a lista de quem você acompanha fica só neste dispositivo.</div>
             <div>• <b>Funciona offline:</b> telas e dados já consultados ficam em cache no aparelho.</div>
           </div>
         </div>
@@ -221,10 +194,6 @@ export function render(root) {
 
     </div>`;
 
-  $('#btn-retificar', root).onclick = () => openPoliticianModal();
-  $('#btn-substituir-pol', root).onclick = () => openPoliticianModal();
-  $('#btn-rever-onboarding', root).onclick = () => openOnboardingModal(true);
-  $('#btn-cola-eleitoral', root).onclick = () => openColaEleitoralModal();
 
   $('#btn-save-domicile', root).onclick = () => {
     const st = $('#dom-state', root)?.value || 'SP';
@@ -272,7 +241,7 @@ export function render(root) {
   // Expurgo LGPD
   $('#purge', root).onclick = () => {
     const ok = confirm(
-      'Atenção (LGPD): Esta ação apagará permanentemente todos os políticos cadastrados, alertas e preferências salvas em cache neste dispositivo. Deseja prosseguir?'
+      'Atenção (LGPD): Esta ação apagará permanentemente a lista de quem você acompanha, alertas e preferências salvas em cache neste dispositivo. Deseja prosseguir?'
     );
     if (ok) {
       store.purge();

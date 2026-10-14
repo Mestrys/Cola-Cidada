@@ -2,7 +2,6 @@ import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
 import { loadComparison, loadSenateComparison } from '../votes.js';
 import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $, skeleton } from '../ui.js';
-import { openPoliticianModal } from './addPolitician.js';
 import { openGlossaryModal } from '../glossary.js';
 import { openShareModal } from '../share.js';
 import { openAnalysisModal } from '../analysis.js';
@@ -185,11 +184,11 @@ export async function render(root) {
           <span class="xs muted">Plenários da Câmara e do Senado</span>
         </div>
         <h1>Comparador Cívico de Votações</h1>
-        <p>Analise a postura e fidelidade dos seus parlamentares frente às principais reformas e leis deliberadas no Congresso Nacional.</p>
+        <p>Veja como votaram os parlamentares que você acompanha frente às principais reformas e leis deliberadas no Congresso Nacional.</p>
       </div>
       <div class="row page-actions">
         <button class="btn outlined" id="btn-glossary"><span class="mi" aria-hidden="true">menu_book</span>Glossário Cívico</button>
-        <button class="btn primary" id="add"><span class="mi" aria-hidden="true">person_add</span>Adicionar Parlamentar</button>
+        <a class="btn primary" href="#/painel"><span class="mi" aria-hidden="true">account_balance</span>Painel Público</a>
       </div>
     </div>
 
@@ -260,8 +259,8 @@ export async function render(root) {
           : `
         <div class="card empty">
           <span class="mi" aria-hidden="true">how_to_vote</span>
-          <h3>Nenhum deputado federal cadastrado</h3>
-          <p>Adicione deputados federais à sua lista para cruzar como votaram em cada matéria do Plenário.</p>
+          <h3>Nenhum deputado federal acompanhado</h3>
+          <p>Abra o perfil de deputados no <a href="#/painel">Painel Público</a> e toque em Acompanhar para cruzar como votaram em cada matéria do Plenário.</p>
         </div>`
       }
     </div>
@@ -274,8 +273,8 @@ export async function render(root) {
           : `
         <div class="card empty">
           <span class="mi" aria-hidden="true">account_balance</span>
-          <h3>Nenhum senador monitorado</h3>
-          <p>Adicione senadores da República para acompanhar suas deliberações em Plenário.</p>
+          <h3>Nenhum senador acompanhado</h3>
+          <p>Abra o perfil de senadores no <a href="#/painel">Painel Público</a> e toque em Acompanhar para ver as deliberações deles em Plenário.</p>
         </div>`
       }
     </div>
@@ -359,7 +358,7 @@ export async function render(root) {
           <div class="card empty u-p-28">
             <span class="mi" aria-hidden="true">compare_arrows</span>
             <h3>Necessário ao menos 2 parlamentares</h3>
-            <p>Cadastre ao menos dois políticos na sua lista para calcular a matriz de convergência de votos.</p>
+            <p>Acompanhe ao menos dois parlamentares (pelo perfil deles no Painel Público) para calcular a convergência de votos.</p>
           </div>`
             : `
           <div class="grid g2 u-gap-14">
@@ -395,7 +394,6 @@ export async function render(root) {
     </div>
   `;
 
-  $('#add', root).onclick = () => openPoliticianModal();
   $('#btn-glossary', root).onclick = () => openGlossaryModal();
 
   // Tabs do Comparador
