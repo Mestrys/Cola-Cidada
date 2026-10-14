@@ -102,3 +102,60 @@ test('reflow em 320px: nenhuma tela rola na horizontal (WCAG 1.4.10)', async ({ 
     expect(overflow, `${r} mais larga que 320px`).toBeLessThanOrEqual(0);
   }
 });
+
+test.describe('abas por teclado (padrão WAI-ARIA)', () => {
+  // Um só ponto de Tab por grupo; setas, Home e End trocam de aba e de painel.
+  async function checkTabs(page, tablist) {
+    const tabs = page.locator(`${tablist} [role=tab]`);
+    const count = await tabs.count();
+    expect(count).toBeGreaterThan(1);
+    await expect(page.locator(`${tablist} [role=tab][tabindex="0"]`)).toHaveCount(1);
+    const panelOf = async (t) => page.locator(`#${await t.getAttribute('aria-controls')}`);
+    await tabs.first().focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(tabs.nth(1)).toBeFocused();
+    await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(tabs.first()).toHaveAttribute('aria-selected', 'false');
+    await expect(await panelOf(tabs.nth(1))).toBeVisible();
+    await expect(await panelOf(tabs.first())).toBeHidden();
+    await page.keyboard.press('End');
+    await expect(tabs.nth(count - 1)).toHaveAttribute('aria-selected', 'true');
+    await page.keyboard.press('ArrowRight');
+    await expect(tabs.first()).toBeFocused();
+    await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
+    await expect(await panelOf(tabs.first())).toBeVisible();
+    await expect(await panelOf(tabs.first())).toHaveAttribute('role', 'tabpanel');
+  }
+
+  test.beforeEach(({ isMobile }) => test.skip(isMobile, 'teclado só no desktop'));
+
+  test('ficha do político', async ({ page }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await checkTabs(page, '#pol-tabs');
+  });
+
+  test('cadastro de político', async ({ page }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('#global-fab').click();
+    await checkTabs(page, '#tabs');
+  });
+
+  test('comparador', async ({ page }) => {
+    await seed(page);
+    await go(page, 'comparador');
+    await checkTabs(page, '#house-tabs');
+  });
+
+  test('análise de proposição', async ({ page }) => {
+    await seed(page);
+    await go(page, 'inicio');
+    await page.evaluate(async () => {
+      const m = await import('/src/analysis.js');
+      m.openAnalysisModal({ type: 'PL', number: '1', year: '2024', summary: 'Dispõe sobre o saneamento básico.' });
+    });
+    await checkTabs(page, '#analysis-tabs');
+  });
+});

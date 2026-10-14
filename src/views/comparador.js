@@ -1,7 +1,7 @@
 import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
 import { loadComparison, loadSenateComparison, EXPLANATION_NOTE } from '../votes.js';
-import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, $ } from '../ui.js';
+import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $ } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openGlossaryModal } from '../glossary.js';
 import { openShareModal } from '../share.js';
@@ -247,7 +247,7 @@ export async function render(root) {
     <!-- Barra de Filtros Legislativos (Stitch) -->
     <div class="card soft stack u-mb-18 u-p-16 u-gap-12">
       <div class="row between">
-        <div class="tabs" id="house-tabs">
+        <div class="tabs" id="house-tabs" aria-label="Casa legislativa">
           <button class="${deputies.length || (!deputies.length && !senators.length) ? 'on' : ''}" data-house="camara">
             Câmara dos Deputados (${deputies.length})
           </button>
@@ -571,6 +571,7 @@ export async function render(root) {
       if (house === 'confronto') computeConfrontation();
     };
   });
+  tablist($('#house-tabs', root), (b) => $(`#${b.dataset.house}-pane`, root));
 
   // Filtros combinados
   let activeTheme = 'all';

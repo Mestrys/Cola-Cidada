@@ -6,7 +6,7 @@ import {
   searchCapitalCouncilors,
   FEDERATION_UNITS,
 } from '../api.js';
-import { modal, esc, avatar, ROLES, defaultMandate, toast, $ } from '../ui.js';
+import { modal, esc, avatar, ROLES, defaultMandate, toast, tablist, $ } from '../ui.js';
 
 // Modal de Cadastro Cívico e Seleção de Representantes (Inspirado no Stitch)
 export function openPoliticianModal({ replaceId } = {}) {
@@ -57,7 +57,7 @@ export function openPoliticianModal({ replaceId } = {}) {
     </div>
 
     <!-- Abas Federativas MD3 -->
-    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="tabs">
+    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="tabs" aria-label="Tipo de cargo">
       <button class="on" data-tab="camara">Dep. Federal (Câmara)</button>
       <button data-tab="senado">Senador da República</button>
       <button data-tab="estadual">Dep. Estadual (27 UFs)</button>
@@ -193,6 +193,7 @@ export function openPoliticianModal({ replaceId } = {}) {
       }
     };
   });
+  tablist($('#tabs', el), (b) => $(`#pane-${b.dataset.tab}`, el));
 
   // 1. Busca Deputados Federais (Câmara)
   let timerDep;

@@ -1,7 +1,7 @@
 // Módulo de Análise Textual Legislativa: Detecção de Jabutis (Contrabando Legislativo) e Sumarização Didática.
 // 100% Processado no Navegador (Client-side), sem envio para servidores externos (Conforme LGPD).
 
-import { modal, esc, fmtDate } from './ui.js';
+import { modal, esc, fmtDate, tablist } from './ui.js';
 
 /* ================= 1. DICIONÁRIO TEMÁTICO & CLASSIFICAÇÃO SEMÂNTICA ================= */
 
@@ -163,7 +163,7 @@ export function openAnalysisModal(item) {
     </div>
 
     <!-- Navegação de Abas -->
-    <div class="row u-gap-8 u-mt-12 u-bb-1-solid-line u-pb-8">
+    <div class="row u-gap-8 u-mt-12 u-bb-1-solid-line u-pb-8" id="analysis-tabs" aria-label="Seções da análise">
       <button class="btn sm active" id="tab-summary-btn"><span class="mi" aria-hidden="true">menu_book</span>Resumo Oficial</button>
       <button class="btn sm ghost" id="tab-jabuti-btn"><span class="mi" aria-hidden="true">pest_control</span>Scanner de Jabutis</button>
       <button class="btn sm ghost" id="tab-simulator-btn"><span class="mi" aria-hidden="true">tune</span>Simulador de Texto</button>
@@ -306,6 +306,7 @@ export function openAnalysisModal(item) {
   tabSummaryBtn.onclick = () => showTab('summary');
   tabJabutiBtn.onclick = () => showTab('jabuti');
   tabSimulatorBtn.onclick = () => showTab('simulator');
+  tablist(el.querySelector('#analysis-tabs'), (b) => el.querySelector('#' + b.id.replace('-btn', '-content')));
 
   // Simulador de Jabutis
   const btnRunSim = el.querySelector('#btn-run-sim');

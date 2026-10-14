@@ -244,3 +244,38 @@ function enableSheetDrag(o, m, dismiss) {
 export const VOTE_CLASS = { Sim: 'sim', Não: 'nao' };
 export const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('pt-BR') : '');
 export const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+// Grupo de abas acessível (padrão WAI-ARIA): papéis tablist/tab/tabpanel, um só ponto de Tab no grupo
+// e setas, Home e End para trocar de aba. A troca de conteúdo continua no onclick de cada view;
+// aqui só se espelha a seleção no ARIA e o teclado aciona o clique.
+export function tablist(container, panelFor) {
+  if (!container) return;
+  const tabs = [...container.querySelectorAll(':scope > button')];
+  container.setAttribute('role', 'tablist');
+  const select = (tab) => tabs.forEach((t) => {
+    t.setAttribute('aria-selected', String(t === tab));
+    t.tabIndex = t === tab ? 0 : -1;
+  });
+  tabs.forEach((t, i) => {
+    t.setAttribute('role', 'tab');
+    t.id ||= `${container.id || 'tabs'}-tab-${i}`;
+    const panel = panelFor(t);
+    if (panel) {
+      t.setAttribute('aria-controls', panel.id);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', t.id);
+    }
+    t.addEventListener('click', () => select(t));
+  });
+  select(tabs.find((t) => t.classList.contains('on') || t.classList.contains('active')) || tabs[0]);
+  container.addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    const tab = tabs[(next + tabs.length) % tabs.length];
+    tab.focus();
+    tab.click();
+  });
+}
