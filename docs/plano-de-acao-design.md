@@ -6,9 +6,10 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 
 ## P0 — antes do deploy
 
-### 1. Confirmar os dados da empresa no rodapé
+### 1. Confirmar os dados da empresa no rodapé — ✅ feito (dados não confirmados removidos)
 - **Problema:** o rodapé mostra CNPJ 68.027.889/0001-34 (dígitos verificadores válidos), endereço na Rua Pais Leme, 215, dois telefones e `contato@mestrys.com.br`. Não há como confirmar daqui se são os dados reais da Mestry's Tecnologia.
 - **Ação:** a empresa confirma cada dado. O que não for real sai do rodapé.
+- **Feito:** como não havia como confirmar os dados, saíram do rodapé o CNPJ, o endereço e os dois telefones. Ficaram o nome da empresa, a descrição e o e-mail `contato@mestrys.com.br`. Para voltar com algum dado, basta a empresa confirmá-lo e incluí-lo em `src/main.js` (bloco `footer-top`).
 - **Esforço:** minutos. **Quem decide:** a empresa.
 
 ### 2. Conteúdo editorial gerado por palavras-chave — ✅ feito
@@ -107,7 +108,7 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 
 | # | Item | Prioridade | Esforço | Precisa de decisão? |
 |---|------|-----------|---------|---------------------|
-| 1 | Dados da empresa no rodapé | P0 | minutos | Sim (empresa) |
+| 1 | ~~Dados da empresa no rodapé~~ ✅ (não confirmados, removidos) | P0 | feito | — |
 | 2 | ~~Conteúdo por palavras-chave~~ ✅ (Linguagem Cidadã removida) | P0 | feito | — |
 | 3 | ~~Mandato estadual por UF~~ ✅ | P0 | feito | — |
 | 4 | ~~Domicílio no cadastro~~ ✅ | P0 | feito | — |

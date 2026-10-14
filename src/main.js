@@ -165,24 +165,12 @@ function shell() {
               <p class="u-fs-12 u-lh-1_5 u-maxw-440">
                 Desenvolvimento de software de alta conformidade e soluções para integridade cívica, inteligência legislativa e auditoria de dados públicos abertos.
               </p>
-              <div class="xs muted u-mt-6">CNPJ: 68.027.889/0001-34</div>
             </div>
 
             <div>
-              <b class="u-fs-12_5 u-c-text u-d-block u-mb-6">Sede Corporativa & Endereço</b>
+              <b class="u-fs-12_5 u-c-text u-d-block u-mb-6">Contato</b>
               <p class="u-fs-12 u-lh-1_5">
-                Rua Pais Leme, 215, Conj 1713<br>
-                Bairro Pinheiros, São Paulo - SP<br>
-                CEP: 05424-150 • Brasil
-              </p>
-            </div>
-
-            <div>
-              <b class="u-fs-12_5 u-c-text u-d-block u-mb-6">Atendimento Cívico</b>
-              <p class="u-fs-12 u-lh-1_5">
-                +55 (11) 3038-7214 (Central)<br>
-                +55 (11) 5283-9382 (Suporte LGPD)<br>
-                contato@mestrys.com.br
+                <a href="mailto:contato@mestrys.com.br">contato@mestrys.com.br</a>
               </p>
             </div>
           </div>
