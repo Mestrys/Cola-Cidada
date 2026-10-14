@@ -122,6 +122,10 @@ export function getThematicCategory(text = '') {
   return 'geral';
 }
 
+// Aviso exibido junto da síntese: o texto é fixo por tema, não vem da votação nem dos parlamentares.
+export const EXPLANATION_NOTE =
+  'Texto editorial fixo sobre o tema, com os argumentos mais citados de cada lado. Não é declaração do parlamentar; confira o inteiro teor da proposição.';
+
 // Síntese didática ("Linguagem Cidadã") para descomplicar atas legislativas
 export function getCitizenExplanation(text = '') {
   const t = text.toLowerCase();

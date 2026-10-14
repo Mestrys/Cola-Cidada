@@ -13,11 +13,11 @@ export function openOnboardingModal(force = false) {
       icon: 'balance',
       tag: 'TRANSPARÊNCIA CÍVICA',
       title: 'Seja bem-vindo ao Monitor Cidadão',
-      desc: 'Transforme sua cola eleitoral em acompanhamento contínuo de mandato. Fiscalize quem você elegeu com dados 100% oficiais do Congresso Nacional e Tribunais.',
+      desc: 'Transforme sua cola eleitoral em acompanhamento contínuo de mandato. Fiscalize quem você elegeu com dados oficiais da Câmara, do Senado e do TSE.',
       bulletTitle: 'O que você vai poder fazer:',
       bullets: [
         { icon: 'how_to_vote', text: 'Cadastrar os candidatos que você votou ou deseja auditar.' },
-        { icon: 'receipt_long', text: 'Auditar notas fiscais e gastos da cota parlamentar (CEAP) em tempo real.' },
+        { icon: 'receipt_long', text: 'Consultar notas fiscais e gastos da cota parlamentar (CEAP) dos deputados federais.' },
         { icon: 'verified', text: 'Comparar votações nominais oficiais com a sua própria convicção.' },
       ],
       actionLabel: 'Continuar Apresentação',
@@ -44,14 +44,14 @@ export function openOnboardingModal(force = false) {
       bullets: [
         { icon: 'account_balance', text: 'Câmara dos Deputados & Senado Federal (Votações Nominais e CEAP).' },
         { icon: 'how_to_reg', text: 'Tribunal Superior Eleitoral (TSE / DivulgaCandContas: patrimônio e financiamento).' },
-        { icon: 'domain', text: 'Assembleias Estaduais (ALESP, ALERJ, ALMG) e Câmaras Municipais (CMSP).' },
+        { icon: 'domain', text: 'Assembleias Legislativas dos 26 estados e do DF e Câmaras Municipais das capitais (dados oficiais do TSE).' },
       ],
       actionLabel: 'Começar a Monitorar Agora',
     },
   ];
 
   const { el, close } = modal(`
-    <div id="onboarding-container" class="stack" style="gap:20px; text-align:left"></div>
+    <div id="onboarding-container" class="stack u-gap-20 u-ta-left"></div>
   `);
 
   const container = el.querySelector('#onboarding-container');
@@ -62,9 +62,9 @@ export function openOnboardingModal(force = false) {
 
     container.innerHTML = `
       <div class="row between no-print">
-        <div class="row" style="gap:8px">
+        <div class="row u-gap-8">
           <span class="chip green">
-            <span class="mi" style="font-size:14px">${step.icon}</span>
+            <span class="mi u-fs-14">${step.icon}</span>
             <span>${step.tag}</span>
           </span>
           <span class="sm muted">Passo ${idx + 1} de ${steps.length}</span>
@@ -74,20 +74,20 @@ export function openOnboardingModal(force = false) {
         </button>
       </div>
 
-      <div class="stack" style="gap:10px; margin-top:4px">
-        <h2 class="h2" style="font-size:20px; line-height:1.25">${step.title}</h2>
-        <p style="font-size:13.5px; line-height:1.5; color:var(--text)">${step.desc}</p>
+      <div class="stack u-gap-10 u-mt-4">
+        <h2 class="h2 u-fs-20 u-lh-1_25">${step.title}</h2>
+        <p class="u-fs-13_5 u-lh-1_5 u-c-text">${step.desc}</p>
       </div>
 
-      <div class="card soft stack" style="gap:10px; background:var(--s1); padding:16px; border-radius:var(--r)">
-        <b style="font-size:12.5px; color:var(--text); text-transform:uppercase; letter-spacing:0.3px">${step.bulletTitle}</b>
-        <div class="stack" style="gap:8px">
+      <div class="card soft stack u-gap-10 u-bg-s1 u-p-16 u-br-r">
+        <b class="u-fs-12_5 u-c-text u-tt-uppercase u-ls-0_3">${step.bulletTitle}</b>
+        <div class="stack u-gap-8">
           ${step.bullets
             .map(
               (b) => `
-            <div class="row" style="align-items:flex-start; gap:10px; flex-wrap:nowrap">
-              <span class="mi" style="color:var(--primary); font-size:18px; margin-top:2px">${b.icon}</span>
-              <span style="font-size:13px; line-height:1.4">${esc(b.text)}</span>
+            <div class="row u-ai-flex-start u-gap-10 u-fwrap-nowrap">
+              <span class="mi u-c-primary u-fs-18 u-mt-2">${b.icon}</span>
+              <span class="u-fs-13 u-lh-1_4">${esc(b.text)}</span>
             </div>`
             )
             .join('')}
@@ -95,19 +95,17 @@ export function openOnboardingModal(force = false) {
       </div>
 
       <!-- Indicador de Passos (Dots) -->
-      <div class="row between" style="margin-top:8px">
-        <div class="row" style="gap:6px">
+      <div class="row between u-mt-8">
+        <div class="row u-gap-6">
           ${steps
             .map(
               (_, i) => `
-            <span style="width:${i === idx ? '22px' : '8px'}; height:8px; border-radius:var(--r-full); background:${
-                i === idx ? 'var(--primary)' : 'var(--s3)'
-              }; transition:all 0.25s ease"></span>`
+            <span class="step-dot${i === idx ? ' on' : ''}"></span>`
             )
             .join('')}
         </div>
 
-        <div class="row" style="gap:8px">
+        <div class="row u-gap-8">
           ${
             idx > 0
               ? `<button class="btn sm" id="btn-prev-step"><span class="mi">arrow_back</span>Voltar</button>`

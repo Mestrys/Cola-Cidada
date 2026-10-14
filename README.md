@@ -12,6 +12,16 @@ Requer apenas Node 18+ (sem dependências):
 npm run dev   # http://localhost:5173
 ```
 
+## Testes
+
+```bash
+npm install
+npm test            # unitários (node:test) + navegador (Playwright, desktop e celular)
+npm run test:unit   # só lógica, dados e verificações estáticas
+```
+
+Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não dependem da Câmara ou do Senado. Com Chromium já instalado, use `PW_CHROMIUM_PATH=/caminho/do/chrome`. O CI (`.github/workflows/ci.yml`) roda tudo a cada PR.
+
 ## Arquitetura
 
 - `index.html` + módulos ES nativos (sem bundler) e CSS próprio com tema claro/escuro.
@@ -50,10 +60,6 @@ npm run dev   # http://localhost:5173
 - **Backup & Restauração Local (LGPD):**
   - Exportação e restauração completa de backup em formato JSON para migração entre dispositivos.
   - Expurgo irreversível dos dados locais sob demanda do usuário.
-- **Expansão Estadual — ALESP (Assembleia Legislativa de São Paulo):**
-  - Integração com dados oficiais da 20ª Legislatura da ALESP (94 deputados estaduais ativos).
-  - Busca instantânea por nome parlamentar, partido, região de base eleitoral ou área de atuação.
-  - Dossiê parlamentar do deputado estadual: base eleitoral, salas e andares no Palácio 9 de Julho, telefones institucionais e e-mails de gabinete.
 - **Atos do Poder Executivo (Medidas Provisórias):**
   - Radar em tempo real de Medidas Provisórias (MPVs) apresentadas pela Presidência da República que tramitam no Congresso Nacional com força de lei.
   - Esclarecimento cívico sobre os prazos constitucionais de 60 + 60 dias (Art. 62 da CF/88) e links oficiais para acompanhamento.
@@ -70,21 +76,19 @@ npm run dev   # http://localhost:5173
 - **Modo Confronto Direto 1 vs 1:**
   - Matriz de alinhamento entre dois parlamentares quaisquer monitorados.
   - Cálculo automático da taxa de convergência (% de votos coincidentes), matérias onde concordaram vs onde divergiram e geração de card de confronto.
-- **Dados Eleitorais do TSE (DivulgaCandContas — Fase 5):**
-  - Número oficial de urna do candidato e ano eleitoral de registro.
-  - Patrimônio declarado no registro de candidatura (bens declarados perante a Justiça Eleitoral).
-  - Financiamento de campanha: proporção auditada entre recursos do Fundo Especial de Financiamento de Campanha (FEFC) e doações privadas de pessoas físicas.
-  - Link canônico e direto para a ficha de prestação de contas oficial no portal DivulgaCandContas do TSE.
-  - Consolidação eleitoral automática no Dossiê Cívico emitido com hash SHA-256.
-- **Expansão Federativa & Poder Local (Fase 6):**
-  - **Assembleias Legislativas Estaduais:** Além da ALESP (SP), expansão com a ALERJ (Assembleia Legislativa do Rio de Janeiro - 70 deputados) e ALMG (Assembleia Legislativa de Minas Gerais - 77 deputados), com gabinetes, ramais e bases regionais.
-  - **Esfera Municipal & Vereadores:** Suporte ao mandato municipal 2025–2028 para vereadores(as), chip temático próprio e integração da CMSP (Câmara Municipal de São Paulo - Palácio Anchieta).
-  - **Seletor de Domicílio Eleitoral:** Configuração personalizável de Estado (UF) e Cidade no Perfil do Cidadão, mantendo a privacidade estrita (100% offline e client-side no `localStorage`).
-- **Assiduidade, Presença & Fidelidade Partidária (Fase 7):**
-  - **Rastreador de Presença e Faltas:** Contabilidade de sessões deliberativas convocadas, presenças registradas, faltas justificadas com atestado/missão oficial e faltas não justificadas.
-  - **Índice de Fidelidade Partidária:** Taxa de alinhamento do parlamentar com a orientação oficial da liderança da sua bancada partidária, destacando votações de dissidência ou votos independentes.
-  - **Atuação como Relator:** Painel de matérias e proposições relatadas pelo parlamentar em comissões temáticas permanentes e especiais com status de tramitação e pareceres técnicos emitidos.
-  - **Consolidação no Dossiê Cívico:** Inclusão dos índices de assiduidade e fidelidade partidária no relatório impresso/PDF protegido pelo selo criptográfico SHA-256.
+- **Deputados Estaduais/Distritais e Vereadores de Capitais (dados reais do TSE):**
+  - Os 27 rosters de assembleias (1.059 eleitos em 2022) e as 26 câmaras de capitais (eleitos em 2024) vêm dos dados abertos do TSE (`consulta_cand` e `bem_candidato`), gerados por `scripts/build-regional-data.mjs`.
+  - Cada parlamentar traz número de urna, resultado, coligação/federação, patrimônio declarado e link para a ficha no DivulgaCandContas.
+  - Limitações: o roster reflete **quem foi eleito**, não o exercício atual (suplentes que assumiram, cassações e afastamentos não aparecem); não há foto, e-mail ou telefone, pois o TSE não os publica.
+  - Dados particionados por UF (`/src/data/states/{uf}.json`, `/src/data/capitais/{uf}.json`) e carregados sob demanda.
+- **Presença & Fidelidade (deputados federais, API da Câmara):** `src/plenary.js` calcula, sobre as últimas sessões deliberativas e votações nominais do Plenário:
+  - presença registrada (`/eventos/{id}/deputados`) e participação em votações nominais (`/votacoes/{id}/votos`);
+  - fidelidade = votos iguais à orientação da bancada (`/votacoes/{id}/orientacoes`; usa o partido ou, se ele não orienta sozinho, o bloco/federação). Votações com bancada liberada ou sem orientação publicada não entram na taxa.
+  - Limitações: a presença não distingue falta justificada; o cálculo cobre só uma janela recente; para deputados estaduais e vereadores não há dado equivalente implementado. A resolução de blocos abreviados (`Bl UniPpPsd...`) é heurística.
+- **Presença & Fidelidade (senadores, API do Senado):** `senatorPlenaryStats` em `src/plenary.js`, sobre as votações nominais do Plenário dos últimos 180 dias (`/votacao` e `/plenario/votacao/orientacaoBancada`):
+  - presença nas votações nominais, separando ausências justificadas (licença, missão, atividade parlamentar) de não comparecimento; votos secretos contam como presença;
+  - fidelidade à orientação publicada para o partido (votações com bancada liberada ou sem orientação ficam fora da taxa). Poucas votações têm orientação, então a amostra costuma ser pequena e o painel mostra quantas foram medidas.
+- **Agenda Legislativa:** próximos eventos oficiais da Câmara (API `/eventos`) na tela inicial.
 - **Detecção Inteligente de "Jabutis" & Sumarizador Cívico (Fase 8):**
   - **Scanner de Jabutis (Contrabando Legislativo):** Algoritmo semântico em linguagem natural (*client-side* no navegador, 100% privado e em conformidade estrita com a LGPD) que audita a coerência temática de emendas e artigos de Medidas Provisórias e Projetos de Lei. Emite alertas de risco (*Baixo, Médio, Alto*) e cita a jurisprudência vinculante do STF (ADI 5127).
   - **Sumarizador Didático de Proposições:** Síntese instantânea em linguagem simples explicando: *O que muda na prática*, *Impacto financeiro e orçamentário*, e *Quem ganha e quem paga*.
@@ -96,11 +100,6 @@ npm run dev   # http://localhost:5173
   - **Minha Cola Eleitoral (Cédula Cívica de Mandatos):** Assistente dedicado para preenchimento e vinculação rápida de todos os cargos eletivos (Presidente, Governador, Senadores, Deputados Federais, Estaduais e Vereadores), com visualização do status de preenchimento.
   - **Painel de Governança & Score de Vigilância Cívica:** Termômetro no Perfil que calcula o índice de vigilância do cidadão (0 a 100 pontos) com base na cobertura de mandatos vigiados, deliberações oficiais checadas e auditorias realizadas.
   - **Floating Action Button (FAB MD3):** Botão flutuante de ação rápida posicionado na interface para seguir novos representantes ou auditar votações instantaneamente de qualquer tela.
-- **Expansão Federativa Integral (Fase 10 — Cobertura Nacional):**
-  - **Todas as 27 Unidades da Federação:** Suporte nativo às 26 Assembleias Legislativas Estaduais e à Câmara Legislativa do Distrito Federal (CLDF), totalizando mais de 1.059 deputados estaduais e distritais mapeados.
-  - **Todas as 26 Câmaras de Capitais:** Cobertura de todas as capitais brasileiras (Câmara Municipal de São Paulo, Rio, Salvador, Belo Horizonte, Manaus, Curitiba, etc.), com mais de 730 vereadores em exercício monitoráveis.
-  - **Arquitetura Partitioned Lazy-Loading:** Dados particionados por Unidade Federativa (`/src/data/states/{uf}.json` e `/src/data/capitais/{uf}.json`), garantindo carregamento sob demanda, consumo mínimo de dados móveis e funcionamento 100% offline via Service Worker após a primeira consulta.
-  - **Localização Inteligente:** Pré-seleção automática do estado e capital conforme o domicílio cívico configurado pelo cidadão.
 - **Conformidade 100% Google Material Design 3 (M3) & Tipografia Actor:**
   - **Tipografia Actor (Thomas Junold):** Adoção completa e irrestrita da fonte **Actor** (`https://fonts.googleapis.com/css2?family=Actor&display=swap`) em toda a hierarquia visual (Display, Headline, Title, Body, Label).
   - **Paleta Tonal M3 (`md-sys-color-*`):** Cores tonais dinâmicas adaptativas (Verde Cívico tonal 40/80, Azul Federal tonal 40/80, Ouro República tonal 40/80) com transição fluida entre Tema Claro e Tema Escuro (*Dark Mode*).
@@ -111,3 +110,22 @@ npm run dev   # http://localhost:5173
 
 
 
+
+## Interação e acessibilidade
+
+- **Diálogos:** entram e saem pelo mesmo caminho, fecham com Esc, prendem o foco e devolvem-no ao botão que os abriu. Em telas estreitas viram folha inferior que pode ser arrastada para baixo para fechar (acompanha o dedo, resiste para cima, projeta a inércia e anima com mola — `src/motion.js`).
+- **Materiais:** cabeçalho e barra inferior translúcidos, com divisória só quando há conteúdo rolando por baixo.
+- **Feedback:** resposta no pressionar; hover só em dispositivos com ponteiro; remover político pode ser desfeito pelo snackbar.
+- **Preferências do sistema:** tema segue `prefers-color-scheme` até o usuário escolher; `prefers-reduced-motion` troca deslizamentos por crossfade; `prefers-reduced-transparency` e `prefers-contrast` deixam as superfícies sólidas e com contornos fortes.
+
+## Dados que NÃO são exibidos (por falta de fonte implementada)
+
+Atuação como relator e financiamento de campanha foram removidos: eram valores simulados (fonte possível: prestação de contas do TSE). Presença e fidelidade existem para deputados federais e senadores (não para deputados estaduais e vereadores).
+
+## Atualizando os dados regionais
+
+```bash
+# baixar e extrair consulta_cand_{2022,2024}.zip e bem_candidato_{2022,2024}.zip de
+# https://cdn.tse.jus.br/estatistica/sead/odsele/{consulta_cand,bem_candidato}/
+node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
+```

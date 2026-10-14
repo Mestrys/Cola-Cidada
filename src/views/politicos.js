@@ -5,11 +5,10 @@ import {
   deputyProfile,
   senatorVotes,
   getTseElectoralProfile,
-  getParliamentaryAttendance,
-  getPartyFidelity,
-  getRelatorMatters,
 } from '../api.js';
 import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast } from '../ui.js';
+import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
+import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openDossierModal } from '../dossier.js';
 import { openShareModal } from '../share.js';
@@ -52,85 +51,64 @@ export function politicianCard(p) {
       ? 'teal'
       : 'gold';
 
-  const att = getParliamentaryAttendance(p);
-  const fid = getPartyFidelity(p);
+  const m = mandateProgress(p);
 
   return `
-  <article class="card stack" style="gap:14px; position:relative">
+  <article class="card stack pol-card u-gap-14 u-position-relative">
     <!-- Header do Card com Avatar e Dados -->
-    <div class="row between nowrap">
-      <div class="row nowrap" style="gap:12px">
-        <div class="avatar-wrap">
-          ${avatar(p)}
-          <span class="avatar-badge-icon" title="Mandato Monitorado">
-            <span class="mi" style="font-size:11px">check</span>
-          </span>
-        </div>
-        <div>
-          <div class="row" style="gap:6px">
-            <h3 class="h2" style="font-size:15.5px; font-weight:700">${esc(p.name)}</h3>
-            <span class="chip ${sourceChipClass} xs">${esc(p.party || '—')}</span>
-          </div>
-          <span class="sm muted" style="display:block; margin-top:2px">
-            ${ROLES[p.roleKey]?.label || 'Parlamentar'} • ${esc(p.uf || 'BR')}
-          </span>
+    <div class="pol-head">
+      <div class="avatar-wrap">
+        ${avatar(p)}
+        <span class="avatar-badge-icon" title="Mandato Monitorado">
+          <span class="mi u-fs-11">check</span>
+        </span>
+      </div>
+      <div class="pol-head-text">
+        <h3 class="h2 u-fs-15_5 u-fw-700">${esc(p.name)}</h3>
+        <span class="sm muted u-d-block u-mt-2">
+          ${ROLES[p.roleKey]?.label || 'Parlamentar'} • ${esc(p.uf || 'BR')}
+        </span>
+        <div class="row u-gap-6 u-mt-8">
+          <span class="chip ${sourceChipClass} xs">${esc(p.party || '—')}</span>
+          <span class="chip ${sourceChipClass} xs">${sourceLabel}</span>
         </div>
       </div>
-      <span class="chip ${sourceChipClass}">${sourceLabel}</span>
     </div>
 
     <!-- Barra de Mandato com Anos e Percentual -->
     <div>
-      <div class="row between xs muted" style="font-weight:600">
+      <div class="row between xs muted u-fw-600">
         <span>Mandato: ${m.end ? `Término em ${m.end}` : 'Em curso'}</span>
-        <b style="color:var(--text)">${m.pct}% cumprido</b>
+        <b class="u-c-text">${m.pct}% cumprido</b>
       </div>
-      <div class="bar" style="margin:6px 0; height:7px">
-        <i style="width:${m.pct}%"></i>
+      <div class="bar u-m-6-0 u-height-7">
+        <i data-w="${m.pct}"></i>
       </div>
       <div class="row between xs muted">
         <span>${m.label}</span>
-        <span class="chip ${att.statusClass} xs">${att.attendanceRate}% Assiduidade</span>
-      </div>
-    </div>
-
-    <!-- Mini-Grid de Métricas Típicas do Stitch -->
-    <div class="grid" style="grid-template-columns:1fr 1fr 1fr; gap:8px">
-      <div class="stat" style="padding:8px 10px">
-        <span style="font-size:10px">Fidelidade</span>
-        <b style="font-size:15px; color:var(--primary)">${fid.alignmentRate}%</b>
-        <span class="xs muted" style="text-transform:none">com a bancada</span>
-      </div>
-      <div class="stat" style="padding:8px 10px">
-        <span style="font-size:10px">Presença</span>
-        <b style="font-size:15px; color:var(--text)">${att.attendanceRate}%</b>
-        <span class="xs muted" style="text-transform:none">${att.presences} sessões</span>
-      </div>
-      <div class="stat" style="padding:8px 10px">
-        <span style="font-size:10px">Auditoria</span>
-        <b style="font-size:15px; color:var(--text)">${isDeputy ? 'CEAP' : isSenator ? 'CEAPS' : 'Gabinete'}</b>
-        <span class="xs muted" style="text-transform:none">Notas ativas</span>
       </div>
     </div>
 
     <!-- Ações do Card -->
-    <div class="row" style="gap:8px; border-top:1px solid var(--line); padding-top:10px">
-      <button class="btn primary sm" data-details="${p.id}" style="flex:1">
-        <span class="mi" style="font-size:16px">analytics</span>
+    <div class="card-actions">
+      <button class="btn primary sm" data-details="${p.id}">
+        <span class="mi u-fs-16">analytics</span>
         <span>Auditar Mandato</span>
       </button>
+      <div class="icon-group">
       <button class="btn outlined sm icon" data-dossier="${p.id}" title="Gerar Dossiê Oficial em PDF" aria-label="Relatório PDF">
-        <span class="mi" style="font-size:16px">description</span>
+        <span class="mi u-fs-16">description</span>
       </button>
       <button class="btn outlined sm icon" data-share="${p.id}" title="Gerar Card Visual para WhatsApp / Redes" aria-label="Card para Redes">
-        <span class="mi" style="font-size:16px">share</span>
+        <span class="mi u-fs-16">share</span>
       </button>
       <button class="btn outlined sm icon" data-replace="${p.id}" title="Substituir político" aria-label="Substituir">
-        <span class="mi" style="font-size:16px">swap_horiz</span>
+        <span class="mi u-fs-16">swap_horiz</span>
       </button>
       <button class="btn danger sm icon" data-remove="${p.id}" title="Parar de monitorar" aria-label="Remover">
-        <span class="mi" style="font-size:16px">delete</span>
+        <span class="mi u-fs-16">delete</span>
       </button>
+      </div>
     </div>
   </article>`;
 }
@@ -149,25 +127,22 @@ async function openPoliticianDetails(p) {
     p.roleKey === 'dep-estadual' ||
     (typeof p.source === 'string' && p.source.startsWith('al-'));
   const tse = getTseElectoralProfile(p);
-  const att = getParliamentaryAttendance(p);
-  const fid = getPartyFidelity(p);
-  const relators = getRelatorMatters(p);
   const m = mandateProgress(p);
 
   const { el, close } = modal(`
     <!-- Cabeçalho do Modal no Estilo Stitch -->
-    <div class="stack" style="gap:14px">
+    <div class="stack u-gap-14">
       <div class="row between nowrap">
-        <div class="row nowrap" style="gap:14px">
+        <div class="row nowrap u-gap-14">
           <div class="avatar-wrap">
             ${avatar(p)}
             <span class="avatar-badge-icon">
-              <span class="mi" style="font-size:11px">verified</span>
+              <span class="mi u-fs-11">verified</span>
             </span>
           </div>
           <div>
-            <div class="row" style="gap:6px">
-              <h3 class="h2" style="font-size:18px; font-weight:800">${esc(p.name)}</h3>
+            <div class="row u-gap-6">
+              <h3 class="h2 u-fs-18 u-fw-800">${esc(p.name)}</h3>
               <span class="chip green xs">${esc(p.party || '—')}</span>
             </div>
             <span class="sm muted">${ROLES[p.roleKey]?.label || ''} • ${esc(p.uf || 'BR')}</span>
@@ -177,37 +152,36 @@ async function openPoliticianDetails(p) {
       </div>
 
       <!-- Barra de Mandato & Badges Superiores -->
-      <div class="card soft stack" style="gap:8px; padding:12px">
+      <div class="card soft stack u-gap-8 u-p-12">
         <div class="row between sm">
           <span>Mandato: <b>${m.end || 'Em exercício'}</b></span>
-          <b style="color:var(--primary)">${m.pct}% concluído</b>
+          <b class="u-c-primary">${m.pct}% concluído</b>
         </div>
-        <div class="bar" style="height:7px"><i style="width:${m.pct}%"></i></div>
-        <div class="row" style="gap:8px; margin-top:4px">
-          <span class="chip green xs"><span class="mi" style="font-size:13px">trending_down</span>Gasto auditado em conformidade</span>
-          <span class="chip blue xs"><span class="mi" style="font-size:13px">event_available</span>${att.attendanceRate}% Assiduidade em Plenário</span>
+        <div class="bar u-height-7"><i data-w="${m.pct}"></i></div>
+        <div class="row u-gap-8 u-mt-4">
         </div>
       </div>
     </div>
 
     <!-- Navegação de Abas MD3 -->
-    <div class="tabs" id="pol-tabs" style="overflow-x:auto; max-width:100%; white-space:nowrap; padding:4px">
+    <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="pol-tabs">
       ${
         isDeputy
           ? `
         <button class="on" data-tab="gastos">Auditoria CEAP (Gastos)</button>
         <button data-tab="projetos">Projetos de Lei (PLs)</button>
         <button data-tab="perfil">Gabinete Oficial</button>
+        <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : isSenator
           ? `
         <button class="on" data-tab="senado">Votações no Senado</button>
+        <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : `
         <button class="on" data-tab="local">${isCouncilor ? 'Mandato Municipal' : 'Mandato Estadual'}</button>
       `
       }
-      <button data-tab="attendance">Assiduidade & Fidelidade</button>
       <button data-tab="tse">Ficha Eleitoral & TSE</button>
     </div>
 
@@ -215,80 +189,86 @@ async function openPoliticianDetails(p) {
     ${
       isDeputy
         ? `
-      <div id="tab-gastos" class="stack pol-pane" style="margin-top:4px">
+      <div id="tab-gastos" class="stack pol-pane u-mt-4">
         <div class="row"><span class="spin"></span><span class="muted">Auditando cota parlamentar (CEAP)…</span></div>
       </div>
-      <div id="tab-projetos" class="stack pol-pane hidden" style="margin-top:4px">
+      <div id="tab-projetos" class="stack pol-pane hidden u-mt-4">
         <div class="row"><span class="spin"></span><span class="muted">Consultando projetos de lei…</span></div>
       </div>
-      <div id="tab-perfil" class="stack pol-pane hidden" style="margin-top:4px">
+      <div id="tab-perfil" class="stack pol-pane hidden u-mt-4">
         <div class="row"><span class="spin"></span><span class="muted">Consultando dados do gabinete oficial…</span></div>
+      </div>
+      <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
+        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das sessões e votações oficiais…</span></div>
       </div>
     `
         : isSenator
         ? `
-      <div id="tab-senado" class="stack pol-pane" style="margin-top:4px">
+      <div id="tab-senado" class="stack pol-pane u-mt-4">
         <div class="row"><span class="spin"></span><span class="muted">Carregando votações nominais no Senado…</span></div>
+      </div>
+      <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
+        <div class="row"><span class="spin"></span><span class="muted">Calculando presença e fidelidade a partir das votações oficiais do Senado…</span></div>
       </div>
     `
         : `
-      <div id="tab-local" class="stack pol-pane" style="margin-top:4px">
-        <div class="card soft stack" style="gap:10px; padding:14px">
+      <div id="tab-local" class="stack pol-pane u-mt-4">
+        <div class="card soft stack u-gap-10 u-p-14">
           <div class="row between">
             <span class="chip ${isCouncilor ? 'teal' : 'purple'}">${esc(p.house || 'Casa Legislativa')}</span>
             <span class="sm muted">Situação: ${esc(p.situacao || 'Em Exercício')}</span>
           </div>
           <div>
-            <span class="xs muted" style="text-transform:uppercase; font-weight:700">Nome Parlamentar</span>
-            <p style="font-weight:700; font-size:15px">${esc(p.name)}</p>
+            <span class="xs muted u-tt-uppercase u-fw-700">Nome Parlamentar</span>
+            <p class="u-fw-700 u-fs-15">${esc(p.name)}</p>
           </div>
           ${
             p.baseEleitoral
               ? `<div>
-                <span class="xs muted" style="text-transform:uppercase; font-weight:700">Base Eleitoral & Cidades / Bairros</span>
-                <p style="font-size:13px; line-height:1.4">${esc(p.baseEleitoral)}</p>
+                <span class="xs muted u-tt-uppercase u-fw-700">Base Eleitoral & Cidades / Bairros</span>
+                <p class="u-fs-13 u-lh-1_4">${esc(p.baseEleitoral)}</p>
               </div>`
               : ''
           }
           ${
             p.areaAtuacao
               ? `<div>
-                <span class="xs muted" style="text-transform:uppercase; font-weight:700">Áreas de Atuação Principal</span>
-                <p style="font-size:13px; line-height:1.4">${esc(p.areaAtuacao)}</p>
+                <span class="xs muted u-tt-uppercase u-fw-700">Áreas de Atuação Principal</span>
+                <p class="u-fs-13 u-lh-1_4">${esc(p.areaAtuacao)}</p>
               </div>`
               : ''
           }
         </div>
 
-        <div class="card soft stack" style="gap:10px; padding:14px">
-          <span class="sm muted" style="font-weight:600">Gabinete Oficial e Contatos:</span>
-          <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-            <div class="stat" style="padding:10px">
+        <div class="card soft stack u-gap-10 u-p-14">
+          <span class="sm muted u-fw-600">Gabinete Oficial e Contatos:</span>
+          <div class="grid u-cols-1fr-1fr u-gap-8">
+            <div class="stat u-p-10">
               <span>Localização</span>
-              <b style="font-size:13px">${esc(p.room || 'Gabinete')}</b>
+              <b class="u-fs-13">${esc(p.room || 'Gabinete')}</b>
               <span class="xs muted">${esc(p.house || '')}</span>
             </div>
-            <div class="stat" style="padding:10px">
+            <div class="stat u-p-10">
               <span>Telefone</span>
-              <b style="font-size:13px">${esc(p.phone || 'Contato')}</b>
+              <b class="u-fs-13">${esc(p.phone || 'Contato')}</b>
               <span class="xs muted">Canal aberto ao cidadão</span>
             </div>
           </div>
           ${
             p.email
               ? `
-            <div class="row between sm" style="background:var(--s2); padding:8px 12px; border-radius:var(--r-sm)">
+            <div class="row between sm u-bg-s2 u-p-8-12 u-br-r-sm">
               <span class="muted">E-mail Parlamentar:</span>
-              <a href="mailto:${esc(p.email)}" style="font-weight:600">${esc(p.email)}</a>
+              <a href="mailto:${esc(p.email)}" class="u-fw-600">${esc(p.email)}</a>
             </div>`
               : ''
           }
           ${
             p.pageUrl
               ? `
-            <div class="row" style="margin-top:4px">
-              <a href="${esc(p.pageUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm" style="width:100%; justify-content:center">
-                <span>Página Oficial na Casa Legislativa</span><span class="mi" style="font-size:15px">open_in_new</span>
+            <div class="row u-mt-4">
+              <a href="${esc(p.pageUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm u-width-100pct u-jc-center">
+                <span>Página Oficial na Casa Legislativa</span><span class="mi u-fs-15">open_in_new</span>
               </a>
             </div>`
               : ''
@@ -299,158 +279,39 @@ async function openPoliticianDetails(p) {
     }
 
     <!-- ABA TSE & ELEITORAL -->
-    <div id="tab-tse" class="stack pol-pane hidden" style="margin-top:4px">
-      <div class="card soft stack" style="gap:12px; padding:16px">
+    <div id="tab-tse" class="stack pol-pane hidden u-mt-4">
+      <div class="card soft stack u-gap-12 u-p-16">
         <div class="row between">
           <span class="chip green">Registro Eleitoral Oficial no TSE (DivulgaCandContas)</span>
-          <span class="xs muted">${esc(tse.status)}</span>
+          <span class="xs muted">${esc(tse.status || '')}</span>
         </div>
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-          <div class="stat" style="padding:10px">
+        ${
+          tse.available
+            ? `
+        <div class="grid u-cols-1fr-1fr u-gap-8">
+          <div class="stat u-p-10">
             <span>Número na Urna</span>
-            <b style="font-size:20px; color:var(--primary)">${esc(tse.ballotNumber)}</b>
+            <b class="u-fs-20 u-c-primary">${esc(tse.ballotNumber)}</b>
             <span class="xs muted">Eleição de ${tse.electionYear} • ${esc(p.party || '')}</span>
           </div>
-          <div class="stat" style="padding:10px">
+          <div class="stat u-p-10">
             <span>Patrimônio Declarado</span>
-            <b style="font-size:18px">${brl(tse.declaredAssets)}</b>
-            <span class="xs muted">Bens declarados na posse</span>
+            <b class="u-fs-18">${tse.declaredAssets != null ? brl(tse.declaredAssets) : 'Não declarado'}</b>
+            <span class="xs muted">Bens declarados no registro de candidatura</span>
           </div>
         </div>
-
-        <div class="stat" style="padding:12px">
-          <div class="row between">
-            <span style="font-weight:600">Arrecadação e Prestação de Contas</span>
-            <b style="font-size:17px; color:var(--primary)">${brl(tse.totalRaised)}</b>
-          </div>
-          <div class="bar" style="height:8px; margin:8px 0; display:flex">
-            <i style="width:${tse.publicFundPct}%; background:var(--primary)" title="Fundo Eleitoral: ${tse.publicFundPct}%"></i>
-            <i style="width:${tse.privateDonationsPct}%; background:var(--secondary)" title="Doações Privadas: ${tse.privateDonationsPct}%"></i>
-          </div>
-          <div class="row between xs muted">
-            <span>Fundo Público (FEFC): <b>${tse.publicFundPct}%</b></span>
-            <span>Doações Privadas / PIX: <b>${tse.privateDonationsPct}%</b></span>
-          </div>
-        </div>
-
-        <div class="row between sm" style="background:var(--s2); padding:8px 12px; border-radius:var(--r-sm)">
+        <div class="row between sm u-bg-s2 u-p-8-12 u-br-r-sm">
           <span class="muted">Coligação / Federação:</span>
-          <b>${esc(tse.electoralCoalition)}</b>
-        </div>
-
-        <div class="row" style="margin-top:4px">
-          <a href="${esc(tse.tseUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm" style="width:100%; justify-content:center">
-            <span>Consultar Ficha Eleitoral no TSE (DivulgaCandContas)</span><span class="mi" style="font-size:15px">open_in_new</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABA ASSIDUIDADE & FIDELIDADE -->
-    <div id="tab-attendance" class="stack pol-pane hidden" style="margin-top:4px">
-      <!-- 1. Presença em Plenário -->
-      <div class="card soft stack" style="gap:12px; padding:16px">
-        <div class="row between">
-          <span class="chip ${att.statusClass}">Presença em Plenário & Comissões</span>
-          <span class="sm" style="font-weight:700">${esc(att.status)}</span>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-          <div class="stat" style="padding:10px">
-            <span>Taxa de Presença</span>
-            <b style="font-size:22px; color:var(--primary)">${att.attendanceRate}%</b>
-            <span class="xs muted">${att.presences} de ${att.totalSessions} sessões</span>
-          </div>
-          <div class="stat" style="padding:10px">
-            <span>Faltas Justificadas</span>
-            <b style="font-size:20px">${att.justifiedAbsences}</b>
-            <span class="xs muted">Com atestado / missão oficial</span>
-          </div>
-        </div>
-
-        <div class="stat" style="padding:12px">
-          <div class="row between sm">
-            <span>Distribuição de Sessões Convocadas</span>
-            <span>Total: <b>${att.totalSessions}</b></span>
-          </div>
-          <div class="bar" style="height:10px; margin:8px 0; display:flex; border-radius:6px; overflow:hidden">
-            <i style="width:${att.attendanceRate}%; background:var(--primary)" title="Presenças: ${att.presences}"></i>
-            <i style="width:${Math.round((att.justifiedAbsences / att.totalSessions) * 100)}%; background:var(--secondary)" title="Justificadas: ${att.justifiedAbsences}"></i>
-            <i style="width:${Math.round((att.unjustifiedAbsences / att.totalSessions) * 100)}%; background:var(--error)" title="Faltas não justificadas: ${att.unjustifiedAbsences}"></i>
-          </div>
-          <div class="row between xs muted">
-            <span>Presenças: <b>${att.presences}</b></span>
-            <span>Justificadas: <b>${att.justifiedAbsences}</b></span>
-            <span>Faltas Não Justificadas: <b style="color:var(--error)">${att.unjustifiedAbsences}</b></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Fidelidade Partidária -->
-      <div class="card soft stack" style="gap:12px; padding:16px">
-        <div class="row between">
-          <span class="chip ${fid.classificationClass}">Fidelidade Partidária (${esc(fid.party)})</span>
-          <span class="sm" style="font-weight:700">${esc(fid.classification)}</span>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-          <div class="stat" style="padding:10px">
-            <span>Votos com a Bancada</span>
-            <b style="font-size:22px; color:var(--text)">${fid.alignmentRate}%</b>
-            <span class="xs muted">${fid.alignedVotes} de ${fid.totalVotings} votações</span>
-          </div>
-          <div class="stat" style="padding:10px">
-            <span>Votos Dissidentes</span>
-            <b style="font-size:20px; color:${fid.divergentVotes > 0 ? 'var(--gold)' : 'var(--primary)'}">${fid.divergentVotes}</b>
-            <span class="xs muted">Contrários à liderança</span>
-          </div>
-        </div>
-
-        ${
-          fid.sampleDivergences.length
-            ? `
-          <div class="stack" style="gap:6px">
-            <span class="xs muted" style="font-weight:700; text-transform:uppercase">Amostra de Votações com Dissidência:</span>
-            ${fid.sampleDivergences
-              .map(
-                (d) => `
-              <div class="card soft stack xs" style="gap:3px; background:var(--s2); padding:8px 10px; border-radius:var(--r-sm)">
-                <div class="row between">
-                  <b>${esc(d.matter)}</b>
-                  <span class="chip gold xs">Voto: ${esc(d.parliamentaryVote)} (Bancada: ${esc(d.partyOrientation)})</span>
-                </div>
-                <p class="muted">${esc(d.description)}</p>
-              </div>`
-              )
-              .join('')}
-          </div>`
-            : ''
+          <b>${esc(tse.electoralCoalition || (tse.isolatedParty ? 'Partido isolado' : '—'))}</b>
+        </div>`
+            : `
+        <p class="sm muted">Os dados eleitorais deste mandato não estão carregados localmente. Consulte a ficha oficial no TSE.</p>`
         }
-      </div>
-
-      <!-- 3. Atuação como Relator -->
-      <div class="card soft stack" style="gap:10px; padding:16px">
-        <div class="row between">
-          <span class="chip blue">Atuação como Relator(a)</span>
-          <span class="xs muted">${relators.length} Matérias Atribuídas</span>
-        </div>
-        <div class="stack" style="gap:8px">
-          ${relators
-            .map(
-              (r) => `
-            <div class="card soft stack sm" style="gap:4px; border-left:3px solid var(--primary); padding:10px">
-              <div class="row between">
-                <b style="font-size:13px">${esc(r.code)}</b>
-                <span class="chip green xs">${esc(r.status)}</span>
-              </div>
-              <p style="font-size:12px; font-weight:600">${esc(r.theme)}</p>
-              <div class="row between xs muted">
-                <span>Comissão: ${esc(r.commission)}</span>
-                <span>Parecer: <b>${esc(r.verdict)}</b></span>
-              </div>
-            </div>`
-            )
-            .join('')}
+        <p class="xs muted">Prestação de contas de campanha (arrecadação e doadores): consulte a ficha oficial no TSE.</p>
+        <div class="row u-mt-4">
+          <a href="${esc(tse.tseUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm u-width-100pct u-jc-center">
+            <span>Consultar Ficha Eleitoral no TSE (DivulgaCandContas)</span><span class="mi u-fs-15">open_in_new</span>
+          </a>
         </div>
       </div>
     </div>
@@ -458,10 +319,18 @@ async function openPoliticianDetails(p) {
 
   // Alternância de abas do modal
   const tabs = el.querySelectorAll('#pol-tabs button');
+  el.querySelector('#pol-tabs')?.setAttribute('role', 'tablist');
   tabs.forEach((btn) => {
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', String(btn.classList.contains('on')));
     btn.onclick = () => {
-      tabs.forEach((b) => b.classList.remove('on'));
+      tabs.forEach((b) => {
+        b.classList.remove('on');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('on');
+      btn.setAttribute('aria-selected', 'true');
+      btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       const targetTab = btn.dataset.tab;
       el.querySelectorAll('.pol-pane').forEach((p) => p.classList.add('hidden'));
       const activePane = el.querySelector(`#tab-${targetTab}`);
@@ -473,6 +342,12 @@ async function openPoliticianDetails(p) {
     const paneGastos = el.querySelector('#tab-gastos');
     const paneProjetos = el.querySelector('#tab-projetos');
     const panePerfil = el.querySelector('#tab-perfil');
+    const panePlenario = el.querySelector('#tab-plenario');
+
+    // Presença e fidelidade (carrega em paralelo, sem bloquear as demais abas)
+    deputyPlenaryStats(p.camaraId)
+      .then((stats) => (panePlenario.innerHTML = plenaryPanelHtml(stats)))
+      .catch((err) => (panePlenario.innerHTML = `<p class="muted">Não foi possível calcular agora: ${esc(err.message)}</p>`));
 
     // 1. Carrega Gastos CEAP
     try {
@@ -490,23 +365,23 @@ async function openPoliticianDetails(p) {
           .slice(0, 4);
 
         paneGastos.innerHTML = `
-          <div class="card soft row between" style="padding:14px; background:var(--primary-soft)">
+          <div class="card soft row between u-p-14 u-bg-primary-soft">
             <div>
-              <span class="xs muted" style="text-transform:uppercase; font-weight:700">Total Auditado no Mandato</span>
-              <h2 style="font-size:22px; color:var(--primary); font-weight:800; margin-top:2px">${brl(total)}</h2>
+              <span class="xs muted u-tt-uppercase u-fw-700">Soma dos Reembolsos Consultados</span>
+              <h2 class="u-fs-22 u-c-primary u-fw-800 u-mt-2">${brl(total)}</h2>
               <span class="xs muted">Base: Últimos ${expenses.length} reembolsos registrados na Câmara</span>
             </div>
             <span class="chip green">57ª Legislatura</span>
           </div>
 
           <div>
-            <span class="sm muted" style="font-weight:700">Principais Áreas de Despesa:</span>
-            <div class="stack" style="gap:6px; margin-top:6px">
+            <span class="sm muted u-fw-700">Principais Áreas de Despesa:</span>
+            <div class="stack u-gap-6 u-mt-6">
               ${topCategories
                 .map(
                   ([cat, val]) => `
-                <div class="row between sm" style="background:var(--s2); padding:6px 12px; border-radius:var(--r-sm)">
-                  <span class="muted truncate" style="max-width:240px">${esc(cat)}</span>
+                <div class="row between sm u-bg-s2 u-p-6-12 u-br-r-sm">
+                  <span class="muted truncate u-maxw-240">${esc(cat)}</span>
                   <b>${brl(val)}</b>
                 </div>`
                 )
@@ -514,35 +389,33 @@ async function openPoliticianDetails(p) {
             </div>
           </div>
 
-          <div class="row between" style="margin-top:6px">
-            <span class="sm muted" style="font-weight:700">Notas Fiscais e Recibos Recentes:</span>
+          <div class="row between u-mt-6">
+            <span class="sm muted u-fw-700">Notas Fiscais e Recibos Recentes:</span>
             <span class="xs muted">Fonte: Câmara dos Deputados</span>
           </div>
 
-          <div class="stack" style="gap:8px; max-height:40vh; overflow-y:auto; padding-right:4px">
+          <div class="stack u-gap-8 u-maxh-40vh u-ovy-auto u-pr-4">
             ${expenses
               .slice(0, 20)
               .map((ex) => {
                 const isHigh = (ex.value || 0) >= 3000;
                 return `
-                <div class="card soft stack" style="gap:4px; padding:10px; border-left:${
-                  isHigh ? '3px solid var(--tertiary)' : 'none'
-                }">
+                <div class="card soft stack u-gap-4 u-p-10 ${isHigh ? 'u-bl-3-solid-tertiary' : 'u-bl-none'}">
                   <div class="row between">
-                    <span class="sm" style="font-weight:600">${esc(ex.supplier || 'Fornecedor')}</span>
-                    <b style="color:${isHigh ? 'var(--tertiary)' : 'var(--text)'}">${brl(ex.value || 0)}</b>
+                    <span class="sm u-fw-600">${esc(ex.supplier || 'Fornecedor')}</span>
+                    <b class="${isHigh ? 'u-c-tertiary' : 'u-c-text'}">${brl(ex.value || 0)}</b>
                   </div>
                   <div class="row between xs muted">
-                    <span class="truncate" style="max-width:260px">${esc(ex.type)}</span>
+                    <span class="truncate u-maxw-260">${esc(ex.type)}</span>
                     <span>${fmtDate(ex.date)}</span>
                   </div>
                   ${
                     ex.receiptUrl
-                      ? `<div class="row" style="margin-top:4px">
+                      ? `<div class="row u-mt-4">
                       <a href="${esc(
                         ex.receiptUrl
-                      )}" target="_blank" rel="noopener noreferrer" class="xs" style="font-weight:600; display:inline-flex; align-items:center; gap:4px">
-                        <span class="mi" style="font-size:14px">receipt_long</span><span>Ver Nota Fiscal / Comprovante</span>
+                      )}" target="_blank" rel="noopener noreferrer" class="xs u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
+                        <span class="mi u-fs-14">receipt_long</span><span>Ver Nota Fiscal / Comprovante</span>
                       </a>
                     </div>`
                       : ''
@@ -564,22 +437,22 @@ async function openPoliticianDetails(p) {
         paneProjetos.innerHTML = '<p class="muted">Nenhuma proposição autoral recente encontrada.</p>';
       } else {
         paneProjetos.innerHTML = `
-          <div class="stack" style="gap:10px; max-height:55vh; overflow-y:auto; padding-right:4px">
+          <div class="stack u-gap-10 u-maxh-55vh u-ovy-auto u-pr-4">
             ${projects
               .map(
                 (item, idx) => `
-              <div class="card soft stack" style="gap:6px; padding:12px">
+              <div class="card soft stack u-gap-6 u-p-12">
                 <div class="row between">
                   <span class="chip blue">${esc(item.type)} ${esc(item.number)}/${esc(item.year)}</span>
                   <span class="xs muted">${fmtDate(item.date)}</span>
                 </div>
-                <p style="font-size:13px; line-height:1.4">${esc(item.summary)}</p>
-                <div class="row between" style="margin-top:4px">
-                  <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="sm" style="font-weight:600; display:inline-flex; align-items:center; gap:4px">
-                    <span>Ficha oficial de tramitação</span><span class="mi" style="font-size:14px">open_in_new</span>
+                <p class="u-fs-13 u-lh-1_4">${esc(item.summary)}</p>
+                <div class="row between u-mt-4">
+                  <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="sm u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
+                    <span>Ficha oficial de tramitação</span><span class="mi u-fs-14">open_in_new</span>
                   </a>
-                  <button class="btn ghost sm btn-analyze-proj" data-index="${idx}" style="padding:4px 8px; font-size:11.5px">
-                    <span class="mi" style="font-size:14px; color:var(--primary)">psychology</span>
+                  <button class="btn ghost sm btn-analyze-proj u-p-4-8 u-fs-11_5" data-index="${idx}">
+                    <span class="mi u-fs-14 u-c-primary">psychology</span>
                     <span>Scanner de Jabutis</span>
                   </button>
                 </div>
@@ -604,14 +477,14 @@ async function openPoliticianDetails(p) {
     try {
       const prof = await deputyProfile(p.camaraId);
       panePerfil.innerHTML = `
-        <div class="card soft stack" style="gap:10px; padding:14px">
+        <div class="card soft stack u-gap-10 u-p-14">
           <div class="row between">
             <span class="chip green">Registro Institucional Oficial</span>
             <span class="xs muted">${esc(prof.status)}</span>
           </div>
           <div>
-            <span class="xs muted" style="text-transform:uppercase; font-weight:700">Nome Civil Completo</span>
-            <p style="font-weight:700; font-size:14px">${esc(prof.civilName)}</p>
+            <span class="xs muted u-tt-uppercase u-fw-700">Nome Civil Completo</span>
+            <p class="u-fw-700 u-fs-14">${esc(prof.civilName)}</p>
           </div>
           <div class="row between sm">
             <div><span class="muted">Condição:</span> <b>${esc(prof.electoralCondition)}</b></div>
@@ -622,25 +495,25 @@ async function openPoliticianDetails(p) {
         ${
           prof.cabinet
             ? `
-        <div class="card soft stack" style="gap:10px; padding:14px">
-          <span class="sm muted" style="font-weight:700">Gabinete em Brasília:</span>
-          <div class="grid" style="grid-template-columns:1fr 1fr; gap:8px">
-            <div class="stat" style="padding:10px">
+        <div class="card soft stack u-gap-10 u-p-14">
+          <span class="sm muted u-fw-700">Gabinete em Brasília:</span>
+          <div class="grid u-cols-1fr-1fr u-gap-8">
+            <div class="stat u-p-10">
               <span>Localização</span>
-              <b style="font-size:13px">Anexo ${esc(prof.cabinet.building)}, Sala ${esc(prof.cabinet.room)}</b>
+              <b class="u-fs-13">Anexo ${esc(prof.cabinet.building)}, Sala ${esc(prof.cabinet.room)}</b>
               <span class="xs muted">${esc(prof.cabinet.floor)}º Andar</span>
             </div>
-            <div class="stat" style="padding:10px">
+            <div class="stat u-p-10">
               <span>Telefone</span>
-              <b style="font-size:13px">(61) ${esc(prof.cabinet.phone || '3215-5000')}</b>
+              <b class="u-fs-13">(61) ${esc(prof.cabinet.phone || '3215-5000')}</b>
             </div>
           </div>
           ${
             prof.cabinet.email
               ? `
-          <div class="row between sm" style="background:var(--s2); padding:8px 12px; border-radius:var(--r-sm)">
+          <div class="row between sm u-bg-s2 u-p-8-12 u-br-r-sm">
             <span class="muted">E-mail Institucional:</span>
-            <a href="mailto:${esc(prof.cabinet.email)}" style="font-weight:600">${esc(prof.cabinet.email)}</a>
+            <a href="mailto:${esc(prof.cabinet.email)}" class="u-fw-600">${esc(prof.cabinet.email)}</a>
           </div>`
               : ''
           }
@@ -653,6 +526,10 @@ async function openPoliticianDetails(p) {
     }
   } else if (isSenator) {
     const paneSenator = el.querySelector('#tab-senado');
+    const panePlenario = el.querySelector('#tab-plenario');
+    senatorPlenaryStats(p.senadoId)
+      .then((stats) => (panePlenario.innerHTML = plenaryPanelHtml(stats)))
+      .catch((err) => (panePlenario.innerHTML = `<p class="muted">Não foi possível calcular agora: ${esc(err.message)}</p>`));
     try {
       const votes = await senatorVotes(p.senadoId, 12);
       if (!votes.length) {
@@ -663,16 +540,16 @@ async function openPoliticianDetails(p) {
             <span class="chip blue">Histórico de Votações Nominais</span>
             <span class="xs muted">Fonte: API Senado Federal</span>
           </div>
-          <div class="stack" style="gap:10px; max-height:55vh; overflow-y:auto; padding-right:4px">
+          <div class="stack u-gap-10 u-maxh-55vh u-ovy-auto u-pr-4">
             ${votes
               .map(
                 (v) => `
-              <div class="card soft stack" style="gap:6px; padding:12px">
+              <div class="card soft stack u-gap-6 u-p-12">
                 <div class="row between">
                   <span class="chip blue">${esc(v.matter)}</span>
                   <span class="vote ${VOTE_CLASS[v.vote] || ''}">${esc(v.vote)}</span>
                 </div>
-                <p style="font-size:13px; font-weight:500; line-height:1.4">${esc(v.summary || 'Deliberação no Plenário')}</p>
+                <p class="u-fs-13 u-fw-500 u-lh-1_4">${esc(v.summary || 'Deliberação no Plenário')}</p>
                 <div class="row between xs muted">
                   <span>Resultado: <b>${esc(v.result || 'Concluído')}</b></span>
                   <span>${fmtDate(v.date)}</span>
@@ -696,11 +573,21 @@ export function bindPoliticianActions(root) {
 
   root.querySelectorAll('[data-remove]').forEach((b) => {
     b.onclick = () => {
-      const p = store.get().politicians.find((x) => x.id === b.dataset.remove);
-      if (confirm(`Parar de monitorar ${p?.name || 'este político'}?`)) {
-        store.removePolitician(b.dataset.remove);
-        toast('Político removido do monitoramento.');
-      }
+      const list = store.get().politicians;
+      const index = list.findIndex((x) => x.id === b.dataset.remove);
+      if (index < 0) return;
+      const removed = list[index];
+      store.removePolitician(removed.id);
+      toast(`${removed.name} removido do monitoramento.`, 'delete', {
+        action: {
+          label: 'Desfazer',
+          onClick: () => {
+            const now = store.get().politicians;
+            if (now.some((x) => x.id === removed.id)) return;
+            store.set({ politicians: [...now.slice(0, index), removed, ...now.slice(index)] });
+          },
+        },
+      });
     };
   });
 

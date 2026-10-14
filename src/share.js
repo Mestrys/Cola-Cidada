@@ -87,7 +87,7 @@ export async function createCardImage({ politician, title, highlight, badge, bad
       : politician.roleKey === 'senador'
       ? 'Senador da República'
       : politician.roleKey === 'dep-estadual'
-      ? 'Deputado Estadual (ALESP)'
+      ? 'Deputado Estadual'
       : 'Parlamentar';
   ctx.fillText(`${roleLabel} · ${politician.party || ''}${politician.uf ? '/' + politician.uf : ''}`, textStartX, 340);
 
@@ -143,7 +143,7 @@ export async function createCardImage({ politician, title, highlight, badge, bad
   // 6. Rodapé Oficial
   ctx.fillStyle = '#718294';
   ctx.font = '500 22px "Actor", system-ui, sans-serif';
-  ctx.fillText('FONTE: DADOS ABERTOS OFICIAIS (CÂMARA / SENADO / ALESP)', 90, 900);
+  ctx.fillText('FONTE: DADOS ABERTOS OFICIAIS (CÂMARA / SENADO / TSE)', 90, 900);
   ctx.fillText(`GERADO EM ${new Date().toLocaleDateString('pt-BR')} · PRIVACIDADE TOTAL (LGPD)`, 90, 935);
 
   return canvas;
@@ -153,20 +153,20 @@ export async function openShareModal({ politician, title, highlight, badge, badg
   const { el, close } = modal(`
     <div class="row between">
       <div class="row">
-        <span class="mi" style="color:var(--primary); font-size:24px">share</span>
-        <h3 class="h2" style="font-size:16px">Card Cívico para Redes Sociais</h3>
+        <span class="mi u-c-primary u-fs-24">share</span>
+        <h3 class="h2 u-fs-16">Card Cívico para Redes Sociais</h3>
       </div>
       <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
     </div>
 
-    <div class="stack" style="align-items:center; gap:12px; margin-top:8px">
-      <div id="card-preview-wrap" style="width:100%; max-width:380px; aspect-ratio:1; border-radius:18px; overflow:hidden; box-shadow:0 12px 36px rgba(0,0,0,0.25); background:var(--s2); display:grid; place-items:center">
+    <div class="stack u-ai-center u-gap-12 u-mt-8">
+      <div id="card-preview-wrap" class="u-width-100pct u-maxw-380 u-aspect-ratio-1 u-br-18 u-overflow-hidden u-box-shadow-bbbad4 u-bg-s2 u-d-grid u-place-items-center">
         <div class="row"><span class="spin"></span><span class="muted">Renderizando card em alta resolução…</span></div>
       </div>
-      <p class="sm muted" style="text-align:center">Card formatado para WhatsApp, Telegram, X (Twitter) e Instagram Stories.</p>
+      <p class="sm muted u-ta-center">Card formatado para WhatsApp, Telegram, X (Twitter) e Instagram Stories.</p>
     </div>
 
-    <div class="row between" style="margin-top:14px">
+    <div class="row between u-mt-14">
       <button class="btn primary" id="btn-download-png" disabled><span class="mi">download</span>Baixar Imagem PNG</button>
       <button class="btn sm" id="btn-share-native" disabled><span class="mi">send</span>Enviar / Compartilhar</button>
     </div>

@@ -1,7 +1,7 @@
 // Módulo de Análise Textual Legislativa: Detecção de Jabutis (Contrabando Legislativo) e Sumarização Didática.
 // 100% Processado no Navegador (Client-side), sem envio para servidores externos (Conforme LGPD).
 
-import { modal, esc } from './ui.js';
+import { modal, esc, fmtDate } from './ui.js';
 
 /* ================= 1. DICIONÁRIO TEMÁTICO & CLASSIFICAÇÃO SEMÂNTICA ================= */
 
@@ -132,29 +132,6 @@ export function summarizeProposition(p) {
   const summary = p.summary || p.theme || 'Sem ementa disponível.';
   const central = detectCentralDomain(code, summary);
 
-  // Geração de síntese explicativa e impactos práticos
-  let practicalEffect = `Estabelece diretrizes e normas legais no âmbito de ${THEMATIC_DOMAINS[central.domain]?.label || 'administração pública'}.`;
-  let financialEffect = 'Sem previsão imediata de novos custos tributários diretos ao consumidor.';
-  let winnersAndLosers = 'Regulamenta relações entre o poder público e os setores afetados pela proposta.';
-
-  if (summary.toLowerCase().includes('imposto') || summary.toLowerCase().includes('tribut') || summary.toLowerCase().includes('fiscal')) {
-    practicalEffect = 'Altera regras fiscais ou tributárias, impactando alíquotas ou critérios de arrecadação do Estado.';
-    financialEffect = 'Pode gerar impacto direto no preço de mercadorias, serviços ou no orçamento público.';
-    winnersAndLosers = 'Beneficia setores contemplados com desoneração ou reforça o caixa arrecadatório público.';
-  } else if (summary.toLowerCase().includes('saude') || summary.toLowerCase().includes('sus') || summary.toLowerCase().includes('medicamento')) {
-    practicalEffect = 'Cria ou aperfeiçoa programas de assistência, fornecimento de tratamentos ou infraestrutura de saúde pública.';
-    financialEffect = 'Gera demandas orçamentárias de custeio para o Sistema Único de Saúde (SUS) e entes federativos.';
-    winnersAndLosers = 'Beneficia pacientes e usuários da rede pública; requer gestão orçamentária dos governos.';
-  } else if (summary.toLowerCase().includes('internet') || summary.toLowerCase().includes('redes') || summary.toLowerCase().includes('digital')) {
-    practicalEffect = 'Regula responsabilidades de plataformas digitais, direitos de usuários e transparência na internet.';
-    financialEffect = 'Custos de conformidade técnica para grandes empresas de tecnologia (Big Techs).';
-    winnersAndLosers = 'Usuários ganham salvaguardas contra abusos; plataformas enfrentam maiores exigências legais.';
-  } else if (summary.toLowerCase().includes('mobilidade') || summary.toLowerCase().includes('transito') || summary.toLowerCase().includes('transporte')) {
-    practicalEffect = 'Organiza a malha de transportes, tarifas ou regulamentação de vias e concessões.';
-    financialEffect = 'Afeta tarifas de transporte ou subsídios públicos a operadores de trânsito.';
-    winnersAndLosers = 'Usuários do transporte público ganham previsibilidade; operadores têm fiscalização ampliada.';
-  }
-
   const analysis = detectJabuti(code, summary, summary);
 
   return {
@@ -162,9 +139,8 @@ export function summarizeProposition(p) {
     summary,
     centralDomain: central.domain,
     centralLabel: THEMATIC_DOMAINS[central.domain]?.label || 'Matéria Geral',
-    practicalEffect,
-    financialEffect,
-    winnersAndLosers,
+    date: p.date || '',
+    url: /^https:\/\/(www\.)?(camara|senado)\.leg\.br\//.test(p.url || '') ? p.url : '',
     analysis,
   };
 }
@@ -177,9 +153,9 @@ export function openAnalysisModal(item) {
   const { el } = modal(`
     <div class="row between no-print">
       <div class="row">
-        <span class="mi" style="color:var(--primary); font-size:24px">psychology</span>
+        <span class="mi u-c-primary u-fs-24">psychology</span>
         <div>
-          <h3 class="h2" style="font-size:16px">Inteligência Cívica & Análise Textual</h3>
+          <h3 class="h2 u-fs-16">Inteligência Cívica & Análise Textual</h3>
           <span class="sm muted">${esc(s.code)}</span>
         </div>
       </div>
@@ -187,58 +163,51 @@ export function openAnalysisModal(item) {
     </div>
 
     <!-- Navegação de Abas -->
-    <div class="row" style="gap:8px; margin-top:12px; border-bottom:1px solid var(--line); padding-bottom:8px">
-      <button class="btn sm active" id="tab-summary-btn"><span class="mi">menu_book</span>Sumário Didático</button>
+    <div class="row u-gap-8 u-mt-12 u-bb-1-solid-line u-pb-8">
+      <button class="btn sm active" id="tab-summary-btn"><span class="mi">menu_book</span>Resumo Oficial</button>
       <button class="btn sm ghost" id="tab-jabuti-btn"><span class="mi">pest_control</span>Scanner de Jabutis</button>
       <button class="btn sm ghost" id="tab-simulator-btn"><span class="mi">tune</span>Simulador de Texto</button>
     </div>
 
     <!-- Conteúdo da Aba 1: Sumário Didático -->
-    <div id="tab-summary-content" class="stack" style="gap:14px; margin-top:14px">
-      <div class="card stack" style="gap:8px; border-left:4px solid var(--primary)">
-        <span class="sm muted" style="font-weight:700; text-transform:uppercase">Ementa Oficial</span>
-        <p class="sm" style="line-height:1.4">${esc(s.summary)}</p>
-        <div class="row sm" style="margin-top:4px">
-          <span class="chip blue">Tema: ${esc(s.centralLabel)}</span>
+    <div id="tab-summary-content" class="stack u-gap-14 u-mt-14">
+      <div class="card stack u-gap-8 u-bl-4-solid-primary">
+        <span class="sm muted u-fw-700 u-tt-uppercase">Ementa Oficial</span>
+        <p class="sm u-lh-1_4">${esc(s.summary)}</p>
+        <div class="row sm u-mt-4">
+          <span class="chip blue" title="Estimado por palavras-chave da ementa">Tema estimado: ${esc(s.centralLabel)}</span>
         </div>
       </div>
 
-      <div class="grid" style="grid-template-columns:1fr; gap:10px">
-        <div class="card stack" style="gap:6px">
-          <div class="row">
-            <span class="mi" style="color:var(--primary)">verified</span>
-            <b>O que muda na prática (Linguagem Cidadã)</b>
-          </div>
-          <p class="sm muted">${esc(s.practicalEffect)}</p>
+      <div class="card stack u-gap-6">
+        <div class="row">
+          <span class="mi u-c-primary">description</span>
+          <b>Dados oficiais da proposição</b>
         </div>
-
-        <div class="card stack" style="gap:6px">
-          <div class="row">
-            <span class="mi" style="color:var(--gold)">payments</span>
-            <b>Impacto Financeiro & Orçamentário</b>
-          </div>
-          <p class="sm muted">${esc(s.financialEffect)}</p>
-        </div>
-
-        <div class="card stack" style="gap:6px">
-          <div class="row">
-            <span class="mi" style="color:var(--green)">balance</span>
-            <b>Quem Ganha e Quem Paga</b>
-          </div>
-          <p class="sm muted">${esc(s.winnersAndLosers)}</p>
-        </div>
+        <p class="sm muted">${esc(s.code)}${s.date ? ` • apresentada em ${esc(fmtDate(s.date))}` : ''}</p>
+        ${
+          s.url
+            ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="sm u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
+                <span>Ficha de tramitação e inteiro teor</span><span class="mi u-fs-14">open_in_new</span>
+              </a>`
+            : '<p class="sm muted">Abra a ficha oficial no site da Câmara ou do Senado para ver a tramitação e o inteiro teor.</p>'
+        }
       </div>
     </div>
 
     <!-- Conteúdo da Aba 2: Scanner de Jabutis -->
-    <div id="tab-jabuti-content" class="stack" style="gap:14px; margin-top:14px; display:none">
-      <div class="card stack" style="gap:8px; background:${s.analysis.hasJabuti ? 'rgba(239, 68, 68, 0.08)' : 'rgba(16, 185, 129, 0.08)'}; border:1px solid ${s.analysis.hasJabuti ? 'var(--red)' : 'var(--green)'}">
+    <div id="tab-jabuti-content" class="stack u-gap-14 u-mt-14 u-d-none">
+      <p class="xs muted u-d-flex u-gap-6 u-ai-flex-start">
+        <span class="mi u-fs-16">info</span>
+        <span>Estimativa automática por palavras-chave, não uma análise do texto da proposição. Confira a ficha oficial antes de tirar conclusões.</span>
+      </p>
+      <div class="card stack verdict${s.analysis.hasJabuti ? ' bad' : ''}">
         <div class="row between">
           <div class="row">
-            <span class="mi" style="color:${s.analysis.hasJabuti ? 'var(--red)' : 'var(--green)'}; font-size:24px">
+            <span class="mi u-fs-24 ${s.analysis.hasJabuti ? 'u-c-red' : 'u-c-green'}">
               ${s.analysis.hasJabuti ? 'warning' : 'check_circle'}
             </span>
-            <h4 style="font-size:15px; font-weight:700">
+            <h4 class="u-fs-15 u-fw-700">
               ${s.analysis.hasJabuti ? `Alerta de Potencial Jabuti (${s.analysis.risk} Risco)` : 'Nenhuma Matéria Estranha Detectada'}
             </h4>
           </div>
@@ -247,7 +216,7 @@ export function openAnalysisModal(item) {
           </span>
         </div>
 
-        <p class="sm" style="color:var(--text); line-height:1.4">
+        <p class="sm u-c-text u-lh-1_4">
           ${
             s.analysis.hasJabuti
               ? `O algoritmo identificou termos que destoam do núcleo temático ("${esc(s.centralLabel)}").`
@@ -259,18 +228,18 @@ export function openAnalysisModal(item) {
       ${
         s.analysis.foreignMatches.length
           ? `
-        <div class="stack" style="gap:8px">
-          <h4 class="h2" style="font-size:14px">Dispositivos / Desvios Temáticos Identificados:</h4>
+        <div class="stack u-gap-8">
+          <h4 class="h2 u-fs-14">Dispositivos / Desvios Temáticos Identificados:</h4>
           ${s.analysis.foreignMatches
             .map(
               (m) => `
-            <div class="card stack" style="gap:4px; border-left:3px solid var(--red)">
+            <div class="card stack u-gap-4 u-bl-3-solid-red">
               <div class="row between sm">
                 <b>Núcleo Alheio: ${esc(m.domainLabel)}</b>
                 <span class="chip red sm">Intensidade: ${m.intensity}</span>
               </div>
               <p class="sm muted">${esc(m.reason)}</p>
-              <span class="sm" style="font-size:11px; color:var(--muted)">Termo disparador: <code>${esc(m.keyword)}</code></span>
+              <span class="sm u-fs-11 u-c-muted">Termo disparador: <code>${esc(m.keyword)}</code></span>
             </div>`
             )
             .join('')}
@@ -278,28 +247,28 @@ export function openAnalysisModal(item) {
           : ''
       }
 
-      <div class="card stack" style="gap:6px; background:var(--s1)">
+      <div class="card stack u-gap-6 u-bg-s1">
         <div class="row sm">
-          <span class="mi" style="color:var(--primary)">gavel</span>
+          <span class="mi u-c-primary">gavel</span>
           <b>Entendimento Constitucional (STF)</b>
         </div>
-        <p class="sm muted" style="font-size:12px; line-height:1.4">
+        <p class="sm muted u-fs-12 u-lh-1_4">
           ${esc(s.analysis.stfSummary)}
         </p>
       </div>
     </div>
 
     <!-- Conteúdo da Aba 3: Simulador de Texto -->
-    <div id="tab-simulator-content" class="stack" style="gap:12px; margin-top:14px; display:none">
+    <div id="tab-simulator-content" class="stack u-gap-12 u-mt-14 u-d-none">
       <p class="sm muted">Cole qualquer parágrafo de projeto de lei, emenda ou artigo de medida provisória para auditar a coerência temática na hora (100% privado no seu navegador):</p>
       
-      <div class="stack" style="gap:4px">
-        <label class="sm" style="font-weight:700">Tema Principal do Projeto:</label>
+      <div class="stack u-gap-4">
+        <label class="sm u-fw-700">Tema Principal do Projeto:</label>
         <input type="text" class="input sm" id="sim-main-theme" value="${esc(s.centralLabel)}" placeholder="Ex: Saneamento Básico, Meio Ambiente">
       </div>
 
-      <div class="stack" style="gap:4px">
-        <label class="sm" style="font-weight:700">Texto da Emenda / Artigo para Escanear:</label>
+      <div class="stack u-gap-4">
+        <label class="sm u-fw-700">Texto da Emenda / Artigo para Escanear:</label>
         <textarea class="input" id="sim-text-input" rows="4" placeholder="Cole aqui o texto do artigo ou emenda legislativa..."></textarea>
       </div>
 
@@ -308,7 +277,7 @@ export function openAnalysisModal(item) {
         <button class="btn ghost sm" id="btn-sample-jabuti"><span class="mi">lightbulb</span>Carregar Exemplo Real de Jabuti</button>
       </div>
 
-      <div id="sim-result-container" style="display:none; margin-top:8px"></div>
+      <div id="sim-result-container" class="u-d-none u-mt-8"></div>
     </div>
   `);
 
@@ -329,9 +298,9 @@ export function openAnalysisModal(item) {
     tabSimulatorBtn.classList.toggle('active', which === 'simulator');
     tabSimulatorBtn.classList.toggle('ghost', which !== 'simulator');
 
-    contentSummary.style.display = which === 'summary' ? 'flex' : 'none';
-    contentJabuti.style.display = which === 'jabuti' ? 'flex' : 'none';
-    contentSimulator.style.display = which === 'simulator' ? 'flex' : 'none';
+    contentSummary.classList.toggle('u-d-none', which !== 'summary');
+    contentJabuti.classList.toggle('u-d-none', which !== 'jabuti');
+    contentSimulator.classList.toggle('u-d-none', which !== 'simulator');
   }
 
   tabSummaryBtn.onclick = () => showTab('summary');
@@ -356,15 +325,15 @@ export function openAnalysisModal(item) {
     const text = inputSimText.value.trim();
 
     if (!text) {
-      simResult.style.display = 'block';
-      simResult.innerHTML = '<p class="sm" style="color:var(--red)">Por favor, insira algum texto para escanear.</p>';
+      simResult.classList.remove('u-d-none');
+      simResult.innerHTML = '<p class="sm u-c-red">Por favor, insira algum texto para escanear.</p>';
       return;
     }
 
     const testRes = detectJabuti(mainTheme, mainTheme, text);
-    simResult.style.display = 'block';
+    simResult.classList.remove('u-d-none');
     simResult.innerHTML = `
-      <div class="card stack" style="gap:8px; border:1px solid ${testRes.hasJabuti ? 'var(--red)' : 'var(--green)'}; background:${testRes.hasJabuti ? 'rgba(239,68,68,0.06)' : 'rgba(16,185,129,0.06)'}">
+      <div class="card stack verdict faint${testRes.hasJabuti ? ' bad' : ''}">
         <div class="row between">
           <b>${testRes.hasJabuti ? `🚨 Jabuti Identificado! Risco ${testRes.risk}` : '✅ Texto Coerente (Sem Matéria Estranha)'}</b>
           <span class="chip ${testRes.hasJabuti ? 'red' : 'green'} sm">${testRes.hasJabuti ? 'Discrepância Alta' : 'Sem Anomalia'}</span>

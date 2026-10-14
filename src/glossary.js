@@ -56,17 +56,17 @@ export function openGlossaryModal() {
   const { el } = modal(`
     <div class="row between">
       <div class="row">
-        <span class="mi" style="color:var(--primary); font-size:24px">menu_book</span>
-        <h3 class="h2" style="font-size:16px">Glossário Cívico do Cidadão</h3>
+        <span class="mi u-c-primary u-fs-24">menu_book</span>
+        <h3 class="h2 u-fs-16">Glossário Cívico do Cidadão</h3>
       </div>
       <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
     </div>
 
-    <div style="margin:4px 0 8px">
-      <input class="input" id="q-glossary" placeholder="Pesquisar termo (ex.: jabuti, quórum, obstrução, emenda)…" autocomplete="off" style="font-size:13px">
+    <div class="u-m-4-0-8">
+      <input class="input u-fs-13" id="q-glossary" placeholder="Pesquisar termo (ex.: jabuti, quórum, obstrução, emenda)…" autocomplete="off">
     </div>
 
-    <div id="glossary-list" class="stack" style="gap:10px; max-height:60vh; overflow-y:auto; padding-right:4px">
+    <div id="glossary-list" class="stack u-gap-10 u-maxh-60vh u-ovy-auto u-pr-4">
       ${renderTerms(GLOSSARY_TERMS)}
     </div>
   `);
@@ -89,13 +89,13 @@ function renderTerms(items) {
   return items
     .map(
       (t) => `
-    <div class="card soft stack" style="gap:6px; padding:12px">
+    <div class="card soft stack u-gap-6 u-p-12">
       <div class="row between">
-        <b style="font-size:14px; color:var(--text)">${esc(t.term)}</b>
+        <b class="u-fs-14 u-c-text">${esc(t.term)}</b>
         <span class="chip blue">${esc(t.category)}</span>
       </div>
-      <p style="font-size:13px; font-weight:500; color:var(--text)">${esc(t.summary)}</p>
-      <p class="sm muted" style="line-height:1.4">${esc(t.explanation)}</p>
+      <p class="u-fs-13 u-fw-500 u-c-text">${esc(t.summary)}</p>
+      <p class="sm muted u-lh-1_4">${esc(t.explanation)}</p>
     </div>`
     )
     .join('');
