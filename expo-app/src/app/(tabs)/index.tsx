@@ -1,98 +1,65 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
+import { PoliticianCard } from '@/components/politician-card';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { Button } from '@/components/ui/button';
+import { Screen } from '@/components/ui/screen';
+import { Spacing } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
+import { mandateProgress } from '@/lib/mandate';
+import { useStore } from '@/lib/store';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+export default function InicioScreen() {
+  const router = useRouter();
+  const theme = useTheme();
+  const { state, ready } = useStore();
+  const list = state.politicians;
 
-export default function HomeScreen() {
+  // o mandato que termina primeiro, entre os que ainda estão em curso
+  const next = list
+    .map((p) => ({ p, m: mandateProgress(p) }))
+    .filter((x) => !x.m.ended && x.m.end)
+    .sort((a, b) => b.m.pct - a.m.pct)[0]; // maior progresso = menos tempo restante
+
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
+    <Screen title="Painel Cívico" subtitle="Acompanhe o mandato de quem você elegeu, com dados oficiais.">
+      {!ready ? null : list.length === 0 ? (
+        <View style={[styles.empty, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+          <ThemedText type="smallBold" accessibilityRole="header">
+            Nenhum representante acompanhado
           </ThemedText>
-        </ThemedView>
+          <ThemedText type="small" themeColor="textSecondary">
+            Busque deputados federais e senadores nas bases oficiais da Câmara e do Senado e siga os que importam para você.
+          </ThemedText>
+          <Button label="Seguir um político" onPress={() => router.push('/adicionar')} />
+        </View>
+      ) : (
+        <>
+          <View style={[styles.summary, { backgroundColor: theme.primaryContainer }]}>
+            <ThemedText type="heading" style={{ color: theme.primary }}>
+              {list.length}
+            </ThemedText>
+            <ThemedText type="small" style={{ color: theme.primary }}>
+              {list.length === 1 ? 'representante acompanhado' : 'representantes acompanhados'}
+              {next ? `. Mandato mais próximo do fim: ${next.p.name}, em ${next.m.end}.` : '.'}
+            </ThemedText>
+          </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+          <ThemedText type="smallBold" accessibilityRole="header">
+            Políticos monitorados
+          </ThemedText>
+          {list.map((p) => (
+            <PoliticianCard key={p.id} politician={p} onPress={() => router.push({ pathname: '/politico/[id]', params: { id: p.id } })} />
+          ))}
+          <Button label="Seguir outro político" variant="secondary" onPress={() => router.push('/adicionar')} />
+        </>
+      )}
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
+  empty: { borderRadius: 16, borderWidth: 1, padding: Spacing.four, gap: Spacing.three },
+  summary: { borderRadius: 16, padding: Spacing.four, gap: Spacing.one },
 });

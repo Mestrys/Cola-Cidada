@@ -12,12 +12,22 @@ src/
     _layout.tsx           raiz: tema, splash e uma pilha (Stack)
     (tabs)/               grupo das abas; "(tabs)" não aparece na URL
       _layout.tsx         monta a barra de abas
-      index.tsx           aba Home      → /
-      explore.tsx         aba Explore   → /explore
+      index.tsx           Início        → /
+      politicos.tsx       Políticos     → /politicos
+      comparador.tsx      Comparador    → /comparador   (em breve)
+      alertas.tsx         Alertas       → /alertas      (em breve)
+      perfil.tsx          Perfil        → /perfil
+    adicionar.tsx         modal de busca e cadastro de políticos
+    politico/[id].tsx     ficha (dados oficiais e projetos de lei)
   components/
     app-tabs.tsx          barra de abas nativa (iOS e Android)
     app-tabs.web.tsx      barra de abas da web
     themed-text.tsx, themed-view.tsx, ui/…   componentes compartilhados
+  lib/                    dados e regras, sem dependência de tela
+    api.ts                APIs de Dados Abertos da Câmara e do Senado (retry e cache)
+    state.ts, store.tsx   estado (reducer) e persistência no AsyncStorage
+    mandate.ts            mandatos padrão e progresso
+    __tests__/            testes (npm test)
   constants/theme.ts      cores, espaçamentos
   hooks/                  use-color-scheme, use-theme
 assets/                   ícones, splash e imagens
@@ -38,6 +48,7 @@ npm run start       # servidor de desenvolvimento
 npm run android     # abre no Android
 npm run ios         # abre no iOS (exige macOS)
 npm run web         # abre na web
+npm test            # jest (regras e camada de dados)
 npm run lint        # expo lint
 npx tsc --noEmit    # checagem de tipos
 npx expo-doctor     # diagnóstico de dependências e configuração
