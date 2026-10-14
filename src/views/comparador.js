@@ -1,7 +1,7 @@
 import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
 import { loadComparison, loadSenateComparison } from '../votes.js';
-import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $ } from '../ui.js';
+import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $, skeleton } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openGlossaryModal } from '../glossary.js';
 import { openShareModal } from '../share.js';
@@ -256,7 +256,7 @@ export async function render(root) {
     <div id="camara-pane" class="stack ${deputies.length || (!deputies.length && !senators.length) ? '' : 'hidden'}">
       ${
         deputies.length
-          ? '<div id="camara-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações da Câmara dos Deputados…</span></div></div>'
+          ? `<div id="camara-list" class="stack">${skeleton('Auditando votações da Câmara dos Deputados…', 2)}</div>`
           : `
         <div class="card empty">
           <span class="mi" aria-hidden="true">how_to_vote</span>
@@ -270,7 +270,7 @@ export async function render(root) {
     <div id="senado-pane" class="stack ${!deputies.length && senators.length ? '' : 'hidden'}">
       ${
         senators.length
-          ? '<div id="senado-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações do Senado Federal…</span></div></div>'
+          ? `<div id="senado-list" class="stack">${skeleton('Auditando votações do Senado Federal…', 2)}</div>`
           : `
         <div class="card empty">
           <span class="mi" aria-hidden="true">account_balance</span>
@@ -338,7 +338,7 @@ export async function render(root) {
       </div>
 
       <div id="mpv-list" class="stack">
-        <div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Carregando Medidas Provisórias…</span></div>
+        ${skeleton('Carregando Medidas Provisórias…', 2)}
       </div>
     </div>
 

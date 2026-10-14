@@ -321,6 +321,13 @@ function createSheet(o, m, { dismiss, reopen }) {
   };
 }
 
+// Espaço reservado com a forma do conteúdo que vai chegar (evita o salto de layout) e a legenda do que está
+// acontecendo, anunciada como status. Larguras e brilho ficam no CSS (.sk-*), sem atributo de estilo.
+export function skeleton(label, rows = 2) {
+  const card = '<div class="sk-card"><i class="sk-line"></i><i class="sk-line"></i><i class="sk-line"></i></div>';
+  return `<div class="skeleton" role="status" aria-live="polite"><p class="xs muted">${esc(label)}</p>${card.repeat(rows)}</div>`;
+}
+
 export const VOTE_CLASS = { Sim: 'sim', Não: 'nao' };
 export const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('pt-BR') : '');
 export const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -332,10 +339,44 @@ export function tablist(container, panelFor) {
   if (!container) return;
   const tabs = [...container.querySelectorAll(':scope > button')];
   container.setAttribute('role', 'tablist');
-  const select = (tab) => tabs.forEach((t) => {
-    t.setAttribute('aria-selected', String(t === tab));
-    t.tabIndex = t === tab ? 0 : -1;
-  });
+
+  // Indicador que desliza de uma aba à outra (posição e largura pelo CSSOM, que a CSP permite).
+  // Só nos grupos com o visual de pílula (.tabs); outros estilos de abas ficam como estão.
+  const pill = container.classList.contains('tabs');
+  const ind = document.createElement('i');
+  ind.className = 'tab-ind';
+  ind.setAttribute('aria-hidden', 'true');
+  if (pill) {
+    container.prepend(ind);
+    container.classList.add('has-ind');
+  }
+  // `instant`: reposicionamento por redimensionamento/fonte não anima; só a troca de aba desliza
+  const place = (instant = false) => {
+    if (!pill) return;
+    const t = tabs.find((x) => x.getAttribute('aria-selected') === 'true');
+    if (!t || !t.offsetWidth) return; // contêiner ainda escondido: o ResizeObserver chama de novo ao aparecer
+    if (instant === true && ind.classList.contains('ready')) {
+      ind.classList.remove('ready');
+      requestAnimationFrame(() => requestAnimationFrame(() => ind.classList.add('ready')));
+    }
+    ind.style.width = `${t.offsetWidth}px`;
+    ind.style.height = `${t.offsetHeight}px`;
+    ind.style.transform = `translate(${t.offsetLeft}px, ${t.offsetTop}px)`;
+  };
+  // só anima depois da primeira posição, para o indicador não "voar" ao aparecer
+  if (pill) {
+    requestAnimationFrame(() => requestAnimationFrame(() => ind.classList.add('ready')));
+    if (typeof ResizeObserver === 'function') new ResizeObserver(() => place(true)).observe(container);
+    document.fonts?.ready.then(() => place(true));
+  }
+
+  const select = (tab) => {
+    tabs.forEach((t) => {
+      t.setAttribute('aria-selected', String(t === tab));
+      t.tabIndex = t === tab ? 0 : -1;
+    });
+    place();
+  };
   tabs.forEach((t, i) => {
     t.setAttribute('role', 'tab');
     t.id ||= `${container.id || 'tabs'}-tab-${i}`;
@@ -345,7 +386,14 @@ export function tablist(container, panelFor) {
       panel.setAttribute('role', 'tabpanel');
       panel.setAttribute('aria-labelledby', t.id);
     }
-    t.addEventListener('click', () => select(t));
+    t.addEventListener('click', () => {
+      select(t);
+      // o painel aparece com um esmaecimento curto (a view já o mostrou neste mesmo clique)
+      if (panel && !panel.classList.contains('tab-enter')) {
+        panel.classList.add('tab-enter');
+        panel.addEventListener('animationend', () => panel.classList.remove('tab-enter'), { once: true });
+      }
+    });
   });
   select(tabs.find((t) => t.classList.contains('on') || t.classList.contains('active')) || tabs[0]);
   container.addEventListener('keydown', (e) => {
