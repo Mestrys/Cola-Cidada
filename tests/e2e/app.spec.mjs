@@ -194,7 +194,8 @@ test.describe('diálogos', () => {
       }
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     };
-    await drag(100, 12, 40);
+    // curto e lento: posição + inércia projetada ficam bem abaixo de metade da folha (que é baixa sem as APIs)
+    await drag(60, 12, 40);
     await page.waitForTimeout(800);
     await expect(page.locator('.overlay')).toHaveCount(1);
     // longo o bastante para fechar só pela posição: a inércia (velocityFrom/project) tem testes unitários
