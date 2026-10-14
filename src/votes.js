@@ -21,7 +21,6 @@ export async function loadComparison(politicians, limit = 8) {
           tally,
           byPol,
           category: getThematicCategory(v.descricao || ''),
-          explanation: getCitizenExplanation(v.descricao || ''),
         };
       } catch {
         return null;
@@ -56,7 +55,6 @@ export async function loadSenateComparison(politicians, limit = 10) {
           yes: v.yes,
           no: v.no,
           category: getThematicCategory(`${v.matter} ${v.summary}`),
-          explanation: getCitizenExplanation(`${v.matter} ${v.summary}`),
           bySenator: {},
         });
       }
@@ -120,60 +118,4 @@ export function getThematicCategory(text = '') {
     return 'seguranca';
   }
   return 'geral';
-}
-
-// Aviso exibido junto da síntese: o texto é fixo por tema, não vem da votação nem dos parlamentares.
-export const EXPLANATION_NOTE =
-  'Texto editorial fixo sobre o tema, com os argumentos mais citados de cada lado. Não é declaração do parlamentar; confira o inteiro teor da proposição.';
-
-// Síntese didática ("Linguagem Cidadã") para descomplicar atas legislativas
-export function getCitizenExplanation(text = '') {
-  const t = text.toLowerCase();
-
-  if (
-    t.includes('reforma tributária') ||
-    t.includes('pec 45') ||
-    t.includes('plp 68') ||
-    (t.includes('ibs') && t.includes('cbs'))
-  ) {
-    return {
-      title: 'Linguagem Cidadã: Reforma Tributária',
-      summary:
-        'Unificação de 5 tributos sobre o consumo em um modelo de IVA Dual (IBS e CBS), com cesta básica nacional isenta e devolução de imposto (cashback) a famílias de baixa renda.',
-      yes: 'Votou SIM para simplificar a cobrança, eliminar impostos cumulativos e desonerar alimentos da cesta básica.',
-      no: 'Votou NÃO alegando risco de aumento de alíquota para serviços ou redução da autonomia de governadores e prefeitos.',
-    };
-  }
-
-  if (t.includes('inteligência artificial') || t.includes('pl 2338')) {
-    return {
-      title: 'Linguagem Cidadã: Marco Legal da Inteligência Artificial',
-      summary:
-        'Estabelece regras e responsabilidades para o uso de IA no país, exigindo auditoria de algoritmos de alto risco e proibindo deepfakes eleitorais sem aviso prévio.',
-      yes: 'Votou SIM para proteger direitos dos cidadãos, dados biométricos e evitar fraudes algorítmicas.',
-      no: 'Votou NÃO apontando risco de burocracia excessiva e perda de competitividade para startups de tecnologia.',
-    };
-  }
-
-  if (t.includes('marco temporal') || t.includes('pl 2903')) {
-    return {
-      title: 'Linguagem Cidadã: Marco Temporal de Terras Indígenas',
-      summary:
-        'Tese jurídica que estabelece a data de 5 de outubro de 1988 (promulgação da CF/88) como marco final para comprovação da posse tradicional de terras indígenas.',
-      yes: 'Votou SIM para conferir segurança jurídica à propriedade rural e conter expansões territoriais indefinidas.',
-      no: 'Votou NÃO em defesa dos direitos originários constitucionais de povos expulsos de suas terras antes de 1988.',
-    };
-  }
-
-  if (t.includes('urgência')) {
-    return {
-      title: 'Linguagem Cidadã: Regime de Urgência Plenária',
-      summary:
-        'Dispensa prazos regimentais e pareceres de comissões temáticas para que a proposta seja votada imediatamente no Plenário.',
-      yes: 'Votou SIM para acelerar a aprovação rápida da pauta.',
-      no: 'Votou NÃO para manter o debate prévio detalhado nas comissões antes do voto definitivo.',
-    };
-  }
-
-  return null;
 }

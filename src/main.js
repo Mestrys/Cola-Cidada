@@ -10,12 +10,13 @@ import { openPoliticianModal } from './views/addPolitician.js';
 import { openOnboardingModal } from './views/onboarding.js';
 import { openColaEleitoralModal } from './views/colaEleitoral.js';
 
+// ownAdd: a própria tela já tem um botão de cadastro, então o botão flutuante some.
 const routes = {
-  inicio: { icon: 'feed', label: 'Início', short: 'Início', view: inicio },
-  'meus-politicos': { icon: 'how_to_vote', label: 'Meus Políticos', short: 'Políticos', view: politicos },
-  comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', short: 'Comparar', view: comparador },
+  inicio: { icon: 'feed', label: 'Início', short: 'Início', view: inicio, ownAdd: true },
+  'meus-politicos': { icon: 'how_to_vote', label: 'Meus Políticos', short: 'Políticos', view: politicos, ownAdd: true },
+  comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', short: 'Comparar', view: comparador, ownAdd: true },
   alertas: { icon: 'notifications', label: 'Alertas', short: 'Alertas', view: alertas },
-  perfil: { icon: 'person', label: 'Perfil', short: 'Perfil', view: perfil },
+  perfil: { icon: 'person', label: 'Perfil', short: 'Perfil', view: perfil, ownAdd: true },
 };
 
 const app = $('#app');
@@ -165,24 +166,12 @@ function shell() {
               <p class="u-fs-12 u-lh-1_5 u-maxw-440">
                 Desenvolvimento de software de alta conformidade e soluções para integridade cívica, inteligência legislativa e auditoria de dados públicos abertos.
               </p>
-              <div class="xs muted u-mt-6">CNPJ: 68.027.889/0001-34</div>
             </div>
 
             <div>
-              <b class="u-fs-12_5 u-c-text u-d-block u-mb-6">Sede Corporativa & Endereço</b>
+              <b class="u-fs-12_5 u-c-text u-d-block u-mb-6">Contato</b>
               <p class="u-fs-12 u-lh-1_5">
-                Rua Pais Leme, 215, Conj 1713<br>
-                Bairro Pinheiros, São Paulo - SP<br>
-                CEP: 05424-150 • Brasil
-              </p>
-            </div>
-
-            <div>
-              <b class="u-fs-12_5 u-c-text u-d-block u-mb-6">Atendimento Cívico</b>
-              <p class="u-fs-12 u-lh-1_5">
-                +55 (11) 3038-7214 (Central)<br>
-                +55 (11) 5283-9382 (Suporte LGPD)<br>
-                contato@mestrys.com.br
+                <a href="mailto:contato@mestrys.com.br">contato@mestrys.com.br</a>
               </p>
             </div>
           </div>
@@ -329,6 +318,7 @@ async function render({ moveFocus = false } = {}) {
   const root = $('#view');
   if (typeof cleanup === 'function') cleanup();
   document.title = `${route.label} · Monitor Cidadão`;
+  $('#global-fab').hidden = !!route.ownAdd;
   cleanup = await route.view.render(root);
   if (moveFocus && !document.querySelector('.overlay')) focusViewHeading();
 }

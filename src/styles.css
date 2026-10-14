@@ -821,6 +821,11 @@ a {
   text-decoration: none;
 }
 
+/* display do botão vence o atributo hidden; sem isto o botão não some */
+.fab-btn[hidden] {
+  display: none;
+}
+
 @media (hover: hover) {
   .fab-btn:hover {
     background: color-mix(in srgb, var(--md-sys-color-on-primary-container) 8%, var(--md-sys-color-primary-container));
@@ -1303,28 +1308,6 @@ a {
   letter-spacing: 0.5px;
 }
 
-.simple-language-box {
-  background: var(--md-sys-color-surface-container);
-  border-radius: var(--md-sys-shape-corner-medium);
-  padding: 1rem 1.125rem;
-  border-left: 4px solid var(--md-sys-color-secondary);
-}
-
-.simple-language-box .box-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--md-sys-color-secondary);
-  font-size: 0.8125rem;
-  margin-bottom: 0.375rem;
-}
-
-.simple-language-box p {
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--md-sys-color-on-surface);
-}
-
 .quorum-bar {
   display: flex;
   height: 8px;
@@ -1446,7 +1429,7 @@ a {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 1.75rem;
   margin-bottom: 1.5rem;
 }

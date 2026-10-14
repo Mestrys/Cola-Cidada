@@ -1,5 +1,5 @@
 import { store } from '../store.js';
-import { loadComparison, loadSenateComparison, EXPLANATION_NOTE } from '../votes.js';
+import { loadComparison, loadSenateComparison } from '../votes.js';
 import { esc, fmtDate, VOTE_CLASS, brl, $ } from '../ui.js';
 import { politicianCard, bindPoliticianActions } from './politicos.js';
 import { openPoliticianModal } from './addPolitician.js';
@@ -209,7 +209,6 @@ export async function render(root) {
           badge: v.siglaOrgao || 'Câmara dos Deputados',
           date: v.data,
           title: v.descricao || 'Votação nominal no Plenário da Câmara',
-          explanation: v.explanation,
           votesHtml: deputies
             .map((p) => {
               const t = v.byPol[p.id];
@@ -239,7 +238,6 @@ export async function render(root) {
           badge: 'Senado Federal',
           date: v.date,
           title: `${v.matter}: ${v.summary.slice(0, 110)}`,
-          explanation: v.explanation,
           votesHtml: senators
             .map((s) => {
               const t = v.bySenator[s.id];
@@ -341,24 +339,6 @@ export async function render(root) {
               <div>
                 <h3 class="u-fs-14_5 u-fw-600 u-lh-1_4">${esc(it.title)}</h3>
               </div>
-
-              ${
-                it.explanation
-                  ? `
-                <div class="simple-language-box">
-                  <div class="box-header">
-                    <span class="mi u-fs-16" aria-hidden="true">translate</span>
-                    <span>Síntese em Linguagem Cidadã • Sem Juridiquês</span>
-                  </div>
-                  <p>${esc(it.explanation.summary)}</p>
-                  <div class="row sm u-mt-6 u-gap-12">
-                    <span class="u-c-primary"><b>SIM:</b> ${esc(it.explanation.yes)}</span>
-                    <span class="u-c-error"><b>NÃO:</b> ${esc(it.explanation.no)}</span>
-                  </div>
-                  <p class="xs muted u-mt-6">${esc(EXPLANATION_NOTE)}</p>
-                </div>`
-                  : ''
-              }
 
               <div class="stack u-gap-6">
                 <span class="xs muted u-fw-700 u-tt-uppercase">Como votaram os parlamentares monitorados:</span>

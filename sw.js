@@ -1,4 +1,4 @@
-const CACHE_NAME = 'monitor-cidadao-v14';
+const CACHE_NAME = 'monitor-cidadao-v15';
 const APP_SHELL = [
   '/',
   '/index.html',

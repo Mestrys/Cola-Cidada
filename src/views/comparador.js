@@ -1,28 +1,11 @@
 import { store } from '../store.js';
 import { recentProvisionalMeasures } from '../api.js';
-import { loadComparison, loadSenateComparison, EXPLANATION_NOTE } from '../votes.js';
+import { loadComparison, loadSenateComparison } from '../votes.js';
 import { avatar, esc, fmtDate, VOTE_CLASS, brl, toast, tablist, $ } from '../ui.js';
 import { openPoliticianModal } from './addPolitician.js';
 import { openGlossaryModal } from '../glossary.js';
 import { openShareModal } from '../share.js';
 import { openAnalysisModal } from '../analysis.js';
-
-function renderExplanationBox(exp) {
-  if (!exp) return '';
-  return `
-  <div class="simple-language-box u-m-8-0">
-    <div class="box-header">
-      <span class="mi u-fs-16" aria-hidden="true">translate</span>
-      <span>Linguagem Cidadã: O que significou este voto?</span>
-    </div>
-    <p class="u-fs-13 u-lh-1_45 u-mb-8">${esc(exp.summary || exp.title)}</p>
-    <div class="stack xs u-gap-4">
-      <div class="u-c-primary"><b>Quem votou SIM:</b> ${esc(exp.yes)}</div>
-      <div class="u-c-error"><b>Quem votou NÃO:</b> ${esc(exp.no)}</div>
-    </div>
-    <p class="xs muted u-mt-6">${esc(EXPLANATION_NOTE)}</p>
-  </div>`;
-}
 
 function camaraVotingCard(v, deputies) {
   const total = (v.tally.Sim || 0) + (v.tally.Não || 0) + (v.tally.Outros || 0) || 1;
@@ -44,8 +27,6 @@ function camaraVotingCard(v, deputies) {
     <div>
       <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.descricao || 'Votação nominal no Plenário')}</h3>
     </div>
-    
-    ${renderExplanationBox(v.explanation)}
 
     <!-- Barra de Quórum Oficial MD3 -->
     <div class="card soft stack u-gap-6 u-p-12">
@@ -113,8 +94,6 @@ function senadoVotingCard(v, senators) {
     <div>
       <h3 class="u-fs-16 u-fw-700 u-lh-1_35">${esc(v.summary || 'Deliberação no Senado Federal')}</h3>
     </div>
-    
-    ${renderExplanationBox(v.explanation)}
 
     ${
       v.yes > 0 || v.no > 0
