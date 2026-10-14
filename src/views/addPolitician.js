@@ -22,21 +22,21 @@ export function openPoliticianModal({ replaceId } = {}) {
       <div class="row between nowrap">
         <div class="row nowrap u-gap-10">
           <div class="u-width-36 u-height-36 u-br-10 u-bg-primary-soft u-c-primary u-d-grid u-place-items-center">
-            <span class="mi u-fs-22">how_to_vote</span>
+            <span class="mi u-fs-22" aria-hidden="true">how_to_vote</span>
           </div>
           <div>
             <span class="xs muted u-tt-uppercase u-fw-700">Configuração Cívica Personalizada</span>
             <h3 class="h2 u-fs-18 u-fw-800">${replaceId ? 'Substituir Representante' : 'Cadastro do Voto & Monitoramento'}</h3>
           </div>
         </div>
-        <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+        <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
       </div>
 
       <!-- Barra de Progresso do Cadastro Cívico (Stitch) -->
       <div class="card soft stack u-gap-6 u-p-12">
         <div class="row between xs u-fw-700">
           <div class="row u-gap-6 u-c-primary">
-            <span class="mi u-fs-16">assignment_turned_in</span>
+            <span class="mi u-fs-16" aria-hidden="true">assignment_turned_in</span>
             <span>Progresso do Cadastro: ${currentCount} de ${targetTotal} preenchidos</span>
           </div>
           <span class="muted">${Math.min(100, Math.round((currentCount / targetTotal) * 100))}%</span>
@@ -48,7 +48,7 @@ export function openPoliticianModal({ replaceId } = {}) {
 
       <!-- Banner de Sigilo Constitucional (Stitch) -->
       <div class="row sm u-bg-secondary-soft u-c-on-secondary-soft u-p-10-14 u-br-r-md u-gap-10">
-        <span class="mi u-fs-20 u-c-secondary">lock</span>
+        <span class="mi u-fs-20 u-c-secondary" aria-hidden="true">lock</span>
         <div class="u-flex-1">
           <b class="u-d-block u-fs-12_5">Sigilo Constitucional do Voto</b>
           <span class="xs u-lh-1_4">Estes dados ficam salvos exclusivamente no seu dispositivo para montar seu feed individual e alertas.</span>
@@ -154,7 +154,7 @@ export function openPoliticianModal({ replaceId } = {}) {
         <input class="input" id="m-party" placeholder="Ex.: REPUBLICANOS, PT, PL">
       </div>
       <button class="btn primary u-mt-6" type="submit">
-        <span class="mi">add</span>Salvar e Iniciar Monitoramento
+        <span class="mi" aria-hidden="true">add</span>Salvar e Iniciar Monitoramento
       </button>
     </form>
   `);
@@ -221,7 +221,7 @@ export function openPoliticianModal({ replaceId } = {}) {
                   </div>
                 </div>
                 <button class="btn primary sm btn-select-dep" data-i="${i}">
-                  <span class="mi u-fs-14">check</span>Votei nele(a)
+                  <span class="mi u-fs-14" aria-hidden="true">check</span>Votei nele(a)
                 </button>
               </div>`
               )
@@ -270,7 +270,7 @@ export function openPoliticianModal({ replaceId } = {}) {
                 </div>
               </div>
               <button class="btn primary sm btn-select-sen" data-i="${i}">
-                <span class="mi u-fs-14">check</span>Votei nele(a)
+                <span class="mi u-fs-14" aria-hidden="true">check</span>Votei nele(a)
               </button>
             </div>`
             )
@@ -340,7 +340,7 @@ export function openPoliticianModal({ replaceId } = {}) {
                 </div>
               </div>
               <button class="btn primary sm btn-select-est" data-i="${i}">
-                <span class="mi u-fs-14">check</span>Votei
+                <span class="mi u-fs-14" aria-hidden="true">check</span>Votei
               </button>
             </div>`
             )
@@ -419,7 +419,7 @@ export function openPoliticianModal({ replaceId } = {}) {
                 </div>
               </div>
               <button class="btn primary sm btn-select-mun" data-i="${i}">
-                <span class="mi u-fs-14">check</span>Votei
+                <span class="mi u-fs-14" aria-hidden="true">check</span>Votei
               </button>
             </div>`
             )

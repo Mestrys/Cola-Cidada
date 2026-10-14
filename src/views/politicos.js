@@ -15,7 +15,7 @@ import { openShareModal } from '../share.js';
 import { openAnalysisModal } from '../analysis.js';
 import { openColaEleitoralModal } from './colaEleitoral.js';
 
-export function politicianCard(p) {
+export function politicianCard(p, { heading = 3 } = {}) {
   const isState =
     p.source === 'alesp' ||
     p.source === 'alerj' ||
@@ -60,11 +60,11 @@ export function politicianCard(p) {
       <div class="avatar-wrap">
         ${avatar(p)}
         <span class="avatar-badge-icon" title="Mandato Monitorado">
-          <span class="mi u-fs-11">check</span>
+          <span class="mi u-fs-11" aria-hidden="true">check</span>
         </span>
       </div>
       <div class="pol-head-text">
-        <h3 class="h2 u-fs-15_5 u-fw-700">${esc(p.name)}</h3>
+        <h${heading} class="h2 u-fs-15_5 u-fw-700">${esc(p.name)}</h${heading}>
         <span class="sm muted u-d-block u-mt-2">
           ${ROLES[p.roleKey]?.label || 'Parlamentar'} • ${esc(p.uf || 'BR')}
         </span>
@@ -92,21 +92,21 @@ export function politicianCard(p) {
     <!-- Ações do Card -->
     <div class="card-actions">
       <button class="btn primary sm" data-details="${p.id}">
-        <span class="mi u-fs-16">analytics</span>
+        <span class="mi u-fs-16" aria-hidden="true">analytics</span>
         <span>Auditar Mandato</span>
       </button>
       <div class="icon-group">
       <button class="btn outlined sm icon" data-dossier="${p.id}" title="Gerar Dossiê Oficial em PDF" aria-label="Relatório PDF">
-        <span class="mi u-fs-16">description</span>
+        <span class="mi u-fs-16" aria-hidden="true">description</span>
       </button>
       <button class="btn outlined sm icon" data-share="${p.id}" title="Gerar Card Visual para WhatsApp / Redes" aria-label="Card para Redes">
-        <span class="mi u-fs-16">share</span>
+        <span class="mi u-fs-16" aria-hidden="true">share</span>
       </button>
       <button class="btn outlined sm icon" data-replace="${p.id}" title="Substituir político" aria-label="Substituir">
-        <span class="mi u-fs-16">swap_horiz</span>
+        <span class="mi u-fs-16" aria-hidden="true">swap_horiz</span>
       </button>
       <button class="btn danger sm icon" data-remove="${p.id}" title="Parar de monitorar" aria-label="Remover">
-        <span class="mi u-fs-16">delete</span>
+        <span class="mi u-fs-16" aria-hidden="true">delete</span>
       </button>
       </div>
     </div>
@@ -137,7 +137,7 @@ async function openPoliticianDetails(p) {
           <div class="avatar-wrap">
             ${avatar(p)}
             <span class="avatar-badge-icon">
-              <span class="mi u-fs-11">verified</span>
+              <span class="mi u-fs-11" aria-hidden="true">verified</span>
             </span>
           </div>
           <div>
@@ -148,7 +148,7 @@ async function openPoliticianDetails(p) {
             <span class="sm muted">${ROLES[p.roleKey]?.label || ''} • ${esc(p.uf || 'BR')}</span>
           </div>
         </div>
-        <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+        <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
       </div>
 
       <!-- Barra de Mandato & Badges Superiores -->
@@ -268,7 +268,7 @@ async function openPoliticianDetails(p) {
               ? `
             <div class="row u-mt-4">
               <a href="${esc(p.pageUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm u-width-100pct u-jc-center">
-                <span>Página Oficial na Casa Legislativa</span><span class="mi u-fs-15">open_in_new</span>
+                <span>Página Oficial na Casa Legislativa</span><span class="mi u-fs-15" aria-hidden="true">open_in_new</span>
               </a>
             </div>`
               : ''
@@ -310,7 +310,7 @@ async function openPoliticianDetails(p) {
         <p class="xs muted">Prestação de contas de campanha (arrecadação e doadores): consulte a ficha oficial no TSE.</p>
         <div class="row u-mt-4">
           <a href="${esc(tse.tseUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary sm u-width-100pct u-jc-center">
-            <span>Consultar Ficha Eleitoral no TSE (DivulgaCandContas)</span><span class="mi u-fs-15">open_in_new</span>
+            <span>Consultar Ficha Eleitoral no TSE (DivulgaCandContas)</span><span class="mi u-fs-15" aria-hidden="true">open_in_new</span>
           </a>
         </div>
       </div>
@@ -415,7 +415,7 @@ async function openPoliticianDetails(p) {
                       <a href="${esc(
                         ex.receiptUrl
                       )}" target="_blank" rel="noopener noreferrer" class="xs u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
-                        <span class="mi u-fs-14">receipt_long</span><span>Ver Nota Fiscal / Comprovante</span>
+                        <span class="mi u-fs-14" aria-hidden="true">receipt_long</span><span>Ver Nota Fiscal / Comprovante</span>
                       </a>
                     </div>`
                       : ''
@@ -449,10 +449,10 @@ async function openPoliticianDetails(p) {
                 <p class="u-fs-13 u-lh-1_4">${esc(item.summary)}</p>
                 <div class="row between u-mt-4">
                   <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="sm u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
-                    <span>Ficha oficial de tramitação</span><span class="mi u-fs-14">open_in_new</span>
+                    <span>Ficha oficial de tramitação</span><span class="mi u-fs-14" aria-hidden="true">open_in_new</span>
                   </a>
                   <button class="btn ghost sm btn-analyze-proj u-p-4-8 u-fs-11_5" data-index="${idx}">
-                    <span class="mi u-fs-14 u-c-primary">psychology</span>
+                    <span class="mi u-fs-14 u-c-primary" aria-hidden="true">psychology</span>
                     <span>Scanner de Jabutis</span>
                   </button>
                 </div>
@@ -632,17 +632,17 @@ export function render(root) {
         <p>Representantes cadastrados para fiscalização ativa com dados abertos da Câmara dos Deputados, Senado e Assembleias.</p>
       </div>
       <div class="row">
-        <button class="btn outlined" id="btn-open-cola-pol"><span class="mi">how_to_vote</span>Minha Cola Eleitoral</button>
-        <button class="btn primary" id="add"><span class="mi">person_add</span>Seguir Novo Político</button>
+        <button class="btn outlined" id="btn-open-cola-pol"><span class="mi" aria-hidden="true">how_to_vote</span>Minha Cola Eleitoral</button>
+        <button class="btn primary" id="add"><span class="mi" aria-hidden="true">person_add</span>Seguir Novo Político</button>
       </div>
     </div>
     ${
       politicians.length
-        ? `<div class="grid g3">${politicians.map(politicianCard).join('')}</div>`
+        ? `<div class="grid g3">${politicians.map((p) => politicianCard(p, { heading: 2 })).join('')}</div>`
         : `
       <div class="card empty">
-        <span class="mi">how_to_vote</span>
-        <h3>Nenhum representante monitorado</h3>
+        <span class="mi" aria-hidden="true">how_to_vote</span>
+        <h2>Nenhum representante monitorado</h2>
         <p>Cadastre deputados federais, senadores, deputados estaduais ou governadores para fiscalizar seus mandatos com dados oficiais.</p>
       </div>`
     }

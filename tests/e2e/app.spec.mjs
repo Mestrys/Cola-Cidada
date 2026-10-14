@@ -167,12 +167,14 @@ test.describe('diálogos', () => {
     await trigger.focus();
     await page.keyboard.press('Enter');
     await expect(page.locator('.modal')).toHaveAttribute('aria-labelledby', /.+/);
+    await expect(page.locator('.app-wrapper'), 'fundo fora do alcance do leitor de tela').toHaveAttribute('inert');
     for (let i = 0; i < 30; i++) await page.keyboard.press('Tab');
     expect(await page.evaluate(() => !!document.activeElement.closest('.modal'))).toBe(true);
     await page.keyboard.press('Escape');
     await expect(page.locator('.overlay')).toHaveCount(0);
     await expect(trigger).toBeFocused();
     expect(await page.evaluate(() => document.documentElement.classList.contains('modal-open'))).toBe(false);
+    await expect(page.locator('.app-wrapper')).not.toHaveAttribute('inert');
   });
 
   test('folha inferior: arrasto curto volta, arrasto longo fecha', async ({ page, isMobile, context }) => {
@@ -192,7 +194,8 @@ test.describe('diálogos', () => {
       }
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     };
-    await drag(100, 12, 40);
+    // curto e lento: posição + inércia projetada ficam bem abaixo de metade da folha (que é baixa sem as APIs)
+    await drag(60, 12, 40);
     await page.waitForTimeout(800);
     await expect(page.locator('.overlay')).toHaveCount(1);
     // longo o bastante para fechar só pela posição: a inércia (velocityFrom/project) tem testes unitários

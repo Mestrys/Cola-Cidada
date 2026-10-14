@@ -23,14 +23,14 @@ export function render(root) {
         </div>
         <div class="row u-gap-10">
           <div class="u-width-36 u-height-36 u-br-10 u-bg-primary-soft u-c-primary u-d-grid u-place-items-center">
-            <span class="mi u-fs-22">notifications_active</span>
+            <span class="mi u-fs-22" aria-hidden="true">notifications_active</span>
           </div>
           <h1>Central de Alertas</h1>
         </div>
         <p>Votações recentes dos seus representantes no Congresso, consultadas quando você toca em "Verificar agora".</p>
       </div>
       <div class="row page-actions">
-        <button class="btn primary" id="check"><span class="mi">sync</span>Verificar Agora</button>
+        <button class="btn primary" id="check"><span class="mi" aria-hidden="true">sync</span>Verificar Agora</button>
       </div>
     </div>
 
@@ -63,7 +63,7 @@ export function render(root) {
               <p class="xs u-c-on-secondary-soft u-mt-2">Receba avisos na área de trabalho quando houver votações de alto impacto.</p>
             </div>
             <button class="btn primary sm" id="btn-enable-notify">
-              <span class="mi">notifications</span>Ativar
+              <span class="mi" aria-hidden="true">notifications</span>Ativar
             </button>
           </div>`
             : ''
@@ -83,7 +83,7 @@ export function render(root) {
               <article class="card stack u-gap-10 u-bl-4-solid-primary">
                 <div class="row between">
                   <div class="row u-gap-6">
-                    <span class="chip green xs"><span class="mi u-fs-12">how_to_vote</span>Nominal</span>
+                    <span class="chip green xs"><span class="mi u-fs-12" aria-hidden="true">how_to_vote</span>Nominal</span>
                     <span class="xs muted">Deliberação em Plenário</span>
                   </div>
                   <span class="xs muted">${fmtDate(a.ts)}</span>
@@ -91,7 +91,7 @@ export function render(root) {
                 <p class="u-fs-14 u-fw-600 u-lh-1_45">${esc(a.text)}</p>
                 <div class="row between xs muted u-bg-s1 u-p-8-12 u-br-r-sm">
                   <span>Auditoria direta via API oficial</span>
-                  <span class="chip green xs"><span class="mi u-fs-12">check</span>Verificado</span>
+                  <span class="chip green xs"><span class="mi u-fs-12" aria-hidden="true">check</span>Verificado</span>
                 </div>
               </article>`
               )
@@ -99,8 +99,8 @@ export function render(root) {
           </div>`
             : `
           <div class="card empty">
-            <span class="mi">notifications_off</span>
-            <h3>Nenhum alerta pendente</h3>
+            <span class="mi" aria-hidden="true">notifications_off</span>
+            <h2>Nenhum alerta pendente</h2>
             <p>Cadastre deputados ou senadores e clique em "Verificar agora" para rastrear deliberações recentes do Congresso.</p>
           </div>`
         }
@@ -108,7 +108,7 @@ export function render(root) {
         <!-- Card Stitch: Fiscalização Cívica Direcionada -->
         <div class="card stack u-gap-10 u-p-18 u-bg-s1 u-border-1-solid-line u-mt-10">
           <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-22">verified</span>
+            <span class="mi u-c-primary u-fs-22" aria-hidden="true">verified</span>
             <b class="u-fs-14">Fiscalização Cívica Direcionada</b>
           </div>
           <p class="sm muted u-lh-1_5">
@@ -125,7 +125,7 @@ export function render(root) {
       <aside class="card stack u-gap-16 u-p-20 u-position-sticky u-top-80">
         <div class="row between">
           <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-20">tune</span>
+            <span class="mi u-c-primary u-fs-20" aria-hidden="true">tune</span>
             <h2 class="h2">Gatilhos de Notificação</h2>
           </div>
           <span class="chip green xs">Ativo</span>
@@ -155,7 +155,7 @@ export function render(root) {
 
         <div class="card soft stack u-gap-8 u-p-12 u-fs-12 u-bg-s2">
           <div class="row u-gap-6 u-c-primary">
-            <span class="mi u-fs-16">security</span>
+            <span class="mi u-fs-16" aria-hidden="true">security</span>
             <b>Privacidade LGPD</b>
           </div>
           <p class="xs muted">Nenhum servidor externo recebe a lista de deputados ou convicções que você monitora.</p>

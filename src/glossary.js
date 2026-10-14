@@ -56,10 +56,10 @@ export function openGlossaryModal() {
   const { el } = modal(`
     <div class="row between">
       <div class="row">
-        <span class="mi u-c-primary u-fs-24">menu_book</span>
+        <span class="mi u-c-primary u-fs-24" aria-hidden="true">menu_book</span>
         <h3 class="h2 u-fs-16">Glossário Cívico do Cidadão</h3>
       </div>
-      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
     </div>
 
     <div class="u-m-4-0-8">

@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
-import { test, expect, seed, go, ROUTES } from './fixtures.mjs';
+import { test, expect, seed, go, ROUTES, ICONS } from './fixtures.mjs';
 
-// WCAG 2.1 AA: contraste e regras básicas de acessibilidade em todas as telas, nos dois temas.
+// WCAG 2.1 AA (e boas práticas do axe nas telas): contraste e regras básicas em todas as telas, nos dois temas.
 for (const theme of ['light', 'dark']) {
   test(`acessibilidade WCAG AA (${theme})`, async ({ page }) => {
     await seed(page, { theme });
@@ -9,7 +9,7 @@ for (const theme of ['light', 'dark']) {
     for (const r of ROUTES) {
       await go(page, r);
       await page.waitForTimeout(300);
-      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
       for (const v of violations) report.push(`${r}: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
     }
     // Diálogos: ficha do político, cadastro e cola eleitoral
@@ -26,3 +26,79 @@ for (const theme of ['light', 'dark']) {
     expect(report).toEqual([]);
   });
 }
+
+test.describe('leitor de tela e teclado', () => {
+  test('nomes acessíveis não incluem o nome da ligadura do ícone', async ({ page }) => {
+    await seed(page);
+    for (const r of ROUTES) {
+      await go(page, r);
+      const tree = await page.locator('#app').ariaSnapshot();
+      const leaked = [...ICONS].filter((name) => new RegExp(`\\b${name}\\b`).test(tree));
+      expect(leaked, `${r}: ícones lidos em voz alta`).toEqual([]);
+    }
+  });
+
+  test('trocar de tela leva o foco ao título da nova tela', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'teclado só no desktop');
+    await seed(page);
+    await go(page, 'inicio');
+    await page.locator('.nav a[data-route=alertas]').focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#view h1')).toBeFocused();
+    await expect(page.locator('#view h1')).toHaveText(/Alertas/);
+  });
+
+  test('primeiro Tab mostra o link de pulo, que leva ao conteúdo', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'teclado só no desktop');
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.keyboard.press('Tab');
+    const skip = page.locator('.skip-link');
+    await expect(skip).toBeFocused();
+    await expect(skip).toBeInViewport();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#view h1')).toBeFocused();
+    expect(page.url()).toMatch(/#\/meus-politicos$/);
+  });
+
+  test('busca do comparador tem rótulo', async ({ page }) => {
+    await seed(page);
+    await go(page, 'comparador');
+    await expect(page.getByRole('textbox', { name: /Buscar votações/ })).toBeVisible();
+  });
+
+  test('no toque, chips e botões do topo têm 44px de área clicável', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'área ampliada só em ponteiro grosso');
+    await seed(page);
+    await go(page, 'inicio');
+    const misses = await page.evaluate(() =>
+      [...document.querySelectorAll('.civic-chips .chip, .header-icon-btn')]
+        .filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.left >= 0 && b.right <= innerWidth; })
+        .flatMap((el) => {
+          const b = el.getBoundingClientRect();
+          const cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+          return [cy - 21.5, cy + 21.5].filter((y) => !el.contains(document.elementFromPoint(cx, y))).map((y) => `${el.textContent.trim()} @${Math.round(y - cy)}`);
+        })
+    );
+    expect(misses).toEqual([]);
+  });
+});
+
+test('títulos não pulam nível: card do político é h2 na lista e h3 dentro de seção no Início', async ({ page }) => {
+  await seed(page);
+  await go(page, 'meus-politicos');
+  await expect(page.locator('.pol-card h2')).toHaveCount(3);
+  await go(page, 'inicio');
+  await expect(page.locator('.pol-card h3').first()).toBeVisible();
+  await expect(page.locator('.pol-card h2')).toHaveCount(0);
+});
+
+test('reflow em 320px: nenhuma tela rola na horizontal (WCAG 1.4.10)', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await seed(page);
+  for (const r of ROUTES) {
+    await go(page, r);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+    expect(overflow, `${r} mais larga que 320px`).toBeLessThanOrEqual(0);
+  }
+});

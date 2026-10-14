@@ -12,7 +12,7 @@ function renderExplanationBox(exp) {
   return `
   <div class="simple-language-box u-m-8-0">
     <div class="box-header">
-      <span class="mi u-fs-16">translate</span>
+      <span class="mi u-fs-16" aria-hidden="true">translate</span>
       <span>Linguagem Cidadã: O que significou este voto?</span>
     </div>
     <p class="u-fs-13 u-lh-1_45 u-mb-8">${esc(exp.summary || exp.title)}</p>
@@ -186,7 +186,7 @@ function mpvCard(m) {
 
     <div class="row">
       <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer" class="btn primary sm u-fw-600">
-        <span>Acompanhar Tramitação na Câmara</span><span class="mi u-fs-14">open_in_new</span>
+        <span>Acompanhar Tramitação na Câmara</span><span class="mi u-fs-14" aria-hidden="true">open_in_new</span>
       </a>
     </div>
   </article>`;
@@ -209,8 +209,8 @@ export async function render(root) {
         <p>Analise a postura e fidelidade dos seus parlamentares frente às principais reformas e leis deliberadas no Congresso Nacional.</p>
       </div>
       <div class="row page-actions">
-        <button class="btn outlined" id="btn-glossary"><span class="mi">menu_book</span>Glossário Cívico</button>
-        <button class="btn primary" id="add"><span class="mi">person_add</span>Adicionar Parlamentar</button>
+        <button class="btn outlined" id="btn-glossary"><span class="mi" aria-hidden="true">menu_book</span>Glossário Cívico</button>
+        <button class="btn primary" id="add"><span class="mi" aria-hidden="true">person_add</span>Adicionar Parlamentar</button>
       </div>
     </div>
 
@@ -221,7 +221,7 @@ export async function render(root) {
       <div class="card stack u-gap-12 u-mb-16 u-p-16">
         <div class="row between">
           <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-20">group</span>
+            <span class="mi u-c-primary u-fs-20" aria-hidden="true">group</span>
             <b class="u-fs-14">Bancada Monitorada (${politicians.length} Representantes)</b>
           </div>
         </div>
@@ -258,7 +258,7 @@ export async function render(root) {
           <button data-house="confronto">Confronto 1 vs 1</button>
         </div>
         <div class="u-flex-1 u-maxw-320">
-          <input class="input u-p-8-12 u-fs-13" id="search-filter" placeholder="Buscar por palavra-chave ou tema…">
+          <input class="input u-p-8-12 u-fs-13" id="search-filter" aria-label="Buscar votações por palavra-chave ou tema" placeholder="Buscar por palavra-chave ou tema…">
         </div>
       </div>
 
@@ -280,7 +280,7 @@ export async function render(root) {
           ? '<div id="camara-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações da Câmara dos Deputados…</span></div></div>'
           : `
         <div class="card empty">
-          <span class="mi">how_to_vote</span>
+          <span class="mi" aria-hidden="true">how_to_vote</span>
           <h3>Nenhum deputado federal cadastrado</h3>
           <p>Adicione deputados federais à sua lista para cruzar como votaram em cada matéria do Plenário.</p>
         </div>`
@@ -294,7 +294,7 @@ export async function render(root) {
           ? '<div id="senado-list" class="stack"><div class="card soft row u-p-16"><span class="spin"></span><span class="muted">Auditando votações do Senado Federal…</span></div></div>'
           : `
         <div class="card empty">
-          <span class="mi">account_balance</span>
+          <span class="mi" aria-hidden="true">account_balance</span>
           <h3>Nenhum senador monitorado</h3>
           <p>Adicione senadores da República para acompanhar suas deliberações em Plenário.</p>
         </div>`
@@ -307,7 +307,7 @@ export async function render(root) {
       <div class="card stack u-gap-14 u-p-20 u-bl-4-solid-primary">
         <div class="row between">
           <div class="row u-gap-10">
-            <span class="mi u-c-primary u-fs-26">account_balance_wallet</span>
+            <span class="mi u-c-primary u-fs-26" aria-hidden="true">account_balance_wallet</span>
             <div>
               <h3 class="h2 u-fs-16">Guia Cívico: Emendas Orçamentárias & "Emendas Pix"</h3>
               <span class="xs muted">Emenda Constitucional 105/2019 • Transferências Especiais</span>
@@ -344,10 +344,10 @@ export async function render(root) {
           </div>
           <div class="row u-gap-8">
             <a href="https://portaldatransparencia.gov.br/emendas" target="_blank" rel="noopener noreferrer" class="btn sm primary">
-              <span>Portal da Transparência</span><span class="mi u-fs-13">open_in_new</span>
+              <span>Portal da Transparência</span><span class="mi u-fs-13" aria-hidden="true">open_in_new</span>
             </a>
             <a href="https://www12.senado.leg.br/orcamento/sigabrasil" target="_blank" rel="noopener noreferrer" class="btn sm outlined">
-              <span>Siga Brasil (Senado)</span><span class="mi u-fs-13">open_in_new</span>
+              <span>Siga Brasil (Senado)</span><span class="mi u-fs-13" aria-hidden="true">open_in_new</span>
             </a>
           </div>
         </div>
@@ -378,7 +378,7 @@ export async function render(root) {
           politicians.length < 2
             ? `
           <div class="card empty u-p-28">
-            <span class="mi">compare_arrows</span>
+            <span class="mi" aria-hidden="true">compare_arrows</span>
             <h3>Necessário ao menos 2 parlamentares</h3>
             <p>Cadastre ao menos dois políticos na sua lista para calcular a matriz de convergência de votos.</p>
           </div>`
@@ -440,7 +440,7 @@ export async function render(root) {
       mpvLoaded = true;
     } catch {
       mpvContainer.innerHTML =
-        '<div class="card empty"><span class="mi">cloud_off</span><p class="muted">Falha temporária ao consultar Medidas Provisórias.</p></div>';
+        '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao consultar Medidas Provisórias.</p></div>';
     }
   }
 
@@ -450,7 +450,7 @@ export async function render(root) {
     const selA = $('#sel-pol-a', root)?.value;
     const selB = $('#sel-pol-b', root)?.value;
     if (!selA || !selB || selA === selB) {
-      resEl.innerHTML = '<div class="card soft sm u-p-14"><span class="mi u-c-secondary u-fs-18">info</span> Selecione dois parlamentares diferentes para comparar.</div>';
+      resEl.innerHTML = '<div class="card soft sm u-p-14"><span class="mi u-c-secondary u-fs-18" aria-hidden="true">info</span> Selecione dois parlamentares diferentes para comparar.</div>';
       return;
     }
 
@@ -497,7 +497,7 @@ export async function render(root) {
               <h2 class="u-fs-28 u-c-primary u-fw-800 u-mt-2">${pct}% de Alinhamento</h2>
               <span class="xs muted">Base: ${total} votações simultâneas (${matches} votos iguais, ${diffs} divergentes)</span>
             </div>
-            <button class="btn primary sm" id="btn-share-confronto"><span class="mi">share</span>Card Social</button>
+            <button class="btn primary sm" id="btn-share-confronto"><span class="mi" aria-hidden="true">share</span>Card Social</button>
           </div>
           <div class="bar u-height-10 u-m-4-0"><i data-w="${pct}"></i></div>
         </div>
@@ -609,7 +609,7 @@ export async function render(root) {
         : '<div class="card empty"><p class="muted">Sem votações nominais recentes na Câmara.</p></div>';
     } catch {
       camaraList.innerHTML =
-        '<div class="card empty"><span class="mi">cloud_off</span><p class="muted">Falha temporária ao consultar a Câmara dos Deputados.</p></div>';
+        '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao consultar a Câmara dos Deputados.</p></div>';
     }
   }
 
@@ -623,7 +623,7 @@ export async function render(root) {
         : '<div class="card empty"><p class="muted">Sem registros de votação recente para os senadores selecionados.</p></div>';
     } catch {
       senadoList.innerHTML =
-        '<div class="card empty"><span class="mi">cloud_off</span><p class="muted">Falha temporária ao consultar o Senado Federal.</p></div>';
+        '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao consultar o Senado Federal.</p></div>';
     }
   }
 }
