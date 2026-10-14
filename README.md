@@ -1,8 +1,18 @@
 # Cola-Cidada · Monitor Cidadão
 
-Sua cola eleitoral vira controle do mandato.
+Transparência sobre quem ocupa cada cargo público, aberta para qualquer pessoa.
 
-Aplicação web que permite ao cidadão cadastrar em quem votou e acompanhar votações nominais, mandato e alertas, usando a **API de Dados Abertos da Câmara dos Deputados**.
+Aplicação web com um **Painel Público** de Presidente e vice, ministros do STF, senadores, deputados federais, governadores,
+deputados estaduais e distritais, prefeitos e vereadores das 26 capitais, mais as **contas** da Presidência, da Câmara, do Senado,
+do STF, dos 27 governos e assembleias e das 26 prefeituras e câmaras de capitais. Nada é escolhido antes: a pessoa consulta
+qualquer perfil e, só depois de vê-lo, pode **acompanhar** quem quiser (votações, gastos e alertas).
+
+## Privacidade (LGPD)
+
+- O app não pergunta em quem a pessoa votou nem pede cadastro. Tudo o que é público já aparece no Painel.
+- "Acompanhar" é uma escolha opcional, feita dentro do perfil, e não declara voto. A lista fica só no `localStorage` do aparelho
+  (opinião política é dado sensível, LGPD art. 5º, II e art. 11) e pode ser exportada ou apagada no Perfil.
+- Os dados exibidos são de agentes públicos no exercício do cargo, publicados pelos próprios órgãos (LGPD art. 7º, §3º e §4º; Lei de Acesso à Informação).
 
 ## Rodando
 
@@ -27,7 +37,9 @@ Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não 
 - `index.html` + módulos ES nativos (sem bundler) e CSS próprio com tema claro/escuro.
 - `src/store.js` — estado no `localStorage`. **Nada é enviado a servidores** (opinião política é dado sensível, LGPD art. 5º, II).
 - `src/api.js` / `src/votes.js` — cliente da API da Câmara e cruzamento de votos nominais.
-- `src/views/` — Início, Meus Políticos, Comparador, Alertas, Perfil.
+- `src/directory.js` — diretório do Painel: carrega cada cargo (APIs da Câmara e do Senado, arquivos do TSE, Executivo e STF) no mesmo formato usado ao acompanhar.
+- `src/contas.js` — contas públicas pelo Siconfi (Tesouro Nacional): RREO (receita e despesa) e RGF (gasto com pessoal por órgão).
+- `src/views/` — Painel Público, Acompanhamento (Início), Quem Acompanho, Comparador, Alertas, Perfil.
 
 ## Decisões vs. protótipo original
 
@@ -128,3 +140,17 @@ Atuação como relator e financiamento de campanha foram removidos: eram valores
 # https://cdn.tse.jus.br/estatistica/sead/odsele/{consulta_cand,bem_candidato}/
 node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
 ```
+
+## Executivo, STF e contas
+
+- **Presidente, governadores e prefeitos das capitais:** `scripts/build-executive-data.mjs` gera `src/data/executivo.json` a partir do
+  `consulta_cand` do TSE (2022 e 2024) e aplica por cima `src/data/titulares.json`, que registra quem ocupa o cargo hoje (renúncias para
+  disputar 2026, sucessões, interinos e a eleição indireta do Amazonas). Quem assumiu no lugar do eleito aparece sem a ficha do TSE, com a
+  data de posse e o nome de quem venceu a eleição. A data da conferência aparece no Painel. Para atualizar, edite `titulares.json` e rode
+  `node scripts/build-executive-data.mjs <consulta_cand_2022> <consulta_cand_2024>`.
+- **STF:** `src/data/stf.json` (composição, posse, quem indicou e ano da aposentadoria compulsória). Ministros não têm mandato nem ficha eleitoral.
+- **Contas (aba Contas do Painel):** consultadas ao vivo no Siconfi (`apidatalake.tesouro.gov.br`), sem chave. Governo Federal, estados e
+  capitais mostram receita arrecadada e despesa empenhada, liquidada e paga no período mais recente entregue; Câmara, Senado, STF,
+  assembleias e câmaras municipais mostram o gasto com pessoal em 12 meses e o peso na receita corrente líquida. Os códigos IBGE ficam em
+  `src/data/entes.json`. Dois cuidados com o Siconfi: o espaço da URL vai como `%20` (com `+` a resposta vem sem CORS), e cada
+  consulta leva `&origem=<host do app>`, porque a CDN deles guarda o cabeçalho CORS de quem pediu a URL primeiro e o repete para todos.

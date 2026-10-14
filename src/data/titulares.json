@@ -1,0 +1,382 @@
+{
+ "fonte": "Wikipédia (Lista de governadores das unidades federativas do Brasil; Lista de prefeitos das capitais do Brasil), conferida com o TSE",
+ "consultadoEm": "2026-10-14",
+ "governadores": {
+  "AC": {
+   "name": "Mailza Assis",
+   "party": "PP",
+   "desde": "2026-04-02",
+   "condicao": "titular",
+   "vice": null
+  },
+  "AL": {
+   "name": "Paulo Dantas",
+   "party": "MDB",
+   "desde": "2022-05-15",
+   "condicao": "titular",
+   "vice": "Ronaldo Lessa"
+  },
+  "AP": {
+   "name": "Clécio Luís",
+   "party": "UNIÃO",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Teles Junior"
+  },
+  "AM": {
+   "name": "Roberto Cidade",
+   "party": "UNIÃO",
+   "desde": "2026-04-04",
+   "condicao": "eleito pela Assembleia",
+   "vice": "Serafim Corrêa",
+   "nota": "Eleito pela Assembleia Legislativa em eleição indireta, em maio de 2026, para completar o mandato."
+  },
+  "BA": {
+   "name": "Jerônimo Rodrigues",
+   "party": "PT",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Geraldo Júnior"
+  },
+  "CE": {
+   "name": "Elmano de Freitas",
+   "party": "PT",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Jade Romero"
+  },
+  "DF": {
+   "name": "Celina Leão",
+   "party": "PP",
+   "desde": "2026-03-30",
+   "condicao": "titular",
+   "vice": null
+  },
+  "ES": {
+   "name": "Ricardo Ferraço",
+   "party": "MDB",
+   "desde": "2026-03-02",
+   "condicao": "titular",
+   "vice": null
+  },
+  "GO": {
+   "name": "Daniel Vilela",
+   "party": "MDB",
+   "desde": "2026-03-31",
+   "condicao": "titular",
+   "vice": null
+  },
+  "MA": {
+   "name": "Carlos Brandão Júnior",
+   "party": "MDB",
+   "desde": "2022-04-02",
+   "condicao": "titular",
+   "vice": "Felipe Camarão"
+  },
+  "MT": {
+   "name": "Otaviano Pivetta",
+   "party": "REPUBLICANOS",
+   "desde": "2026-03-31",
+   "condicao": "titular",
+   "vice": null
+  },
+  "MS": {
+   "name": "Eduardo Riedel",
+   "party": "PP",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Barbosinha"
+  },
+  "MG": {
+   "name": "Mateus Simões",
+   "party": "PSD",
+   "desde": "2026-03-22",
+   "condicao": "titular",
+   "vice": null
+  },
+  "PA": {
+   "name": "Hana Ghassan",
+   "party": "MDB",
+   "desde": "2026-04-02",
+   "condicao": "titular",
+   "vice": null
+  },
+  "PB": {
+   "name": "Lucas Ribeiro",
+   "party": "PP",
+   "desde": "2026-04-02",
+   "condicao": "titular",
+   "vice": null
+  },
+  "PR": {
+   "name": "Ratinho Júnior",
+   "party": "PSD",
+   "desde": "2019-01-01",
+   "condicao": "titular",
+   "vice": "Darci Piana"
+  },
+  "PE": {
+   "name": "Raquel Lyra",
+   "party": "PSD",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Priscila Krause"
+  },
+  "PI": {
+   "name": "Rafael Fonteles",
+   "party": "PT",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Themístocles Filho"
+  },
+  "RJ": {
+   "name": "Ricardo Couto",
+   "party": "S/PARTIDO",
+   "desde": "2026-03-23",
+   "condicao": "interino",
+   "vice": null,
+   "nota": "Governador(a) interino(a), na linha de sucessão."
+  },
+  "RN": {
+   "name": "Fátima Bezerra",
+   "party": "PT",
+   "desde": "2019-01-01",
+   "condicao": "titular",
+   "vice": "Walter Alves"
+  },
+  "RS": {
+   "name": "Eduardo Leite",
+   "party": "PSD",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Gabriel Souza"
+  },
+  "RO": {
+   "name": "Marcos Rocha",
+   "party": "PSD",
+   "desde": "2019-01-01",
+   "condicao": "titular",
+   "vice": "Sérgio Alves"
+  },
+  "RR": {
+   "name": "Soldado Sampaio",
+   "party": "REPUBLICANOS",
+   "desde": "2026-04-30",
+   "condicao": "interino",
+   "vice": null,
+   "nota": "Governador(a) interino(a), na linha de sucessão."
+  },
+  "SC": {
+   "name": "Jorginho Mello",
+   "party": "PL",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Delegada Marilisa"
+  },
+  "SP": {
+   "name": "Tarcísio de Freitas",
+   "party": "REPUBLICANOS",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Felicio Ramuth"
+  },
+  "SE": {
+   "name": "Fábio Mitidieri",
+   "party": "PSD",
+   "desde": "2023-01-01",
+   "condicao": "titular",
+   "vice": "Zezinho Sobral"
+  },
+  "TO": {
+   "name": "Wanderlei Barbosa",
+   "party": "REPUBLICANOS",
+   "desde": "2022-03-11",
+   "condicao": "titular",
+   "vice": "Laurez Moreira"
+  }
+ },
+ "prefeitos": {
+  "SE": {
+   "name": "Emília Corrêa",
+   "party": "REPUBLICANOS",
+   "desde": "2025-01-01",
+   "vice": "Ricardo Marques",
+   "nota": "Eleita pelo PL."
+  },
+  "PA": {
+   "name": "Igor Normando",
+   "party": "PSDB",
+   "desde": "2025-01-01",
+   "vice": "Cássio Andrade",
+   "nota": "Eleito pelo MDB"
+  },
+  "MG": {
+   "name": "Álvaro Damião",
+   "party": "UNIÃO",
+   "desde": "2025-03-26",
+   "vice": null,
+   "nota": "Vice-prefeito que assumiu a titularidade após o falecimento de Fuad Noman."
+  },
+  "RR": {
+   "name": "Marcelo Zeitoune",
+   "party": "PL",
+   "desde": "2026-04-02",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Arthur Henrique para concorrer ao Governo do Estado."
+  },
+  "MS": {
+   "name": "Adriane Lopes",
+   "party": "PP",
+   "desde": "2022-04-02",
+   "vice": null,
+   "nota": "Vice-Prefeita que assumiu o mandato após a renuncia de Marquinhos Trad para concorrer ao Governo do Estado em 2022. Assumiu a prefeitura pelo Patriota."
+  },
+  "MT": {
+   "name": "Abilio Brunini",
+   "party": "PL",
+   "desde": "2025-01-01",
+   "vice": "Vânia Garcia Rosa",
+   "nota": null
+  },
+  "PR": {
+   "name": "Eduardo Pimentel",
+   "party": "PSD",
+   "desde": "2025-01-01",
+   "vice": "Paulo Eduardo Martins",
+   "nota": null
+  },
+  "SC": {
+   "name": "Topázio Neto",
+   "party": "PODE",
+   "desde": "2022-03-31",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu a titularidade após a renuncia de Gean Loureiro para concorrer ao Governo do Estado em 2022. Assumiu a prefeitura e foi reeleito pelo PSD."
+  },
+  "CE": {
+   "name": "Evandro Leitão",
+   "party": "PT",
+   "desde": "2025-01-01",
+   "vice": "Gabriella Aguiar",
+   "nota": null
+  },
+  "GO": {
+   "name": "Sandro Mabel",
+   "party": "UNIÃO",
+   "desde": "2025-01-01",
+   "vice": "Coronel Cláudia",
+   "nota": null
+  },
+  "PB": {
+   "name": "Leo Bezerra",
+   "party": "PSDB",
+   "desde": "2026-04-02",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Cícero Lucena para concorrer ao Governo do Estado. Eleito vice pelo PSB."
+  },
+  "AP": {
+   "name": "Pedro da Lua",
+   "party": "UNIÃO",
+   "desde": "2026-03-04",
+   "vice": null,
+   "nota": "Presidente da Câmara Municipal que assumiu o mandato após a renuncia de Antônio Furlan para concorrer ao Governo do Estado, seguido do afastamento do vice-prefeito pelo STF por 60 dias."
+  },
+  "AL": {
+   "name": "Rodrigo Cunha",
+   "party": "PODE",
+   "desde": "2026-04-04",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de João Henrique Caldas (JHC) para concorrer nas eleições de 2026."
+  },
+  "AM": {
+   "name": "Renato Junior",
+   "party": "AVANTE",
+   "desde": "2026-03-31",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de David Almeida para concorrer ao Governo do Estado."
+  },
+  "RN": {
+   "name": "Paulinho Freire",
+   "party": "UNIÃO",
+   "desde": "2025-01-01",
+   "vice": "Joanna Guerra",
+   "nota": null
+  },
+  "TO": {
+   "name": "Eduardo Siqueira Campos",
+   "party": "PODE",
+   "desde": "2025-01-01",
+   "vice": "Carlos Eduardo",
+   "nota": null
+  },
+  "RS": {
+   "name": "Sebastião Melo",
+   "party": "MDB",
+   "desde": "2021-01-01",
+   "vice": "Ricardo Gomes",
+   "nota": null
+  },
+  "RO": {
+   "name": "Léo Moraes",
+   "party": "PODE",
+   "desde": "2025-01-01",
+   "vice": "Magna dos Anjos Queiroz",
+   "nota": null
+  },
+  "PE": {
+   "name": "Victor Marques",
+   "party": "PCdoB",
+   "desde": "2026-04-02",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de João Campos para concorrer ao Governo do Estado."
+  },
+  "AC": {
+   "name": "Alysson Bestene",
+   "party": "PP",
+   "desde": "2026-04-03",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Tião Bocalom para concorrer ao Governo do Estado."
+  },
+  "RJ": {
+   "name": "Eduardo Cavaliere",
+   "party": "PSD",
+   "desde": "2026-03-20",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Eduardo Paes para concorrer ao Governo do Estado."
+  },
+  "BA": {
+   "name": "Bruno Reis",
+   "party": "UNIÃO",
+   "desde": "2021-01-01",
+   "vice": "Ana Paula Matos",
+   "nota": null
+  },
+  "MA": {
+   "name": "Esmênia Miranda",
+   "party": "PSD",
+   "desde": "2026-03-31",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Eduardo Braide para concorrer ao Governo do Estado."
+  },
+  "SP": {
+   "name": "Ricardo Nunes",
+   "party": "MDB",
+   "desde": "2021-05-16",
+   "vice": null,
+   "nota": "Vice-Prefeito que assumiu inicialmente de forma interina após afastamento do titular Bruno Covas, para tratamento contra o câncer. Efetivado em 16 de maio de 2021, após o falecimento do titular e reeleito para o mandato em 2024."
+  },
+  "PI": {
+   "name": "Silvio Mendes",
+   "party": "UNIÃO",
+   "desde": null,
+   "vice": "Jeová Alencar",
+   "nota": null
+  },
+  "ES": {
+   "name": "Cris Samorini",
+   "party": "PP",
+   "desde": "2026-04-01",
+   "vice": null,
+   "nota": "Vice-Prefeita que assumiu o mandato após a renuncia de Lorenzo Pazolini para concorrer ao Governo do Estado."
+  }
+ }
+}

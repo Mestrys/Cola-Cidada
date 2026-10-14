@@ -2,22 +2,21 @@ import { store } from './store.js';
 import { $, $$ } from './ui.js';
 import { prefersReducedMotion } from './motion.js';
 import { initDynamicStyles } from './dynamic.js';
+import * as painel from './views/painel.js';
 import * as inicio from './views/inicio.js';
 import * as politicos from './views/politicos.js';
 import * as comparador from './views/comparador.js';
 import * as alertas from './views/alertas.js';
 import * as perfil from './views/perfil.js';
-import { openPoliticianModal } from './views/addPolitician.js';
-import { openOnboardingModal } from './views/onboarding.js';
-import { openColaEleitoralModal } from './views/colaEleitoral.js';
 
-// ownAdd: a própria tela já tem um botão de cadastro, então o botão flutuante some.
+// nav: false — a tela existe (links internos levam a ela), mas não ocupa lugar na navegação.
 const routes = {
-  inicio: { icon: 'feed', label: 'Início', short: 'Início', view: inicio, ownAdd: true },
-  'meus-politicos': { icon: 'how_to_vote', label: 'Meus Políticos', short: 'Políticos', view: politicos, ownAdd: true },
-  comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', short: 'Comparar', view: comparador, ownAdd: true },
+  painel: { icon: 'account_balance', label: 'Painel Público', short: 'Painel', view: painel },
+  inicio: { icon: 'feed', label: 'Acompanhamento', short: 'Início', view: inicio },
+  'meus-politicos': { icon: 'bookmark_added', label: 'Quem Acompanho', short: 'Acompanho', view: politicos, nav: false },
+  comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', short: 'Comparar', view: comparador },
   alertas: { icon: 'notifications', label: 'Alertas', short: 'Alertas', view: alertas },
-  perfil: { icon: 'person', label: 'Perfil', short: 'Perfil', view: perfil, ownAdd: true },
+  perfil: { icon: 'person', label: 'Perfil', short: 'Perfil', view: perfil },
 };
 
 const app = $('#app');
@@ -74,6 +73,7 @@ function shell() {
         <aside class="side" aria-label="Menu lateral">
           <nav class="nav" aria-label="Navegação principal">
             ${Object.entries(routes)
+              .filter(([, r]) => r.nav !== false)
               .map(
                 ([k, r]) => `
               <a href="#/${k}" data-route="${k}">
@@ -122,14 +122,13 @@ function shell() {
           <aside class="sub-civic-bar no-print" aria-label="Fontes oficiais e atalhos">
             <span class="civic-sources">
               <span class="mi u-fs-15 u-c-primary" aria-hidden="true">verified</span>
-              Fontes oficiais: TSE • Câmara dos Deputados • Senado Federal
+              Fontes oficiais: TSE • Câmara • Senado • Tesouro Nacional
             </span>
 
             <div class="row civic-chips u-gap-8">
-              <button class="chip green u-cursor-pointer u-border-none" id="sub-btn-cola"><span class="mi u-fs-14" aria-hidden="true">how_to_vote</span>Minha Cola</button>
-              <a href="#/inicio" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">dashboard</span>Visão Geral</a>
+              <a href="#/painel" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">dashboard</span>Painel Público</a>
               <a href="#/comparador" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">gavel</span>Votações</a>
-              <a href="#/meus-politicos" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">receipt_long</span>Auditoria CEAP</a>
+              <a href="#/meus-politicos" class="chip u-cursor-pointer u-text-decoration-none"><span class="mi u-fs-14" aria-hidden="true">bookmark_added</span>Quem Acompanho</a>
             </div>
           </aside>
 
@@ -141,6 +140,7 @@ function shell() {
       <!-- 4. Mobile Bottom Navigation Bar (Material You MD3) -->
       <nav class="mobile-nav no-print" aria-label="Navegação Inferior Mobile">
         ${Object.entries(routes)
+          .filter(([, r]) => r.nav !== false)
           .map(
             ([k, r]) => `
           <a href="#/${k}" data-route="${k}">
@@ -189,25 +189,15 @@ function shell() {
               </span>
               <span class="footer-badge-item">
                 <span class="mi u-fs-14 u-c-primary" aria-hidden="true">database</span>
-                Dados abertos: Câmara • Senado • TSE
+                Dados abertos: Câmara • Senado • TSE • Tesouro
               </span>
             </div>
           </div>
         </div>
       </footer>
 
-      <!-- Floating Action Button (FAB MD3 Stitch) -->
-      <button class="fab-btn no-print" id="global-fab" title="Seguir Político" aria-label="Seguir Político">
-        <span class="mi" aria-hidden="true">person_add</span>
-        <span class="fab-label">Seguir Político</span>
-      </button>
     </div>`;
 
-  const fab = $('#global-fab');
-  if (fab) fab.onclick = () => openPoliticianModal();
-
-  const btnCola = $('#sub-btn-cola');
-  if (btnCola) btnCola.onclick = () => openColaEleitoralModal();
 
   // O roteamento usa o hash, então o link de pulo move o foco em vez de navegar.
   $('.skip-link').onclick = (e) => {
@@ -310,18 +300,17 @@ let cleanup;
 let renderId = 0;
 async function render({ moveFocus = false } = {}) {
   const myRender = ++renderId;
-  const key = location.hash.replace('#/', '') || 'inicio';
-  const route = routes[key] || routes.inicio;
+  const key = location.hash.replace('#/', '') || 'painel';
+  const route = routes[key] || routes.painel;
 
   // Atualiza active na sidebar e no mobile nav
   $$('.nav a, .mobile-nav a').forEach((a) =>
-    a.classList.toggle('active', a.dataset.route === (routes[key] ? key : 'inicio'))
+    a.classList.toggle('active', a.dataset.route === (routes[key] ? key : 'painel'))
   );
 
   const root = $('#view');
   if (typeof cleanup === 'function') cleanup();
   document.title = `${route.label} · Monitor Cidadão`;
-  $('#global-fab').hidden = !!route.ownAdd;
   const next = await route.view.render(root);
   // uma renderização mais nova começou enquanto esta esperava: o que ela montou é que vale
   if (myRender !== renderId) return typeof next === 'function' && next();
@@ -350,6 +339,9 @@ store.subscribe((s) => {
     applyTheme({ animate: true });
     return;
   }
+  // telas que sabem se atualizar no lugar não são remontadas (o usuário não perde busca, rolagem nem foco)
+  const route = routes[routeOf()];
+  if (route?.view.onStore) return route.view.onStore($('#view'), s);
   render();
 });
 
@@ -359,8 +351,8 @@ store.subscribe((s) => {
 history.scrollRestoration = 'manual';
 const routeKeys = Object.keys(routes);
 const routeOf = () => {
-  const k = location.hash.replace('#/', '') || 'inicio';
-  return routes[k] ? k : 'inicio';
+  const k = location.hash.replace('#/', '') || 'painel';
+  return routes[k] ? k : 'painel';
 };
 let currentKey = routeOf();
 const scrollByRoute = new Map();
@@ -417,6 +409,5 @@ window.addEventListener('hashchange', () => {
   }
 });
 
-// Onboarding no primeiro acesso: abre junto da primeira renderização, sem espera artificial.
+// Nada a escolher no primeiro acesso: o Painel abre direto, com tudo público.
 render();
-if (!store.get().onboardingDone) openOnboardingModal();

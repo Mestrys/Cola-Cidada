@@ -13,15 +13,28 @@ for (const theme of ['light', 'dark']) {
       const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
       for (const v of violations) report.push(`${r}: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
     }
-    // Diálogos: ficha do político, cadastro e cola eleitoral
-    await go(page, 'meus-politicos');
-    // No celular a barra de atalhos some; "Minha Cola" abre pelo botão da própria tela.
-    for (const sel of ['[data-details]', '#add', isMobile ? '#btn-open-cola-pol' : '#sub-btn-cola']) {
+    // Painel: a aba de contas (com uma conta aberta, mesmo sem rede) e a ficha de um governador
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=orgaos]').click();
+    await page.locator('[data-accounts]').first().click();
+    await page.waitForTimeout(300);
+    {
+      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
+      for (const v of violations) report.push(`painel contas: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+    }
+    const dialogs = [
+      ['meus-politicos', null, '[data-details]'],
+      ['painel', 'governadores', '.painel-open'],
+      ['painel', 'stf', '.painel-open'],
+    ];
+    for (const [route, section, sel] of dialogs) {
+      await go(page, route);
+      if (section) await page.locator(`#painel-tabs [data-section=${section}]`).click();
       await page.locator(sel).first().click();
       await page.waitForSelector('.overlay .modal');
       await page.waitForTimeout(400);
       const { violations } = await new AxeBuilder({ page }).include('.overlay').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
-      for (const v of violations) report.push(`modal ${sel}: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+      for (const v of violations) report.push(`modal ${section || sel}: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
       await page.keyboard.press('Escape');
       await page.waitForSelector('.overlay', { state: 'detached' });
     }
@@ -85,13 +98,13 @@ test.describe('leitor de tela e teclado', () => {
     expect(misses).toEqual([]);
   });
 
-  test('botão flutuante só aparece onde a tela não tem botão próprio de cadastro', async ({ page }) => {
-    await seed(page);
+  test('nenhuma tela pede cadastro: todas levam ao Painel Público', async ({ page }) => {
+    await seed(page, { politicians: [] });
     for (const r of ROUTES) {
       await go(page, r);
-      await expect(page.locator('#global-fab'), r).toBeVisible({ visible: r === 'alertas' });
-      // Toda tela tem uma forma de cadastrar um político.
-      await expect(page.locator(r === 'alertas' ? '#global-fab' : '#add, #btn-retificar').first(), r).toBeVisible();
+      await expect(page.locator('.overlay'), r).toHaveCount(0);
+      await expect(page.locator('#global-fab'), r).toHaveCount(0);
+      await expect(page.locator('#view a[href="#/painel"], #painel-tabs').first(), r).toBeVisible();
     }
   });
 
@@ -196,11 +209,22 @@ test.describe('abas por teclado (padrão WAI-ARIA)', () => {
     await checkTabs(page, '#pol-tabs');
   });
 
-  test('cadastro de político', async ({ page }) => {
+  test('painel público: um só painel, setas trocam o cargo e o foco fica na aba', async ({ page }) => {
     await seed(page);
-    await go(page, 'meus-politicos');
-    await page.locator('#add').click();
-    await checkTabs(page, '#tabs');
+    await go(page, 'painel');
+    const tabs = page.locator('#painel-tabs [role=tab]');
+    await expect(page.locator('#painel-tabs [role=tab][tabindex="0"]')).toHaveCount(1);
+    await tabs.first().focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(tabs.nth(1)).toBeFocused();
+    await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+    const panel = page.locator('#painel-panel');
+    await expect(panel).toHaveAttribute('role', 'tabpanel');
+    await expect(panel).toHaveAttribute('aria-labelledby', await tabs.nth(1).getAttribute('id'));
+    await expect(page.locator('#painel-count')).toContainText('resultado');
+    await page.keyboard.press('End');
+    await expect(tabs.last()).toBeFocused();
+    await expect(tabs.last()).toHaveAttribute('aria-selected', 'true');
   });
 
   test('comparador', async ({ page }) => {

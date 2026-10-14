@@ -1,33 +1,106 @@
-import { recentRollCalls, votesOf, senatorVotes } from './api.js';
+import { recentNominalVotings, votesOf, senatorVotes, senateNominalVotings, senateWindow } from './api.js';
 
-// Retorna votações nominais recentes da Câmara com o voto de cada deputado monitorado.
-export async function loadComparison(politicians, limit = 8) {
+// A API da Câmara derruba conexões em rajadas: no máximo `limit` consultas ao mesmo tempo.
+export async function mapLimit(items, limit, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i], i);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
+
+const tallyOf = (votes) => {
+  const t = { Sim: 0, Não: 0, Outros: 0 };
+  for (const v of votes) t[v.vote === 'Sim' || v.vote === 'Não' ? v.vote : 'Outros']++;
+  return t;
+};
+
+// Quantos de cada partido votaram Sim, Não ou outra coisa (obstrução, abstenção, art. 17...), maiores bancadas primeiro.
+export function partyBreakdown(votes) {
+  const map = new Map();
+  for (const v of votes) {
+    const k = v.party || 'Sem partido';
+    if (!map.has(k)) map.set(k, { party: k, Sim: 0, Não: 0, Outros: 0, total: 0 });
+    const row = map.get(k);
+    row[v.vote === 'Sim' || v.vote === 'Não' ? v.vote : 'Outros']++;
+    row.total++;
+  }
+  return [...map.values()].sort((a, b) => b.total - a.total || a.party.localeCompare(b.party, 'pt-BR'));
+}
+
+// Votações nominais recentes da Câmara com o voto de todos os deputados (dado público) e, à parte,
+// o de quem a pessoa acompanha (byPol), para os cartões e os alertas.
+export async function loadComparison(politicians = [], limit = 8) {
   const deputies = politicians.filter((p) => p.camaraId);
-  const votings = await recentRollCalls(limit * 2);
-  const rows = await Promise.all(
-    votings.map(async (v) => {
-      try {
-        const votos = await votesOf(v.id);
-        if (!votos.length) return null;
-        const tally = { Sim: 0, Não: 0, Outros: 0 };
-        for (const x of votos) tally[x.tipoVoto === 'Sim' || x.tipoVoto === 'Não' ? x.tipoVoto : 'Outros']++;
-        const byPol = {};
-        for (const d of deputies) {
-          const hit = votos.find((x) => x.deputado_?.id === d.camaraId);
-          byPol[d.id] = hit ? hit.tipoVoto : null;
-        }
-        return {
-          ...v,
-          tally,
-          byPol,
-          category: getThematicCategory(v.descricao || ''),
-        };
-      } catch {
-        return null;
-      }
-    })
-  );
+  // só votações nominais do Plenário: as simbólicas não têm lista de votos
+  const votings = await recentNominalVotings(limit + 4);
+  const rows = await mapLimit(votings, 3, async (v) => {
+    try {
+      const raw = await votesOf(v.id);
+      if (!raw.length) return null;
+      const votes = raw.map((x) => ({
+        id: x.deputado_?.id,
+        name: x.deputado_?.nome || 'Deputado(a)',
+        party: x.deputado_?.siglaPartido || '',
+        uf: x.deputado_?.siglaUf || '',
+        vote: x.tipoVoto,
+      }));
+      const byPol = {};
+      for (const d of deputies) byPol[d.id] = votes.find((x) => x.id === d.camaraId)?.vote ?? null;
+      return { ...v, votes, tally: tallyOf(votes), byPol, category: getThematicCategory(v.descricao || '') };
+    } catch {
+      return null;
+    }
+  });
   return rows.filter(Boolean).slice(0, limit);
+}
+
+const SENATE_RESULT = { A: 'Aprovado', R: 'Rejeitado' };
+
+// Votações nominais recentes do Plenário do Senado com o voto de todos os senadores presentes.
+// Voto secreto aparece como tal; quem não estava (NA) fica de fora.
+export async function loadSenatePublic(politicians = [], limit = 10) {
+  const senators = politicians.filter((p) => p.senadoId);
+  const { since, until } = senateWindow();
+  const votings = await senateNominalVotings(since, until);
+  return votings
+    .filter((v) => (v.votos || []).length)
+    .sort((a, b) => String(b.dataSessao).localeCompare(String(a.dataSessao)))
+    .slice(0, limit)
+    .map((v) => {
+      const secret = v.votacaoSecreta === 'S';
+      const votes = (v.votos || [])
+        .filter((x) => x.siglaVotoParlamentar && x.siglaVotoParlamentar !== 'NA')
+        .map((x) => ({
+          id: x.codigoParlamentar,
+          name: x.nomeParlamentar || 'Senador(a)',
+          party: x.siglaPartidoParlamentar || '',
+          uf: x.siglaUFParlamentar || '',
+          vote: secret && x.siglaVotoParlamentar === 'Votou' ? 'Voto secreto' : x.siglaVotoParlamentar,
+        }));
+      const tally = tallyOf(votes);
+      const bySenator = {};
+      for (const s of senators) bySenator[s.id] = votes.find((x) => x.id === Number(s.senadoId))?.vote ?? null;
+      return {
+        key: v.codigoSessaoVotacao,
+        matter: v.identificacao || 'Matéria',
+        summary: v.ementa || v.descricaoVotacao || '',
+        date: v.dataSessao || '',
+        result: SENATE_RESULT[v.resultadoVotacao] || v.resultadoVotacao || '',
+        secret,
+        yes: Number(v.totalVotosSim ?? tally.Sim) || tally.Sim,
+        no: Number(v.totalVotosNao ?? tally.Não) || tally.Não,
+        votes,
+        tally,
+        bySenator,
+        category: getThematicCategory(`${v.identificacao || ''} ${v.ementa || ''}`),
+      };
+    });
 }
 
 // Retorna votações nominais consolidadas do Senado Federal para os senadores monitorados.
