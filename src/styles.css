@@ -452,6 +452,10 @@ a {
   vertical-align: middle;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   user-select: none;
+  /* a ligadura que vira o ícone se perde com maiúsculas ou espaçamento herdados do contêiner */
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: nowrap;
 }
 
 .mi.fill {
@@ -2059,5 +2063,62 @@ button.chip:active, a.chip:active,
     max-height: none !important;
     padding: 0 !important;
     border: none !important;
+  }
+}
+
+/* ==========================================================================
+   REFINAMENTOS II — acabamento (ícones, títulos, ações no celular, bordas de rolagem, material)
+   ========================================================================== */
+
+/* Títulos sem órfãs ("& Governança" sozinho na linha) e parágrafos sem última palavra solta */
+h1, h2, h3, .headline-large, .display-small, .display-medium, .alert-title {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Ações do cabeçalho da tela: no celular viram uma grade de botões de largura igual, em vez de pílulas soltas */
+@media (max-width: 600px) {
+  .page-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .page-actions.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .page-actions .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Borda de rolagem: faixas roláveis esmaecem só do lado em que ainda há conteúdo (classe aplicada por dynamic.js) */
+.edge-fade {
+  --fade-l: 0px;
+  --fade-r: 0px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+}
+
+/* Navegação inferior: material mais denso, para o conteúdo que passa por baixo não "fantasmar" sobre os rótulos */
+@media (max-width: 900px) {
+  @supports (background: color-mix(in srgb, red 50%, blue)) and ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .mobile-nav {
+      --mobile-nav-bg: color-mix(in srgb, var(--md-sys-color-surface-container) 90%, transparent);
+      -webkit-backdrop-filter: saturate(180%) blur(28px);
+      backdrop-filter: saturate(180%) blur(28px);
+    }
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .mobile-nav {
+    --mobile-nav-bg: var(--md-sys-color-surface-container);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

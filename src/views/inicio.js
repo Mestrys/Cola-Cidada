@@ -86,7 +86,7 @@ export async function render(root) {
         <h1>Painel Cívico & Transparência</h1>
         <p>Visão integrada de vigilância social sobre seus <b>${politicians.length} representantes eleitos</b> em exercício.</p>
       </div>
-      <div class="row">
+      <div class="row page-actions">
         <button class="btn outlined" id="btn-refresh"><span class="mi">sync</span>Atualizar Feed</button>
         <button class="btn primary" id="add"><span class="mi">person_add</span>Seguir Novo Parlamentar</button>
       </div>
