@@ -327,18 +327,21 @@ test.describe('navegação entre telas', () => {
     await go(page, 'inicio');
     const env = await page.evaluate(() => ({ vt: typeof document.startViewTransition, reduce: matchMedia('(prefers-reduced-motion: reduce)').matches }));
     test.skip(env.vt !== 'function', 'navegador sem View Transitions: a troca é instantânea');
+    // espia a chamada à transição: registra a direção no instante em que ela começa (sem depender de pegar um atributo passageiro)
     await page.evaluate(() => {
-      window.__dirs = [];
-      new MutationObserver(() => {
-        const d = document.documentElement.dataset.navDir;
-        if (d) window.__dirs.push(d);
-      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-nav-dir'] });
+      window.__vt = [];
+      const orig = document.startViewTransition.bind(document);
+      document.startViewTransition = (cb) => {
+        window.__vt.push(document.documentElement.dataset.navDir);
+        return orig(cb);
+      };
     });
     await navLink(page, 'comparador').click(); // adiante na navegação
     await expect(page).toHaveURL(/#\/comparador$/);
     await page.goBack(); // para trás
     await expect(page).toHaveURL(/#\/inicio$/);
-    await expect.poll(() => page.evaluate(() => window.__dirs.join(',')), `ambiente: ${JSON.stringify(env)}`).toBe('fwd,back');
+    const diag = async () => `ambiente: ${JSON.stringify(env)} chamadas: ${JSON.stringify(await page.evaluate(() => window.__vt))} hash: ${await page.evaluate(() => location.hash)}`;
+    await expect.poll(() => page.evaluate(() => window.__vt.join(',')), await diag()).toBe('fwd,back');
     await expect.poll(() => page.evaluate(() => 'navDir' in document.documentElement.dataset), 'marca some ao fim').toBe(false);
   });
 
