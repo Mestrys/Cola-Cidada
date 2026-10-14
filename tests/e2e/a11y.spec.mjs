@@ -4,6 +4,7 @@ import { test, expect, seed, go, ROUTES, ICONS } from './fixtures.mjs';
 // WCAG 2.1 AA (e boas práticas do axe nas telas): contraste e regras básicas em todas as telas, nos dois temas.
 for (const theme of ['light', 'dark']) {
   test(`acessibilidade WCAG AA (${theme})`, async ({ page, isMobile }) => {
+    test.setTimeout(60_000); // cinco telas e três diálogos com axe: ~17 s sozinho, folga para CI lento
     await seed(page, { theme });
     const report = [];
     for (const r of ROUTES) {
