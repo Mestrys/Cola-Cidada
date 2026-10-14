@@ -45,6 +45,51 @@ test.describe('telas', () => {
     expect(w).toBe('25%');
   });
 
+  test('ícones não herdam maiúsculas nem espaçamento (a ligadura se perderia)', async ({ page }) => {
+    await seed(page);
+    for (const r of ROUTES) {
+      await go(page, r);
+      const bad = await page.evaluate(() => [...document.querySelectorAll('.mi')].filter((e) => {
+        const cs = getComputedStyle(e);
+        return cs.textTransform !== 'none' || (cs.letterSpacing !== 'normal' && cs.letterSpacing !== '0px');
+      }).map((e) => e.textContent.trim()));
+      expect(bad, `ícones afetados em ${r}`).toEqual([]);
+    }
+    // contêiner em maiúsculas com ícone dentro: o caso do cartão "Próximo evento"
+    const ok = await page.evaluate(() => {
+      document.body.insertAdjacentHTML('beforeend', '<h3 id="up" style="text-transform:uppercase;letter-spacing:2px"><span class="mi">event</span>X</h3>');
+      const cs = getComputedStyle(document.querySelector('#up .mi'));
+      return cs.textTransform === 'none' && cs.letterSpacing === 'normal';
+    });
+    expect(ok).toBe(true);
+  });
+
+  test('faixas rolagem horizontal esmaecem só do lado com conteúdo', async ({ page }) => {
+    await seed(page);
+    await go(page, 'inicio');
+    const r = await page.evaluate(async () => {
+      document.body.insertAdjacentHTML('beforeend', '<div id="strip" data-edge-fade><div id="inner"></div></div>');
+      const el = document.querySelector('#strip');
+      el.style.cssText = 'width:200px;overflow-x:auto;';
+      document.querySelector('#inner').style.cssText = 'width:600px;height:10px';
+      const tick = () => new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)));
+      const read = () => [el.classList.contains('edge-fade'), el.style.getPropertyValue('--fade-l'), el.style.getPropertyValue('--fade-r')];
+      await tick();
+      const start = read();
+      el.scrollLeft = 200; await tick();
+      const middle = read();
+      el.scrollLeft = 1000; await tick();
+      const end = read();
+      el.querySelector('#inner').style.width = '100px'; el.dispatchEvent(new Event('scroll')); await tick();
+      const fits = read();
+      return { start, middle, end, fits };
+    });
+    expect(r.start).toEqual([true, '0px', '1.5rem']);
+    expect(r.middle).toEqual([true, '1.5rem', '1.5rem']);
+    expect(r.end).toEqual([true, '1.5rem', '0px']);
+    expect(r.fits[0]).toBe(false);
+  });
+
   test('ícones usados estão no subconjunto da fonte', async ({ page }) => {
     await seed(page);
     const used = new Set();

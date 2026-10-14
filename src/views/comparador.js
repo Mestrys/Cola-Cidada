@@ -208,7 +208,7 @@ export async function render(root) {
         <h1>Comparador Cívico de Votações</h1>
         <p>Analise a postura e fidelidade dos seus parlamentares frente às principais reformas e leis deliberadas no Congresso Nacional.</p>
       </div>
-      <div class="row">
+      <div class="row page-actions">
         <button class="btn outlined" id="btn-glossary"><span class="mi">menu_book</span>Glossário Cívico</button>
         <button class="btn primary" id="add"><span class="mi">person_add</span>Adicionar Parlamentar</button>
       </div>
@@ -226,7 +226,7 @@ export async function render(root) {
           </div>
         </div>
 
-        <div class="row u-gap-12 u-ovx-auto u-pb-6 u-fwrap-nowrap" tabindex="0" role="region" aria-label="Bancada monitorada (rolagem horizontal)">
+        <div class="row u-gap-12 u-ovx-auto u-pb-6 u-fwrap-nowrap" data-edge-fade tabindex="0" role="region" aria-label="Bancada monitorada (rolagem horizontal)">
           ${politicians
             .map((p) => {
               return `

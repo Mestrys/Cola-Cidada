@@ -29,7 +29,7 @@ export function render(root) {
         </div>
         <p>Votações recentes dos seus representantes no Congresso, consultadas quando você toca em "Verificar agora".</p>
       </div>
-      <div class="row">
+      <div class="row page-actions">
         <button class="btn primary" id="check"><span class="mi">sync</span>Verificar Agora</button>
       </div>
     </div>

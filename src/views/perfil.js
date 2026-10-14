@@ -23,7 +23,7 @@ export function render(root) {
         <h1>Perfil do Cidadão & Governança</h1>
         <p>Garantia de soberania de dados pessoais (Art. 5º da LGPD) e fiscalização do ciclo eleitoral em vigor.</p>
       </div>
-      <div class="row">
+      <div class="row page-actions two">
         <button class="btn outlined" id="btn-rever-onboarding"><span class="mi">help_outline</span>Guia Inicial</button>
         <button class="btn outlined" id="btn-cola-eleitoral"><span class="mi">how_to_vote</span>Minha Cola</button>
         <button class="btn outlined" id="btn-export-top"><span class="mi">download</span>Backup JSON</button>
