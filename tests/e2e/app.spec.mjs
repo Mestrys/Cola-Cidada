@@ -572,6 +572,50 @@ test.describe('fluxos', () => {
     await expect(page.locator('.pol-card').nth(2)).toContainText('31/01/2027');
   });
 
+  test('comparador mostra as votações de todos, sem acompanhar ninguém, e compara dois deputados quaisquer', async ({ page }) => {
+    const dep = (id, nome, siglaPartido, siglaUf) => ({ id, nome, siglaPartido, siglaUf });
+    const votos = [
+      { deputado_: dep(1, 'Ana Lima', 'PT', 'SP'), tipoVoto: 'Sim' },
+      { deputado_: dep(2, 'Bruno Reis', 'PL', 'RJ'), tipoVoto: 'Não' },
+      { deputado_: dep(3, 'Carla Dias', 'PT', 'BA'), tipoVoto: 'Sim' },
+    ];
+    await page.route(/dadosabertos\.camara\.leg\.br\/api\/v2\/votacoes\?/, (r) =>
+      // a API é paginada: só a primeira página tem votações
+      r.fulfill({ json: { dados: /pagina=1(&|$)/.test(r.request().url()) ? [{ id: '9-1', descricao: 'Aprovado o projeto de saneamento. Sim: 2; Não: 1; Total: 3.', data: '2026-09-01', siglaOrgao: 'PLEN', aprovacao: 1 }] : [] } })
+    );
+    await page.route(/votacoes\/9-1\/votos/, (r) => r.fulfill({ json: { dados: votos } }));
+    await page.route(/legis\.senado\.leg\.br\/dadosabertos\/votacao\?/, (r) =>
+      r.fulfill({
+        json: [{
+          codigoSessaoVotacao: 7, identificacao: 'PL 1/2026', ementa: 'Dispõe sobre a saúde.', dataSessao: '2026-09-02', resultadoVotacao: 'A', votacaoSecreta: 'N',
+          votos: [
+            { codigoParlamentar: 10, nomeParlamentar: 'Davi Souza', siglaPartidoParlamentar: 'MDB', siglaUFParlamentar: 'AP', siglaVotoParlamentar: 'Sim' },
+            { codigoParlamentar: 11, nomeParlamentar: 'Eva Ramos', siglaPartidoParlamentar: 'PSD', siglaUFParlamentar: 'MG', siglaVotoParlamentar: 'NA' },
+          ],
+        }],
+      })
+    );
+    await seed(page, { politicians: [] });
+    await go(page, 'comparador');
+    const card = page.locator('#camara-list article');
+    await expect(card).toHaveCount(1);
+    // a lista completa só é montada ao abrir
+    await expect(card.locator('.vote-list')).toHaveCount(0);
+    await card.locator('details.vote-details summary').click();
+    await expect(card.locator('.party-table tbody tr')).toHaveCount(2);
+    await expect(card.locator('.party-table tbody tr').first()).toContainText('PT');
+    await card.locator('.vote-q').fill('bruno');
+    await expect(card.locator('.vote-list li:visible')).toHaveCount(1);
+    await page.locator('#house-tabs [data-house=senado]').click();
+    // quem não estava presente (NA) não entra na lista
+    await page.locator('#senado-list details.vote-details summary').click();
+    await expect(page.locator('#senado-list .vote-list li')).toHaveCount(1);
+    await page.locator('#house-tabs [data-house=confronto]').click();
+    await page.locator('#sel-pol-a').selectOption('1');
+    await page.locator('#sel-pol-b').selectOption('3');
+    await expect(page.locator('#confronto-results')).toContainText('100% de Alinhamento');
+  });
+
   test('primeiro acesso abre o Painel Público direto, sem diálogo nem escolha', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#view h1')).toHaveText('Painel público');

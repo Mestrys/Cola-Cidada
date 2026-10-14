@@ -102,11 +102,6 @@ export async function deputyExpenses(camaraId, limit = 100) {
   }));
 }
 
-export async function recentRollCalls(limit = 8) {
-  const { dados } = await getJson(`${CAMARA_BASE}/votacoes?ordem=DESC&ordenarPor=dataHoraRegistro&itens=${limit * 3}`);
-  return (dados || []).filter((v) => v.aprovacao !== null).slice(0, limit);
-}
-
 export async function votesOf(votingId) {
   const { dados } = await getJson(`${CAMARA_BASE}/votacoes/${votingId}/votos`);
   return dados || [];
