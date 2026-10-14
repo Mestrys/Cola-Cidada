@@ -96,7 +96,7 @@ test.describe('telas', () => {
     const collect = async () => (await page.$$eval('.mi', (els) => els.map((e) => e.textContent.trim()))).forEach((t) => t && used.add(t));
     for (const r of ROUTES) { await go(page, r); await collect(); }
     await go(page, 'meus-politicos');
-    for (const sel of ['[data-details]', '[data-dossier]', '[data-share]', '#global-fab']) {
+    for (const sel of ['[data-details]', '[data-dossier]', '[data-share]', '#add']) {
       await page.locator(sel).first().click();
       await page.waitForSelector('.overlay .modal');
       await collect();
@@ -242,7 +242,7 @@ test.describe('fluxos', () => {
   test('cadastro abre no estado do domicílio e grava o mandato da UF', async ({ page }) => {
     await seed(page, { politicians: [], domicile: { state: 'MG', city: 'Belo Horizonte' } });
     await go(page, 'meus-politicos');
-    await page.locator('#global-fab').click();
+    await page.locator('#add').click();
     await expect(page.locator('#sel-state-uf')).toHaveValue('MG');
     await page.locator('#tabs button[data-tab=estadual]').click();
     await page.locator('.btn-select-est').first().click();

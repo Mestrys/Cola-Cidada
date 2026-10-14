@@ -92,6 +92,9 @@ Ordem sugerida: **P0** antes do deploy, **P1** logo em seguida, **P2** quando ho
 - **Ação:** mesma validade de 5 min, ou recálculo ao tocar em atualizar.
 - **Esforço:** 1 h.
 
+### Extra. Botão flutuante duplicado — ✅ feito
+- O botão "Seguir Político" repetia o botão de cadastro de quase toda tela e, no celular, cobria conteúdo. Agora só aparece em Alertas, a única tela sem botão próprio (`ownAdd` em `src/main.js`).
+
 ### 11. Foto do deputado no card de compartilhamento
 - **Problema:** o servidor de fotos da Câmara não envia CORS. O canvas não pode usar a imagem sem ficar bloqueado para exportar, e o card sai sem foto (os senadores funcionam).
 - **Opções:**

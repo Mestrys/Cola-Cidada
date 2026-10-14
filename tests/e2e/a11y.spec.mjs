@@ -15,7 +15,7 @@ for (const theme of ['light', 'dark']) {
     // Diálogos: ficha do político, cadastro e cola eleitoral
     await go(page, 'meus-politicos');
     // No celular a barra de atalhos some; "Minha Cola" abre pelo botão da própria tela.
-    for (const sel of ['[data-details]', '#global-fab', isMobile ? '#btn-open-cola-pol' : '#sub-btn-cola']) {
+    for (const sel of ['[data-details]', '#add', isMobile ? '#btn-open-cola-pol' : '#sub-btn-cola']) {
       await page.locator(sel).first().click();
       await page.waitForSelector('.overlay .modal');
       await page.waitForTimeout(400);
@@ -84,6 +84,16 @@ test.describe('leitor de tela e teclado', () => {
     expect(misses).toEqual([]);
   });
 
+  test('botão flutuante só aparece onde a tela não tem botão próprio de cadastro', async ({ page }) => {
+    await seed(page);
+    for (const r of ROUTES) {
+      await go(page, r);
+      await expect(page.locator('#global-fab'), r).toBeVisible({ visible: r === 'alertas' });
+      // Toda tela tem uma forma de cadastrar um político.
+      await expect(page.locator(r === 'alertas' ? '#global-fab' : '#add, #btn-retificar').first(), r).toBeVisible();
+    }
+  });
+
   test('barra de fontes e atalhos aparece só no desktop (no celular repete a navegação inferior)', async ({ page, isMobile }) => {
     await seed(page);
     await go(page, 'inicio');
@@ -148,7 +158,7 @@ test.describe('abas por teclado (padrão WAI-ARIA)', () => {
   test('cadastro de político', async ({ page }) => {
     await seed(page);
     await go(page, 'meus-politicos');
-    await page.locator('#global-fab').click();
+    await page.locator('#add').click();
     await checkTabs(page, '#tabs');
   });
 
