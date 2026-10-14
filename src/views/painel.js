@@ -1,0 +1,325 @@
+// Painel público: todos os cargos abertos para consulta, sem cadastro. Acompanhar alguém é opcional
+// e só acontece dentro do perfil, depois de a pessoa ver os dados.
+import { store } from '../store.js';
+import { FEDERATION_UNITS, loadStf, loadExecutive } from '../api.js';
+import { SECTIONS, loadSection, placeOf, matches } from '../directory.js';
+import { budgetSummary, personnelSpending, federalBodies, stateBodies, SICONFI_URL } from '../contas.js';
+import { esc, avatar, ROLES, skeleton, tablist, $ } from '../ui.js';
+import { openPoliticianDetails } from './politicos.js';
+
+const PAGE = 24;
+
+// O que a pessoa escolheu continua valendo ao sair e voltar para o Painel.
+const view = {
+  section: 'presidencia',
+  uf: '',
+  q: '',
+  shown: PAGE,
+};
+
+let entesPromise = null;
+const loadEntes = () => (entesPromise ||= fetch('/src/data/entes.json').then((r) => r.json()));
+
+const homeUf = () => {
+  const d = store.get().domicile || {};
+  return String(d.state || d.uf || 'SP').toUpperCase();
+};
+
+function ufOptions(section, selected) {
+  const units = section.key === 'vereadores' || section.key === 'prefeitos' ? FEDERATION_UNITS.filter((u) => u.hasCouncil) : FEDERATION_UNITS;
+  const all = section.requiresUf || section.key === 'orgaos' ? '' : `<option value="">Todos os estados</option>`;
+  return (
+    all +
+    units
+      .map((u) => `<option value="${u.uf}" ${u.uf === selected ? 'selected' : ''}>${esc(u.name)} (${u.uf})</option>`)
+      .join('')
+  );
+}
+
+const isFollowed = (id) => store.get().politicians.some((p) => p.id === id);
+
+function card(p) {
+  const role = ROLES[p.roleKey]?.label || p.role || 'Agente público';
+  const followed = isFollowed(p.id);
+  const party = p.party && p.party !== '—' ? p.party : '';
+  return `
+  <li class="card painel-card" data-id="${esc(p.id)}">
+    <div class="painel-card-head">
+      ${avatar(p)}
+      <div class="painel-card-text">
+        <h2 class="painel-name">${esc(p.name)}</h2>
+        <p class="sm muted">${esc(role)} · ${esc(placeOf(p))}</p>
+        <div class="row u-gap-6 u-mt-4">
+          ${party ? `<span class="chip xs">${esc(party)}</span>` : ''}
+          ${p.condicao ? `<span class="chip gold xs">${esc(p.condicao)}</span>` : ''}
+          <span class="chip green xs follow-badge" ${followed ? '' : 'hidden'}>
+            <span class="mi u-fs-14" aria-hidden="true">bookmark_added</span>Acompanhando
+          </span>
+        </div>
+      </div>
+    </div>
+    <button class="btn outlined sm painel-open" data-open="${esc(p.id)}">
+      Ver perfil<span class="sr-only"> de ${esc(p.name)}</span>
+    </button>
+  </li>`;
+}
+
+const compact = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1 });
+const money = (v) => (v == null ? 'não informado' : compact.format(v));
+const pct = (v) => `${v.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`;
+
+function bodyCard(b, i) {
+  return `
+  <li class="card painel-card">
+    <div class="painel-card-head">
+      <span class="painel-icon"><span class="mi" aria-hidden="true">${b.icon}</span></span>
+      <div class="painel-card-text">
+        <h2 class="painel-name">${esc(b.name)}</h2>
+        <p class="sm muted">${b.budget ? 'Receitas e despesas do orçamento' : 'Gasto com pessoal do órgão'}${b.heavy ? ' · consulta maior (≈ 4 MB)' : ''}</p>
+      </div>
+    </div>
+    <div class="row u-gap-8">
+      <button class="btn outlined sm" data-accounts="${i}" aria-expanded="false" aria-controls="acc-${i}">
+        Ver contas<span class="sr-only"> de ${esc(b.name)}</span>
+      </button>
+      ${
+        b.portal
+          ? `<a class="btn ghost sm" href="${esc(b.portal)}" target="_blank" rel="noopener noreferrer">${esc(b.portalLabel)}<span class="sr-only"> (abre em nova aba)</span><span class="mi u-fs-15" aria-hidden="true">open_in_new</span></a>`
+          : ''
+      }
+    </div>
+    <div id="acc-${i}" class="painel-accounts" hidden></div>
+  </li>`;
+}
+
+function accountsHtml(b, data) {
+  if (!data) return '<p class="sm muted">Este órgão ainda não entregou o relatório ao Tesouro nos últimos períodos.</p>';
+  const rows = b.budget
+    ? [
+        ['Receita arrecadada até o período', money(data.revenue), data.revenueForecast ? `de ${money(data.revenueForecast)} previstos` : ''],
+        ['Despesa empenhada (contratada)', money(data.committed), data.budget ? `de ${money(data.budget)} autorizados` : ''],
+        ['Despesa liquidada (serviço entregue)', money(data.liquidated), ''],
+        ['Despesa paga', money(data.paid), ''],
+      ]
+    : [
+        ['Gasto com pessoal', money(data.gross), 'ativos, aposentados e pensionistas'],
+        ...(data.rclPct != null ? [['Peso na receita corrente líquida', pct(data.rclPct), 'a Lei de Responsabilidade Fiscal limita esse percentual']] : []),
+      ];
+  return `
+    <dl class="painel-figures">
+      ${rows.map(([k, v, note]) => `<div><dt>${k}</dt><dd><b>${v}</b>${note ? `<span class="xs muted">${note}</span>` : ''}</dd></div>`).join('')}
+    </dl>
+    <p class="xs muted">${esc(data.institution)} · ${esc(data.periodLabel)}. Fonte: <a href="${SICONFI_URL}" target="_blank" rel="noopener noreferrer">Siconfi, Tesouro Nacional<span class="sr-only"> (abre em nova aba)</span></a>.</p>`;
+}
+
+export async function render(root) {
+  root.innerHTML = `
+    <div class="top">
+      <div>
+        <h1>Painel público</h1>
+        <p>Quem ocupa cada cargo, do Presidente aos vereadores das capitais, e as contas de cada órgão. Tudo aberto, sem cadastro.
+        Abra um perfil e, se quiser, acompanhe essa pessoa: a escolha fica só neste aparelho.</p>
+      </div>
+    </div>
+
+    <div class="tabs painel-tabs" id="painel-tabs" aria-label="Cargos e órgãos">
+      ${SECTIONS.map(
+        (s) => `<button class="${s.key === view.section ? 'on' : ''}" data-section="${s.key}">
+          <span class="mi u-fs-18" aria-hidden="true">${s.icon}</span>${esc(s.label)}</button>`
+      ).join('')}
+    </div>
+
+    <section id="painel-panel" class="stack u-gap-14"></section>
+  `;
+
+  // As abas são montadas uma vez: trocar de aba só refaz o painel, e o foco fica na aba (setas continuam funcionando).
+  const tabs = $('#painel-tabs', root);
+  const panel = $('#painel-panel', root);
+  tablist(tabs, () => panel);
+  tabs.querySelectorAll('button').forEach((b) => {
+    b.addEventListener('click', () => {
+      panel.setAttribute('aria-labelledby', b.id);
+      if (b.dataset.section === view.section) return;
+      view.section = b.dataset.section;
+      view.q = '';
+      view.shown = PAGE;
+      const next = SECTIONS.find((s) => s.key === view.section);
+      if (!next.filter && next.key !== 'orgaos') view.uf = '';
+      renderPanel(panel);
+    });
+  });
+  const selected = tabs.querySelector('[aria-selected="true"]');
+  if (selected) panel.setAttribute('aria-labelledby', selected.id);
+  await renderPanel(panel);
+}
+
+let panelToken = 0;
+
+async function renderPanel(panel) {
+  const token = ++panelToken;
+  const section = SECTIONS.find((s) => s.key === view.section) || SECTIONS[0];
+  if ((section.requiresUf || section.key === 'orgaos') && !view.uf) view.uf = homeUf();
+
+  panel.innerHTML = `
+      <p class="sm muted" id="painel-hint">${esc(section.hint)}</p>
+      <div class="painel-filters">
+        ${
+          section.key === 'orgaos'
+            ? ''
+            : `<div class="painel-field painel-search">
+          <label class="label" for="painel-q">Buscar por nome, partido ou cidade</label>
+          <input class="input" type="search" id="painel-q" value="${esc(view.q)}" autocomplete="off" enterkeyhint="search">
+        </div>`
+        }
+        ${
+          section.filter === 'uf' || section.key === 'orgaos'
+            ? `<div class="painel-field">
+          <label class="label" for="painel-uf">${section.key === 'orgaos' ? 'Estado e capital' : 'Estado'}</label>
+          <select class="input" id="painel-uf">${ufOptions(section, view.uf)}</select>
+        </div>`
+            : ''
+        }
+      </div>
+      <p class="sm u-fw-600" id="painel-count" role="status" aria-live="polite"></p>
+      <div id="painel-results">${skeleton('Carregando dados oficiais…', 3)}</div>
+  `;
+
+  const results = $('#painel-results', panel);
+  const count = $('#painel-count', panel);
+  const ufSel = $('#painel-uf', panel);
+  const search = $('#painel-q', panel);
+
+  if (section.key === 'orgaos') return renderBodies(results, count, ufSel);
+
+  let list = [];
+  const paint = () => {
+    const filtered = list.filter((p) => (!view.uf || p.uf === view.uf) && matches(p, view.q));
+    const visible = filtered.slice(0, view.shown);
+    count.textContent = filtered.length
+      ? `${filtered.length} ${filtered.length === 1 ? 'resultado' : 'resultados'}${filtered.length > visible.length ? `, mostrando ${visible.length}` : ''}`
+      : 'Nenhum resultado para esse filtro.';
+    results.innerHTML = `
+      <ul class="painel-grid" aria-label="${esc(section.label)}">${visible.map(card).join('')}</ul>
+      ${filtered.length > visible.length ? `<button class="btn outlined painel-more" id="painel-more">Mostrar mais ${Math.min(PAGE, filtered.length - visible.length)}</button>` : ''}
+      ${section.key === 'stf' ? `<p class="sm muted">${esc(stfNote)}</p>` : ''}
+      ${['governadores', 'prefeitos'].includes(section.key) ? `<p class="xs muted">Ocupantes atuais conferidos em ${esc(checkedAt)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.</p>` : ''}`;
+    results.querySelectorAll('[data-open]').forEach((b) => {
+      b.onclick = () => {
+        const p = list.find((x) => x.id === b.dataset.open);
+        if (p) openPoliticianDetails(p);
+      };
+    });
+    const more = $('#painel-more', results);
+    if (more)
+      more.onclick = () => {
+        const first = view.shown;
+        view.shown += PAGE;
+        paint();
+        // o foco vai para o primeiro item novo, e não volta ao topo da lista
+        results.querySelectorAll('.painel-open')[first]?.focus();
+      };
+  };
+
+  let stfNote = '';
+  let checkedAt = '';
+  try {
+    list = await loadSection(section.key, view.uf);
+    if (section.key === 'stf') {
+      stfNote = (await loadStf()).vaga || '';
+    }
+    if (['governadores', 'prefeitos'].includes(section.key)) {
+      const { consultadoEm } = await loadExecutive();
+      checkedAt = consultadoEm ? new Date(`${consultadoEm}T12:00:00`).toLocaleDateString('pt-BR') : 'data não informada';
+    }
+  } catch {
+    count.textContent = '';
+    results.innerHTML = `<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span>
+      <p class="muted">Não foi possível carregar agora. Verifique a conexão e tente de novo.</p>
+      <button class="btn outlined" id="painel-retry">Tentar de novo</button></div>`;
+    $('#painel-retry', results).onclick = () => renderPanel(panel);
+    return;
+  }
+  if (!panel.isConnected || token !== panelToken) return;
+  paint();
+
+  let timer;
+  if (search)
+    search.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        view.q = search.value;
+        view.shown = PAGE;
+        paint();
+      }, 200);
+    });
+  if (ufSel)
+    ufSel.onchange = async () => {
+      view.uf = ufSel.value;
+      view.shown = PAGE;
+      if (section.requiresUf) {
+        await renderPanel(panel);
+        $('#painel-uf', panel)?.focus();
+      } else paint();
+    };
+}
+
+async function renderBodies(results, count, ufSel) {
+  const entes = await loadEntes().catch(() => null);
+  if (!entes) {
+    results.innerHTML = '<div class="card empty"><p class="muted">Não foi possível carregar a lista de órgãos.</p></div>';
+    return;
+  }
+  const bodies = [...federalBodies(), ...stateBodies(view.uf, entes)];
+  const uf = FEDERATION_UNITS.find((u) => u.uf === view.uf);
+  count.textContent = `${bodies.length} órgãos: federais e de ${uf?.name || view.uf}`;
+  results.innerHTML = `
+    <ul class="painel-grid painel-bodies" aria-label="Órgãos e contas">${bodies.map(bodyCard).join('')}</ul>
+    <p class="xs muted">As contas vêm dos relatórios que a União, os estados e as capitais entregam ao Tesouro Nacional por exigência da
+    Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão.</p>`;
+
+  results.querySelectorAll('[data-accounts]').forEach((btn) => {
+    btn.onclick = async () => {
+      const b = bodies[Number(btn.dataset.accounts)];
+      const box = $(`#acc-${btn.dataset.accounts}`, results);
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      box.hidden = open;
+      if (open || box.dataset.loaded) return;
+      const load = async (retrying) => {
+        box.innerHTML = skeleton('Consultando o Tesouro Nacional…', 1);
+        try {
+          const data = b.budget ? await budgetSummary(b.ente) : await personnelSpending(b.ente, b.poder, b.match);
+          box.innerHTML = accountsHtml(b, data);
+          box.dataset.loaded = '1';
+        } catch {
+          box.innerHTML = `<p class="sm muted" role="status">Falha ao consultar o Tesouro Nacional.</p>
+            <button class="btn outlined sm" data-retry>Tentar de novo<span class="sr-only"> (${esc(b.name)})</span></button>`;
+          box.querySelector('[data-retry]').onclick = async () => {
+            await load(true);
+            // o botão some ao recarregar: o foco vai para o resultado ou para o novo botão
+            if (box.dataset.loaded) {
+              box.tabIndex = -1;
+              box.focus();
+            }
+          };
+          if (retrying) box.querySelector('[data-retry]').focus();
+        }
+      };
+      load(false);
+    };
+  });
+
+  ufSel.onchange = () => {
+    view.uf = ufSel.value;
+    renderBodies(results, count, ufSel);
+  };
+}
+
+// O Painel não é remontado quando o usuário passa a acompanhar alguém (isso fecharia o lugar onde ele está):
+// só os selos "Acompanhando" mudam.
+export function onStore(root) {
+  root.querySelectorAll('.painel-card[data-id]').forEach((li) => {
+    const badge = li.querySelector('.follow-badge');
+    if (badge) badge.hidden = !isFollowed(li.dataset.id);
+  });
+}

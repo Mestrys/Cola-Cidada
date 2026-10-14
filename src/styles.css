@@ -2340,3 +2340,155 @@ a.card:active {
     transform: none;
   }
 }
+
+/* ===== Painel público ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.painel-tabs {
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: nowrap;
+  padding: 4px;
+}
+.painel-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.painel-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.painel-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 200px;
+}
+.painel-search {
+  flex: 2 1 260px;
+}
+.painel-field .input {
+  min-height: 44px;
+}
+
+.painel-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 12px;
+}
+.painel-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+.painel-card-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.painel-card-head .avatar {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.painel-card-text {
+  min-width: 0;
+}
+.painel-name {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.painel-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--md-sys-color-primary-container, var(--s2));
+  color: var(--md-sys-color-on-primary-container, inherit);
+}
+.painel-open,
+.painel-more,
+.painel-card .btn {
+  min-height: 44px;
+}
+.painel-more {
+  justify-self: center;
+  margin: 12px auto 0;
+  display: flex;
+}
+.painel-accounts {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.painel-figures,
+.office-list {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.painel-figures div,
+.office-list div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px 12px;
+}
+.painel-figures dt,
+.office-list dt {
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+.painel-figures dd,
+.office-list dd {
+  margin: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.875rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.follow-row {
+  align-items: center;
+}
+.follow-row .btn {
+  min-height: 44px;
+}
+/* o display dos chips e cartões vence o atributo hidden; sem isto o selo e as contas não somem */
+.painel-card [hidden],
+.painel-accounts[hidden] {
+  display: none;
+}
+
+/* link no meio de um parágrafo precisa de mais que cor para se distinguir (WCAG 1.4.1) */
+#view p a:not(.btn) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

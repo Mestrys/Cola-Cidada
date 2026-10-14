@@ -104,13 +104,22 @@ test.describe('telas', () => {
     const collect = async () => (await page.$$eval('.mi', (els) => els.map((e) => e.textContent.trim()))).forEach((t) => t && used.add(t));
     for (const r of ROUTES) { await go(page, r); await collect(); }
     await go(page, 'meus-politicos');
-    for (const sel of ['[data-details]', '[data-dossier]', '[data-share]', '#add']) {
+    for (const sel of ['[data-details]', '[data-dossier]', '[data-share]']) {
       await page.locator(sel).first().click();
       await page.waitForSelector('.overlay .modal');
       await collect();
       await page.keyboard.press('Escape');
       await expect(page.locator('.overlay')).toHaveCount(0);
     }
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=orgaos]').click();
+    await page.waitForSelector('[data-accounts]');
+    await collect();
+    await page.locator('#painel-tabs [data-section=governadores]').click();
+    await page.locator('.painel-open').first().click();
+    await page.waitForSelector('#follow-btn');
+    await page.locator('#follow-btn').click();
+    await collect();
     expect([...used].filter((i) => !ICONS.has(i))).toEqual([]);
   });
 
@@ -359,7 +368,7 @@ test.describe('navegação entre telas', () => {
     // ao tratá-los, já leria o endereço final (inicio → inicio, sem transição)
     await expect(page.locator('#view h1')).toContainText('Comparador');
     await page.goBack(); // para trás
-    await expect(page.locator('#view h1')).toContainText('Painel');
+    await expect(page.locator('#view h1')).toContainText('Acompanhamento');
     const diag = async () => `ambiente: ${JSON.stringify(env)} chamadas: ${JSON.stringify(await page.evaluate(() => window.__vt))} hash: ${await page.evaluate(() => location.hash)}`;
     await expect.poll(() => page.evaluate(() => window.__vt.join(',')), await diag()).toBe('fwd,back');
     await expect.poll(() => page.evaluate(() => 'navDir' in document.documentElement.dataset), 'marca some ao fim').toBe(false);
@@ -518,17 +527,43 @@ test.describe('fluxos', () => {
     }
   });
 
-  test('cadastro abre no estado do domicílio e grava o mandato da UF', async ({ page }) => {
+  test('painel: assembleia abre no estado do domicílio; acompanhar só dentro do perfil e grava o mandato da UF', async ({ page }) => {
     await seed(page, { politicians: [], domicile: { state: 'MG', city: 'Belo Horizonte' } });
-    await go(page, 'meus-politicos');
-    await page.locator('#add').click();
-    await expect(page.locator('#sel-state-uf')).toHaveValue('MG');
-    await page.locator('#tabs button[data-tab=estadual]').click();
-    await page.locator('.btn-select-est').first().click();
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=assembleias]').click();
+    await expect(page.locator('#painel-uf')).toHaveValue('MG');
+    await expect(page.locator('#painel-count')).toContainText('77 resultados');
+    // o cartão só abre o perfil; não há como acompanhar sem vê-lo
+    await expect(page.locator('.painel-card #follow-btn')).toHaveCount(0);
+    await page.locator('.painel-open').first().click();
+    const follow = page.locator('#follow-btn');
+    await expect(follow).toHaveAttribute('aria-pressed', 'false');
+    await follow.click();
+    await expect(follow).toHaveAttribute('aria-pressed', 'true');
     const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('monitor-cidadao:v1')).politicians[0]);
     expect(saved.uf).toBe('MG');
     expect(saved.mandate).toEqual(['2023-02-01', '2027-01-31']);
     expect(saved.tse?.ballotNumber).toBeTruthy();
+    // a lista atrás do diálogo não foi remontada: o selo aparece no cartão e a busca continua lá
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.painel-card .follow-badge:visible')).toHaveCount(1);
+    await expect(page.locator('.painel-open').first()).toBeFocused();
+  });
+
+  test('painel: governadores e prefeitos mostram quem ocupa o cargo hoje, e o STF não tem ficha do TSE', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=governadores]').click();
+    await expect(page.locator('#painel-count')).toContainText('27 resultados');
+    await page.locator('#painel-q').fill('minas');
+    await expect(page.locator('#painel-count')).toHaveText('1 resultado');
+    await page.locator('.painel-open').click();
+    await expect(page.locator('.office-list')).toContainText('Eleito(a) na chapa original');
+    await page.keyboard.press('Escape');
+    await page.locator('#painel-tabs [data-section=stf]').click();
+    await page.locator('.painel-open').first().click();
+    await expect(page.locator('#pol-tabs [data-tab=tse]')).toHaveCount(0);
+    await expect(page.locator('.office-list')).toContainText('Aposentadoria compulsória');
   });
 
   test('cadastro antigo com data da ALESP exibe o mandato correto', async ({ page }) => {
@@ -537,15 +572,10 @@ test.describe('fluxos', () => {
     await expect(page.locator('.pol-card').nth(2)).toContainText('31/01/2027');
   });
 
-  test('onboarding abre no primeiro acesso sem atraso', async ({ page }) => {
-    await page.addInitScript(() => {
-      new MutationObserver(() => {
-        if (!window.__shell && document.querySelector('.app-wrapper')) window.__shell = performance.now();
-        if (!window.__modal && document.querySelector('.overlay')) window.__modal = performance.now();
-      }).observe(document, { childList: true, subtree: true });
-    });
+  test('primeiro acesso abre o Painel Público direto, sem diálogo nem escolha', async ({ page }) => {
     await page.goto('/');
-    await page.waitForSelector('.overlay .modal');
-    expect(await page.evaluate(() => window.__modal - window.__shell)).toBeLessThan(100);
+    await expect(page.locator('#view h1')).toHaveText('Painel público');
+    await expect(page.locator('.painel-card').first()).toBeVisible();
+    await expect(page.locator('.overlay')).toHaveCount(0);
   });
 });

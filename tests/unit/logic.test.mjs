@@ -71,3 +71,10 @@ test('summarizeProposition só devolve dados oficiais e aceita apenas links da C
   assert.equal(summarizeProposition({ summary: 'x', url: 'javascript:alert(1)' }).url, '');
   assert.equal(summarizeProposition({ summary: 'x', url: 'https://evil.example/camara.leg.br/' }).url, '');
 });
+
+test('ministro do STF não tem mandato: o cartão mostra cargo vitalício em vez de barra', () => {
+  const m = mandateProgress({ roleKey: 'ministro-stf' });
+  assert.equal(m.open, true);
+  assert.match(m.label, /vitalício/);
+  assert.deepEqual(defaultMandate('prefeito'), ['2025-01-01', '2028-12-31']);
+});

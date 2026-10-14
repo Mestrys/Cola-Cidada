@@ -9,11 +9,9 @@ import {
 import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist, skeleton } from '../ui.js';
 import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
 import { plenaryPanelHtml } from './plenaryPanel.js';
-import { openPoliticianModal } from './addPolitician.js';
 import { openDossierModal } from '../dossier.js';
 import { openShareModal } from '../share.js';
 import { openAnalysisModal } from '../analysis.js';
-import { openColaEleitoralModal } from './colaEleitoral.js';
 
 export function politicianCard(p, { heading = 3 } = {}) {
   const isState =
@@ -93,7 +91,7 @@ export function politicianCard(p, { heading = 3 } = {}) {
     <div class="card-actions">
       <button class="btn primary sm" data-details="${p.id}">
         <span class="mi u-fs-16" aria-hidden="true">analytics</span>
-        <span>Auditar Mandato</span>
+        <span>Ver perfil</span>
       </button>
       <div class="icon-group">
       <button class="btn outlined sm icon" data-dossier="${p.id}" title="Gerar Dossiê Oficial em PDF" aria-label="Relatório PDF">
@@ -102,10 +100,7 @@ export function politicianCard(p, { heading = 3 } = {}) {
       <button class="btn outlined sm icon" data-share="${p.id}" title="Gerar Card Visual para WhatsApp / Redes" aria-label="Card para Redes">
         <span class="mi u-fs-16" aria-hidden="true">share</span>
       </button>
-      <button class="btn outlined sm icon" data-replace="${p.id}" title="Substituir político" aria-label="Substituir">
-        <span class="mi u-fs-16" aria-hidden="true">swap_horiz</span>
-      </button>
-      <button class="btn danger sm icon" data-remove="${p.id}" title="Parar de monitorar" aria-label="Remover">
+      <button class="btn danger sm icon" data-remove="${p.id}" title="Deixar de acompanhar" aria-label="Deixar de acompanhar ${esc(p.name)}">
         <span class="mi u-fs-16" aria-hidden="true">delete</span>
       </button>
       </div>
@@ -113,7 +108,84 @@ export function politicianCard(p, { heading = 3 } = {}) {
   </article>`;
 }
 
-async function openPoliticianDetails(p) {
+const longDate = (iso) => (iso ? new Date(`${iso}T12:00:00`).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+
+// Ficha do cargo para quem não é parlamentar: Presidente, governadores, prefeitos e ministros do STF.
+function officeHtml(p, isStf) {
+  const rows = isStf
+    ? [
+        ['Cargo', p.cargo || 'Ministro(a)'],
+        ['Nome completo', p.fullName],
+        ['No STF desde', longDate(p.posse)],
+        ['Indicado(a) por', p.indicadoPor],
+        ['Aposentadoria compulsória (75 anos)', p.aposentadoriaCompulsoria ? String(p.aposentadoriaCompulsoria) : ''],
+      ]
+    : [
+        ['Órgão', p.house],
+        ['Nome completo', p.fullName],
+        ['Partido atual', p.party],
+        ['Situação', p.situacao],
+        ['No cargo desde', longDate(p.desde)],
+        [p.roleKey === 'prefeito' ? 'Vice-prefeito(a)' : p.roleKey === 'governador' ? 'Vice-governador(a)' : 'Vice-presidente', p.vice?.name || 'Não há (o cargo de vice está vago)'],
+        ...(p.eleitoPeloTse ? [['Eleito(a) na chapa original', `${p.eleitoPeloTse.name} (${p.eleitoPeloTse.party}), em ${p.eleitoPeloTse.year}`]] : []),
+      ];
+  return `
+    <div class="card soft stack u-gap-10 u-p-14">
+      <dl class="office-list">
+        ${rows.filter(([, v]) => v).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}
+      </dl>
+      ${p.nota ? `<p class="sm muted">${esc(p.nota)}</p>` : ''}
+      <p class="xs muted">${
+        isStf
+          ? 'Ministros do STF não são eleitos: são indicados pelo Presidente e aprovados pelo Senado.'
+          : 'Ocupante atual conferido com registros públicos; a ficha eleitoral do TSE é de quem venceu a eleição.'
+      }</p>
+      ${
+        isStf
+          ? `<a href="https://portal.stf.jus.br/" target="_blank" rel="noopener noreferrer" class="btn outlined sm u-jc-center">Portal do STF<span class="sr-only"> (abre em nova aba)</span><span class="mi u-fs-15" aria-hidden="true">open_in_new</span></a>`
+          : ''
+      }
+    </div>`;
+}
+
+const EXEC_ROLES = new Set(['presidente', 'governador', 'prefeito']);
+
+// Acompanhar é uma escolha feita aqui, depois de ver o perfil; fica só neste aparelho.
+function followButtonHtml(followed) {
+  return followed
+    ? '<span class="mi u-fs-16" aria-hidden="true">bookmark_added</span>Acompanhando'
+    : '<span class="mi u-fs-16" aria-hidden="true">bookmark_add</span>Acompanhar';
+}
+
+function bindFollow(el, p) {
+  const btn = el.querySelector('#follow-btn');
+  if (!btn) return;
+  const paint = () => {
+    const followed = store.get().politicians.some((x) => x.id === p.id);
+    btn.setAttribute('aria-pressed', String(followed));
+    btn.classList.toggle('primary', !followed);
+    btn.classList.toggle('outlined', followed);
+    btn.innerHTML = followButtonHtml(followed);
+  };
+  btn.onclick = () => {
+    const followed = store.get().politicians.some((x) => x.id === p.id);
+    if (followed) {
+      store.removePolitician(p.id);
+      toast(`Você deixou de acompanhar ${p.name}.`, 'delete', {
+        action: { label: 'Desfazer', onClick: () => { store.addPolitician(p); paint(); } },
+      });
+    } else {
+      store.addPolitician(p);
+      toast(`Você passou a acompanhar ${p.name}. Veja em Início, Comparador e Alertas.`);
+    }
+    paint();
+  };
+  paint();
+}
+
+export async function openPoliticianDetails(p) {
+  const isExec = EXEC_ROLES.has(p.roleKey);
+  const isStf = p.roleKey === 'ministro-stf';
   const isDeputy = p.source === 'camara' || p.roleKey === 'dep-federal';
   const isSenator = p.source === 'senado' || p.roleKey === 'senador';
   const isCouncilor =
@@ -145,19 +217,28 @@ async function openPoliticianDetails(p) {
               <h3 class="h2 u-fs-18 u-fw-800">${esc(p.name)}</h3>
               <span class="chip green xs">${esc(p.party || '—')}</span>
             </div>
-            <span class="sm muted">${ROLES[p.roleKey]?.label || ''} • ${esc(p.uf || 'BR')}</span>
+            <span class="sm muted">${ROLES[p.roleKey]?.label || ''} • ${esc(p.city ? `${p.city}/${p.uf}` : p.uf || 'BR')}</span>
           </div>
         </div>
         <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
       </div>
 
+      <div class="row u-gap-10 follow-row">
+        <button class="btn sm" id="follow-btn" aria-pressed="false" aria-describedby="follow-note"></button>
+        <span class="xs muted" id="follow-note">Opcional. A lista de quem você acompanha fica salva só neste aparelho.</span>
+      </div>
+
       <!-- Barra de Mandato & Badges Superiores -->
       <div class="card soft stack u-gap-8 u-p-12">
-        <div class="row between sm">
-          <span>Mandato: <b>${m.end || 'Em exercício'}</b></span>
+        ${
+          m.open
+            ? `<p class="sm"><b>${esc(m.label)}</b></p>`
+            : `<div class="row between sm">
+          <span>Mandato até <b>${m.end || 'em exercício'}</b></span>
           <b class="u-c-primary">${m.pct}% concluído</b>
         </div>
-        <div class="bar u-height-7"><i data-w="${m.pct}"></i></div>
+        <div class="bar u-height-7"><i data-w="${m.pct}"></i></div>`
+        }
         <div class="row u-gap-8 u-mt-4">
         </div>
       </div>
@@ -179,10 +260,10 @@ async function openPoliticianDetails(p) {
         <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : `
-        <button class="on" data-tab="local">${isCouncilor ? 'Mandato Municipal' : 'Mandato Estadual'}</button>
+        <button class="on" data-tab="local">${isStf ? 'No Supremo' : isExec ? 'No cargo' : isCouncilor ? 'Mandato Municipal' : 'Mandato Estadual'}</button>
       `
       }
-      <button data-tab="tse">Ficha Eleitoral & TSE</button>
+      ${isStf ? '' : '<button data-tab="tse">Ficha Eleitoral & TSE</button>'}
     </div>
 
     <!-- ABA 1: Gastos CEAP (Deputados) -->
@@ -213,6 +294,8 @@ async function openPoliticianDetails(p) {
     `
         : `
       <div id="tab-local" class="stack pol-pane u-mt-4">
+        ${isStf || isExec ? officeHtml(p, isStf) : ''}
+        <div class="stack u-gap-12 ${isStf || isExec ? 'hidden' : ''}">
         <div class="card soft stack u-gap-10 u-p-14">
           <div class="row between">
             <span class="chip ${isCouncilor ? 'teal' : 'purple'}">${esc(p.house || 'Casa Legislativa')}</span>
@@ -274,6 +357,7 @@ async function openPoliticianDetails(p) {
               : ''
           }
         </div>
+        </div>
       </div>
     `
     }
@@ -331,6 +415,7 @@ async function openPoliticianDetails(p) {
     };
   });
   tablist(el.querySelector('#pol-tabs'), (b) => el.querySelector(`#tab-${b.dataset.tab}`));
+  bindFollow(el, p);
 
   if (isDeputy) {
     const paneGastos = el.querySelector('#tab-gastos');
@@ -561,10 +646,6 @@ async function openPoliticianDetails(p) {
 }
 
 export function bindPoliticianActions(root) {
-  root.querySelectorAll('[data-replace]').forEach((b) => {
-    b.onclick = () => openPoliticianModal({ replaceId: b.dataset.replace });
-  });
-
   root.querySelectorAll('[data-remove]').forEach((b) => {
     b.onclick = () => {
       const list = store.get().politicians;
@@ -572,7 +653,7 @@ export function bindPoliticianActions(root) {
       if (index < 0) return;
       const removed = list[index];
       store.removePolitician(removed.id);
-      toast(`${removed.name} removido do monitoramento.`, 'delete', {
+      toast(`Você deixou de acompanhar ${removed.name}.`, 'delete', {
         action: {
           label: 'Desfazer',
           onClick: () => {
@@ -622,12 +703,11 @@ export function render(root) {
   root.innerHTML = `
     <div class="top">
       <div>
-        <h1>Meus Políticos</h1>
-        <p>Representantes cadastrados para fiscalização ativa com dados abertos da Câmara dos Deputados, Senado e Assembleias.</p>
+        <h1>Quem Acompanho</h1>
+        <p>Atalhos para as pessoas que você escolheu acompanhar depois de ver o perfil delas. A lista fica só neste aparelho.</p>
       </div>
       <div class="row">
-        <button class="btn outlined" id="btn-open-cola-pol"><span class="mi" aria-hidden="true">how_to_vote</span>Minha Cola Eleitoral</button>
-        <button class="btn primary" id="add"><span class="mi" aria-hidden="true">person_add</span>Seguir Novo Político</button>
+        <a class="btn primary" href="#/painel"><span class="mi" aria-hidden="true">account_balance</span>Painel Público</a>
       </div>
     </div>
     ${
@@ -635,14 +715,11 @@ export function render(root) {
         ? `<div class="grid g3">${politicians.map((p) => politicianCard(p, { heading: 2 })).join('')}</div>`
         : `
       <div class="card empty">
-        <span class="mi" aria-hidden="true">how_to_vote</span>
-        <h2>Nenhum representante monitorado</h2>
-        <p>Cadastre deputados federais, senadores, deputados estaduais ou governadores para fiscalizar seus mandatos com dados oficiais.</p>
+        <span class="mi" aria-hidden="true">bookmark_add</span>
+        <h2>Você ainda não acompanha ninguém</h2>
+        <p>Todos os cargos estão abertos no <a href="#/painel">Painel Público</a>. Abra um perfil e toque em Acompanhar, se quiser.</p>
       </div>`
     }
   `;
-  root.querySelector('#add').onclick = () => openPoliticianModal();
-  const btnCola = root.querySelector('#btn-open-cola-pol');
-  if (btnCola) btnCola.onclick = () => openColaEleitoralModal();
   bindPoliticianActions(root);
 }
