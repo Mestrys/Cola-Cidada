@@ -3,7 +3,7 @@ import { test, expect, seed, go, ROUTES, ICONS } from './fixtures.mjs';
 
 // WCAG 2.1 AA (e boas práticas do axe nas telas): contraste e regras básicas em todas as telas, nos dois temas.
 for (const theme of ['light', 'dark']) {
-  test(`acessibilidade WCAG AA (${theme})`, async ({ page }) => {
+  test(`acessibilidade WCAG AA (${theme})`, async ({ page, isMobile }) => {
     await seed(page, { theme });
     const report = [];
     for (const r of ROUTES) {
@@ -14,7 +14,8 @@ for (const theme of ['light', 'dark']) {
     }
     // Diálogos: ficha do político, cadastro e cola eleitoral
     await go(page, 'meus-politicos');
-    for (const sel of ['[data-details]', '#global-fab', '#sub-btn-cola']) {
+    // No celular a barra de atalhos some; "Minha Cola" abre pelo botão da própria tela.
+    for (const sel of ['[data-details]', '#global-fab', isMobile ? '#btn-open-cola-pol' : '#sub-btn-cola']) {
       await page.locator(sel).first().click();
       await page.waitForSelector('.overlay .modal');
       await page.waitForTimeout(400);
@@ -81,6 +82,12 @@ test.describe('leitor de tela e teclado', () => {
         })
     );
     expect(misses).toEqual([]);
+  });
+
+  test('barra de fontes e atalhos aparece só no desktop (no celular repete a navegação inferior)', async ({ page, isMobile }) => {
+    await seed(page);
+    await go(page, 'inicio');
+    await expect(page.locator('.sub-civic-bar')).toBeVisible({ visible: !isMobile });
   });
 });
 

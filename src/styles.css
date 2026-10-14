@@ -1867,25 +1867,8 @@ button.chip:active, a.chip:active,
     padding: 0.25rem;
   }
 
+  /* Os atalhos da barra repetem a navegação inferior; "Minha Cola" segue em Início, Meus Políticos e Perfil. */
   .sub-civic-bar {
-    padding: 0.5rem 1rem;
-  }
-
-  .sub-civic-bar .civic-sources {
-    display: none;
-  }
-
-  .sub-civic-bar .civic-chips {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    /* Folga vertical para a área de toque de 44px dos chips não ser cortada pela rolagem. */
-    margin: -0.375rem -16px;
-    padding: 0.375rem 1rem;
-    width: calc(100% + 32px);
-  }
-
-  .sub-civic-bar .civic-chips::-webkit-scrollbar {
     display: none;
   }
 
