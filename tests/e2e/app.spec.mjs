@@ -443,6 +443,70 @@ test.describe('fluxos', () => {
     expect(ids[0]).toBe('camara-160561');
   });
 
+  test('aviso: arrastar para o lado dispensa; arrasto curto volta e o aviso fica', async ({ page }) => {
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-remove]').first().click();
+    const toast = page.locator('.toast');
+    await expect(toast).toBeVisible();
+    await page.waitForTimeout(400); // fim da animação de entrada
+    const drag = async (dx, steps, ms) => {
+      const b = await toast.boundingBox();
+      const x = b.x + 24, y = b.y + b.height / 2; // fora do botão Desfazer
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      for (let i = 1; i <= steps; i++) {
+        await page.mouse.move(x + (dx * i) / steps, y);
+        await page.waitForTimeout(ms);
+      }
+      await page.mouse.up();
+    };
+    // curto e lento: volta ao lugar e continua ali
+    await drag(30, 6, 30);
+    await expect.poll(() => toast.evaluate((t) => t.style.transform), 'volta ao lugar').toMatch(/^$|translateX\(0(px)?\)|translateX\(-?0\.\d+px\)/);
+    await expect(toast).toBeVisible();
+    // longo: sai de cena e some, sem desfazer a remoção
+    await drag(500, 6, 8);
+    await expect(page.locator('.toast')).toHaveCount(0);
+    await expect(page.locator('.pol-card')).toHaveCount(2);
+  });
+
+  test('toque háptico curto ao remover e ao desfazer; nenhum com movimento reduzido', async ({ page }) => {
+    await page.addInitScript(() => {
+      window.__vib = [];
+      Object.defineProperty(navigator, 'vibrate', { configurable: true, value: (ms) => { window.__vib.push(ms); return true; } });
+    });
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-remove]').first().click();
+    await page.locator('.toast-action').click();
+    expect(await page.evaluate(() => window.__vib), 'remover (15) e desfazer (8)').toEqual([15, 8]);
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.evaluate(() => { window.__vib = []; });
+    await page.locator('[data-remove]').first().click();
+    await page.locator('.toast-action').click();
+    expect(await page.evaluate(() => window.__vib), 'sem háptico com movimento reduzido').toEqual([]);
+  });
+
+  test('pressão proporcional ao tamanho: ícones afundam mais, cartões menos', async ({ page }) => {
+    await seed(page);
+    await go(page, 'inicio');
+    const scale = (sel) => page.evaluate((sel) => {
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch { continue; } // folhas de outra origem (fontes) não são legíveis
+        for (const r of rules) {
+          if (r.selectorText === sel) return r.style.transform;
+        }
+      }
+      return null;
+    }, sel);
+    expect(await scale('.btn.icon:active, .header-user-btn:active')).toBe('scale(0.9)');
+    expect(await scale('button.chip:active, a.chip:active, .tabs button:active')).toBe('scale(0.95)');
+    expect(await scale('a.card:active')).toBe('scale(0.985)');
+  });
+
   test('tema segue o sistema e o botão do cabeçalho alterna', async ({ page, isMobile }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
     await seed(page, { theme: 'system' });

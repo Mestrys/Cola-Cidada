@@ -2302,3 +2302,28 @@ html[data-nav-dir='back'] { --vt-x: -28px; }
   .tab-ind.ready { transition: none; }
   .tab-enter { animation: none; }
 }
+
+/* --- Pressão proporcional ao tamanho: o que é pequeno afunda mais, o que é grande, menos --- */
+.btn.icon:active, .header-user-btn:active {
+  transform: scale(0.9);
+}
+
+button.chip:active, a.chip:active, .tabs button:active {
+  transform: scale(0.95);
+}
+
+a.card:active {
+  transform: scale(0.985);
+}
+
+/* aviso arrastável para o lado: o gesto horizontal é dele, o vertical segue com a página */
+.toast {
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.icon:active, .header-user-btn:active, button.chip:active, a.chip:active, .tabs button:active, a.card:active {
+    transform: none;
+  }
+}
