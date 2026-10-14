@@ -616,6 +616,28 @@ test.describe('fluxos', () => {
     await expect(page.locator('#confronto-results')).toContainText('100% de Alinhamento');
   });
 
+  test('alertas: sem acompanhar ninguém chegam as votações do Plenário; os filtros escondem o que não é do tipo', async ({ page }) => {
+    await page.route(/dadosabertos\.camara\.leg\.br\/api\/v2\/votacoes\?/, (r) =>
+      r.fulfill({ json: { dados: /pagina=1(&|$)/.test(r.request().url()) ? [{ id: '9-1', descricao: 'Aprovado o projeto de saneamento. Sim: 2; Não: 1; Total: 3.', data: '2026-09-01', siglaOrgao: 'PLEN', aprovacao: 1 }] : [] } })
+    );
+    await page.route(/votacoes\/9-1\/votos/, (r) =>
+      r.fulfill({ json: { dados: [{ deputado_: { id: 1, nome: 'Ana Lima', siglaPartido: 'PT', siglaUf: 'SP' }, tipoVoto: 'Sim' }] } })
+    );
+    await page.route(/legis\.senado\.leg\.br\/dadosabertos\/votacao\?/, (r) => r.fulfill({ json: [] }));
+    await seed(page, { politicians: [], alerts: [{ id: 'antigo', ts: '2026-01-01', text: 'Alerta gravado por uma versão anterior.' }] });
+    await go(page, 'alertas');
+    await page.locator('#check').click();
+    await expect(page.locator('.alert-item[data-kind=plenario]')).toHaveCount(1);
+    await expect(page.locator('.alert-item[data-kind=plenario]')).toContainText('Câmara — Aprovado o projeto de saneamento');
+    // alerta antigo, sem tipo, conta como voto de quem a pessoa acompanha
+    await page.locator('#alert-filters [data-filter=plenario]').click();
+    await expect(page.locator('#alert-filters [data-filter=plenario]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.alert-item:visible')).toHaveCount(1);
+    await page.locator('#alert-filters [data-filter=gasto]').click();
+    await expect(page.locator('.alert-item:visible')).toHaveCount(0);
+    await expect(page.locator('#alerts-empty-filter')).toBeVisible();
+  });
+
   test('primeiro acesso abre o Painel Público direto, sem diálogo nem escolha', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#view h1')).toHaveText('Painel público');
