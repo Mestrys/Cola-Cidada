@@ -102,13 +102,14 @@ function setBackgroundInert(on) {
 }
 
 // Diálogo modal: entra e sai pelo mesmo caminho, fecha com Esc, prende o foco e devolve-o ao gatilho.
-// Em telas estreitas vira folha inferior que pode ser arrastada para baixo para fechar.
+// Em telas estreitas vira folha inferior, movida por mola do começo ao fim: pode ser agarrada
+// (pela alça, em qualquer momento) e arrastada para baixo para fechar.
 export function modal(html) {
   const opener = document.activeElement;
   const o = document.createElement('div');
   o.className = 'overlay';
-  o.innerHTML = `<div class="modal" role="dialog" aria-modal="true" tabindex="-1">${html}</div>`;
-  const m = o.firstChild;
+  o.innerHTML = `<div class="modal" role="dialog" aria-modal="true" tabindex="-1"><div class="sheet-grabber" aria-hidden="true"></div>${html}</div>`;
+  const m = o.lastChild;
   const heading = m.querySelector('h1, h2, h3, h4');
   if (heading) {
     heading.id ||= `dlg-${Math.random().toString(36).slice(2, 8)}`;
@@ -116,6 +117,7 @@ export function modal(html) {
   }
 
   let closed = false;
+  let sheet = null;
   const finish = () => {
     if (!o.isConnected) return;
     o.remove();
@@ -128,6 +130,7 @@ export function modal(html) {
     if (closed) return;
     closed = true;
     if (!animate) return finish();
+    if (sheet?.springs()) return sheet.close(finish);
     o.classList.add('closing');
     o.addEventListener('animationend', (e) => e.target === m && finish());
     setTimeout(finish, 450);
@@ -157,22 +160,32 @@ export function modal(html) {
   o.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) close(); });
   document.addEventListener('keydown', onKey, true);
   if (scrollLocks++ === 0) setBackgroundInert(true);
+  sheet = createSheet(o, m, {
+    dismiss: () => { closed = true; finish(); },
+    reopen: () => { closed = false; }, // agarrou a folha que estava fechando
+  });
   document.body.append(o);
   m.focus({ preventScroll: true });
-  enableSheetDrag(o, m, () => {
-    closed = true;
-    finish();
-  });
+  sheet.enter();
   return { el: m, close };
 }
 
-// Arrastar a folha para baixo: acompanha o dedo 1:1, resiste para cima, projeta a inércia
-// na soltura e anima com mola a partir da velocidade do gesto. Pode ser agarrada no meio do caminho.
-function enableSheetDrag(o, m, dismiss) {
-  if (!matchMedia('(max-width: 600px)').matches || !('ontouchstart' in window)) return;
-  let startX = 0, startY = 0, offset = 0, decided = false, dragging = false;
+const isNarrow = () => matchMedia('(max-width: 600px)').matches;
+
+// Física da folha inferior. Um só estado (`offset`, em px abaixo da posição de repouso) é movido
+// pelo dedo (1:1, com resistência para cima), pela entrada e pela saída (molas). Qualquer gesto
+// agarra a folha onde ela estiver: a mola em curso é parada e o arrasto continua do valor apresentado.
+//  - Alça (Pointer Events + captura): sempre arrasta, com o conteúdo rolado ou não, com dedo, caneta ou mouse.
+//  - Corpo (eventos de toque): arrasta quando o conteúdo está no topo; senão rola normalmente. O toque
+//    precisa de preventDefault no touchmove, que Pointer Events não permite, então o corpo segue em touch.
+function createSheet(o, m, { dismiss, reopen }) {
+  const grabber = m.querySelector('.sheet-grabber');
+  let offset = 0, startY = 0, startX = 0, decided = false, dragging = false, closing = false;
   let samples = [];
   let anim = null;
+
+  // Mola só quando a tela é estreita e o usuário não pediu menos movimento.
+  const springs = () => isNarrow() && !prefersReducedMotion();
 
   const apply = (y) => {
     offset = y;
@@ -181,41 +194,31 @@ function enableSheetDrag(o, m, dismiss) {
     o.style.setProperty('--scrim', String(Math.max(0, 1 - Math.max(0, y) / h)));
   };
 
-  m.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1) return;
-    const t = e.touches[0];
-    samples = [{ v: t.clientY, t: e.timeStamp }];
-    if (anim?.running) {
-      // agarrou a folha em movimento: continua do valor apresentado, sem salto
-      const { value } = anim.stop();
-      apply(value);
-      startY = t.clientY - value;
-      decided = dragging = true;
-      return;
-    }
-    startX = t.clientX;
-    startY = t.clientY;
-    decided = dragging = false;
-  }, { passive: true });
+  const animateTo = (to, velocity, response, onComplete) => {
+    if (anim?.running) anim.stop();
+    anim = spring({ from: offset, to, velocity, dampingRatio: 1, response, onUpdate: apply, onComplete });
+  };
 
-  m.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    if (!decided) {
-      const dx = t.clientX - startX, dy = t.clientY - startY;
-      if (Math.hypot(dx, dy) < 10) return; // histerese antes de escolher a direção
-      decided = true;
-      const blocked = e.target.closest('input, textarea, select, .tabs, [data-no-drag]');
-      dragging = dy > 0 && Math.abs(dy) > Math.abs(dx) && m.scrollTop <= 0 && !blocked;
-      if (!dragging) return;
-      startY = t.clientY;
+  const grab = (y, t) => {
+    samples = [{ v: y, t }];
+    if (anim?.running) {
+      const { value } = anim.stop();
+      if (closing) { closing = false; reopen(); }
+      apply(value);
+      startY = y - value;
+      decided = dragging = true;
+      return true;
     }
-    if (!dragging) return;
-    e.preventDefault();
-    const raw = t.clientY - startY;
+    startY = y;
+    return false;
+  };
+
+  const move = (y, t) => {
+    const raw = y - startY;
     apply(raw >= 0 ? raw : -rubberband(-raw, m.offsetHeight));
-    samples.push({ v: t.clientY, t: e.timeStamp });
+    samples.push({ v: y, t });
     if (samples.length > 6) samples.shift();
-  }, { passive: false });
+  };
 
   const release = () => {
     if (!dragging) return;
@@ -228,18 +231,69 @@ function enableSheetDrag(o, m, dismiss) {
       else apply(0);
       return;
     }
-    anim = spring({
-      from: offset,
-      to: shouldDismiss ? h + 24 : 0,
-      velocity,
-      dampingRatio: 1,
-      response: shouldDismiss ? 0.28 : 0.35,
-      onUpdate: apply,
-      onComplete: shouldDismiss ? dismiss : undefined,
-    });
+    if (shouldDismiss) closing = true;
+    animateTo(shouldDismiss ? h + 24 : 0, velocity, shouldDismiss ? 0.28 : 0.35, shouldDismiss ? dismiss : undefined);
   };
-  m.addEventListener('touchend', release);
-  m.addEventListener('touchcancel', release);
+
+  // --- alça: Pointer Events com captura ---
+  grabber.addEventListener('pointerdown', (e) => {
+    if (!isNarrow() || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    e.preventDefault();
+    grabber.setPointerCapture(e.pointerId);
+    grab(e.clientY, e.timeStamp);
+    dragging = true;
+    decided = true;
+  });
+  grabber.addEventListener('pointermove', (e) => {
+    if (dragging && grabber.hasPointerCapture(e.pointerId)) move(e.clientY, e.timeStamp);
+  });
+  grabber.addEventListener('pointerup', release);
+  grabber.addEventListener('pointercancel', release);
+
+  // --- corpo: toque, só com o conteúdo no topo ---
+  m.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1 || e.target.closest('.sheet-grabber')) return;
+    const t = e.touches[0];
+    startX = t.clientX;
+    if (!grab(t.clientY, e.timeStamp)) decided = dragging = false;
+  }, { passive: true });
+
+  m.addEventListener('touchmove', (e) => {
+    if (e.target.closest('.sheet-grabber')) return;
+    const t = e.touches[0];
+    if (!decided) {
+      const dx = t.clientX - startX, dy = t.clientY - startY;
+      if (Math.hypot(dx, dy) < 10) return; // histerese antes de escolher a direção
+      decided = true;
+      const blocked = e.target.closest('input, textarea, select, .tabs, [data-no-drag]');
+      dragging = isNarrow() && dy > 0 && Math.abs(dy) > Math.abs(dx) && m.scrollTop <= 0 && !blocked;
+      if (!dragging) return;
+      startY = t.clientY;
+    }
+    if (!dragging) return;
+    e.preventDefault();
+    move(t.clientY, e.timeStamp);
+  }, { passive: false });
+  m.addEventListener('touchend', (e) => { if (!e.target.closest('.sheet-grabber')) release(); });
+  m.addEventListener('touchcancel', (e) => { if (!e.target.closest('.sheet-grabber')) release(); });
+
+  return {
+    springs,
+    // Entrada: sobe da borda por mola, a partir de fora da tela. Pode ser agarrada desde o primeiro quadro.
+    enter() {
+      if (!springs()) return;
+      o.classList.add('sheet-mode');
+      apply(m.offsetHeight);
+      animateTo(0, 0, 0.32);
+    },
+    // Saída por botão, Esc ou toque no fundo: desce pelo mesmo caminho, a partir de onde a folha estiver.
+    close(done) {
+      closing = true;
+      dragging = false;
+      o.classList.add('sheet-mode');
+      animateTo(m.offsetHeight + 24, 0, 0.28, done);
+    },
+  };
 }
 
 export const VOTE_CLASS = { Sim: 'sim', Não: 'nao' };

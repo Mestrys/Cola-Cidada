@@ -207,6 +207,87 @@ test.describe('diálogos', () => {
     await expect(page.locator('.overlay')).toHaveCount(0);
   });
 
+  // Toques reais via CDP (geram Pointer Events na alça e eventos de toque no corpo).
+  const touchTools = async (page, context) => {
+    const cdp = await context.newCDPSession(page);
+    const send = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
+    const offset = () => page.locator('.modal').evaluate((m) => parseFloat(m.style.transform.match(/translateY\(([-\d.]+)px\)/)?.[1] ?? '0'));
+    return { send, offset };
+  };
+
+  test('folha: a alça fecha mesmo com o conteúdo rolado (o corpo só rola)', async ({ page, isMobile, context }) => {
+    test.skip(!isMobile, 'gesto só no celular');
+    await seed(page);
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.waitForTimeout(600);
+    // em repouso a alça não cobre nada do conteúdo (a faixa é sólida: já cortou o avatar do cabeçalho)
+    const overlap = await page.locator('.modal').evaluate((m) => m.querySelector('.sheet-grabber').getBoundingClientRect().bottom - m.children[1].getBoundingClientRect().top);
+    expect(overlap, 'alça sobre o conteúdo').toBeLessThanOrEqual(0.5);
+    // conteúdo comprido e já rolado: antes, arrastar de cima rolava o conteúdo em vez de fechar a folha
+    await page.locator('.modal').evaluate((m) => {
+      const pad = document.createElement('div');
+      pad.style.height = '1500px';
+      m.append(pad);
+      m.scrollTop = 80;
+    });
+    const { send } = await touchTools(page, context);
+    const box = await page.locator('.sheet-grabber').boundingBox();
+    const x = box.x + box.width / 2, y = box.y + box.height / 2;
+    await send('touchStart', x, y);
+    for (let i = 1; i <= 8; i++) {
+      await send('touchMove', x, y + i * 40);
+      await page.waitForTimeout(10);
+    }
+    await send('touchEnd');
+    await expect(page.locator('.overlay')).toHaveCount(0);
+  });
+
+  test('folha: pode ser agarrada no meio da entrada e do fechamento', async ({ page, isMobile, context }) => {
+    test.skip(!isMobile, 'gesto só no celular');
+    await seed(page);
+    await go(page, 'meus-politicos');
+    // relógio parado: o tempo só anda com runFor, então "no meio da animação" é determinístico
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 60_000));
+    const { send, offset } = await touchTools(page, context);
+
+    // entrada: com o tempo parado a 60 ms, a folha ainda está bem abaixo do repouso
+    await page.locator('[data-details]').first().click();
+    await page.clock.runFor(100);
+    const mid = await offset();
+    expect(mid, 'folha ainda subindo').toBeGreaterThan(20);
+    const vh = page.viewportSize().height;
+    const box = await page.locator('.modal').boundingBox();
+    const x = box.x + box.width / 2, y = Math.min(box.y + 80, vh - 8); // dentro da folha e da tela
+    await send('touchStart', x, y);
+    await send('touchMove', x, y + 20);
+    await send('touchMove', x, y + 120);
+    // antes a animação (@keyframes) vencia o arrasto; agora o dedo continua de onde a folha estava
+    expect(await offset(), 'arrasto segue o dedo a partir do valor apresentado').toBeGreaterThan(mid + 60);
+    await send('touchEnd');
+    await page.clock.runFor(1500);
+    await expect(page.locator('.overlay')).toHaveCount(0);
+
+    // fechamento: agarrar a folha que desce a traz de volta, e ela continua fechável
+    await page.locator('[data-details]').first().click();
+    await page.clock.runFor(1000);
+    await page.locator('.modal').evaluate((m) => m.querySelector('[data-close]')?.click());
+    await page.clock.runFor(60);
+    const midClose = await offset();
+    expect(midClose, 'folha descendo').toBeGreaterThan(20);
+    const box2 = await page.locator('.modal').boundingBox();
+    const x2 = box2.x + box2.width / 2, y2 = Math.min(box2.y + 80, vh - 8);
+    await send('touchStart', x2, y2);
+    await send('touchMove', x2, y2 + 1);
+    await send('touchEnd');
+    await page.clock.runFor(1500);
+    await expect(page.locator('.overlay'), 'agarrada, a folha volta e fica').toHaveCount(1);
+    await page.keyboard.press('Escape');
+    await page.clock.runFor(1500);
+    await expect(page.locator('.overlay'), 'e ainda fecha depois').toHaveCount(0);
+  });
+
   test('movimento reduzido troca deslizamento por esmaecimento', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await seed(page);
