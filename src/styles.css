@@ -154,7 +154,9 @@
   /* ==========================================================================
      M3 TIPOGRAFIA — FONTE ACTOR (Thomas Junold)
      ========================================================================== */
-  --md-sys-typescale-font: 'Actor', sans-serif;
+  /* Corpo e controles: fonte do sistema, com pesos reais. Actor só nos títulos e na marca (--font-display). */
+  --md-sys-typescale-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Actor', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-family: var(--md-sys-typescale-font);
   color-scheme: light;
 
@@ -2121,4 +2123,15 @@ p {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
+}
+
+/* --- Títulos e marca em Actor ---
+   A Actor só existe no peso 400; font-synthesis: none impede o negrito sintético (borrado e mais largo)
+   mesmo quando uma classe pede 600/700. A hierarquia vem do tamanho, do espaçamento e da cor. */
+h1, h2, h3, h4, .h1, .h2, .h3,
+.display-large, .display-medium, .display-small,
+.headline-large, .headline-medium, .headline-small, .title-large,
+.header-brand .brand-title {
+  font-family: var(--font-display);
+  font-synthesis: none;
 }
