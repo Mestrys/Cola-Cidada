@@ -92,7 +92,8 @@ export function toast(msg, icon = 'check_circle', { action, duration } = {}) {
 }
 
 let scrollLocks = 0;
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+// Só o que o Tab alcança: abas inativas (tabindex=-1, ver tablist) ficam de fora, senão o ciclo nunca fecha.
+const FOCUSABLE = ':is(a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]):not([tabindex="-1"])';
 
 // Enquanto houver diálogo aberto, o resto do app sai da árvore de acessibilidade e não recebe foco nem cliques.
 function setBackgroundInert(on) {
