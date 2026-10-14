@@ -63,6 +63,11 @@ export function mandateProgress(p) {
 const TOAST_ICONS = { success: 'check_circle', error: 'error', info: 'info', delete: 'delete' };
 
 // Snackbar com região live para leitores de tela; `action` adiciona um botão (ex.: Desfazer).
+// Toque háptico curto, só onde confirma um ato (remover, desfazer). Silencioso sem suporte (iOS) e com movimento reduzido.
+export function buzz(ms = 10) {
+  if (!prefersReducedMotion()) navigator.vibrate?.(ms);
+}
+
 export function toast(msg, icon = 'check_circle', { action, duration } = {}) {
   document.querySelectorAll('.toast').forEach((old) => old.remove());
   const t = document.createElement('div');
@@ -82,13 +87,71 @@ export function toast(msg, icon = 'check_circle', { action, duration } = {}) {
     b.className = 'toast-action';
     b.textContent = action.label;
     b.onclick = () => {
+      buzz(8);
       action.onClick();
       dismiss();
     };
     t.append(b);
   }
   document.body.append(t);
-  timer = setTimeout(dismiss, duration || (action ? 6000 : 3200));
+  const wait = duration || (action ? 6000 : 3200);
+  timer = setTimeout(dismiss, wait);
+  if (icon === 'delete') buzz(15);
+  enableToastSwipe(t, {
+    hold: () => clearTimeout(timer), // segurando o aviso, ele não some
+    resume: () => { timer = setTimeout(dismiss, wait); },
+    dismiss: () => t.remove(),
+  });
+}
+
+// Arrastar o aviso para o lado o dispensa: acompanha o dedo 1:1, projeta a inércia na soltura e anima
+// com mola a partir da velocidade do gesto (volta ao lugar se o arrasto for curto).
+function enableToastSwipe(t, { hold, resume, dismiss }) {
+  let startX = 0, offset = 0, dragging = false, samples = [], anim = null;
+  const apply = (x) => {
+    offset = x;
+    t.style.transform = x ? `translateX(${x}px)` : '';
+    t.style.opacity = String(Math.max(0, 1 - Math.abs(x) / (t.offsetWidth * 1.2)));
+  };
+  t.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button') || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    t.setPointerCapture(e.pointerId);
+    if (anim?.running) apply(anim.stop().value);
+    startX = e.clientX - offset;
+    samples = [{ v: e.clientX, t: e.timeStamp }];
+    dragging = true;
+    hold();
+  });
+  t.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    apply(e.clientX - startX);
+    samples.push({ v: e.clientX, t: e.timeStamp });
+    if (samples.length > 6) samples.shift();
+  });
+  const release = () => {
+    if (!dragging) return;
+    dragging = false;
+    const velocity = velocityFrom(samples);
+    const w = t.offsetWidth;
+    const gone = Math.abs(offset + project(velocity)) > w * 0.4;
+    if (prefersReducedMotion()) {
+      if (gone) dismiss();
+      else { apply(0); resume(); }
+      return;
+    }
+    const dir = Math.sign(offset + project(velocity)) || 1;
+    anim = spring({
+      from: offset,
+      to: gone ? dir * (w + 32) : 0,
+      velocity,
+      dampingRatio: 1,
+      response: gone ? 0.28 : 0.35,
+      onUpdate: apply,
+      onComplete: gone ? dismiss : resume,
+    });
+  };
+  t.addEventListener('pointerup', release);
+  t.addEventListener('pointercancel', release);
 }
 
 let scrollLocks = 0;
