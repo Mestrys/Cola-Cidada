@@ -120,3 +120,41 @@ export async function searchSenators(query: string): Promise<SenatorResult[]> {
     .filter((s) => s.name.toLowerCase().includes(q) || s.uf.toLowerCase() === q || s.party.toLowerCase().includes(q))
     .slice(0, 8);
 }
+
+/* ================= VOTAÇÕES ================= */
+
+export async function recentRollCalls(limit = 8): Promise<any[]> {
+  const { dados } = await getJson(`${CAMARA_BASE}/votacoes?ordem=DESC&ordenarPor=dataHoraRegistro&itens=${limit * 3}`);
+  return (dados || []).filter((v: any) => v.aprovacao !== null).slice(0, limit);
+}
+
+export async function votesOf(votingId: string | number): Promise<any[]> {
+  const { dados } = await getJson(`${CAMARA_BASE}/votacoes/${votingId}/votos`);
+  return dados || [];
+}
+
+export async function recentProvisionalMeasures(limit = 10): Promise<Proposition[]> {
+  const { dados } = await getJson(`${CAMARA_BASE}/proposicoes?siglaTipo=MPV&ordem=DESC&ordenarPor=id&itens=${limit}`);
+  return (dados || []).map((p: any) => ({
+    id: p.id,
+    type: p.siglaTipo,
+    number: p.numero,
+    year: p.ano,
+    summary: p.ementa,
+    date: p.dataApresentacao,
+    url: `https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=${p.id}`,
+  }));
+}
+
+export const SENATE_WINDOW_DAYS = 180;
+
+/** Mesmas datas na mesma janela => mesma URL => resposta reaproveitada do cache. */
+export function senateWindow(now = new Date()) {
+  const iso = (d: Date) => d.toISOString().slice(0, 10);
+  return { since: iso(new Date(now.getTime() - SENATE_WINDOW_DAYS * 86400000)), until: iso(now) };
+}
+
+export async function senateNominalVotings(since: string, until: string): Promise<any[]> {
+  const list = await getJson(`${SENADO_BASE}/votacao?dataInicio=${since}&dataFim=${until}`);
+  return Array.isArray(list) ? list : [];
+}

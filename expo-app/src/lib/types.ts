@@ -67,3 +67,30 @@ export interface Proposition {
   date?: string;
   url: string;
 }
+
+export interface CamaraVoting {
+  id: string;
+  descricao: string;
+  data: string;
+  siglaOrgao: string;
+  approved: boolean;
+  tally: { Sim: number; Não: number; Outros: number };
+  /** voto de cada político acompanhado (id do app); null = ausente */
+  byPol: Record<string, string | null>;
+  category: Category;
+}
+
+export interface SenateVoting {
+  key: string;
+  matter: string;
+  summary: string;
+  date: string;
+  result: string;
+  yes: number;
+  no: number;
+  /** voto de cada senador acompanhado (id do app) */
+  bySenator: Record<string, string>;
+  category: Category;
+}
+
+export type Category = 'economia' | 'tecnologia' | 'meio-ambiente' | 'social-saude' | 'seguranca' | 'geral';

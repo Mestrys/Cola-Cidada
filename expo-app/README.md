@@ -14,8 +14,8 @@ src/
       _layout.tsx         monta a barra de abas
       index.tsx           Início        → /
       politicos.tsx       Políticos     → /politicos
-      comparador.tsx      Comparador    → /comparador   (em breve)
-      alertas.tsx         Alertas       → /alertas      (em breve)
+      comparador.tsx      Comparador    → /comparador   votações da Câmara e do Senado, filtros e confronto 1 contra 1
+      alertas.tsx         Alertas       → /alertas      votações da Câmara e do Senado, filtros e confronto 1 contra 1
       perfil.tsx          Perfil        → /perfil
     adicionar.tsx         modal de busca e cadastro de políticos
     politico/[id].tsx     ficha (dados oficiais e projetos de lei)
