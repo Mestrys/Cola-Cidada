@@ -15,12 +15,12 @@ export async function openDossierModal(p) {
   const { el, close } = modal(`
     <div class="row between no-print">
       <div class="row">
-        <span class="mi u-c-primary u-fs-24">description</span>
+        <span class="mi u-c-primary u-fs-24" aria-hidden="true">description</span>
         <h3 class="h2 u-fs-16">Dossiê Cívico de Prestação de Contas</h3>
       </div>
       <div class="row">
-        <button class="btn primary sm" id="btn-print-dossier"><span class="mi">print</span>Imprimir / Salvar PDF</button>
-        <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+        <button class="btn primary sm" id="btn-print-dossier"><span class="mi" aria-hidden="true">print</span>Imprimir / Salvar PDF</button>
+        <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
       </div>
     </div>
 

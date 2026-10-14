@@ -57,3 +57,10 @@ test('toda classe utilitária u-* usada nas views existe em utilities.css', () =
   }
   assert.deepEqual([...missing], []);
 });
+
+test('ícones da fonte ficam fora do leitor de tela (o nome da ligadura seria lido)', () => {
+  for (const f of sources.filter((f) => f.startsWith('src/'))) {
+    const bare = [...read(f).matchAll(/<span class="mi[ "][^>]*>/g)].map((m) => m[0]).filter((t) => !t.includes('aria-hidden="true"'));
+    assert.deepEqual(bare, [], `${f}: ícone sem aria-hidden`);
+  }
+});

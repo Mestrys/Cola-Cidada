@@ -153,20 +153,20 @@ export function openAnalysisModal(item) {
   const { el } = modal(`
     <div class="row between no-print">
       <div class="row">
-        <span class="mi u-c-primary u-fs-24">psychology</span>
+        <span class="mi u-c-primary u-fs-24" aria-hidden="true">psychology</span>
         <div>
           <h3 class="h2 u-fs-16">Inteligência Cívica & Análise Textual</h3>
           <span class="sm muted">${esc(s.code)}</span>
         </div>
       </div>
-      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
     </div>
 
     <!-- Navegação de Abas -->
     <div class="row u-gap-8 u-mt-12 u-bb-1-solid-line u-pb-8">
-      <button class="btn sm active" id="tab-summary-btn"><span class="mi">menu_book</span>Resumo Oficial</button>
-      <button class="btn sm ghost" id="tab-jabuti-btn"><span class="mi">pest_control</span>Scanner de Jabutis</button>
-      <button class="btn sm ghost" id="tab-simulator-btn"><span class="mi">tune</span>Simulador de Texto</button>
+      <button class="btn sm active" id="tab-summary-btn"><span class="mi" aria-hidden="true">menu_book</span>Resumo Oficial</button>
+      <button class="btn sm ghost" id="tab-jabuti-btn"><span class="mi" aria-hidden="true">pest_control</span>Scanner de Jabutis</button>
+      <button class="btn sm ghost" id="tab-simulator-btn"><span class="mi" aria-hidden="true">tune</span>Simulador de Texto</button>
     </div>
 
     <!-- Conteúdo da Aba 1: Sumário Didático -->
@@ -181,14 +181,14 @@ export function openAnalysisModal(item) {
 
       <div class="card stack u-gap-6">
         <div class="row">
-          <span class="mi u-c-primary">description</span>
+          <span class="mi u-c-primary" aria-hidden="true">description</span>
           <b>Dados oficiais da proposição</b>
         </div>
         <p class="sm muted">${esc(s.code)}${s.date ? ` • apresentada em ${esc(fmtDate(s.date))}` : ''}</p>
         ${
           s.url
             ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" class="sm u-fw-600 u-d-inline-flex u-ai-center u-gap-4">
-                <span>Ficha de tramitação e inteiro teor</span><span class="mi u-fs-14">open_in_new</span>
+                <span>Ficha de tramitação e inteiro teor</span><span class="mi u-fs-14" aria-hidden="true">open_in_new</span>
               </a>`
             : '<p class="sm muted">Abra a ficha oficial no site da Câmara ou do Senado para ver a tramitação e o inteiro teor.</p>'
         }
@@ -198,13 +198,13 @@ export function openAnalysisModal(item) {
     <!-- Conteúdo da Aba 2: Scanner de Jabutis -->
     <div id="tab-jabuti-content" class="stack u-gap-14 u-mt-14 u-d-none">
       <p class="xs muted u-d-flex u-gap-6 u-ai-flex-start">
-        <span class="mi u-fs-16">info</span>
+        <span class="mi u-fs-16" aria-hidden="true">info</span>
         <span>Estimativa automática por palavras-chave, não uma análise do texto da proposição. Confira a ficha oficial antes de tirar conclusões.</span>
       </p>
       <div class="card stack verdict${s.analysis.hasJabuti ? ' bad' : ''}">
         <div class="row between">
           <div class="row">
-            <span class="mi u-fs-24 ${s.analysis.hasJabuti ? 'u-c-red' : 'u-c-green'}">
+            <span class="mi u-fs-24 ${s.analysis.hasJabuti ? 'u-c-red' : 'u-c-green'}" aria-hidden="true">
               ${s.analysis.hasJabuti ? 'warning' : 'check_circle'}
             </span>
             <h4 class="u-fs-15 u-fw-700">
@@ -249,7 +249,7 @@ export function openAnalysisModal(item) {
 
       <div class="card stack u-gap-6 u-bg-s1">
         <div class="row sm">
-          <span class="mi u-c-primary">gavel</span>
+          <span class="mi u-c-primary" aria-hidden="true">gavel</span>
           <b>Entendimento Constitucional (STF)</b>
         </div>
         <p class="sm muted u-fs-12 u-lh-1_4">
@@ -273,8 +273,8 @@ export function openAnalysisModal(item) {
       </div>
 
       <div class="row">
-        <button class="btn primary sm" id="btn-run-sim"><span class="mi">radar</span>Escanear Discrepância Temática</button>
-        <button class="btn ghost sm" id="btn-sample-jabuti"><span class="mi">lightbulb</span>Carregar Exemplo Real de Jabuti</button>
+        <button class="btn primary sm" id="btn-run-sim"><span class="mi" aria-hidden="true">radar</span>Escanear Discrepância Temática</button>
+        <button class="btn ghost sm" id="btn-sample-jabuti"><span class="mi" aria-hidden="true">lightbulb</span>Carregar Exemplo Real de Jabuti</button>
       </div>
 
       <div id="sim-result-container" class="u-d-none u-mt-8"></div>

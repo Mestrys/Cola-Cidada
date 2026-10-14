@@ -153,10 +153,10 @@ export async function openShareModal({ politician, title, highlight, badge, badg
   const { el, close } = modal(`
     <div class="row between">
       <div class="row">
-        <span class="mi u-c-primary u-fs-24">share</span>
+        <span class="mi u-c-primary u-fs-24" aria-hidden="true">share</span>
         <h3 class="h2 u-fs-16">Card Cívico para Redes Sociais</h3>
       </div>
-      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi">close</span></button>
+      <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
     </div>
 
     <div class="stack u-ai-center u-gap-12 u-mt-8">
@@ -167,8 +167,8 @@ export async function openShareModal({ politician, title, highlight, badge, badg
     </div>
 
     <div class="row between u-mt-14">
-      <button class="btn primary" id="btn-download-png" disabled><span class="mi">download</span>Baixar Imagem PNG</button>
-      <button class="btn sm" id="btn-share-native" disabled><span class="mi">send</span>Enviar / Compartilhar</button>
+      <button class="btn primary" id="btn-download-png" disabled><span class="mi" aria-hidden="true">download</span>Baixar Imagem PNG</button>
+      <button class="btn sm" id="btn-share-native" disabled><span class="mi" aria-hidden="true">send</span>Enviar / Compartilhar</button>
     </div>
   `);
 

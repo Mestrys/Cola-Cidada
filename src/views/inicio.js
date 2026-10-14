@@ -20,7 +20,7 @@ export async function render(root) {
         <div class="card u-bg-60a2ea u-c-fff u-p-36 u-border-none u-br-r-lg u-position-relative u-overflow-hidden">
           <div class="u-position-relative u-z-index-2 u-maxw-680">
             <span class="chip u-bg-rgba-255-255-255-0_2 u-c-fff u-mb-12">
-              <span class="mi u-fs-14">security</span>
+              <span class="mi u-fs-14" aria-hidden="true">security</span>
               LGPD: seus dados ficam somente no seu dispositivo
             </span>
             <h1 class="u-fs-32 u-fw-800 u-lh-1_2 u-mb-12 u-ls-0_5">
@@ -31,10 +31,10 @@ export async function render(root) {
             </p>
             <div class="row u-gap-12">
               <button class="btn u-bg-fff u-c-00531b u-fw-700 u-p-12-24 u-fs-14 u-box-shadow-0-4-14-rgba-0-0-0-0_2" id="start">
-                <span class="mi">how_to_vote</span>Cadastrar Meus Políticos
+                <span class="mi" aria-hidden="true">how_to_vote</span>Cadastrar Meus Políticos
               </button>
               <a href="#/comparador" class="btn u-bg-rgba-255-255-255-0_15 u-c-fff u-border-346aaa">
-                <span class="mi">explore</span>Explorar Votações Abertas
+                <span class="mi" aria-hidden="true">explore</span>Explorar Votações Abertas
               </a>
             </div>
           </div>
@@ -44,7 +44,7 @@ export async function render(root) {
         <div class="grid g3">
           <div class="card stack u-gap-10">
             <div class="u-width-44 u-height-44 u-br-12 u-bg-primary-soft u-c-primary u-d-grid u-place-items-center">
-              <span class="mi fill u-fs-24">account_balance</span>
+              <span class="mi fill u-fs-24" aria-hidden="true">account_balance</span>
             </div>
             <h3 class="h2">Congresso Nacional Conectado</h3>
             <p class="sm muted u-lh-1_5">
@@ -54,7 +54,7 @@ export async function render(root) {
 
           <div class="card stack u-gap-10">
             <div class="u-width-44 u-height-44 u-br-12 u-bg-secondary-container u-c-secondary u-d-grid u-place-items-center">
-              <span class="mi fill u-fs-24">lock</span>
+              <span class="mi fill u-fs-24" aria-hidden="true">lock</span>
             </div>
             <h3 class="h2">Privacidade Absoluta (LGPD)</h3>
             <p class="sm muted u-lh-1_5">
@@ -64,7 +64,7 @@ export async function render(root) {
 
           <div class="card stack u-gap-10">
             <div class="u-width-44 u-height-44 u-br-12 u-bg-tertiary-container u-c-tertiary u-d-grid u-place-items-center">
-              <span class="mi fill u-fs-24">notifications_active</span>
+              <span class="mi fill u-fs-24" aria-hidden="true">notifications_active</span>
             </div>
             <h3 class="h2">Alertas de Votação Nominal</h3>
             <p class="sm muted u-lh-1_5">
@@ -87,8 +87,8 @@ export async function render(root) {
         <p>Visão integrada de vigilância social sobre seus <b>${politicians.length} representantes eleitos</b> em exercício.</p>
       </div>
       <div class="row page-actions">
-        <button class="btn outlined" id="btn-refresh"><span class="mi">sync</span>Atualizar Feed</button>
-        <button class="btn primary" id="add"><span class="mi">person_add</span>Seguir Novo Parlamentar</button>
+        <button class="btn outlined" id="btn-refresh"><span class="mi" aria-hidden="true">sync</span>Atualizar Feed</button>
+        <button class="btn primary" id="add"><span class="mi" aria-hidden="true">person_add</span>Seguir Novo Parlamentar</button>
       </div>
     </div>
 
@@ -99,22 +99,22 @@ export async function render(root) {
       <section class="stack" aria-labelledby="pol-list-title">
         <div class="row between">
           <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-22">how_to_vote</span>
+            <span class="mi u-c-primary u-fs-22" aria-hidden="true">how_to_vote</span>
             <h2 id="pol-list-title" class="h2">Políticos Monitorados</h2>
           </div>
           <span class="chip green">${politicians.length} Ativos</span>
         </div>
 
         <div class="stack" id="politicians-container">
-          ${politicians.map(politicianCard).join('')}
+          ${politicians.map((p) => politicianCard(p)).join('')}
         </div>
 
         <div class="row u-gap-8">
           <button class="btn outlined sm u-flex-1" id="btn-open-cola-col1">
-            <span class="mi">how_to_vote</span>Minha Cola
+            <span class="mi" aria-hidden="true">how_to_vote</span>Minha Cola
           </button>
           <button class="btn primary sm u-flex-1" id="add-sub">
-            <span class="mi">person_add</span>Novo Político
+            <span class="mi" aria-hidden="true">person_add</span>Novo Político
           </button>
         </div>
       </section>
@@ -123,7 +123,7 @@ export async function render(root) {
       <section class="stack" aria-labelledby="feed-title">
         <div class="row between">
           <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-22">timeline</span>
+            <span class="mi u-c-primary u-fs-22" aria-hidden="true">timeline</span>
             <h2 id="feed-title" class="h2">Linha do Tempo Cívica</h2>
           </div>
           <span class="sm muted">Câmara e Senado</span>
@@ -156,7 +156,7 @@ export async function render(root) {
         <div class="card stack u-gap-12">
           <div class="row between">
             <div class="row u-gap-6">
-              <span class="mi u-c-primary u-fs-18">calendar_month</span>
+              <span class="mi u-c-primary u-fs-18" aria-hidden="true">calendar_month</span>
               <h3 class="h3">Pauta da Semana</h3>
             </div>
             <span class="chip blue">Câmara</span>
@@ -169,7 +169,7 @@ export async function render(root) {
         <!-- 3. Fontes oficiais -->
         <div class="card stack u-gap-10">
           <div class="row u-gap-6">
-            <span class="mi u-c-primary u-fs-18">verified_user</span>
+            <span class="mi u-c-primary u-fs-18" aria-hidden="true">verified_user</span>
             <h3 class="h3">Fontes Oficiais</h3>
           </div>
           <div class="stack xs muted u-gap-6">
@@ -298,7 +298,7 @@ export async function render(root) {
                 <div class="row between">
                   <div class="row u-gap-6">
                     <span class="chip gold">${esc(it.badge)}</span>
-                    <span class="chip green"><span class="mi u-fs-13">verified</span>Validada</span>
+                    <span class="chip green"><span class="mi u-fs-13" aria-hidden="true">verified</span>Validada</span>
                   </div>
                   <span class="xs muted">${fmtDate(it.date)}</span>
                 </div>
@@ -316,7 +316,7 @@ export async function render(root) {
 
                 <div class="row between sm u-bg-s1 u-p-8-12 u-br-r-sm">
                   <span class="muted">Fornecedor: <b>${esc(it.supplier)}</b></span>
-                  <span class="chip green xs"><span class="mi u-fs-13">check</span>Preço Médio Regional</span>
+                  <span class="chip green xs"><span class="mi u-fs-13" aria-hidden="true">check</span>Preço Médio Regional</span>
                 </div>
               </article>
             `;
@@ -331,7 +331,7 @@ export async function render(root) {
                 </div>
                 <div class="row u-gap-6">
                   <button class="btn ghost sm btn-feed-analyze u-p-2-8 u-fs-11" data-index="${idx}">
-                    <span class="mi u-fs-14 u-c-primary">psychology</span>
+                    <span class="mi u-fs-14 u-c-primary" aria-hidden="true">psychology</span>
                     <span>Analisar Jabutis & Síntese</span>
                   </button>
                   <span class="xs muted">${fmtDate(it.date)}</span>
@@ -347,7 +347,7 @@ export async function render(root) {
                   ? `
                 <div class="simple-language-box">
                   <div class="box-header">
-                    <span class="mi u-fs-16">translate</span>
+                    <span class="mi u-fs-16" aria-hidden="true">translate</span>
                     <span>Síntese em Linguagem Cidadã • Sem Juridiquês</span>
                   </div>
                   <p>${esc(it.explanation.summary)}</p>
@@ -398,7 +398,7 @@ export async function render(root) {
       };
     });
   } catch (err) {
-    feed.innerHTML = '<div class="card empty"><span class="mi">cloud_off</span><p class="muted">Falha temporária ao carregar feed do Congresso.</p></div>';
+    feed.innerHTML = '<div class="card empty"><span class="mi" aria-hidden="true">cloud_off</span><p class="muted">Falha temporária ao carregar feed do Congresso.</p></div>';
   }
 }
 
@@ -433,7 +433,7 @@ async function loadAgenda(root) {
     if (hero && next) {
       hero.hidden = false;
       hero.innerHTML = `
-        <h3><span class="mi u-fs-18">event</span>PRÓXIMO EVENTO NA CÂMARA</h3>
+        <h3><span class="mi u-fs-18" aria-hidden="true">event</span>PRÓXIMO EVENTO NA CÂMARA</h3>
         <div class="alert-title">${esc(next.organName || next.organ || 'Câmara dos Deputados')}</div>
         <p>${esc(next.description || next.type)}</p>
         <div class="row between u-mt-14 u-fs-12">

@@ -64,13 +64,13 @@ export function openOnboardingModal(force = false) {
       <div class="row between no-print">
         <div class="row u-gap-8">
           <span class="chip green">
-            <span class="mi u-fs-14">${step.icon}</span>
+            <span class="mi u-fs-14" aria-hidden="true">${step.icon}</span>
             <span>${step.tag}</span>
           </span>
           <span class="sm muted">Passo ${idx + 1} de ${steps.length}</span>
         </div>
         <button class="btn icon ghost" id="skip-onboarding" title="Pular introdução" aria-label="Fechar">
-          <span class="mi">close</span>
+          <span class="mi" aria-hidden="true">close</span>
         </button>
       </div>
 
@@ -86,7 +86,7 @@ export function openOnboardingModal(force = false) {
             .map(
               (b) => `
             <div class="row u-ai-flex-start u-gap-10 u-fwrap-nowrap">
-              <span class="mi u-c-primary u-fs-18 u-mt-2">${b.icon}</span>
+              <span class="mi u-c-primary u-fs-18 u-mt-2" aria-hidden="true">${b.icon}</span>
               <span class="u-fs-13 u-lh-1_4">${esc(b.text)}</span>
             </div>`
             )
@@ -108,12 +108,12 @@ export function openOnboardingModal(force = false) {
         <div class="row u-gap-8">
           ${
             idx > 0
-              ? `<button class="btn sm" id="btn-prev-step"><span class="mi">arrow_back</span>Voltar</button>`
+              ? `<button class="btn sm" id="btn-prev-step"><span class="mi" aria-hidden="true">arrow_back</span>Voltar</button>`
               : ''
           }
           <button class="btn primary sm" id="btn-next-step">
             <span>${step.actionLabel}</span>
-            <span class="mi">${isLast ? 'check_circle' : 'arrow_forward'}</span>
+            <span class="mi" aria-hidden="true">${isLast ? 'check_circle' : 'arrow_forward'}</span>
           </button>
         </div>
       </div>

@@ -24,10 +24,10 @@ export function render(root) {
         <p>Garantia de soberania de dados pessoais (Art. 5º da LGPD) e fiscalização do ciclo eleitoral em vigor.</p>
       </div>
       <div class="row page-actions two">
-        <button class="btn outlined" id="btn-rever-onboarding"><span class="mi">help_outline</span>Guia Inicial</button>
-        <button class="btn outlined" id="btn-cola-eleitoral"><span class="mi">how_to_vote</span>Minha Cola</button>
-        <button class="btn outlined" id="btn-export-top"><span class="mi">download</span>Backup JSON</button>
-        <button class="btn primary" id="btn-retificar"><span class="mi">person_add</span>Seguir Político</button>
+        <button class="btn outlined" id="btn-rever-onboarding"><span class="mi" aria-hidden="true">help_outline</span>Guia Inicial</button>
+        <button class="btn outlined" id="btn-cola-eleitoral"><span class="mi" aria-hidden="true">how_to_vote</span>Minha Cola</button>
+        <button class="btn outlined" id="btn-export-top"><span class="mi" aria-hidden="true">download</span>Backup JSON</button>
+        <button class="btn primary" id="btn-retificar"><span class="mi" aria-hidden="true">person_add</span>Seguir Político</button>
       </div>
     </div>
 
@@ -36,7 +36,7 @@ export function render(root) {
       <div class="row between">
         <div class="row nowrap u-gap-16">
           <div class="u-width-64 u-height-64 u-br-50pct u-bg-f4e9bb u-d-grid u-place-items-center u-c-fff u-fs-24 u-fw-700 u-flex-shrink-0">
-            <span class="mi fill u-fs-32">person</span>
+            <span class="mi fill u-fs-32" aria-hidden="true">person</span>
           </div>
           <div>
             <div class="row u-gap-8">
@@ -51,7 +51,7 @@ export function render(root) {
 
         <div class="row u-gap-8">
           <button class="btn outlined sm" id="btn-edit-domicile">
-            <span class="mi">edit_location_alt</span>Alterar Município
+            <span class="mi" aria-hidden="true">edit_location_alt</span>Alterar Município
           </button>
         </div>
       </div>
@@ -74,7 +74,7 @@ export function render(root) {
       <div class="card stack u-gap-10 u-bg-s1 u-p-16 u-br-r u-border-1-solid-line u-mt-4">
         <div class="row between">
           <div class="row u-gap-8">
-            <span class="mi u-c-primary u-fs-20">verified_user</span>
+            <span class="mi u-c-primary u-fs-20" aria-hidden="true">verified_user</span>
             <b class="u-fs-13_5">Seu Acompanhamento</b>
           </div>
           <span class="chip green"><b>${civicScore}/100 pts</b> · ${civicScore >= 80 ? 'Vigilância Alta' : civicScore >= 50 ? 'Vigilância Moderada' : 'Iniciante'}</span>
@@ -127,7 +127,7 @@ export function render(root) {
             </div>`
               : `
             <div class="empty u-p-28">
-              <span class="mi">how_to_vote</span>
+              <span class="mi" aria-hidden="true">how_to_vote</span>
               <h3 class="u-fs-14">Nenhum voto declarado ainda</h3>
               <p class="xs muted">Cadastre seus votos para começar a acompanhar os mandatos.</p>
             </div>`
@@ -163,7 +163,7 @@ export function render(root) {
             </div>
           </div>
           <button class="btn sm primary u-align-self-flex-start" id="btn-save-domicile">
-            <span class="mi">check</span>Salvar Domicílio
+            <span class="mi" aria-hidden="true">check</span>Salvar Domicílio
           </button>
         </div>
 
@@ -175,7 +175,7 @@ export function render(root) {
         <div class="card stack u-gap-14 u-p-20 u-bl-4-solid-primary">
           <div class="row between">
             <div class="row u-gap-8">
-              <span class="mi u-c-primary u-fs-22">shield</span>
+              <span class="mi u-c-primary u-fs-22" aria-hidden="true">shield</span>
               <h2 class="h2">Privacidade & LGPD</h2>
             </div>
           </div>
@@ -188,10 +188,10 @@ export function render(root) {
             <b class="xs muted u-tt-uppercase u-fw-700">Backup & Portabilidade (Art. 18 LGPD):</b>
             <div class="row u-gap-8">
               <button class="btn sm outlined u-flex-1" id="export">
-                <span class="mi">download</span>Exportar JSON
+                <span class="mi" aria-hidden="true">download</span>Exportar JSON
               </button>
               <label class="btn sm outlined u-flex-1 u-cursor-pointer u-ta-center">
-                <span class="mi">upload</span>Restaurar
+                <span class="mi" aria-hidden="true">upload</span>Restaurar
                 <input type="file" id="import-file" accept=".json" class="u-d-none">
               </label>
             </div>
@@ -199,7 +199,7 @@ export function render(root) {
 
           <div class="u-bt-1-solid-line u-pt-14 u-mt-4">
             <button class="btn danger sm u-width-100pct" id="purge">
-              <span class="mi">delete_forever</span>Expurgar Todos os Dados Locais
+              <span class="mi" aria-hidden="true">delete_forever</span>Expurgar Todos os Dados Locais
             </button>
             <span class="xs muted u-d-block u-ta-center u-mt-6">
               Apaga permanentemente todos os registros e zera a memória local.
