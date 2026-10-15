@@ -1,5 +1,5 @@
 import { store } from './store.js';
-import { $, $$ } from './ui.js';
+import { $, $$, initImageFallback } from './ui.js';
 import { prefersReducedMotion } from './motion.js';
 import { initDynamicStyles } from './dynamic.js';
 import * as painel from './views/painel.js';
@@ -328,6 +328,12 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+initImageFallback();
+// Se a fonte de ícones não carregar, o ícone some (o rótulo ao lado basta) em vez de mostrar o nome da ligadura cortado.
+document.fonts?.load('24px "Material Symbols Outlined"', 'home').then(
+  (f) => !f.length && document.documentElement.classList.add('no-icon-font'),
+  () => document.documentElement.classList.add('no-icon-font')
+);
 shell();
 initDynamicStyles();
 applyTheme();

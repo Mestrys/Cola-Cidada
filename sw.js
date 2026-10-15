@@ -1,9 +1,11 @@
-const CACHE_NAME = 'monitor-cidadao-v24';
+const CACHE_NAME = 'monitor-cidadao-v25';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/icon.svg',
+  '/fonts/material-symbols.woff2',
+  '/fonts/actor-latin.woff2',
   '/src/styles.css',
   '/src/utilities.css',
   '/src/dynamic.js',

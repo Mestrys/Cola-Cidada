@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { project, rubberband, velocityFrom } from '../../src/motion.js';
-import { defaultMandate, mandateProgress, esc } from '../../src/ui.js';
+import { defaultMandate, mandateProgress, esc, initials, photoUrl } from '../../src/ui.js';
 import { parseBloc, orientationFor } from '../../src/plenary.js';
 
 test('projeção de inércia: parado não anda, lançamento rápido vai longe', () => {
@@ -77,4 +77,25 @@ test('ministro do STF não tem mandato: o cartão mostra cargo vitalício em vez
   assert.equal(m.open, true);
   assert.match(m.label, /vitalício/);
   assert.deepEqual(defaultMandate('prefeito'), ['2025-01-01', '2028-12-31']);
+});
+
+test('iniciais ignoram o título que vem antes do nome', () => {
+  assert.equal(initials('Pref. Abilio Brunini'), 'AB');
+  assert.equal(initials('Presidente Lula'), 'L');
+  assert.equal(initials('Gov. Mateus Simões'), 'MS');
+  assert.equal(initials('Min. Cármen Lúcia'), 'CL');
+  assert.equal(initials('Dep. Álvaro Dias'), 'ÁD');
+  assert.equal(initials('Ver. Aiache'), 'A');
+  assert.equal(initials('Tabata Amaral'), 'TA');
+  assert.equal(initials('Dr. '), 'D');
+  assert.equal(initials('Cap Silva'), 'CS', 'sem ponto não é título');
+  assert.equal(initials('Cap. Silva'), 'S');
+  assert.equal(initials(''), '');
+});
+
+test('fotos oficiais: sempre https e direto na URL final do Senado', () => {
+  assert.equal(photoUrl(''), '');
+  assert.equal(photoUrl('http://www.camara.leg.br/internet/deputado/bandep/204379.jpg'), 'https://www.camara.leg.br/internet/deputado/bandep/204379.jpg');
+  assert.equal(photoUrl('http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg'), 'https://legis.senado.leg.br/senadores/fotos-oficiais/5672');
+  assert.equal(photoUrl('https://exemplo.org/a.png'), 'https://exemplo.org/a.png');
 });

@@ -1,8 +1,26 @@
 /* ==========================================================================
    MONITOR CIDADÃO — 100% GOOGLE MATERIAL DESIGN 3 (M3)
-   Tipografia: Actor (Designed by Thomas Junold)
-   Google Fonts: https://fonts.googleapis.com/css2?family=Actor&display=swap
+   Tipografia: Actor (Designed by Thomas Junold) e Material Symbols, servidas de /fonts (scripts/build-fonts.mjs):
+   nenhum pedido a terceiros, nem o IP de quem visita vai ao Google (LGPD), e os ícones não dependem de rede externa.
    ========================================================================== */
+
+@font-face {
+  font-family: 'Actor';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/actor-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Só os ícones de fonts/icon-names.txt; eixos variáveis: peso 400–500, preenchimento 0–1 */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: block;
+  src: url('../fonts/material-symbols.woff2') format('woff2');
+}
 
 :root {
   /* ==========================================================================
@@ -454,10 +472,19 @@ a {
   vertical-align: middle;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   user-select: none;
+  /* o ícone é um quadrado de 1em: se a fonte falhar, o nome da ligadura é cortado em vez de alargar a tela */
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0; /* num contêiner flex o quadrado não pode ser espremido: cortaria o ícone */
+  overflow: hidden;
   /* a ligadura que vira o ícone se perde com maiúsculas ou espaçamento herdados do contêiner */
   text-transform: none;
   letter-spacing: normal;
   white-space: nowrap;
+}
+
+.no-icon-font .mi {
+  visibility: hidden;
 }
 
 .mi.fill {
@@ -1050,6 +1077,11 @@ a {
   font-size: 0.875rem;
   line-height: 1.25rem;
   transition: var(--t-ui);
+}
+
+.input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 1; /* o padrão do Firefox deixa o texto mais claro e abaixo do contraste mínimo */
 }
 
 .input:focus {
