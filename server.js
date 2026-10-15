@@ -11,6 +11,7 @@ const types = {
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json',
   '.svg': 'image/svg+xml',
+  '.woff2': 'font/woff2',
   '.webmanifest': 'application/manifest+json',
 };
 const port = process.env.PORT || 5173;

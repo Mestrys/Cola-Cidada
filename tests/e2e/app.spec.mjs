@@ -616,6 +616,67 @@ test.describe('fluxos', () => {
     await expect(page.locator('#confronto-results')).toContainText('100% de Alinhamento');
   });
 
+  test('alertas: sem acompanhar ninguém chegam as votações do Plenário; os filtros escondem o que não é do tipo', async ({ page }) => {
+    await page.route(/dadosabertos\.camara\.leg\.br\/api\/v2\/votacoes\?/, (r) =>
+      r.fulfill({ json: { dados: /pagina=1(&|$)/.test(r.request().url()) ? [{ id: '9-1', descricao: 'Aprovado o projeto de saneamento. Sim: 2; Não: 1; Total: 3.', data: '2026-09-01', siglaOrgao: 'PLEN', aprovacao: 1 }] : [] } })
+    );
+    await page.route(/votacoes\/9-1\/votos/, (r) =>
+      r.fulfill({ json: { dados: [{ deputado_: { id: 1, nome: 'Ana Lima', siglaPartido: 'PT', siglaUf: 'SP' }, tipoVoto: 'Sim' }] } })
+    );
+    await page.route(/legis\.senado\.leg\.br\/dadosabertos\/votacao\?/, (r) => r.fulfill({ json: [] }));
+    await seed(page, { politicians: [], alerts: [{ id: 'antigo', ts: '2026-01-01', text: 'Alerta gravado por uma versão anterior.' }] });
+    await go(page, 'alertas');
+    await page.locator('#check').click();
+    await expect(page.locator('.alert-item[data-kind=plenario]')).toHaveCount(1);
+    await expect(page.locator('.alert-item[data-kind=plenario]')).toContainText('Câmara — Aprovado o projeto de saneamento');
+    // alerta antigo, sem tipo, conta como voto de quem a pessoa acompanha
+    await page.locator('#alert-filters [data-filter=plenario]').click();
+    await expect(page.locator('#alert-filters [data-filter=plenario]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.alert-item:visible')).toHaveCount(1);
+    await page.locator('#alert-filters [data-filter=gasto]').click();
+    await expect(page.locator('.alert-item:visible')).toHaveCount(0);
+    await expect(page.locator('#alerts-empty-filter')).toBeVisible();
+  });
+
+  test('sem nenhum pedido a terceiros: ícones e texto saem do próprio app e os ícones viram glifos', async ({ page }) => {
+    const outside = [];
+    page.on('request', (r) => { if (!r.url().startsWith('http://localhost')) outside.push(r.url()); });
+    await seed(page, { politicians: [] });
+    for (const r of ['painel', 'perfil', 'alertas', 'comparador']) {
+      await go(page, r);
+      await page.evaluate(() => document.fonts.ready);
+      // fonte de ícones carregada, e nenhum ícone mostrando o nome da ligadura (que estoura o quadrado de 1em)
+      expect(await page.evaluate(() => document.fonts.check('24px "Material Symbols Outlined"')), r).toBe(true);
+      const leaking = await page.$$eval('.mi', (els) => els.filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent.trim()));
+      expect(leaking, `${r}: ícones virando texto`).toEqual([]);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      expect(overflow, `${r}: barra de rolagem horizontal`).toBeLessThanOrEqual(0);
+    }
+    expect(await page.evaluate(() => document.fonts.check('16px Actor'))).toBe(true);
+    // só as APIs públicas de dados abertos; nenhuma fonte, folha de estilo ou script de terceiros
+    const APIS = /^https:\/\/(dadosabertos\.camara\.leg\.br|legis\.senado\.leg\.br|apidatalake\.tesouro\.gov\.br)\//;
+    expect(outside.filter((u) => !APIS.test(u))).toEqual([]);
+  });
+
+  test('fonte de ícones que falha esconde os ícones em vez de mostrar o nome cortado', async ({ page }) => {
+    await page.route('**/fonts/material-symbols.woff2', (r) => r.abort());
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await expect(page.locator('html')).toHaveClass(/no-icon-font/);
+    const visible = await page.$$eval('.mi', (els) => els.filter((e) => getComputedStyle(e).visibility !== 'hidden').length);
+    expect(visible).toBe(0);
+    // o rótulo ao lado continua lá
+    await expect(page.locator('.nav a[data-route=alertas]')).toContainText('Alertas');
+  });
+
+  test('foto que não carrega vira as iniciais, sem texto alternativo quebrado', async ({ page }) => {
+    await page.route('https://www.camara.leg.br/**', (r) => r.abort());
+    await seed(page, { politicians: [{ id: 'camara-1', source: 'camara', camaraId: 1, name: 'Dep. Maria Souza', party: 'PT', uf: 'SP', roleKey: 'dep-federal', photo: 'http://www.camara.leg.br/foto.jpg' }] });
+    await go(page, 'meus-politicos');
+    await expect(page.locator('.pol-card img.avatar')).toHaveCount(0);
+    await expect(page.locator('.pol-card .avatar').first()).toHaveText('MS');
+  });
+
   test('primeiro acesso abre o Painel Público direto, sem diálogo nem escolha', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#view h1')).toHaveText('Painel público');

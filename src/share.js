@@ -1,5 +1,5 @@
 // Geração de cards visuais cívicos para redes sociais (WhatsApp, Stories, Instagram)
-import { modal, esc, toast, brl, fmtDate } from './ui.js';
+import { modal, esc, toast, brl, fmtDate, photoUrl } from './ui.js';
 
 export async function createCardImage({ politician, title, highlight, badge, badgeColor = '#006c27', detailText }) {
   const canvas = document.createElement('canvas');
@@ -48,7 +48,7 @@ export async function createCardImage({ politician, title, highlight, badge, bad
       await new Promise((resolve) => {
         img.onload = () => { imgLoaded = true; resolve(); };
         img.onerror = () => resolve();
-        img.src = politician.photo;
+        img.src = photoUrl(politician.photo);
         // Timeout de 2.5s se a foto demorar
         setTimeout(resolve, 2500);
       });
