@@ -1,6 +1,6 @@
 name: Atualizar dados públicos
 
-# Refaz os resumos gerados de dados abertos (cota dos senadores e gastos por Poder) e abre um PR com a diferença.
+# Refaz os resumos gerados de dados abertos (cota dos senadores, gastos por Poder e emendas) e abre um PR com a diferença.
 # Rode também à mão: Actions > Atualizar dados públicos > Run workflow.
 on:
   schedule:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   atualizar:
-    name: Atualizar ceaps.json e poderes.json
+    name: Atualizar ceaps.json, poderes.json e emendas.json
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -23,6 +23,7 @@ jobs:
           node-version: 22
       - run: node scripts/build-ceaps.mjs
       - run: node scripts/build-poderes.mjs
+      - run: node scripts/build-emendas.mjs
       - run: node expo-app/scripts/sync-data.mjs
       - run: npm run test:unit
       - name: Abrir PR se algo mudou
@@ -38,8 +39,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add src/data expo-app/src/data
-          git commit -m "Atualiza cota dos senadores e gastos por Poder ($(date -u +%Y-%m-%d))"
+          git commit -m "Atualiza cota dos senadores, gastos por Poder e emendas ($(date -u +%Y-%m-%d))"
           git push -u origin "$branch"
           gh pr create --base main --head "$branch" \
-            --title "Atualiza cota dos senadores e gastos por Poder ($(date -u +%Y-%m-%d))" \
-            --body "Atualização automática dos resumos gerados (CEAPS e RGF por Poder). Confira a diferença em src/data. Os testes unitários passaram neste fluxo; rode o CI completo antes de mesclar (feche e reabra o PR, ou empurre um commit, pois PRs abertos pelo GITHUB_TOKEN não disparam o CI)."
+            --title "Atualiza cota dos senadores, gastos por Poder e emendas ($(date -u +%Y-%m-%d))" \
+            --body "Atualização automática dos resumos gerados (CEAPS, RGF por Poder e emendas). Confira a diferença em src/data. Os testes unitários passaram neste fluxo; rode o CI completo antes de mesclar (feche e reabra o PR, ou empurre um commit, pois PRs abertos pelo GITHUB_TOKEN não disparam o CI)."

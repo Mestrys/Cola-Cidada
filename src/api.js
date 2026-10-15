@@ -491,3 +491,21 @@ export function getTseElectoralProfile(p) {
 
 // Despesa com pessoal por Poder de cada ente (RGF, Siconfi), gerada por scripts/build-poderes.mjs.
 export const loadPoderes = () => staticJson('/src/data/poderes.json');
+
+/* ================= EMENDAS PARLAMENTARES ================= */
+
+// Emendas desde 2023 (Portal da Transparência), geradas por scripts/build-emendas.mjs: por parlamentar (emendas individuais)
+// e por cidade monitorada. O dado traz o nome parlamentar do autor, não o código da Câmara ou do Senado: a ligação é pelo nome.
+export const loadEmendas = () => staticJson('/src/data/emendas.json');
+export const normName = (s = '') => s.normalize('NFD').replace(/\p{Diacritic}/gu, '').toUpperCase().replace(/\s+/g, ' ').trim();
+const emendasMeta = (d) => ({ geradoEm: d.geradoEm, desde: d.desde, fonte: d.fonte });
+export async function authorEmendas(name) {
+  const d = await loadEmendas();
+  const a = d.autores[normName(name)];
+  return a ? { ...a, ...emendasMeta(d) } : null;
+}
+export async function cityEmendas(ibge) {
+  const d = await loadEmendas();
+  const c = d.cidades[String(ibge)];
+  return c ? { ...c, ...emendasMeta(d) } : { ...emendasMeta(d), vazio: true };
+}

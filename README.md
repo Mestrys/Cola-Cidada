@@ -171,6 +171,11 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   **Fase 2 (despesa total por função):** o mesmo `poderes.json` traz, por ente, a despesa liquidada por função de governo (DCA, Anexo I-E, ano mais recente:
   2025 em 105 dos 106 entes): Legislativa, Judiciária, Essencial à Justiça, Encargos especiais e as demais funções. É o gasto total, mas função não é Poder
   (aposentadorias e outros gastos de um Poder podem estar em outras funções), e a tela diz isso. O comparativo entre estados ganhou essas medidas.
+- **Emendas parlamentares:** `scripts/build-emendas.mjs` lê o download aberto do Portal da Transparência (CGU, ~32 MB, sem chave) e grava
+  `src/data/emendas.json` (~600 KB): desde 2023, por parlamentar (emendas individuais: empenhado e pago por ano, emendas Pix, municípios e favorecidos
+  que mais receberam) e por cidade monitorada (total e autores que mais enviaram). O perfil de deputado e de senador ganha a aba "Emendas" e o bloco
+  "A cidade" mostra o que a cidade recebeu. O dado traz o nome parlamentar do autor, não o código da Câmara ou do Senado: a ligação é pelo nome.
+  Para atualizar: `node scripts/build-emendas.mjs [pasta-do-zip-extraído]` (sem argumento, baixa e extrai com `unzip`).
 - **Frentes parlamentares e comissões:** o perfil do deputado federal lista as frentes da legislatura atual (API da Câmara) e o do senador
   mostra as comissões em que atua hoje (API do Senado), ambas consultadas ao vivo.
 - **STF:** `src/data/stf.json` (composição, posse, quem indicou e ano da aposentadoria compulsória). Ministros não têm mandato nem ficha eleitoral.

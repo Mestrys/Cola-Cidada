@@ -585,6 +585,8 @@ test.describe('fluxos', () => {
     await page.locator('.painel-open').first().click();
     await expect(page.locator('#city-facts')).toContainText('2ª maior economia do estado');
     await expect(page.locator('#city-facts')).toContainText('264.054');
+    await expect(page.locator('#city-facts')).toContainText('Emendas parlamentares desde 2023');
+    await expect(page.locator('#city-emendas li').first()).toBeVisible();
     await page.keyboard.press('Escape');
 
     // trocar de estado zera a cidade escolhida
@@ -629,6 +631,24 @@ test.describe('fluxos', () => {
     await expect(page.locator('#tab-cota')).toContainText('Resumo de');
     await expect(page.locator('#tab-cota')).toContainText(Object.keys(s.anos).sort().reverse()[0]);
     await expect(page.locator('#tab-cota')).toContainText('Despesas a partir de');
+  });
+
+  test('perfil do parlamentar mostra as emendas individuais (ligadas pelo nome) e avisa quando o nome não aparece', async ({ page }) => {
+    const emendas = JSON.parse((await import('node:fs')).readFileSync(new URL('../../src/data/emendas.json', import.meta.url), 'utf8'));
+    const autor = Object.values(emendas.autores).find((a) => a.destinos.length >= 3 && a.favorecidos.length >= 3);
+    const sen = (id, name) => ({ id: `senado-${id}`, source: 'senado', senadoId: id, name, party: 'MDB', uf: 'SE', roleKey: 'senador', mandate: ['2023-02-01', '2031-01-31'] });
+    await seed(page, { politicians: [sen('1', autor.nome.toLowerCase()), sen('2', 'Fulano Sem Emenda')] });
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.locator('#pol-tabs [data-tab=emendas]').click();
+    await expect(page.locator('#tab-emendas')).toContainText('Emendas individuais desde 2023');
+    await expect(page.locator('#tab-emendas')).toContainText('Municípios que mais receberam');
+    await expect(page.locator('#tab-emendas')).toContainText('Quem mais recebeu o dinheiro');
+    await expect(page.locator('#tab-emendas')).toContainText('Resumo de');
+    await page.keyboard.press('Escape');
+    await page.locator('[data-details]').nth(1).click();
+    await page.locator('#pol-tabs [data-tab=emendas]').click();
+    await expect(page.locator('#tab-emendas')).toContainText('Nenhuma emenda individual encontrada');
   });
 
   test('gastos por Poder: estado com a União, a capital e as cidades-polo; e o comparativo entre estados', async ({ page }) => {

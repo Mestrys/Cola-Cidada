@@ -6,6 +6,8 @@ import {
   deputyFronts,
   senatorCommittees,
   senatorCeaps,
+  authorEmendas,
+  cityEmendas,
   cityFacts,
   loadCidades,
   senatorVotes,
@@ -156,7 +158,7 @@ function officeHtml(p, isStf) {
 const compactBrl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1 });
 
 // Contexto da cidade (IBGE): ajuda a ler o tamanho do orçamento e da câmara. Vale para capitais e cidades-polo.
-function cityFactsHtml(c, ano, popAno) {
+function cityFactsHtml(c, ano, popAno, em) {
   const place = c.kind === 'capital' ? `Capital · ${c.rankPib}ª economia do estado` : `${c.rankPib}ª maior economia do estado`;
   const rows = [
     ['Posição no estado (PIB)', place],
@@ -169,7 +171,62 @@ function cityFactsHtml(c, ano, popAno) {
       <h3 class="sm u-fw-700" id="city-facts-title">A cidade: ${esc(c.nome)}</h3>
       <dl class="office-list">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
       <p class="xs muted">Fonte: IBGE (PIB dos Municípios e Censo Demográfico).</p>
+      ${cityEmendasHtml(em)}
     </section>`;
+}
+
+const yearsOf = (o) => Object.keys(o).sort().reverse();
+
+// Emendas que a cidade recebeu desde 2023 (todas as modalidades), com os autores que mais enviaram.
+function cityEmendasHtml(em) {
+  if (!em) return '';
+  if (em.vazio) return `<p class="xs muted">Emendas parlamentares: nenhuma registrada para esta cidade desde ${em.desde} (Portal da Transparência).</p>`;
+  const tot = Object.values(em.anos).reduce((a, y) => ({ e: a.e + y.empenhado, p: a.p + y.pago }), { e: 0, p: 0 });
+  return `
+    <div class="stack u-gap-6" id="city-emendas">
+      <h4 class="sm u-fw-700">Emendas parlamentares desde ${em.desde}</h4>
+      <dl class="office-list">
+        <div><dt>Empenhado (reservado)</dt><dd>${compactBrl.format(tot.e)}</dd></div>
+        <div><dt>Pago até agora</dt><dd>${compactBrl.format(tot.p)}</dd></div>
+        <div><dt>Emendas</dt><dd>${em.emendas}</dd></div>
+      </dl>
+      <span class="xs muted u-fw-700">Quem mais enviou:</span>
+      <ul class="stack u-gap-6">${em.autores.map((a) => `<li class="row between sm u-bg-s2 u-p-6-12 u-br-r-sm"><span class="muted truncate u-maxw-240">${esc(a.nome)}</span><b>${compactBrl.format(a.valor)}</b></li>`).join('')}</ul>
+      <p class="xs muted">Fonte: Portal da Transparência (CGU), resumo de ${fmtDate(em.geradoEm)}.</p>
+    </div>`;
+}
+
+// Emendas individuais do parlamentar desde 2023, do resumo gerado do Portal da Transparência. A ligação é pelo nome parlamentar.
+function emendasHtml(e) {
+  if (!e) {
+    return `<p class="muted">Nenhuma emenda individual encontrada com este nome parlamentar desde 2023. A ligação é feita pelo nome: se o nome no Portal da Transparência for outro, ela não aparece aqui.
+      <a href="https://portaldatransparencia.gov.br/emendas" target="_blank" rel="noopener noreferrer">Consultar no Portal<span class="sr-only"> (abre em nova aba)</span></a>.</p>`;
+  }
+  const years = yearsOf(e.anos);
+  const list = (items, label) =>
+    items.length
+      ? `<section class="card soft stack u-gap-8 u-p-14"><h3 class="sm u-fw-700">${label}</h3>
+        <ul class="stack u-gap-6">${items.map((i) => `<li class="row between sm u-bg-s2 u-p-6-12 u-br-r-sm"><span class="muted truncate u-maxw-240">${esc(i.nome)}${i.uf ? ` (${esc(i.uf)})` : ''}</span><b>${brl(i.valor)}</b></li>`).join('')}</ul></section>`
+      : '';
+  return `
+    <div class="row between">
+      <span class="chip blue">Emendas individuais desde ${e.desde}</span>
+      <span class="xs muted">Resumo de ${fmtDate(e.geradoEm)}</span>
+    </div>
+    ${years
+      .map((y) => {
+        const a = e.anos[y];
+        return `<section class="card soft stack u-gap-8 u-p-14" aria-labelledby="em-${y}">
+          <h3 class="sm u-fw-700" id="em-${y}">${esc(y)}${Number(y) === Number(e.geradoEm.slice(0, 4)) ? ' (até a data do resumo)' : ''}</h3>
+          <dl class="office-list"><div><dt>Empenhado (reservado no orçamento)</dt><dd>${brl(a.empenhado)}</dd></div><div><dt>Pago até agora</dt><dd>${brl(a.pago)}</dd></div></dl>
+        </section>`;
+      })
+      .join('')}
+    <p class="sm">${e.emendas} emendas no período${e.especial ? `, ${brl(e.especial)} delas em transferências especiais (as "emendas Pix", que vão direto ao caixa do município)` : ''}.</p>
+    ${list(e.destinos, 'Municípios que mais receberam')}
+    ${list(e.favorecidos, 'Quem mais recebeu o dinheiro')}
+    <p class="xs muted">Fonte: <a href="https://portaldatransparencia.gov.br/emendas" target="_blank" rel="noopener noreferrer">Portal da Transparência (CGU)<span class="sr-only"> (abre em nova aba)</span></a>.
+    Valores desde ${e.desde}; o pago inclui restos a pagar de anos anteriores. O parlamentar é ligado pelo nome parlamentar, e o resumo é gerado de tempos em tempos.</p>`;
 }
 
 // Cota para o exercício da atividade parlamentar (CEAPS) do senador, a partir do resumo gerado do dado aberto do Senado.
@@ -315,12 +372,14 @@ export async function openPoliticianDetails(p) {
         <button class="on" data-tab="gastos">Auditoria CEAP (Gastos)</button>
         <button data-tab="projetos">Projetos de Lei (PLs)</button>
         <button data-tab="perfil">Gabinete Oficial</button>
+        <button data-tab="emendas">Emendas</button>
         <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : isSenator
           ? `
         <button class="on" data-tab="senado">Votações no Senado</button>
         <button data-tab="cota">Cota (CEAPS)</button>
+        <button data-tab="emendas">Emendas</button>
         <button data-tab="comissoes">Comissões</button>
         <button data-tab="plenario">Presença & Fidelidade</button>
       `
@@ -344,6 +403,9 @@ export async function openPoliticianDetails(p) {
       <div id="tab-perfil" class="stack pol-pane hidden u-mt-4">
         ${skeleton('Consultando dados do gabinete oficial…', 1)}
       </div>
+      <div id="tab-emendas" class="stack pol-pane hidden u-mt-4">
+        ${skeleton('Carregando as emendas parlamentares…', 1)}
+      </div>
       <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
         ${skeleton('Calculando presença e fidelidade a partir das sessões e votações oficiais…', 1)}
       </div>
@@ -355,6 +417,9 @@ export async function openPoliticianDetails(p) {
       </div>
       <div id="tab-cota" class="stack pol-pane hidden u-mt-4">
         ${skeleton('Carregando o resumo da cota parlamentar…', 1)}
+      </div>
+      <div id="tab-emendas" class="stack pol-pane hidden u-mt-4">
+        ${skeleton('Carregando as emendas parlamentares…', 1)}
       </div>
       <div id="tab-comissoes" class="stack pol-pane hidden u-mt-4">
         ${skeleton('Consultando as comissões do Senado…', 1)}
@@ -491,10 +556,19 @@ export async function openPoliticianDetails(p) {
   const factsBox = el.querySelector('#city-facts');
   if (factsBox) {
     Promise.all([cityFacts(p.state || p.uf, p.city), loadCidades()])
-      .then(([c, meta]) => {
-        if (c) factsBox.innerHTML = cityFactsHtml(c, meta.pibAno, meta.populacaoAno);
+      .then(async ([c, meta]) => {
+        if (!c) return;
+        const em = await cityEmendas(c.ibge).catch(() => null);
+        factsBox.innerHTML = cityFactsHtml(c, meta.pibAno, meta.populacaoAno, em);
       })
       .catch(() => {});
+  }
+
+  if (isDeputy || isSenator) {
+    const paneEmendas = el.querySelector('#tab-emendas');
+    authorEmendas(p.name)
+      .then((e) => (paneEmendas.innerHTML = emendasHtml(e)))
+      .catch(() => (paneEmendas.innerHTML = '<p class="muted">Não foi possível carregar as emendas agora.</p>'));
   }
 
   if (isDeputy) {
