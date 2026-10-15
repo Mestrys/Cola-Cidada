@@ -26,7 +26,8 @@ for (const theme of ['light', 'dark']) {
     await go(page, 'painel');
     await page.locator('#painel-tabs [data-section=vereadores]').click();
     await page.locator('#painel-uf').selectOption('SC');
-    await page.locator('#painel-city-field').waitFor();
+    // trocar de estado refaz o painel: espera as cidades do estado novo, não as do anterior
+    await page.locator('#painel-city option', { hasText: 'Joinville' }).waitFor({ state: 'attached' });
     await page.locator('#painel-city').selectOption('Joinville');
     await page.waitForTimeout(300);
     {
