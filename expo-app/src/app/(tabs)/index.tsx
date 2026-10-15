@@ -221,9 +221,12 @@ export default function PainelScreen() {
         </ScrollView>
       ) : null}
       {section === 'orgaos' ? (
-        <ThemedText type="smallBold" accessibilityLiveRegion="polite">
-          {bodies.length} órgãos: federais, do estado escolhido, da capital e das duas maiores cidades dele
-        </ThemedText>
+        <>
+          <ThemedText type="smallBold" accessibilityLiveRegion="polite">
+            {bodies.length} órgãos: federais, do estado escolhido, da capital e das duas maiores cidades dele
+          </ThemedText>
+          <Button label="Ver gastos por Poder: Executivo, Legislativo e Judiciário" variant="secondary" onPress={() => router.push('/poderes')} />
+        </>
       ) : list.data ? (
         <ThemedText type="smallBold" accessibilityLiveRegion="polite">
           {visible.length ? `${visible.length} ${visible.length === 1 ? 'resultado' : 'resultados'}` : 'Nenhum resultado para esse filtro.'}

@@ -486,3 +486,8 @@ export function getTseElectoralProfile(p) {
     tseUrl: p.pageUrl && p.pageUrl.includes('divulgacandcontas') ? p.pageUrl : 'https://divulgacandcontas.tse.jus.br/divulga/',
   };
 }
+
+/* ================= GASTOS POR PODER ================= */
+
+// Despesa com pessoal por Poder de cada ente (RGF, Siconfi), gerada por scripts/build-poderes.mjs.
+export const loadPoderes = () => staticJson('/src/data/poderes.json');

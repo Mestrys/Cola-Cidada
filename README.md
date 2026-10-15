@@ -162,6 +162,12 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   `src/data/ceaps.json` (~300 KB): total e principais tipos por ano e as despesas grandes (a partir de R$ 5.000) mais recentes de cada senador.
   O perfil do senador ganha a aba "Cota (CEAPS)", com a data do resumo, e os Alertas avisam das despesas grandes dos últimos 90 dias de quem se
   acompanha. Para atualizar: `node scripts/build-ceaps.mjs` (padrão: ano anterior e atual). A API traz lançamentos com data futura; eles são ignorados.
+- **Gastos por Poder** (`#/poderes`, aberta pelo Painel > Contas; no Expo, a tela `poderes`): a despesa líquida com pessoal do Executivo, do
+  Legislativo e do Judiciário na União, nos 27 estados, nas 26 capitais e nas 52 cidades-polo, e quanto do limite da LRF ela consome (alerta aos 90%,
+  prudencial aos 95%). `scripts/build-poderes.mjs` lê o RGF (Anexo 01) do Siconfi, soma os órgãos de cada Poder (ex.: Assembleia + Tribunal de Contas;
+  todos os tribunais do Judiciário) e grava `src/data/poderes.json` (~80 KB). Município não tem Judiciário. É gasto com pessoal, não o gasto total do Poder.
+  O Executivo federal vem sem comparação: o relatório dele no Siconfi cobre só uma parcela. Para atualizar: `node scripts/build-poderes.mjs` (~2 min) e,
+  no Expo, `node expo-app/scripts/sync-data.mjs`.
 - **Frentes parlamentares e comissões:** o perfil do deputado federal lista as frentes da legislatura atual (API da Câmara) e o do senador
   mostra as comissões em que atua hoje (API do Senado), ambas consultadas ao vivo.
 - **STF:** `src/data/stf.json` (composição, posse, quem indicou e ano da aposentadoria compulsória). Ministros não têm mandato nem ficha eleitoral.
