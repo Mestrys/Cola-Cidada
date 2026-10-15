@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react';
 
 import { initialState, reduce } from './state';
-import type { AppState, Politician } from './types';
+import type { Alert, AppState, Politician, Prefs } from './types';
 
 // Os dados ficam só no aparelho (LGPD), com a mesma chave e formato do PWA.
 export const STORAGE_KEY = 'monitor-cidadao:v1';
@@ -14,6 +14,9 @@ interface Store {
   add: (p: Politician) => boolean;
   /** remove e devolve uma função que desfaz, na mesma posição */
   remove: (id: string) => () => void;
+  /** guarda os alertas ainda desconhecidos e devolve quantos eram novos */
+  addAlerts: (alerts: Alert[]) => number;
+  setPref: (key: keyof Prefs, value: boolean) => void;
   purge: () => void;
 }
 
@@ -60,9 +63,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  const addAlerts = useCallback((alerts: Alert[]) => {
+    const known = new Set(stateRef.current.alerts.map((a) => a.id));
+    const count = alerts.filter((a) => !known.has(a.id)).length;
+    if (count) dispatch({ type: 'addAlerts', alerts });
+    return count;
+  }, []);
+
+  const setPref = useCallback((key: keyof Prefs, value: boolean) => dispatch({ type: 'setPref', key, value }), []);
+
   const purge = useCallback(() => dispatch({ type: 'purge' }), []);
 
-  const value = useMemo(() => ({ state, ready, add, remove, purge }), [state, ready, add, remove, purge]);
+  const value = useMemo(() => ({ state, ready, add, remove, addAlerts, setPref, purge }), [state, ready, add, remove, addAlerts, setPref, purge]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 

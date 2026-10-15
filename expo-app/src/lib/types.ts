@@ -45,16 +45,29 @@ export interface Politician {
   aposentadoriaCompulsoria?: number;
 }
 
+export type AlertKind = 'plenario' | 'votacao' | 'gasto' | 'proposicao';
+
 export interface Alert {
   id: string;
-  ts: number;
-  politicianId: string;
+  /** AAAA-MM-DD…; alertas do PWA antigo, sem tipo, contam como 'votacao' */
+  ts: string | number;
+  kind?: AlertKind;
+  politicianId?: string;
   text: string;
+  url?: string;
+}
+
+export interface Prefs {
+  plenario: boolean;
+  rollcall: boolean;
+  expenses: boolean;
+  bills: boolean;
 }
 
 export interface AppState {
   politicians: Politician[];
   alerts: Alert[];
+  prefs: Prefs;
   domicile: { state: string; city: string };
 }
 
@@ -98,6 +111,15 @@ export interface Proposition {
   url: string;
 }
 
+/** Voto de um parlamentar numa votação (dado público, de todos os que votaram). */
+export interface CastVote {
+  id?: number;
+  name: string;
+  party: string;
+  uf: string;
+  vote: string;
+}
+
 export interface CamaraVoting {
   id: string;
   descricao: string;
@@ -105,6 +127,8 @@ export interface CamaraVoting {
   siglaOrgao: string;
   approved: boolean;
   tally: { Sim: number; Não: number; Outros: number };
+  /** voto de todos os deputados que votaram */
+  votes: CastVote[];
   /** voto de cada político acompanhado (id do app); null = ausente */
   byPol: Record<string, string | null>;
   category: Category;
@@ -116,10 +140,16 @@ export interface SenateVoting {
   summary: string;
   date: string;
   result: string;
+  secret: boolean;
+  /** "1º turno", "2º turno"… quando a descrição da votação diz; vazio nas demais */
+  round: string;
   yes: number;
   no: number;
-  /** voto de cada senador acompanhado (id do app) */
-  bySenator: Record<string, string>;
+  /** voto de todos os senadores presentes */
+  votes: CastVote[];
+  tally: { Sim: number; Não: number; Outros: number };
+  /** voto de cada senador acompanhado (id do app); null = ausente */
+  bySenator: Record<string, string | null>;
   category: Category;
 }
 

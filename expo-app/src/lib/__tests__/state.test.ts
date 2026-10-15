@@ -55,4 +55,15 @@ describe('reduce', () => {
     const s = reduce(reduce(initialState(), { type: 'add', politician: mk('a') }), { type: 'purge' });
     expect(s).toEqual(initialState());
   });
+
+  it('alertas: guarda só os novos, no máximo 200, e preferências antigas ganham as novas', () => {
+    let s = reduce(initialState(), { type: 'addAlerts', alerts: [{ id: 'a', ts: '2026-01-01', text: 'um' }] });
+    s = reduce(s, { type: 'addAlerts', alerts: [{ id: 'a', ts: '2026-01-01', text: 'um' }, { id: 'b', ts: '2026-01-02', text: 'dois' }] });
+    expect(s.alerts.map((a) => a.id)).toEqual(['b', 'a']);
+    const many = Array.from({ length: 250 }, (_, i) => ({ id: `x${i}`, ts: '2026-01-01', text: 't' }));
+    expect(reduce(initialState(), { type: 'addAlerts', alerts: many }).alerts).toHaveLength(200);
+    const h = reduce(initialState(), { type: 'hydrate', state: { prefs: { rollcall: false } as never } });
+    expect(h.prefs).toEqual({ plenario: true, rollcall: false, expenses: true, bills: true });
+    expect(reduce(h, { type: 'setPref', key: 'bills', value: false }).prefs.bills).toBe(false);
+  });
 });

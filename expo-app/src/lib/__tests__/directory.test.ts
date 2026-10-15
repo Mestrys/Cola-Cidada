@@ -5,7 +5,7 @@ const base = { source: 'x', party: 'PT', uf: 'MG', roleKey: 'prefeito', city: 'B
 
 describe('Painel público', () => {
   it('cobre do Presidente aos vereadores das capitais', () => {
-    expect(SECTIONS.map((s) => s.key)).toEqual(['presidencia', 'stf', 'senado', 'camara', 'governadores', 'assembleias', 'prefeitos', 'vereadores']);
+    expect(SECTIONS.map((s) => s.key)).toEqual(['presidencia', 'stf', 'senado', 'camara', 'governadores', 'assembleias', 'prefeitos', 'vereadores', 'orgaos']);
   });
 
   it('busca sem acento por nome, partido, cidade e estado', () => {

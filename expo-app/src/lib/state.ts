@@ -1,9 +1,12 @@
 import { defaultMandate } from './mandate';
-import type { AppState, Politician } from './types';
+import type { Alert, AppState, Politician, Prefs } from './types';
+
+export const defaultPrefs = (): Prefs => ({ plenario: true, rollcall: true, expenses: true, bills: true });
 
 export const initialState = (): AppState => ({
   politicians: [],
   alerts: [],
+  prefs: defaultPrefs(),
   domicile: { state: 'SP', city: 'São Paulo' },
 });
 
@@ -12,6 +15,8 @@ export type Action =
   | { type: 'add'; politician: Politician }
   | { type: 'remove'; id: string }
   | { type: 'restore'; politician: Politician; index: number }
+  | { type: 'addAlerts'; alerts: Alert[] }
+  | { type: 'setPref'; key: keyof Prefs; value: boolean }
   | { type: 'purge' };
 
 export function reduce(state: AppState, action: Action): AppState {
@@ -22,6 +27,8 @@ export function reduce(state: AppState, action: Action): AppState {
         ...action.state,
         politicians: Array.isArray(action.state.politicians) ? action.state.politicians : [],
         alerts: Array.isArray(action.state.alerts) ? action.state.alerts : [],
+        // preferências gravadas antes de existir uma delas: a ausente conta como ligada
+        prefs: { ...defaultPrefs(), ...(action.state.prefs ?? {}) },
       };
     case 'add': {
       if (state.politicians.some((p) => p.id === action.politician.id)) return state;
@@ -36,6 +43,13 @@ export function reduce(state: AppState, action: Action): AppState {
       next.splice(Math.min(action.index, next.length), 0, action.politician);
       return { ...state, politicians: next };
     }
+    case 'addAlerts': {
+      const known = new Set(state.alerts.map((a) => a.id));
+      const fresh = action.alerts.filter((a) => !known.has(a.id));
+      return fresh.length ? { ...state, alerts: [...fresh, ...state.alerts].slice(0, 200) } : state;
+    }
+    case 'setPref':
+      return { ...state, prefs: { ...state.prefs, [action.key]: action.value } };
     case 'purge':
       return initialState();
   }

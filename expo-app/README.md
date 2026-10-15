@@ -15,8 +15,9 @@ src/
       index.tsx           Painel        → /             todos os cargos abertos, sem cadastro (Presidência, STF, Senado,
                                                         Câmara, governadores, assembleias, prefeitos e vereadores das capitais)
       politicos.tsx       Acompanho     → /politicos    quem a pessoa escolheu acompanhar depois de ver o perfil
-      comparador.tsx      Comparador    → /comparador   votações da Câmara e do Senado, filtros e confronto 1 contra 1
-      alertas.tsx         Alertas       → /alertas
+      comparador.tsx      Comparador    → /comparador   votações da Câmara e do Senado abertas (placar, voto por partido e de cada
+                                                        parlamentar), filtros e confronto 1 contra 1 entre quaisquer deputados
+      alertas.tsx         Alertas       → /alertas      votações do Plenário para todos; votos, gastos e projetos de quem se acompanha
       perfil.tsx          Perfil        → /perfil
     politico/[id].tsx     perfil: dados oficiais, cargo, TSE e o botão Acompanhar
   components/
@@ -26,6 +27,8 @@ src/
   lib/                    dados e regras, sem dependência de tela
     api.ts                APIs de Dados Abertos da Câmara e do Senado (retry e cache)
     directory.ts          diretório do Painel (APIs + dados locais do TSE, Executivo e STF)
+    contas.ts             contas públicas pelo Siconfi (RREO e RGF): aba Contas do Painel
+    votes.ts, alerts.ts   votações abertas e alertas (mesma lógica do PWA)
   data/                   cópia dos dados públicos do PWA (../src/data): rode `node scripts/sync-data.mjs` ao atualizá-los
     state.ts, store.tsx   estado (reducer) e persistência no AsyncStorage
     mandate.ts            mandatos padrão e progresso
@@ -47,6 +50,13 @@ assets/                   ícones, splash e imagens
 
 Nada é escolhido antes de ver: o Painel abre direto, com todos os cargos. "Acompanhar" é opcional, fica dentro do perfil e não
 declara voto; a lista fica só no aparelho (AsyncStorage, mesma chave e formato do PWA).
+
+O CI (`.github/workflows/ci.yml`, job "App Expo") roda tipos, lint, testes e confere se `src/data` está igual ao do PWA.
+
+## Notificações
+
+Os alertas aparecem na tela e são consultados quando a pessoa toca em "Verificar agora". Notificações do aparelho exigem
+`expo-notifications` e uma decisão sobre aviso em segundo plano (tarefa agendada), que ainda não foi tomada.
 
 ## Scripts
 

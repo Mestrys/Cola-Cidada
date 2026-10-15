@@ -9,7 +9,7 @@ import { allDeputies, allSenators } from './api';
 import { defaultMandate } from './mandate';
 import type { Politician } from './types';
 
-export type SectionKey = 'presidencia' | 'stf' | 'senado' | 'camara' | 'governadores' | 'assembleias' | 'prefeitos' | 'vereadores';
+export type SectionKey = 'presidencia' | 'stf' | 'senado' | 'camara' | 'governadores' | 'assembleias' | 'prefeitos' | 'vereadores' | 'orgaos';
 
 export interface Section {
   key: SectionKey;
@@ -30,6 +30,7 @@ export const SECTIONS: Section[] = [
   { key: 'assembleias', label: 'Assembleias', hint: 'Deputados estaduais e distritais', byUf: true, requiresUf: true },
   { key: 'prefeitos', label: 'Prefeitos', hint: 'Prefeitos das 26 capitais', byUf: true },
   { key: 'vereadores', label: 'Vereadores', hint: 'Vereadores das câmaras das capitais', byUf: true, requiresUf: true },
+  { key: 'orgaos', label: 'Contas', hint: 'Receitas, despesas e gasto com pessoal de cada órgão, direto do Tesouro Nacional', byUf: true, requiresUf: true },
 ];
 
 export interface FederationUnit {
@@ -104,6 +105,8 @@ export async function loadSection(key: SectionKey, uf = ''): Promise<Politician[
         load().map((d: any) => ({ ...d, uf: d.state || uf, roleKey: 'dep-estadual', mandate: defaultMandate('dep-estadual', d.state || uf) }))
       );
     }
+    case 'orgaos':
+      return []; // a aba Contas lista órgãos, não pessoas (src/lib/contas.ts)
     case 'vereadores': {
       const load = CAPITALS[uf.toLowerCase()];
       if (!load) return [];

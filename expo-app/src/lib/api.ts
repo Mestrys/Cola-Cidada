@@ -139,9 +139,44 @@ export async function searchSenators(query: string): Promise<SenatorResult[]> {
 
 /* ================= VOTAÇÕES ================= */
 
-export async function recentRollCalls(limit = 8): Promise<any[]> {
-  const { dados } = await getJson(`${CAMARA_BASE}/votacoes?ordem=DESC&ordenarPor=dataHoraRegistro&itens=${limit * 3}`);
-  return (dados || []).filter((v: any) => v.aprovacao !== null).slice(0, limit);
+/**
+ * Votações nominais do Plenário (órgão 180), mais recentes primeiro. As simbólicas não têm lista de votos, e a
+ * descrição das nominais traz o placar "Sim: N". Páginas em sequência: encerra com votações suficientes.
+ */
+export async function recentNominalVotings(limit = 20): Promise<any[]> {
+  const since = new Date(Date.now() - 180 * 86400000).toISOString().slice(0, 10);
+  const out: any[] = [];
+  for (let page = 1; page <= 6 && out.length < limit; page++) {
+    const url = `${CAMARA_BASE}/votacoes?ordem=DESC&ordenarPor=dataHoraRegistro&itens=100&pagina=${page}&idOrgao=180&dataInicio=${since}`;
+    const dados = await getJson(url).then((r) => r.dados || [], () => []);
+    if (!dados.length) break;
+    out.push(...dados.filter((v: any) => v.aprovacao !== null && /Sim:\s*\d+/.test(v.descricao || '')));
+  }
+  return out.slice(0, limit);
+}
+
+export interface Expense {
+  type: string;
+  supplier: string;
+  docNumber?: string;
+  date?: string;
+  value: number;
+  receiptUrl?: string;
+}
+
+/** Notas da cota parlamentar (CEAP) mais recentes de um deputado. */
+export async function deputyExpenses(camaraId: number, limit = 30): Promise<Expense[]> {
+  const { dados } = await getJson(
+    `${CAMARA_BASE}/deputados/${camaraId}/despesas?idLegislatura=57&itens=${limit}&ordem=DESC&ordenarPor=dataDocumento`
+  );
+  return (dados || []).map((d: any) => ({
+    type: d.tipoDespesa,
+    supplier: d.nomeFornecedor,
+    docNumber: d.numDocumento,
+    date: d.dataDocumento,
+    value: d.valorLiquido,
+    receiptUrl: d.urlDocumento,
+  }));
 }
 
 export async function votesOf(votingId: string | number): Promise<any[]> {

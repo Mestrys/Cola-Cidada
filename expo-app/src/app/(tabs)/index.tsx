@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, FlatList, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { ActivityIndicator, FlatList, Linking, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
@@ -11,6 +11,7 @@ import { ScreenHeader, screenContent } from '@/components/ui/screen';
 import { Spacing } from '@/constants/theme';
 import { useAsync } from '@/hooks/use-async';
 import { useTheme } from '@/hooks/use-theme';
+import { budgetSummary, federalBodies, money, personnelSpending, SICONFI_URL, stateBodies, type Body } from '@/lib/contas';
 import { CHECKED_AT, loadSection, matches, placeOf, SECTIONS, STF_VACANCY, UNITS, type SectionKey } from '@/lib/directory';
 import { formatDate, ROLES } from '@/lib/mandate';
 import { useStore } from '@/lib/store';
@@ -61,6 +62,84 @@ function Row({ p, followed, onPress }: { p: Politician; followed: boolean; onPre
   );
 }
 
+/** Um órgão da aba Contas: abre as contas sob demanda, direto do Tesouro Nacional. */
+function BodyCard({ body }: { body: Body }) {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [tick, setTick] = useState(0);
+  const res = useAsync(
+    async () => (open ? (body.budget ? await budgetSummary(body.ente) : await personnelSpending(body.ente, body.poder!, body.match!)) : undefined),
+    [open, body.key, tick]
+  );
+  const data = res.data as any;
+  const rows: [string, string, string?][] = !data
+    ? []
+    : body.budget
+      ? [
+          ['Receita arrecadada até o período', money(data.revenue), data.revenueForecast ? `de ${money(data.revenueForecast)} previstos` : undefined],
+          ['Despesa empenhada (contratada)', money(data.committed), data.budget ? `de ${money(data.budget)} autorizados` : undefined],
+          ['Despesa liquidada (serviço entregue)', money(data.liquidated)],
+          ['Despesa paga', money(data.paid)],
+        ]
+      : [
+          ['Gasto com pessoal', money(data.gross), 'ativos, aposentados e pensionistas'],
+          ...(data.rclPct != null ? ([['Peso na receita corrente líquida', `${Number(data.rclPct).toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`, 'a Lei de Responsabilidade Fiscal limita esse percentual']] as [string, string, string][]) : []),
+        ];
+  return (
+    <View style={[styles.row, styles.bodyCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+      <View style={styles.flex}>
+        <ThemedText type="smallBold" accessibilityRole="header">
+          {body.name}
+        </ThemedText>
+        <ThemedText type="small" themeColor="textSecondary">
+          {body.budget ? 'Receitas e despesas do orçamento' : 'Gasto com pessoal do órgão'}
+          {body.heavy ? ' · consulta maior' : ''}
+        </ThemedText>
+      </View>
+      <Button
+        label={open ? 'Ocultar contas' : 'Ver contas'}
+        variant="secondary"
+        accessibilityState={{ expanded: open }}
+        onPress={() => setOpen(!open)}
+      />
+      {open ? (
+        res.loading ? (
+          <ActivityIndicator accessibilityLabel="Consultando o Tesouro Nacional" />
+        ) : res.error ? (
+          <View style={styles.bodyRows}>
+            <ThemedText type="small">Falha ao consultar o Tesouro Nacional.</ThemedText>
+            <Button label="Tentar de novo" variant="secondary" onPress={() => setTick(tick + 1)} />
+          </View>
+        ) : !data ? (
+          <ThemedText type="small" themeColor="textSecondary">
+            Este órgão ainda não entregou o relatório ao Tesouro nos últimos períodos.
+          </ThemedText>
+        ) : (
+          <View style={styles.bodyRows}>
+            {rows.map(([label, value, note]) => (
+              <View key={label} accessible accessibilityLabel={`${label}: ${value}${note ? `, ${note}` : ''}`}>
+                <ThemedText type="small" themeColor="textSecondary">
+                  {label}
+                </ThemedText>
+                <ThemedText type="smallBold">{value}</ThemedText>
+                {note ? (
+                  <ThemedText type="small" themeColor="textSecondary">
+                    {note}
+                  </ThemedText>
+                ) : null}
+              </View>
+            ))}
+            <ThemedText type="small" themeColor="textSecondary">
+              {data.institution} · {data.periodLabel}. Fonte: Siconfi, Tesouro Nacional.
+            </ThemedText>
+          </View>
+        )
+      ) : null}
+      {body.portal ? <Button label={body.portalLabel ?? 'Portal de transparência'} variant="secondary" onPress={() => Linking.openURL(body.portal!)} /> : null}
+    </View>
+  );
+}
+
 export default function PainelScreen() {
   const router = useRouter();
   const theme = useTheme();
@@ -76,6 +155,7 @@ export default function PainelScreen() {
   const units = section === 'prefeitos' || section === 'vereadores' ? UNITS.filter((u) => u.hasCouncil) : UNITS;
 
   const list = useAsync(() => loadSection(section, current.requiresUf ? uf : ''), [section, current.requiresUf ? uf : '']);
+  const bodies = section === 'orgaos' ? [...federalBodies(), ...stateBodies(uf)] : [];
   const followedIds = useMemo(() => new Set(state.politicians.map((p) => p.id)), [state.politicians]);
   const visible = (list.data ?? []).filter((p) => (!uf || p.uf === uf) && matches(p, query));
 
@@ -99,7 +179,7 @@ export default function PainelScreen() {
       <ThemedText type="small" themeColor="textSecondary">
         {current.hint}
       </ThemedText>
-      {section !== 'presidencia' && section !== 'stf' ? (
+      {section !== 'presidencia' && section !== 'stf' && section !== 'orgaos' ? (
         <TextInput
           value={query}
           onChangeText={setQuery}
@@ -120,7 +200,11 @@ export default function PainelScreen() {
           ))}
         </ScrollView>
       ) : null}
-      {list.data ? (
+      {section === 'orgaos' ? (
+        <ThemedText type="smallBold" accessibilityLiveRegion="polite">
+          {bodies.length} órgãos: federais e do estado escolhido
+        </ThemedText>
+      ) : list.data ? (
         <ThemedText type="smallBold" accessibilityLiveRegion="polite">
           {visible.length ? `${visible.length} ${visible.length === 1 ? 'resultado' : 'resultados'}` : 'Nenhum resultado para esse filtro.'}
         </ThemedText>
@@ -133,6 +217,10 @@ export default function PainelScreen() {
       <ThemedText type="small" themeColor="textSecondary">
         {STF_VACANCY}
       </ThemedText>
+    ) : section === 'orgaos' ? (
+      <ThemedText type="small" themeColor="textSecondary" onPress={() => Linking.openURL(SICONFI_URL)} accessibilityRole="link">
+        As contas vêm dos relatórios que a União, os estados e as capitais entregam ao Tesouro Nacional por exigência da Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão. Toque para abrir o Siconfi.
+      </ThemedText>
     ) : section === 'governadores' || section === 'prefeitos' ? (
       <ThemedText type="small" themeColor="textSecondary">
         Ocupantes atuais conferidos em {formatDate(CHECKED_AT)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.
@@ -143,14 +231,20 @@ export default function PainelScreen() {
     <ThemedView style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top']}>
         <FlatList
-          data={list.data ? visible : []}
+          data={section === 'orgaos' ? [] : list.data ? visible : []}
           keyExtractor={(p) => p.id}
           contentContainerStyle={screenContent}
           keyboardShouldPersistTaps="handled"
           ListHeaderComponent={header}
           ListFooterComponent={footer}
           ListEmptyComponent={
-            list.loading ? (
+            section === 'orgaos' ? (
+              <View style={styles.bodies}>
+                {bodies.map((b) => (
+                  <BodyCard key={b.key} body={b} />
+                ))}
+              </View>
+            ) : list.loading ? (
               <ActivityIndicator accessibilityLabel="Carregando dados oficiais" />
             ) : list.error ? (
               <View style={[styles.empty, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
@@ -178,4 +272,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three, borderRadius: 16, borderWidth: 1, padding: Spacing.three },
   pressed: { opacity: 0.7 },
   empty: { borderRadius: 16, borderWidth: 1, padding: Spacing.four, gap: Spacing.two },
+  bodies: { gap: Spacing.two },
+  bodyCard: { flexDirection: 'column', alignItems: 'stretch', gap: Spacing.two },
+  bodyRows: { gap: Spacing.two },
 });
