@@ -2,10 +2,12 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { Avatar } from '@/components/ui/avatar';
+import { PartyChip } from '@/components/party-chip';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { mandateProgress, ROLES } from '@/lib/mandate';
+import { isMagistrate, partyOrBirth } from '@/lib/simbolos';
 import type { Politician } from '@/lib/types';
 
 interface Props {
@@ -23,7 +25,7 @@ export function PoliticianCard({ politician: p, onPress, onRemove }: Props) {
     <View style={[styles.card, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`${p.name}, ${role}, ${p.party} ${p.uf}. Abrir ficha`}
+        accessibilityLabel={`${p.name}, ${role}, ${partyOrBirth(p).replace('/', ' ')}. Abrir ficha`}
         onPress={onPress}
         style={({ pressed }) => [styles.main, pressed && styles.pressed]}>
         <Avatar name={p.name} uri={p.photo} />
@@ -32,8 +34,10 @@ export function PoliticianCard({ politician: p, onPress, onRemove }: Props) {
             {p.name}
           </ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
-            {role} • {p.party} / {p.uf}
+            {role}
+            {isMagistrate(p) ? '' : ` • ${p.uf}`}
           </ThemedText>
+          <PartyChip politician={p} />
         </View>
       </Pressable>
 

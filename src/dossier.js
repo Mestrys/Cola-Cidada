@@ -7,6 +7,7 @@ import {
   getTseElectoralProfile,
 } from './api.js';
 import { deputyPlenaryStats, senatorPlenaryStats } from './plenary.js';
+import { birthplace, isMagistrate, partyName } from './simbolos.js';
 import { plenaryPanelHtml } from './views/plenaryPanel.js';
 
 export async function openDossierModal(p) {
@@ -95,7 +96,7 @@ export async function openDossierModal(p) {
           <div class="u-flex-1">
             <h3 class="u-fs-18 u-fw-700">${esc(p.name)}</h3>
             <p class="sm muted u-mt-2">
-              <b>Cargo:</b> ${ROLES[p.roleKey]?.label || 'Parlamentar'} · <b>Partido:</b> ${esc(p.party || '—')} · <b>Estado/UF:</b> ${esc(p.uf || 'SP')}
+              <b>Cargo:</b> ${ROLES[p.roleKey]?.label || 'Parlamentar'} · ${isMagistrate(p) ? `<b>Natural de:</b> ${esc(birthplace(p)?.texto || 'não informado')}` : `<b>Partido:</b> ${esc(partyName(p) || 'sem partido')} · <b>Estado/UF:</b> ${esc(p.uf || 'SP')}`}
             </p>
             ${
               profile?.civilName && profile.civilName !== p.name

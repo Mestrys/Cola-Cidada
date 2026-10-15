@@ -22,6 +22,18 @@ for (const theme of ['light', 'dark']) {
       const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
       for (const v of violations) report.push(`painel contas: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
     }
+    // STF com o estado de nascimento no lugar do partido, e os créditos das imagens abertos
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=stf]').click();
+    await page.locator('.painel-card img.flag').first().waitFor();
+    await page.locator('#creditos-btn').focus();
+    await page.keyboard.press('Enter');
+    await page.locator('#creditos li').first().waitFor();
+    await page.waitForTimeout(300);
+    {
+      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
+      for (const v of violations) report.push(`painel stf+créditos: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+    }
     // contratos da prefeitura (PNCP) abertos: a resposta é simulada, sem rede
     await page.route('https://pncp.gov.br/**', (route) =>
       route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ data: [{ numeroControlePNCP: '1', dataPublicacaoPncp: '2026-10-01T09:00:00', objetoContrato: 'Reforma da escola', nomeRazaoSocialFornecedor: 'CONSTRUTORA X', valorGlobal: 5000, tipoContrato: { nome: 'Contrato' }, orgaoEntidade: { cnpj: '1' }, anoContrato: 2026, sequencialContrato: 1 }], totalRegistros: 1, totalPaginas: 1 }) })

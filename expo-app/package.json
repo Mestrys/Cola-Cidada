@@ -47,7 +47,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "jest"
+    "test": "jest",
+    "sync-data": "node scripts/sync-data.mjs",
+    "eas-build-post-install": "node scripts/sync-data.mjs"
   },
   "private": true,
   "jest": {

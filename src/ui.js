@@ -1,5 +1,6 @@
 // Utilitários de UI e domínio.
 import { spring, project, rubberband, velocityFrom, prefersReducedMotion } from './motion.js';
+import { partyName, partyFlag, stateFlag, birthplace, isMagistrate } from './simbolos.js';
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -44,10 +45,33 @@ export function initImageFallback(doc = document) {
   );
 }
 
+// Quem foi acompanhado antes de as fotos existirem guarda a ficha sem `photo`: se tem ficha do TSE, a foto está no caminho de sempre
+// (se o arquivo não existir, o navegador não carrega e a foto vira as iniciais, como qualquer foto que falha).
+const tsePhoto = (p) => (p.tse?.sq && p.tse?.year ? `/fotos/tse/${p.tse.year}/${p.tse.sq}.jpg` : '');
+
 export function avatar(p, cls = '') {
-  return p.photo
-    ? `<img class="avatar ${cls}" src="${esc(photoUrl(p.photo))}" alt="" data-name="${esc(p.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`
+  const photo = p.photo || tsePhoto(p);
+  return photo
+    ? `<img class="avatar ${cls}" src="${esc(photoUrl(photo))}" alt="" data-name="${esc(p.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`
     : `<div class="avatar ${cls}" aria-hidden="true">${esc(initials(p.name))}</div>`;
+}
+
+// Bandeira pequena ao lado do texto: decorativa (o nome do partido ou do estado está escrito ao lado).
+const flagImg = (asset) => (asset ? `<img class="flag" src="${esc(asset.arquivo)}" alt="" width="22" height="16" loading="lazy" decoding="async">` : '');
+
+/**
+ * No lugar certo do cartão e da ficha: a bandeira e a sigla do partido; para magistrado, que não tem vínculo partidário,
+ * o estado onde nasceu (com a bandeira dele). Sem partido e sem naturalidade conhecida, nada.
+ */
+export function partyChip(p, cls = '') {
+  if (isMagistrate(p)) {
+    const b = birthplace(p);
+    if (!b) return '';
+    return `<span class="chip xs ${cls}" title="Natural de ${esc(b.cidade ? `${b.cidade}, ${b.estado}` : b.estado)}">${flagImg(stateFlag(b.uf))}Natural de ${esc(b.uf)}</span>`;
+  }
+  const party = partyName(p);
+  if (!party) return '';
+  return `<span class="chip xs ${cls}">${flagImg(partyFlag(party))}${esc(party)}</span>`;
 }
 
 export const ROLES = {

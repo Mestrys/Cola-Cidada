@@ -683,6 +683,68 @@ test.describe('fluxos', () => {
     await expect(page.locator('#tab-emendas')).toContainText('Nenhuma emenda individual encontrada');
   });
 
+  test('painel: ministros do STF mostram o estado de nascimento no lugar do partido; governadores, a bandeira do partido; todos com foto', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    // as fotos são preguiçosas: só as de cima carregam sem rolar a lista
+    const loaded = (loc) => loc.evaluateAll((imgs) => imgs.slice(0, 4).length === 4 && imgs.slice(0, 4).every((i) => i.complete && i.naturalWidth > 0));
+
+    await page.locator('#painel-tabs [data-section=stf]').click();
+    await expect(page.locator('.painel-card')).toHaveCount(10);
+    for (const card of await page.locator('.painel-card').all()) {
+      await expect(card).toContainText('Natural de');
+      await expect(card.locator('img.flag[src^="/partidos/"]')).toHaveCount(0); // magistrado não tem vínculo partidário
+      await expect(card.locator('img.flag[src^="/bandeiras/"]')).toHaveCount(1);
+    }
+    const gilmar = page.locator('.painel-card', { hasText: 'Gilmar Mendes' });
+    await expect(gilmar.locator('.chip', { hasText: 'Natural de MT' })).toHaveAttribute('title', 'Natural de Diamantino, Mato Grosso');
+    await expect.poll(() => loaded(page.locator('.painel-card img.avatar'))).toBe(true); // carregam do próprio app
+    await expect(page.locator('.painel-card img.avatar')).toHaveCount(10);
+
+    await page.locator('#painel-tabs [data-section=governadores]').click();
+    await expect(page.locator('.painel-card')).toHaveCount(24); // a lista mostra 24 de cada vez
+    await expect(page.locator('.painel-card img.flag[src^="/partidos/"]').first()).toBeVisible();
+    await expect(page.locator('.painel-card .chip', { hasText: 'Natural de' })).toHaveCount(0);
+    await expect.poll(() => page.locator('.painel-card img.avatar[src^="/fotos/tse/2022/"]').count()).toBeGreaterThan(15);
+    await expect.poll(() => loaded(page.locator('.painel-card img.avatar'))).toBe(true);
+  });
+
+  test('ficha do ministro do STF: estado de nascimento no cabeçalho e nos dados, e o crédito da foto; sem partido', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=stf]').click();
+    await page.locator('.painel-card', { hasText: 'Dias Toffoli' }).locator('.painel-open').click();
+    const modal = page.locator('.overlay .modal');
+    await expect(modal.locator('.chip', { hasText: 'Natural de SP' })).toBeVisible();
+    await expect(modal).toContainText('Marília/SP');
+    await expect(modal).toContainText('Foto: Geraldo Magela/Agência Senado · CC BY 2.0');
+    await expect(modal.locator('a', { hasText: 'Foto:' })).toHaveAttribute('href', /commons\.wikimedia\.org/);
+    await expect(modal).not.toContainText('Partido atual');
+  });
+
+  test('quem acompanhava um ministro antes do estado de nascimento existir passa a vê-lo, e a foto do TSE vem do caminho de sempre', async ({ page }) => {
+    const antigo = { id: 'stf-flavio-dino', source: 'stf', name: 'Min. Flávio Dino', party: '—', roleKey: 'ministro-stf', uf: 'BR', state: 'BR' };
+    const eleito = { id: 'sp-250001610117', source: 'al-sp', name: 'Dep. Agente Federal Danilo Balas', party: 'PL', roleKey: 'dep-estadual', uf: 'SP', tse: { year: 2022, sq: '250001610117' } };
+    await seed(page, { politicians: [antigo, eleito] });
+    await go(page, 'meus-politicos');
+    const dino = page.locator('.pol-card', { hasText: 'Flávio Dino' });
+    await expect(dino.locator('.chip', { hasText: 'Natural de MA' })).toBeVisible();
+    await expect(dino.locator('img.avatar[src="/fotos/stf/flavio-dino.jpg"]')).toBeVisible();
+    await expect(page.locator('.pol-card', { hasText: 'Danilo Balas' }).locator('img.avatar[src="/fotos/tse/2022/250001610117.jpg"]')).toBeVisible();
+    await expect(page.locator('.pol-card', { hasText: 'Danilo Balas' }).locator('img.flag[src="/partidos/PL.png"]')).toBeVisible();
+  });
+
+  test('créditos das imagens: fotos do STF com autor e licença, e as bandeiras de 31 partidos e 27 estados', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#creditos-btn').focus(); // pelo teclado: as barras fixas do celular cobrem o botão no clique
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#creditos')).toContainText('Fotos dos ministros do STF (Wikimedia Commons)');
+    await expect(page.locator('#creditos')).toContainText('Marcelo Camargo/Agência Brasil · CC BY 3.0 br');
+    await expect(page.locator('#creditos li')).toHaveCount(10 + 31 + 27);
+    await expect(page.locator('#creditos')).toContainText('não têm vínculo partidário');
+  });
+
   test('gastos por Poder: estado com a União, a capital e as cidades-polo; e o comparativo entre estados', async ({ page }) => {
     await seed(page);
     await go(page, 'painel');

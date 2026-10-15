@@ -176,6 +176,16 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   partir do cadastro de entes do Siconfi). Mostra o total dos últimos 30 dias, a soma dos valores informados, os maiores contratos e os mais recentes (com a marca
   de emenda parlamentar quando o contrato traz uma). A API só filtra por CNPJ do órgão, aceita até 365 dias e devolve do mais antigo ao mais novo: o app lê a
   última página para trás, até 500 contratos. Só prefeituras: governos estaduais, câmaras e assembleias têm vários CNPJs ou CNPJs próprios e ficam de fora por ora.
+- **Fotos, bandeiras dos partidos e naturalidade do STF:** os CSVs de candidatos do TSE não trazem foto, e a CSP só aceita imagens do próprio app e da
+  Câmara e do Senado; por isso governadores, prefeitos, deputados estaduais e vereadores apareciam só com as iniciais (e o STF, que é digitado à mão,
+  também). `scripts/build-fotos.mjs` lê dos zips de fotos do TSE (dados abertos, por estado e eleição), por HTTP Range e sem baixar os zips (chegam a
+  2 GB), só as fotos de quem está nos dados, reduz cada uma (96×134, ~3 KB) e grava em `fotos/tse/{ano}/{sq}.jpg`, com `photo` em cada pessoa;
+  rode depois dos scripts que geram os dados do TSE. `scripts/build-stf.mjs` completa `stf.json` com a naturalidade (Wikidata, conferida pela data de
+  nascimento) e a foto de cada ministro (Wikimedia Commons, com autor e licença em `fotoCredito`). `scripts/build-simbolos.mjs` baixa as bandeiras dos
+  partidos e dos estados do Commons (só arquivos livres; qual arquivo vale para cada um está em `scripts/simbolos-fontes.json`) e gera
+  `src/data/simbolos.js`. Nos cartões e nas fichas, quem tem partido mostra a bandeira e a sigla; **magistrados não têm vínculo partidário: no lugar do
+  partido aparece o estado onde nasceram**, com a bandeira dele. Os créditos ficam em "Créditos das imagens", no fim do Painel. Precisa do ImageMagick
+  (`convert`). Fotos de quem assumiu no lugar de um eleito ficam com as iniciais (a ficha do TSE é de outra pessoa).
 - **Emendas parlamentares:** `scripts/build-emendas.mjs` lê o download aberto do Portal da Transparência (CGU, ~32 MB, sem chave) e grava
   `src/data/emendas.json` (~600 KB): desde 2023, por parlamentar (emendas individuais: empenhado e pago por ano, emendas Pix, municípios e favorecidos
   que mais receberam) e por cidade monitorada (total e autores que mais enviaram). O perfil de deputado e de senador ganha a aba "Emendas" e o bloco

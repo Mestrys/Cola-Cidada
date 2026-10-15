@@ -29,6 +29,7 @@ src/
     directory.ts          diretório do Painel (APIs + dados locais do TSE, Executivo e STF)
     contas.ts             contas públicas pelo Siconfi (RREO e RGF) e contratos das prefeituras pelo PNCP: aba Contas do Painel
     emendas.ts            emendas parlamentares desde 2023, por parlamentar e por cidade (instantâneo emendas.json)
+    simbolos.ts           bandeiras dos partidos e dos estados, estado de nascimento do STF e fotos empacotadas (assets/ é gerado por sync-data)
     poderes.ts            gastos por Poder (Executivo, Legislativo, Judiciário): pessoal e limite da LRF, do instantâneo poderes.json
     votes.ts, alerts.ts   votações abertas e alertas (mesma lógica do PWA)
   data/                   cópia dos dados públicos do PWA (../src/data): rode `node scripts/sync-data.mjs` ao atualizá-los

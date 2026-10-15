@@ -1,0 +1,238 @@
+{
+ "partidos": {
+  "PL": {
+   "nome": "Partido Liberal",
+   "arquivo": "Bandeira Partido Liberal (Brasil).png"
+  },
+  "UNIÃO": {
+   "nome": "União Brasil",
+   "arquivo": "União Brasil logo.svg"
+  },
+  "MDB": {
+   "nome": "Movimento Democrático Brasileiro",
+   "arquivo": "Movimento Democrático Brasileiro (2017).png"
+  },
+  "PP": {
+   "nome": "Progressistas",
+   "arquivo": "Progressistas logo.png"
+  },
+  "PT": {
+   "nome": "Partido dos Trabalhadores",
+   "arquivo": "PT (Brazil) logo 2021.svg"
+  },
+  "PSD": {
+   "nome": "Partido Social Democrático",
+   "arquivo": "PSD Brazil logo.svg"
+  },
+  "REPUBLICANOS": {
+   "nome": "Republicanos",
+   "arquivo": "Republicanos (Brazil) wordmark.svg"
+  },
+  "PSB": {
+   "nome": "Partido Socialista Brasileiro",
+   "arquivo": "Logo of the Brazilian Socialist Party (wordmark color).svg"
+  },
+  "PDT": {
+   "nome": "Partido Democrático Trabalhista",
+   "arquivo": "PDT logo 2026 (cropped).png"
+  },
+  "PSDB": {
+   "nome": "Partido da Social Democracia Brasileira",
+   "arquivo": "Logo of the Brazilian Social Democracy Party (2023).svg"
+  },
+  "PODE": {
+   "nome": "Podemos",
+   "arquivo": "Podemos (Brasil) logo.svg"
+  },
+  "SOLIDARIEDADE": {
+   "nome": "Solidariedade",
+   "arquivo": "Logomarca do Partido Solidariedade.png"
+  },
+  "PSOL": {
+   "nome": "Partido Socialismo e Liberdade",
+   "arquivo": "Logo PSOL roxo.svg"
+  },
+  "PRD": {
+   "nome": "Partido Renovação Democrática",
+   "arquivo": "Partido Renovação Democrática logo.svg"
+  },
+  "AVANTE": {
+   "nome": "Avante",
+   "arquivo": "Avante 70 (Brasil) logo.svg"
+  },
+  "PV": {
+   "nome": "Partido Verde",
+   "arquivo": "PV Logo.svg"
+  },
+  "CIDADANIA": {
+   "nome": "Cidadania",
+   "arquivo": "Logo do Cidadania 23.png"
+  },
+  "PCDOB": {
+   "nome": "Partido Comunista do Brasil",
+   "arquivo": "PCdoB flag.svg"
+  },
+  "NOVO": {
+   "nome": "Partido Novo",
+   "arquivo": "Partido Novo logo (2023).svg"
+  },
+  "DC": {
+   "nome": "Democracia Cristã",
+   "arquivo": "Bandeira-democracia-cristã.png"
+  },
+  "REDE": {
+   "nome": "Rede Sustentabilidade",
+   "arquivo": "Rede Sustentabilidade logo.svg"
+  },
+  "PSC": {
+   "nome": "Partido Social Cristão (extinto em 2023)",
+   "arquivo": "PSC logo.svg"
+  },
+  "AGIR": {
+   "nome": "Agir",
+   "arquivo": "Logomarca do Partido Agir.png"
+  },
+  "PATRIOTA": {
+   "nome": "Patriota (extinto em 2023)",
+   "arquivo": "Logotipo do partido Patriota.svg"
+  },
+  "MOBILIZA": {
+   "nome": "Mobiliza (antigo PMN)",
+   "arquivo": "Logomarca Partido Mobiliza.png"
+  },
+  "PMN": {
+   "nome": "Partido da Mobilização Nacional (hoje Mobiliza)",
+   "arquivo": "Logomarca Partido Mobiliza.png"
+  },
+  "PRTB": {
+   "nome": "Partido Renovador Trabalhista Brasileiro",
+   "arquivo": "PRTB-LOGO-03-1024x393.png"
+  },
+  "PTB": {
+   "nome": "Partido Trabalhista Brasileiro (extinto em 2023)",
+   "arquivo": "Logomarca Partido Trabalhista Brasileiro.png"
+  },
+  "PROS": {
+   "nome": "Partido Republicano da Ordem Social (extinto em 2023)",
+   "arquivo": "Logomarca do Partido Republicano da Ordem Social (PROS), do Brasil.png"
+  },
+  "PMB": {
+   "nome": "Partido da Mulher Brasileira (hoje Democrata)",
+   "arquivo": "Logomarca O Democrata 35.png"
+  },
+  "MISSÃO": {
+   "nome": "Partido Missão",
+   "arquivo": "Bandeira do Partido Missão.svg"
+  }
+ },
+ "estados": {
+  "SP": {
+   "nome": "São Paulo",
+   "arquivo": "Bandeira do estado de São Paulo.svg"
+  },
+  "PR": {
+   "nome": "Paraná",
+   "arquivo": "Bandeira do Paraná.svg"
+  },
+  "PB": {
+   "nome": "Paraíba",
+   "arquivo": "Bandeira da Paraíba.svg"
+  },
+  "MG": {
+   "nome": "Minas Gerais",
+   "arquivo": "Bandeira de Minas Gerais.svg"
+  },
+  "PA": {
+   "nome": "Pará",
+   "arquivo": "Bandeira do Pará.svg"
+  },
+  "RS": {
+   "nome": "Rio Grande do Sul",
+   "arquivo": "Bandeira do Rio Grande do Sul.svg"
+  },
+  "AM": {
+   "nome": "Amazonas",
+   "arquivo": "Bandeira do Amazonas.svg"
+  },
+  "CE": {
+   "nome": "Ceará",
+   "arquivo": "Bandeira do Ceará.svg"
+  },
+  "AP": {
+   "nome": "Amapá",
+   "arquivo": "Bandeira do Amapá.svg"
+  },
+  "BA": {
+   "nome": "Bahia",
+   "arquivo": "Bandeira da Bahia.svg"
+  },
+  "AC": {
+   "nome": "Acre",
+   "arquivo": "Bandeira do Acre.svg"
+  },
+  "AL": {
+   "nome": "Alagoas",
+   "arquivo": "Bandeira de Alagoas.svg"
+  },
+  "PE": {
+   "nome": "Pernambuco",
+   "arquivo": "Bandeira de Pernambuco.svg"
+  },
+  "SC": {
+   "nome": "Santa Catarina",
+   "arquivo": "Bandeira de Santa Catarina.svg"
+  },
+  "RJ": {
+   "nome": "Rio de Janeiro",
+   "arquivo": "Bandeira do estado do Rio de Janeiro.svg"
+  },
+  "GO": {
+   "nome": "Goiás",
+   "arquivo": "Flag of Goiás.svg"
+  },
+  "MA": {
+   "nome": "Maranhão",
+   "arquivo": "Bandeira do Maranhão.svg"
+  },
+  "RR": {
+   "nome": "Roraima",
+   "arquivo": "Bandeira de Roraima.svg"
+  },
+  "PI": {
+   "nome": "Piauí",
+   "arquivo": "Bandeira do Piauí.svg"
+  },
+  "MT": {
+   "nome": "Mato Grosso",
+   "arquivo": "Bandeira de Mato Grosso.svg"
+  },
+  "ES": {
+   "nome": "Espírito Santo",
+   "arquivo": "Bandeira do Espírito Santo.svg"
+  },
+  "RO": {
+   "nome": "Rondônia",
+   "arquivo": "Bandeira de Rondônia.svg"
+  },
+  "RN": {
+   "nome": "Rio Grande do Norte",
+   "arquivo": "Bandeira do Rio Grande do Norte.svg"
+  },
+  "MS": {
+   "nome": "Mato Grosso do Sul",
+   "arquivo": "Bandeira de Mato Grosso do Sul.svg"
+  },
+  "TO": {
+   "nome": "Tocantins",
+   "arquivo": "Bandeira do Tocantins.svg"
+  },
+  "SE": {
+   "nome": "Sergipe",
+   "arquivo": "Bandeira de Sergipe.svg"
+  },
+  "DF": {
+   "nome": "Distrito Federal",
+   "arquivo": "Bandeira do Distrito Federal (Brasil).svg"
+  }
+ }
+}

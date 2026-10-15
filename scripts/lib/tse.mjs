@@ -2,7 +2,10 @@
 import { readFileSync } from 'node:fs';
 
 export function parseCsv(path) {
-  const text = new TextDecoder('latin1').decode(readFileSync(path));
+  return parseCsvText(new TextDecoder('latin1').decode(readFileSync(path)));
+}
+
+export function parseCsvText(text) {
   const rows = [];
   let row = [], field = '', q = false;
   for (let i = 0; i < text.length; i++) {

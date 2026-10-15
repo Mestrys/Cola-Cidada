@@ -4,8 +4,9 @@ import { store } from '../store.js';
 import { FEDERATION_UNITS, loadStf, loadExecutive, loadCidades, loadCnpjs } from '../api.js';
 import { SECTIONS, loadSection, placeOf, matches } from '../directory.js';
 import { budgetSummary, personnelSpending, federalBodies, stateBodies, recentContracts, SICONFI_URL } from '../contas.js';
-import { esc, avatar, ROLES, skeleton, tablist, brl, $ } from '../ui.js';
+import { esc, avatar, partyChip, ROLES, skeleton, tablist, brl, $ } from '../ui.js';
 import { openPoliticianDetails } from './politicos.js';
+import { creditsHtml } from '../creditos.js';
 
 const PAGE = 24;
 
@@ -42,7 +43,6 @@ const isFollowed = (id) => store.get().politicians.some((p) => p.id === id);
 function card(p) {
   const role = ROLES[p.roleKey]?.label || p.role || 'Agente público';
   const followed = isFollowed(p.id);
-  const party = p.party && p.party !== '—' ? p.party : '';
   return `
   <li class="card painel-card" data-id="${esc(p.id)}">
     <div class="painel-card-head">
@@ -51,7 +51,7 @@ function card(p) {
         <h2 class="painel-name">${esc(p.name)}</h2>
         <p class="sm muted">${esc(role)} · ${esc(placeOf(p))}</p>
         <div class="row u-gap-6 u-mt-4">
-          ${party ? `<span class="chip xs">${esc(party)}</span>` : ''}
+          ${partyChip(p)}
           ${p.condicao ? `<span class="chip gold xs">${esc(p.condicao)}</span>` : ''}
           <span class="chip green xs follow-badge" ${followed ? '' : 'hidden'}>
             <span class="mi u-fs-14" aria-hidden="true">bookmark_added</span>Acompanhando
@@ -163,7 +163,21 @@ export async function render(root) {
     </div>
 
     <section id="painel-panel" class="stack u-gap-14"></section>
+
+    <section class="card creditos stack u-gap-8" id="creditos">
+      <button class="btn outlined sm creditos-btn" id="creditos-btn" aria-expanded="false" aria-controls="creditos-body">Créditos das imagens</button>
+      <div class="stack u-gap-8" id="creditos-body" hidden></div>
+    </section>
   `;
+  $('#creditos-btn', root).addEventListener('click', async (e) => {
+    const box = $('#creditos-body', root);
+    const open = e.currentTarget.getAttribute('aria-expanded') === 'true';
+    e.currentTarget.setAttribute('aria-expanded', String(!open));
+    box.hidden = open;
+    if (open || box.dataset.loaded) return;
+    box.dataset.loaded = '1';
+    box.innerHTML = creditsHtml(await loadStf().catch(() => null));
+  });
 
   // As abas são montadas uma vez: trocar de aba só refaz o painel, e o foco fica na aba (setas continuam funcionando).
   const tabs = $('#painel-tabs', root);
