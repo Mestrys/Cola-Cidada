@@ -168,6 +168,11 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   todos os tribunais do Judiciário) e grava `src/data/poderes.json` (~80 KB). Município não tem Judiciário. É gasto com pessoal, não o gasto total do Poder.
   O Executivo federal vem sem comparação: o relatório dele no Siconfi cobre só uma parcela. Para atualizar: `node scripts/build-poderes.mjs` (~2 min) e,
   no Expo, `node expo-app/scripts/sync-data.mjs`.
+- **Emendas parlamentares:** `scripts/build-emendas.mjs` lê o download aberto do Portal da Transparência (CGU, ~32 MB, sem chave) e grava
+  `src/data/emendas.json` (~600 KB): desde 2023, por parlamentar (emendas individuais: empenhado e pago por ano, emendas Pix, municípios e favorecidos
+  que mais receberam) e por cidade monitorada (total e autores que mais enviaram). O perfil de deputado e de senador ganha a aba "Emendas" e o bloco
+  "A cidade" mostra o que a cidade recebeu. O dado traz o nome parlamentar do autor, não o código da Câmara ou do Senado: a ligação é pelo nome.
+  Para atualizar: `node scripts/build-emendas.mjs [pasta-do-zip-extraído]` (sem argumento, baixa e extrai com `unzip`).
 - **Frentes parlamentares e comissões:** o perfil do deputado federal lista as frentes da legislatura atual (API da Câmara) e o do senador
   mostra as comissões em que atua hoje (API do Senado), ambas consultadas ao vivo.
 - **STF:** `src/data/stf.json` (composição, posse, quem indicou e ano da aposentadoria compulsória). Ministros não têm mandato nem ficha eleitoral.

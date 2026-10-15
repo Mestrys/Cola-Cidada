@@ -14,6 +14,7 @@ import { deputyProfile, deputyPropositions } from '@/lib/api';
 import { formatDate, mandateProgress, ROLES } from '@/lib/mandate';
 import { senatorCeaps } from '@/lib/ceaps';
 import { money } from '@/lib/contas';
+import { authorEmendas, cityEmendas, EMENDAS_DESDE, type AuthorEmendas } from '@/lib/emendas';
 import { CITY_YEARS, cityFacts, findSeen, placeOf } from '@/lib/directory';
 import { useStore } from '@/lib/store';
 import type { Politician } from '@/lib/types';
@@ -66,6 +67,77 @@ function CityCard({ c }: { c: NonNullable<ReturnType<typeof cityFacts>> }) {
       <Row label="PIB por habitante" value={c.pibPerCapita ? brl(c.pibPerCapita) : 'Não informado'} />
       <ThemedText type="small" themeColor="textSecondary">
         Fonte: IBGE (PIB dos Municípios e Censo Demográfico).
+      </ThemedText>
+      <CityEmendasBlock ibge={c.ibge} />
+    </View>
+  );
+}
+
+// Emendas que a cidade recebeu desde 2023 (todas as modalidades), com os autores que mais enviaram.
+function CityEmendasBlock({ ibge }: { ibge: number }) {
+  const e = cityEmendas(ibge);
+  if (!e) return <ThemedText type="small" themeColor="textSecondary">Emendas parlamentares: nenhuma registrada para esta cidade desde {EMENDAS_DESDE} (Portal da Transparência).</ThemedText>;
+  const tot = Object.values(e.anos).reduce((a, y) => ({ e: a.e + y.empenhado, p: a.p + y.pago }), { e: 0, p: 0 });
+  return (
+    <View style={styles.gap}>
+      <ThemedText type="smallBold" accessibilityRole="header">Emendas parlamentares desde {e.desde}</ThemedText>
+      <Row label="Empenhado (reservado)" value={money(tot.e)} />
+      <Row label="Pago até agora" value={money(tot.p)} />
+      <Row label="Emendas" value={String(e.emendas)} />
+      <ThemedText type="small" themeColor="textSecondary">Quem mais enviou:</ThemedText>
+      {e.autores.map((a) => (
+        <Row key={a.nome} label={a.nome} value={money(a.valor)} />
+      ))}
+      <ThemedText type="small" themeColor="textSecondary">Fonte: Portal da Transparência (CGU), resumo de {formatDate(e.geradoEm)}.</ThemedText>
+    </View>
+  );
+}
+
+// Emendas individuais do parlamentar desde 2023, do resumo gerado do Portal da Transparência (ligado pelo nome parlamentar).
+function EmendasCard({ e, name }: { e: AuthorEmendas | null; name: string }) {
+  const theme = useTheme();
+  if (!e) {
+    return (
+      <View style={[styles.card, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+        <ThemedText type="smallBold" accessibilityRole="header">Emendas parlamentares</ThemedText>
+        <ThemedText type="small" themeColor="textSecondary">
+          Nenhuma emenda individual encontrada com o nome parlamentar {name} desde {EMENDAS_DESDE}. A ligação é feita pelo nome: se o nome no Portal da Transparência for outro, ela não aparece aqui.
+        </ThemedText>
+        <Button label="Consultar no Portal da Transparência" variant="secondary" onPress={() => Linking.openURL('https://portaldatransparencia.gov.br/emendas')} />
+      </View>
+    );
+  }
+  const years = Object.keys(e.anos).sort().reverse();
+  return (
+    <View style={[styles.card, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+      <ThemedText type="smallBold" accessibilityRole="header">Emendas individuais desde {e.desde}</ThemedText>
+      {years.map((y) => (
+        <View key={y} style={styles.gap}>
+          <Row label={y === e.geradoEm.slice(0, 4) ? `${y} (até ${formatDate(e.geradoEm)})` : y} value={`${money(e.anos[y].empenhado)} empenhado`} />
+          <Row label="Pago até agora" value={money(e.anos[y].pago)} />
+        </View>
+      ))}
+      <ThemedText type="small">
+        {e.emendas} emendas no período{e.especial ? `, ${money(e.especial)} delas em transferências especiais (as "emendas Pix", que vão direto ao caixa do município)` : ''}.
+      </ThemedText>
+      {e.destinos.length ? (
+        <View style={styles.gap}>
+          <ThemedText type="smallBold">Municípios que mais receberam</ThemedText>
+          {e.destinos.map((d) => (
+            <Row key={`${d.nome}${d.uf}`} label={`${d.nome}${d.uf ? ` (${d.uf})` : ''}`} value={money(d.valor)} />
+          ))}
+        </View>
+      ) : null}
+      {e.favorecidos.length ? (
+        <View style={styles.gap}>
+          <ThemedText type="smallBold">Quem mais recebeu o dinheiro</ThemedText>
+          {e.favorecidos.map((f) => (
+            <Row key={f.nome} label={f.nome} value={money(f.valor)} />
+          ))}
+        </View>
+      ) : null}
+      <ThemedText type="small" themeColor="textSecondary" onPress={() => Linking.openURL('https://portaldatransparencia.gov.br/emendas')} accessibilityRole="link">
+        Fonte: Portal da Transparência (CGU), resumo de {formatDate(e.geradoEm)}. O pago inclui restos a pagar de anos anteriores. O parlamentar é ligado pelo nome parlamentar. Toque para abrir o Portal.
       </ThemedText>
     </View>
   );
@@ -296,6 +368,8 @@ export default function PoliticoScreen() {
       ) : null}
 
       {p.senadoId && senatorCeaps(p.senadoId) ? <CeapsCard c={senatorCeaps(p.senadoId)!} /> : null}
+
+      {camaraId || p.senadoId ? <EmendasCard e={authorEmendas(p.name)} name={p.name} /> : null}
 
       {url ? <Button label="Ver página oficial" variant="secondary" onPress={() => Linking.openURL(url)} /> : null}
     </Screen>

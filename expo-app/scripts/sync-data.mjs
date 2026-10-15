@@ -11,7 +11,7 @@ const to = join(here, '..', 'src', 'data');
 
 rmSync(to, { recursive: true, force: true });
 mkdirSync(to, { recursive: true });
-for (const f of ['executivo.json', 'stf.json', 'entes.json', 'cidades.json', 'prefeitos-cidades.json', 'ceaps.json', 'poderes.json']) cpSync(join(from, f), join(to, f));
+for (const f of ['executivo.json', 'stf.json', 'entes.json', 'cidades.json', 'prefeitos-cidades.json', 'ceaps.json', 'poderes.json', 'emendas.json']) cpSync(join(from, f), join(to, f));
 cpSync(join(from, 'states'), join(to, 'states'), { recursive: true });
 cpSync(join(from, 'capitais'), join(to, 'capitais'), { recursive: true });
 cpSync(join(from, 'cidades'), join(to, 'cidades'), { recursive: true });
