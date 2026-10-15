@@ -7,12 +7,47 @@ export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 export const esc = (s = '') =>
   String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-export const initials = (n = '') => n.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+// Títulos que vêm antes do nome ("Pref. Abilio Brunini", "Presidente Lula") não entram nas iniciais.
+// Só o que o app mesmo coloca ("Pref.", "Gov.", "Dep.", "Ver.", "Min.", "Presidente") e abreviaturas com ponto:
+// um nome que apenas começa com "Cap" ou "Min", sem ponto, continua inteiro.
+const TITLE = /^(presidente|(pref|gov|dep|ver|min|sen|sr|sra|dr|dra|prof|profa|cel|cap|sgt|gen|cons)\.)$/i;
+export const initials = (n = '') => {
+  const words = String(n).split(/\s+/).filter(Boolean);
+  const rest = words.filter((w, i) => !(i === 0 && words.length > 1 && TITLE.test(w)));
+  return rest.slice(0, 2).map((w) => [...w][0]).join('').toUpperCase();
+};
+
+// Fotos oficiais: sempre https (o Senado ainda entrega http, que a CSP e o navegador bloqueiam) e direto na
+// URL final, sem os dois redirecionamentos que o endereço antigo faz até chegar ao arquivo.
+export function photoUrl(u) {
+  if (!u) return '';
+  const url = String(u).replace(/^http:\/\//i, 'https://');
+  const m = url.match(/^https:\/\/www\.senado\.leg\.br\/senadores\/img\/fotos-oficiais\/senador(\d+)\.jpg$/i);
+  return m ? `https://legis.senado.leg.br/senadores/fotos-oficiais/${m[1]}` : url;
+}
+
+// Foto que não carrega (rede, bloqueio, arquivo removido) vira as iniciais, em vez do texto alternativo quebrado.
+// Ouve a fase de captura porque `error` não borbulha; a CSP não permite onerror inline.
+export function initImageFallback(doc = document) {
+  doc.addEventListener(
+    'error',
+    (e) => {
+      const img = e.target;
+      if (img?.tagName !== 'IMG' || !img.classList.contains('avatar')) return;
+      const box = doc.createElement('div');
+      box.className = img.className;
+      box.setAttribute('aria-hidden', 'true'); // decorativo, como a foto: o nome está escrito ao lado
+      box.textContent = initials(img.dataset.name);
+      img.replaceWith(box);
+    },
+    true
+  );
+}
 
 export function avatar(p, cls = '') {
   return p.photo
-    ? `<img class="avatar ${cls}" src="${esc(p.photo)}" alt="${esc(p.name)}" loading="lazy">`
-    : `<div class="avatar ${cls}">${esc(initials(p.name))}</div>`;
+    ? `<img class="avatar ${cls}" src="${esc(photoUrl(p.photo))}" alt="" data-name="${esc(p.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`
+    : `<div class="avatar ${cls}" aria-hidden="true">${esc(initials(p.name))}</div>`;
 }
 
 export const ROLES = {

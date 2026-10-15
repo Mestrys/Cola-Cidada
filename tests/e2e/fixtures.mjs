@@ -1,8 +1,8 @@
 import { test as base, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
-// Os testes não dependem das APIs públicas: tudo fora do servidor local (e das fontes) é bloqueado,
-// então as telas são exercitadas também nos estados de erro/vazio.
+// Os testes não dependem das APIs públicas nem de terceiros: tudo fora do servidor local é bloqueado (fontes e ícones
+// vêm do próprio app), então as telas são exercitadas também nos estados de erro/vazio.
 export const POLITICIANS = [
   { id: 'camara-160561', source: 'camara', camaraId: 160561, name: 'Deputado Teste', party: 'PL', uf: 'SP', roleKey: 'dep-federal', mandate: ['2023-02-01', '2027-01-31'] },
   { id: 'senado-5982', source: 'senado', senadoId: '5982', name: 'Senador Teste', party: 'MDB', uf: 'SE', roleKey: 'senador', mandate: ['2023-02-01', '2031-01-31'] },
@@ -13,13 +13,13 @@ export const ROUTES = ['painel', 'inicio', 'meus-politicos', 'comparador', 'aler
 
 const vercel = JSON.parse(readFileSync(new URL('../../vercel.json', import.meta.url)));
 export const CSP = vercel.headers.flatMap((h) => h.headers).find((h) => h.key === 'Content-Security-Policy').value;
-export const ICONS = new Set(readFileSync(new URL('../../index.html', import.meta.url), 'utf8').match(/icon_names=([a-z0-9_,]+)/)[1].split(','));
+export const ICONS = new Set(readFileSync(new URL('../../fonts/icon-names.txt', import.meta.url), 'utf8').split('\n').filter(Boolean));
 
 export const test = base.extend({
   page: async ({ page }, use) => {
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
-    await page.route(/^https?:\/\/(?!localhost|fonts\.googleapis\.com|fonts\.gstatic\.com)/, (r) => r.abort());
+    await page.route(/^https?:\/\/(?!localhost)/, (r) => r.abort());
     await use(page);
     expect(errors, 'erros de JavaScript na página').toEqual([]);
   },

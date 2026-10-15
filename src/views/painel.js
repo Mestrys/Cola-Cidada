@@ -168,7 +168,7 @@ async function renderPanel(panel) {
             ? ''
             : `<div class="painel-field painel-search">
           <label class="label" for="painel-q">Buscar por nome, partido ou cidade</label>
-          <input class="input" type="search" id="painel-q" value="${esc(view.q)}" autocomplete="off" enterkeyhint="search">
+          <input class="input" type="search" id="painel-q" value="${esc(view.q)}" placeholder="Ex.: Maria, PT ou Recife" autocomplete="off" enterkeyhint="search">
         </div>`
         }
         ${
