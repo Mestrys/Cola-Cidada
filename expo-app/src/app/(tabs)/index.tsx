@@ -94,6 +94,7 @@ function BodyCard({ body }: { body: Body }) {
         <ThemedText type="small" themeColor="textSecondary">
           {body.budget ? 'Receitas e despesas do orçamento' : 'Gasto com pessoal do órgão'}
           {body.heavy ? ' · consulta maior' : ''}
+          {body.note ? ` · ${body.note}` : ''}
         </ThemedText>
       </View>
       <Button
@@ -146,6 +147,7 @@ export default function PainelScreen() {
   const { state } = useStore();
   const [section, setSection] = useState<SectionKey>('presidencia');
   const [pickedUf, setPickedUf] = useState('');
+  const [pickedCity, setPickedCity] = useState('');
   const [query, setQuery] = useState('');
 
   const current = SECTIONS.find((s) => s.key === section)!;
@@ -157,19 +159,26 @@ export default function PainelScreen() {
   const list = useAsync(() => loadSection(section, current.requiresUf ? uf : ''), [section, current.requiresUf ? uf : '']);
   const bodies = section === 'orgaos' ? [...federalBodies(), ...stateBodies(uf)] : [];
   const followedIds = useMemo(() => new Set(state.politicians.map((p) => p.id)), [state.politicians]);
-  const visible = (list.data ?? []).filter((p) => (!uf || p.uf === uf) && matches(p, query));
+  // câmaras: a capital e as duas maiores cidades do estado; a pessoa pode afunilar para uma
+  const cities = useMemo(
+    () => (section === 'vereadores' ? [...new Set((list.data ?? []).map((p) => p.city).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b, 'pt-BR')) : []),
+    [section, list.data]
+  );
+  const city = cities.includes(pickedCity) ? pickedCity : '';
+  const visible = (list.data ?? []).filter((p) => (!uf || p.uf === uf) && (!city || p.city === city) && matches(p, query));
 
   const pickSection = (k: SectionKey) => {
     setSection(k);
     setQuery('');
     setPickedUf('');
+    setPickedCity('');
   };
 
   const header = (
     <View style={styles.header}>
       <ScreenHeader
         title="Painel público"
-        subtitle="Quem ocupa cada cargo, do Presidente aos vereadores das capitais. Tudo aberto, sem cadastro: abra um perfil e, se quiser, acompanhe essa pessoa."
+        subtitle="Quem ocupa cada cargo, do Presidente aos vereadores das capitais e das maiores cidades de cada estado. Tudo aberto, sem cadastro: abra um perfil e, se quiser, acompanhe essa pessoa."
       />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} accessibilityRole="tablist" contentContainerStyle={styles.chips}>
         {SECTIONS.map((s) => (
@@ -196,13 +205,24 @@ export default function PainelScreen() {
           {current.requiresUf ? null : <Chip label="Todos" a11y="Todos os estados" on={!uf} onPress={() => setPickedUf('')} />}
           {units.map((u) => (
             // a sigla fica na tela; o leitor de tela ouve o nome do estado (sigla seria lida letra por letra)
-            <Chip key={u.uf} label={u.uf} a11y={u.name} on={u.uf === uf} onPress={() => setPickedUf(u.uf)} />
+            <Chip key={u.uf} label={u.uf} a11y={u.name} on={u.uf === uf} onPress={() => {
+              setPickedUf(u.uf);
+              setPickedCity('');
+            }} />
+          ))}
+        </ScrollView>
+      ) : null}
+      {cities.length > 1 ? (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} accessibilityLabel="Cidade" contentContainerStyle={styles.chips}>
+          <Chip label="Todas" a11y="Todas as cidades" on={!city} onPress={() => setPickedCity('')} />
+          {cities.map((c) => (
+            <Chip key={c} label={c} on={c === city} onPress={() => setPickedCity(c)} />
           ))}
         </ScrollView>
       ) : null}
       {section === 'orgaos' ? (
         <ThemedText type="smallBold" accessibilityLiveRegion="polite">
-          {bodies.length} órgãos: federais e do estado escolhido
+          {bodies.length} órgãos: federais, do estado escolhido, da capital e das duas maiores cidades dele
         </ThemedText>
       ) : list.data ? (
         <ThemedText type="smallBold" accessibilityLiveRegion="polite">
@@ -219,11 +239,12 @@ export default function PainelScreen() {
       </ThemedText>
     ) : section === 'orgaos' ? (
       <ThemedText type="small" themeColor="textSecondary" onPress={() => Linking.openURL(SICONFI_URL)} accessibilityRole="link">
-        As contas vêm dos relatórios que a União, os estados e as capitais entregam ao Tesouro Nacional por exigência da Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão. Toque para abrir o Siconfi.
+        As contas vêm dos relatórios que a União, os estados e os municípios entregam ao Tesouro Nacional por exigência da Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão. Toque para abrir o Siconfi.
       </ThemedText>
     ) : section === 'governadores' || section === 'prefeitos' ? (
       <ThemedText type="small" themeColor="textSecondary">
         Ocupantes atuais conferidos em {formatDate(CHECKED_AT)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.
+        {section === 'prefeitos' ? ' Nas cidades que não são capitais, o nome é o de quem foi eleito em 2024 (TSE): o ocupante de hoje pode ser outro.' : ''}
       </ThemedText>
     ) : null;
 

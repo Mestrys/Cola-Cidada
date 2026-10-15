@@ -1,0 +1,788 @@
+{
+ "pibAno": 2023,
+ "populacaoAno": 2022,
+ "fonte": "IBGE — PIB dos Municípios (SIDRA 5938) e Censo 2022 (SIDRA 4709)",
+ "criterio": "Cidades-polo: as duas maiores de cada estado por PIB, fora a capital. O DF não tem outras cidades.",
+ "cidades": [
+  {
+   "ibge": 1200401,
+   "nome": "Rio Branco",
+   "uf": "AC",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 12960966000,
+   "populacao": 364756,
+   "pibPerCapita": 35533
+  },
+  {
+   "ibge": 1200203,
+   "nome": "Cruzeiro do Sul",
+   "uf": "AC",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 2680143000,
+   "populacao": 91888,
+   "pibPerCapita": 29167
+  },
+  {
+   "ibge": 1200450,
+   "nome": "Senador Guiomard",
+   "uf": "AC",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 1111821000,
+   "populacao": 21454,
+   "pibPerCapita": 51823
+  },
+  {
+   "ibge": 2704302,
+   "nome": "Maceió",
+   "uf": "AL",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 33749576000,
+   "populacao": 957916,
+   "pibPerCapita": 35232
+  },
+  {
+   "ibge": 2700300,
+   "nome": "Arapiraca",
+   "uf": "AL",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 6880940000,
+   "populacao": 234696,
+   "pibPerCapita": 29319
+  },
+  {
+   "ibge": 2704708,
+   "nome": "Marechal Deodoro",
+   "uf": "AL",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 3185683000,
+   "populacao": 60370,
+   "pibPerCapita": 52769
+  },
+  {
+   "ibge": 1600303,
+   "nome": "Macapá",
+   "uf": "AP",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 18470858000,
+   "populacao": 442933,
+   "pibPerCapita": 41701
+  },
+  {
+   "ibge": 1600600,
+   "nome": "Santana",
+   "uf": "AP",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 3725688000,
+   "populacao": 107618,
+   "pibPerCapita": 34620
+  },
+  {
+   "ibge": 1600279,
+   "nome": "Laranjal do Jari",
+   "uf": "AP",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 1335225000,
+   "populacao": 35114,
+   "pibPerCapita": 38025
+  },
+  {
+   "ibge": 1302603,
+   "nome": "Manaus",
+   "uf": "AM",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 127649795000,
+   "populacao": 2063689,
+   "pibPerCapita": 61855
+  },
+  {
+   "ibge": 1301209,
+   "nome": "Coari",
+   "uf": "AM",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 3893679000,
+   "populacao": 70616,
+   "pibPerCapita": 55139
+  },
+  {
+   "ibge": 1301902,
+   "nome": "Itacoatiara",
+   "uf": "AM",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 3321936000,
+   "populacao": 103598,
+   "pibPerCapita": 32066
+  },
+  {
+   "ibge": 2927408,
+   "nome": "Salvador",
+   "uf": "BA",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 76698777000,
+   "populacao": 2417678,
+   "pibPerCapita": 31724
+  },
+  {
+   "ibge": 2905701,
+   "nome": "Camaçari",
+   "uf": "BA",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 27418878000,
+   "populacao": 300372,
+   "pibPerCapita": 91283
+  },
+  {
+   "ibge": 2929206,
+   "nome": "São Francisco do Conde",
+   "uf": "BA",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 26505737000,
+   "populacao": 38733,
+   "pibPerCapita": 684319
+  },
+  {
+   "ibge": 2304400,
+   "nome": "Fortaleza",
+   "uf": "CE",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 86939832000,
+   "populacao": 2428708,
+   "pibPerCapita": 35797
+  },
+  {
+   "ibge": 2307650,
+   "nome": "Maracanaú",
+   "uf": "CE",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 13540094000,
+   "populacao": 234509,
+   "pibPerCapita": 57738
+  },
+  {
+   "ibge": 2303709,
+   "nome": "Caucaia",
+   "uf": "CE",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 9873557000,
+   "populacao": 355679,
+   "pibPerCapita": 27760
+  },
+  {
+   "ibge": 3205309,
+   "nome": "Vitória",
+   "uf": "ES",
+   "kind": "capital",
+   "rankPib": 2,
+   "pib": 28257606000,
+   "populacao": 322869,
+   "pibPerCapita": 87520
+  },
+  {
+   "ibge": 3205002,
+   "nome": "Serra",
+   "uf": "ES",
+   "kind": "polo",
+   "rankPib": 1,
+   "pib": 37649155000,
+   "populacao": 520653,
+   "pibPerCapita": 72311
+  },
+  {
+   "ibge": 3205200,
+   "nome": "Vila Velha",
+   "uf": "ES",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 19711328000,
+   "populacao": 467722,
+   "pibPerCapita": 42143
+  },
+  {
+   "ibge": 5208707,
+   "nome": "Goiânia",
+   "uf": "GO",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 75780846000,
+   "populacao": 1437366,
+   "pibPerCapita": 52722
+  },
+  {
+   "ibge": 5218805,
+   "nome": "Rio Verde",
+   "uf": "GO",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 22310032000,
+   "populacao": 225696,
+   "pibPerCapita": 98850
+  },
+  {
+   "ibge": 5201405,
+   "nome": "Aparecida de Goiânia",
+   "uf": "GO",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 20888937000,
+   "populacao": 527796,
+   "pibPerCapita": 39578
+  },
+  {
+   "ibge": 2111300,
+   "nome": "São Luís",
+   "uf": "MA",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 42389051000,
+   "populacao": 1037775,
+   "pibPerCapita": 40846
+  },
+  {
+   "ibge": 2105302,
+   "nome": "Imperatriz",
+   "uf": "MA",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 9475802000,
+   "populacao": 273110,
+   "pibPerCapita": 34696
+  },
+  {
+   "ibge": 2101400,
+   "nome": "Balsas",
+   "uf": "MA",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 7529798000,
+   "populacao": 101767,
+   "pibPerCapita": 73991
+  },
+  {
+   "ibge": 5103403,
+   "nome": "Cuiabá",
+   "uf": "MT",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 39050753000,
+   "populacao": 650877,
+   "pibPerCapita": 59997
+  },
+  {
+   "ibge": 5107602,
+   "nome": "Rondonópolis",
+   "uf": "MT",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 16568250000,
+   "populacao": 244911,
+   "pibPerCapita": 67650
+  },
+  {
+   "ibge": 5108402,
+   "nome": "Várzea Grande",
+   "uf": "MT",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 13984218000,
+   "populacao": 300078,
+   "pibPerCapita": 46602
+  },
+  {
+   "ibge": 5002704,
+   "nome": "Campo Grande",
+   "uf": "MS",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 42269768000,
+   "populacao": 898100,
+   "pibPerCapita": 47066
+  },
+  {
+   "ibge": 5003702,
+   "nome": "Dourados",
+   "uf": "MS",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 20257953000,
+   "populacao": 243367,
+   "pibPerCapita": 83240
+  },
+  {
+   "ibge": 5008305,
+   "nome": "Três Lagoas",
+   "uf": "MS",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 14761816000,
+   "populacao": 132152,
+   "pibPerCapita": 111703
+  },
+  {
+   "ibge": 3106200,
+   "nome": "Belo Horizonte",
+   "uf": "MG",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 130197671000,
+   "populacao": 2315560,
+   "pibPerCapita": 56227
+  },
+  {
+   "ibge": 3106705,
+   "nome": "Betim",
+   "uf": "MG",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 52614325000,
+   "populacao": 411846,
+   "pibPerCapita": 127752
+  },
+  {
+   "ibge": 3170206,
+   "nome": "Uberlândia",
+   "uf": "MG",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 51065684000,
+   "populacao": 713224,
+   "pibPerCapita": 71598
+  },
+  {
+   "ibge": 1501402,
+   "nome": "Belém",
+   "uf": "PA",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 40536062000,
+   "populacao": 1303403,
+   "pibPerCapita": 31100
+  },
+  {
+   "ibge": 1505536,
+   "nome": "Parauapebas",
+   "uf": "PA",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 26421067000,
+   "populacao": 267836,
+   "pibPerCapita": 98646
+  },
+  {
+   "ibge": 1502152,
+   "nome": "Canaã dos Carajás",
+   "uf": "PA",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 16621560000,
+   "populacao": 77079,
+   "pibPerCapita": 215643
+  },
+  {
+   "ibge": 2507507,
+   "nome": "João Pessoa",
+   "uf": "PB",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 28442131000,
+   "populacao": 833932,
+   "pibPerCapita": 34106
+  },
+  {
+   "ibge": 2504009,
+   "nome": "Campina Grande",
+   "uf": "PB",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 12908743000,
+   "populacao": 419379,
+   "pibPerCapita": 30781
+  },
+  {
+   "ibge": 2503209,
+   "nome": "Cabedelo",
+   "uf": "PB",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 4092777000,
+   "populacao": 66519,
+   "pibPerCapita": 61528
+  },
+  {
+   "ibge": 4106902,
+   "nome": "Curitiba",
+   "uf": "PR",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 120065276000,
+   "populacao": 1773718,
+   "pibPerCapita": 67691
+  },
+  {
+   "ibge": 4101804,
+   "nome": "Araucária",
+   "uf": "PR",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 34075052000,
+   "populacao": 151666,
+   "pibPerCapita": 224672
+  },
+  {
+   "ibge": 4125506,
+   "nome": "São José dos Pinhais",
+   "uf": "PR",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 33957964000,
+   "populacao": 329628,
+   "pibPerCapita": 103019
+  },
+  {
+   "ibge": 2611606,
+   "nome": "Recife",
+   "uf": "PE",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 66351305000,
+   "populacao": 1488920,
+   "pibPerCapita": 44563
+  },
+  {
+   "ibge": 2607901,
+   "nome": "Jaboatão dos Guararapes",
+   "uf": "PE",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 20281298000,
+   "populacao": 644037,
+   "pibPerCapita": 31491
+  },
+  {
+   "ibge": 2607208,
+   "nome": "Ipojuca",
+   "uf": "PE",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 17972323000,
+   "populacao": 98932,
+   "pibPerCapita": 181663
+  },
+  {
+   "ibge": 2211001,
+   "nome": "Teresina",
+   "uf": "PI",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 29449063000,
+   "populacao": 866300,
+   "pibPerCapita": 33994
+  },
+  {
+   "ibge": 2211209,
+   "nome": "Uruçuí",
+   "uf": "PI",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 4226266000,
+   "populacao": 25203,
+   "pibPerCapita": 167689
+  },
+  {
+   "ibge": 2207702,
+   "nome": "Parnaíba",
+   "uf": "PI",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 3682146000,
+   "populacao": 162159,
+   "pibPerCapita": 22707
+  },
+  {
+   "ibge": 3304557,
+   "nome": "Rio de Janeiro",
+   "uf": "RJ",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 418462360000,
+   "populacao": 6211223,
+   "pibPerCapita": 67372
+  },
+  {
+   "ibge": 3302700,
+   "nome": "Maricá",
+   "uf": "RJ",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 134092034000,
+   "populacao": 197277,
+   "pibPerCapita": 679714
+  },
+  {
+   "ibge": 3303302,
+   "nome": "Niterói",
+   "uf": "RJ",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 76268005000,
+   "populacao": 481749,
+   "pibPerCapita": 158315
+  },
+  {
+   "ibge": 2408102,
+   "nome": "Natal",
+   "uf": "RN",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 31162043000,
+   "populacao": 751300,
+   "pibPerCapita": 41477
+  },
+  {
+   "ibge": 2408003,
+   "nome": "Mossoró",
+   "uf": "RN",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 10323666000,
+   "populacao": 264577,
+   "pibPerCapita": 39020
+  },
+  {
+   "ibge": 2403251,
+   "nome": "Parnamirim",
+   "uf": "RN",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 7608526000,
+   "populacao": 252716,
+   "pibPerCapita": 30107
+  },
+  {
+   "ibge": 4314902,
+   "nome": "Porto Alegre",
+   "uf": "RS",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 104743272000,
+   "populacao": 1332845,
+   "pibPerCapita": 78586
+  },
+  {
+   "ibge": 4305108,
+   "nome": "Caxias do Sul",
+   "uf": "RS",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 37860602000,
+   "populacao": 463501,
+   "pibPerCapita": 81684
+  },
+  {
+   "ibge": 4304606,
+   "nome": "Canoas",
+   "uf": "RS",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 29166697000,
+   "populacao": 347657,
+   "pibPerCapita": 83895
+  },
+  {
+   "ibge": 1100205,
+   "nome": "Porto Velho",
+   "uf": "RO",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 25402193000,
+   "populacao": 460434,
+   "pibPerCapita": 55170
+  },
+  {
+   "ibge": 1100122,
+   "nome": "Ji-Paraná",
+   "uf": "RO",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 5824472000,
+   "populacao": 124333,
+   "pibPerCapita": 46846
+  },
+  {
+   "ibge": 1100304,
+   "nome": "Vilhena",
+   "uf": "RO",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 5115785000,
+   "populacao": 95832,
+   "pibPerCapita": 53383
+  },
+  {
+   "ibge": 1400100,
+   "nome": "Boa Vista",
+   "uf": "RR",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 18234169000,
+   "populacao": 413486,
+   "pibPerCapita": 44099
+  },
+  {
+   "ibge": 1400472,
+   "nome": "Rorainópolis",
+   "uf": "RR",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 981040000,
+   "populacao": 32647,
+   "pibPerCapita": 30050
+  },
+  {
+   "ibge": 1400050,
+   "nome": "Alto Alegre",
+   "uf": "RR",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 802540000,
+   "populacao": 21096,
+   "pibPerCapita": 38042
+  },
+  {
+   "ibge": 4205407,
+   "nome": "Florianópolis",
+   "uf": "SC",
+   "kind": "capital",
+   "rankPib": 3,
+   "pib": 31190132000,
+   "populacao": 537211,
+   "pibPerCapita": 58059
+  },
+  {
+   "ibge": 4209102,
+   "nome": "Joinville",
+   "uf": "SC",
+   "kind": "polo",
+   "rankPib": 1,
+   "pib": 49815877000,
+   "populacao": 616317,
+   "pibPerCapita": 80828
+  },
+  {
+   "ibge": 4208203,
+   "nome": "Itajaí",
+   "uf": "SC",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 48195909000,
+   "populacao": 264054,
+   "pibPerCapita": 182523
+  },
+  {
+   "ibge": 3550308,
+   "nome": "São Paulo",
+   "uf": "SP",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 1066825105000,
+   "populacao": 11451999,
+   "pibPerCapita": 93156
+  },
+  {
+   "ibge": 3534401,
+   "nome": "Osasco",
+   "uf": "SP",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 119404053000,
+   "populacao": 728615,
+   "pibPerCapita": 163878
+  },
+  {
+   "ibge": 3518800,
+   "nome": "Guarulhos",
+   "uf": "SP",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 97557674000,
+   "populacao": 1291771,
+   "pibPerCapita": 75522
+  },
+  {
+   "ibge": 2800308,
+   "nome": "Aracaju",
+   "uf": "SE",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 22291877000,
+   "populacao": 602757,
+   "pibPerCapita": 36983
+  },
+  {
+   "ibge": 2801207,
+   "nome": "Canindé de São Francisco",
+   "uf": "SE",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 2967957000,
+   "populacao": 26834,
+   "pibPerCapita": 110604
+  },
+  {
+   "ibge": 2802908,
+   "nome": "Itabaiana",
+   "uf": "SE",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 2942686000,
+   "populacao": 103440,
+   "pibPerCapita": 28448
+  },
+  {
+   "ibge": 1721000,
+   "nome": "Palmas",
+   "uf": "TO",
+   "kind": "capital",
+   "rankPib": 1,
+   "pib": 14168469000,
+   "populacao": 302692,
+   "pibPerCapita": 46808
+  },
+  {
+   "ibge": 1702109,
+   "nome": "Araguaína",
+   "uf": "TO",
+   "kind": "polo",
+   "rankPib": 2,
+   "pib": 7357638000,
+   "populacao": 171301,
+   "pibPerCapita": 42952
+  },
+  {
+   "ibge": 1709500,
+   "nome": "Gurupi",
+   "uf": "TO",
+   "kind": "polo",
+   "rankPib": 3,
+   "pib": 3695017000,
+   "populacao": 85125,
+   "pibPerCapita": 43407
+  }
+ ]
+}

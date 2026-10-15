@@ -13,7 +13,7 @@ src/
     (tabs)/               grupo das abas; "(tabs)" não aparece na URL
       _layout.tsx         monta a barra de abas
       index.tsx           Painel        → /             todos os cargos abertos, sem cadastro (Presidência, STF, Senado,
-                                                        Câmara, governadores, assembleias, prefeitos e vereadores das capitais)
+                                                        Câmara, governadores, assembleias, prefeitos e vereadores das capitais e das duas maiores cidades de cada estado)
       politicos.tsx       Acompanho     → /politicos    quem a pessoa escolheu acompanhar depois de ver o perfil
       comparador.tsx      Comparador    → /comparador   votações da Câmara e do Senado abertas (placar, voto por partido e de cada
                                                         parlamentar), filtros e confronto 1 contra 1 entre quaisquer deputados

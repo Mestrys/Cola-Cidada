@@ -12,7 +12,8 @@ import { useAsync } from '@/hooks/use-async';
 import { useTheme } from '@/hooks/use-theme';
 import { deputyProfile, deputyPropositions } from '@/lib/api';
 import { formatDate, mandateProgress, ROLES } from '@/lib/mandate';
-import { findSeen, placeOf } from '@/lib/directory';
+import { money } from '@/lib/contas';
+import { CITY_YEARS, cityFacts, findSeen, placeOf } from '@/lib/directory';
 import { useStore } from '@/lib/store';
 import type { Politician } from '@/lib/types';
 
@@ -48,6 +49,25 @@ function officeRows(p: Politician): [string, string | undefined][] {
       : []),
     ['Eleito(a) na chapa original', p.eleitoPeloTse ? `${p.eleitoPeloTse.name} (${p.eleitoPeloTse.party}), em ${p.eleitoPeloTse.year}` : undefined],
   ];
+}
+
+// Contexto da cidade (IBGE): ajuda a ler o tamanho do orçamento e da câmara. Vale para capitais e cidades-polo.
+function CityCard({ c }: { c: NonNullable<ReturnType<typeof cityFacts>> }) {
+  const theme = useTheme();
+  return (
+    <View style={[styles.card, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+      <ThemedText type="smallBold" accessibilityRole="header">
+        A cidade: {c.nome}
+      </ThemedText>
+      <Row label="Posição no estado (PIB)" value={c.kind === 'capital' ? `Capital · ${c.rankPib}ª economia do estado` : `${c.rankPib}ª maior economia do estado`} />
+      <Row label={`PIB (${CITY_YEARS.pib})`} value={money(c.pib)} />
+      <Row label={`População (Censo ${CITY_YEARS.populacao})`} value={c.populacao ? c.populacao.toLocaleString('pt-BR') : 'Não informada'} />
+      <Row label="PIB por habitante" value={c.pibPerCapita ? brl(c.pibPerCapita) : 'Não informado'} />
+      <ThemedText type="small" themeColor="textSecondary">
+        Fonte: IBGE (PIB dos Municípios e Censo Demográfico).
+      </ThemedText>
+    </View>
+  );
 }
 
 export default function PoliticoScreen() {
@@ -141,6 +161,8 @@ export default function PoliticoScreen() {
           </>
         )}
       </View>
+
+      {(p.roleKey === 'prefeito' || p.roleKey === 'vereador') && cityFacts(p.uf, p.city) ? <CityCard c={cityFacts(p.uf, p.city)!} /> : null}
 
       {!camaraId && !p.senadoId ? (
         <View style={card}>

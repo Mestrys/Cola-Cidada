@@ -11,9 +11,10 @@ const to = join(here, '..', 'src', 'data');
 
 rmSync(to, { recursive: true, force: true });
 mkdirSync(to, { recursive: true });
-for (const f of ['executivo.json', 'stf.json', 'entes.json']) cpSync(join(from, f), join(to, f));
+for (const f of ['executivo.json', 'stf.json', 'entes.json', 'cidades.json', 'prefeitos-cidades.json']) cpSync(join(from, f), join(to, f));
 cpSync(join(from, 'states'), join(to, 'states'), { recursive: true });
 cpSync(join(from, 'capitais'), join(to, 'capitais'), { recursive: true });
+cpSync(join(from, 'cidades'), join(to, 'cidades'), { recursive: true });
 
 // federation.js é um módulo do PWA; aqui vira JSON
 const { FEDERATION_UNITS } = await import(join(from, 'federation.js'));
@@ -26,6 +27,8 @@ writeFileSync(
   join(to, 'index.ts'),
   `// Gerado por scripts/sync-data.mjs: não edite à mão.\n` +
     `export const STATES: Record<string, () => any[]> = {\n${ufs.map((u) => `  ${u}: () => require('./states/${u}.json'),`).join('\n')}\n};\n\n` +
-    `export const CAPITALS: Record<string, () => any[]> = {\n${caps.map((u) => `  ${u}: () => require('./capitais/${u}.json'),`).join('\n')}\n};\n`
+    `export const CAPITALS: Record<string, () => any[]> = {\n${caps.map((u) => `  ${u}: () => require('./capitais/${u}.json'),`).join('\n')}\n};\n\n` +
+    `// vereadores das cidades-polo (as duas maiores economias de cada estado, fora a capital)\n` +
+    `export const POLOS: Record<string, () => any[]> = {\n${caps.map((u) => `  ${u}: () => require('./cidades/${u}.json'),`).join('\n')}\n};\n`
 );
-console.log(`dados copiados: ${ufs.length} assembleias, ${caps.length} câmaras de capitais, executivo, STF e entes`);
+console.log(`dados copiados: ${ufs.length} assembleias, ${caps.length} câmaras de capitais e de cidades-polo, executivo, STF, entes e cidades`);

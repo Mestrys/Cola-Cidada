@@ -1,7 +1,7 @@
 // Painel público: todos os cargos abertos para consulta, sem cadastro. Acompanhar alguém é opcional
 // e só acontece dentro do perfil, depois de a pessoa ver os dados.
 import { store } from '../store.js';
-import { FEDERATION_UNITS, loadStf, loadExecutive } from '../api.js';
+import { FEDERATION_UNITS, loadStf, loadExecutive, loadCidades } from '../api.js';
 import { SECTIONS, loadSection, placeOf, matches } from '../directory.js';
 import { budgetSummary, personnelSpending, federalBodies, stateBodies, SICONFI_URL } from '../contas.js';
 import { esc, avatar, ROLES, skeleton, tablist, $ } from '../ui.js';
@@ -13,6 +13,7 @@ const PAGE = 24;
 const view = {
   section: 'presidencia',
   uf: '',
+  city: '',
   q: '',
   shown: PAGE,
 };
@@ -75,7 +76,7 @@ function bodyCard(b, i) {
       <span class="painel-icon"><span class="mi" aria-hidden="true">${b.icon}</span></span>
       <div class="painel-card-text">
         <h2 class="painel-name">${esc(b.name)}</h2>
-        <p class="sm muted">${b.budget ? 'Receitas e despesas do orçamento' : 'Gasto com pessoal do órgão'}${b.heavy ? ' · consulta maior (≈ 4 MB)' : ''}</p>
+        <p class="sm muted">${b.budget ? 'Receitas e despesas do orçamento' : 'Gasto com pessoal do órgão'}${b.heavy ? ' · consulta maior (≈ 4 MB)' : ''}${b.note ? ` · ${esc(b.note)}` : ''}</p>
       </div>
     </div>
     <div class="row u-gap-8">
@@ -117,7 +118,7 @@ export async function render(root) {
     <div class="top">
       <div>
         <h1>Painel público</h1>
-        <p>Quem ocupa cada cargo, do Presidente aos vereadores das capitais, e as contas de cada órgão. Tudo aberto, sem cadastro.
+        <p>Quem ocupa cada cargo, do Presidente aos vereadores das capitais e das maiores cidades de cada estado, e as contas de cada órgão. Tudo aberto, sem cadastro.
         Abra um perfil e, se quiser, acompanhe essa pessoa: a escolha fica só neste aparelho.</p>
       </div>
     </div>
@@ -142,6 +143,7 @@ export async function render(root) {
       if (b.dataset.section === view.section) return;
       view.section = b.dataset.section;
       view.q = '';
+      view.city = '';
       view.shown = PAGE;
       const next = SECTIONS.find((s) => s.key === view.section);
       if (!next.filter && next.key !== 'orgaos') view.uf = '';
@@ -174,8 +176,16 @@ async function renderPanel(panel) {
         ${
           section.filter === 'uf' || section.key === 'orgaos'
             ? `<div class="painel-field">
-          <label class="label" for="painel-uf">${section.key === 'orgaos' ? 'Estado e capital' : 'Estado'}</label>
+          <label class="label" for="painel-uf">${section.key === 'orgaos' ? 'Estado e cidades' : 'Estado'}</label>
           <select class="input" id="painel-uf">${ufOptions(section, view.uf)}</select>
+        </div>`
+            : ''
+        }
+        ${
+          section.key === 'vereadores'
+            ? `<div class="painel-field" id="painel-city-field" hidden>
+          <label class="label" for="painel-city">Cidade</label>
+          <select class="input" id="painel-city"></select>
         </div>`
             : ''
         }
@@ -188,12 +198,13 @@ async function renderPanel(panel) {
   const count = $('#painel-count', panel);
   const ufSel = $('#painel-uf', panel);
   const search = $('#painel-q', panel);
+  const citySel = $('#painel-city', panel);
 
   if (section.key === 'orgaos') return renderBodies(results, count, ufSel);
 
   let list = [];
   const paint = () => {
-    const filtered = list.filter((p) => (!view.uf || p.uf === view.uf) && matches(p, view.q));
+    const filtered = list.filter((p) => (!view.uf || p.uf === view.uf) && (!view.city || p.city === view.city) && matches(p, view.q));
     const visible = filtered.slice(0, view.shown);
     count.textContent = filtered.length
       ? `${filtered.length} ${filtered.length === 1 ? 'resultado' : 'resultados'}${filtered.length > visible.length ? `, mostrando ${visible.length}` : ''}`
@@ -202,7 +213,7 @@ async function renderPanel(panel) {
       <ul class="painel-grid" aria-label="${esc(section.label)}">${visible.map(card).join('')}</ul>
       ${filtered.length > visible.length ? `<button class="btn outlined painel-more" id="painel-more">Mostrar mais ${Math.min(PAGE, filtered.length - visible.length)}</button>` : ''}
       ${section.key === 'stf' ? `<p class="sm muted">${esc(stfNote)}</p>` : ''}
-      ${['governadores', 'prefeitos'].includes(section.key) ? `<p class="xs muted">Ocupantes atuais conferidos em ${esc(checkedAt)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.</p>` : ''}`;
+      ${['governadores', 'prefeitos'].includes(section.key) ? `<p class="xs muted">Ocupantes atuais conferidos em ${esc(checkedAt)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.${section.key === 'prefeitos' ? ' Nas cidades que não são capitais, o nome é o de quem foi eleito em 2024 (TSE): o ocupante de hoje pode ser outro.' : ''}</p>` : ''}`;
     results.querySelectorAll('[data-open]').forEach((b) => {
       b.onclick = () => {
         const p = list.find((x) => x.id === b.dataset.open);
@@ -240,6 +251,19 @@ async function renderPanel(panel) {
     return;
   }
   if (!panel.isConnected || token !== panelToken) return;
+  if (citySel) {
+    const cities = [...new Set(list.filter((p) => !view.uf || p.uf === view.uf).map((p) => p.city))].sort((x, y) => x.localeCompare(y, 'pt-BR'));
+    if (!cities.includes(view.city)) view.city = '';
+    citySel.innerHTML = `<option value="">Todas as cidades (${cities.length})</option>${cities
+      .map((c) => `<option value="${esc(c)}" ${c === view.city ? 'selected' : ''}>${esc(c)}</option>`)
+      .join('')}`;
+    $('#painel-city-field', panel).hidden = cities.length < 2;
+    citySel.onchange = () => {
+      view.city = citySel.value;
+      view.shown = PAGE;
+      paint();
+    };
+  }
   paint();
 
   let timer;
@@ -255,6 +279,7 @@ async function renderPanel(panel) {
   if (ufSel)
     ufSel.onchange = async () => {
       view.uf = ufSel.value;
+      view.city = '';
       view.shown = PAGE;
       if (section.requiresUf) {
         await renderPanel(panel);
@@ -269,12 +294,14 @@ async function renderBodies(results, count, ufSel) {
     results.innerHTML = '<div class="card empty"><p class="muted">Não foi possível carregar a lista de órgãos.</p></div>';
     return;
   }
-  const bodies = [...federalBodies(), ...stateBodies(view.uf, entes)];
+  const { cidades } = await loadCidades().catch(() => ({ cidades: [] }));
+  const bodies = [...federalBodies(), ...stateBodies(view.uf, entes, cidades)];
   const uf = FEDERATION_UNITS.find((u) => u.uf === view.uf);
-  count.textContent = `${bodies.length} órgãos: federais e de ${uf?.name || view.uf}`;
+  const hasCities = cidades.some((c) => c.uf === view.uf && c.kind === 'polo');
+  count.textContent = `${bodies.length} órgãos: federais, de ${uf?.name || view.uf}${hasCities ? ', da capital e das duas maiores cidades do estado' : ''}`;
   results.innerHTML = `
     <ul class="painel-grid painel-bodies" aria-label="Órgãos e contas">${bodies.map(bodyCard).join('')}</ul>
-    <p class="xs muted">As contas vêm dos relatórios que a União, os estados e as capitais entregam ao Tesouro Nacional por exigência da
+    <p class="xs muted">As contas vêm dos relatórios que a União, os estados e os municípios entregam ao Tesouro Nacional por exigência da
     Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão.</p>`;
 
   results.querySelectorAll('[data-accounts]').forEach((btn) => {

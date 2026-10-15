@@ -22,6 +22,28 @@ for (const theme of ['light', 'dark']) {
       const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
       for (const v of violations) report.push(`painel contas: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
     }
+    // vereadores com o filtro de cidade (cidades-polo)
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=vereadores]').click();
+    await page.locator('#painel-uf').selectOption('SC');
+    await page.locator('#painel-city-field').waitFor();
+    await page.locator('#painel-city').selectOption('Joinville');
+    await page.waitForTimeout(300);
+    {
+      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
+      for (const v of violations) report.push(`painel vereadores/cidade: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+    }
+    // perfil de prefeito de cidade-polo, com o bloco "A cidade"
+    await page.locator('#painel-tabs [data-section=prefeitos]').click();
+    await page.locator('.painel-open').first().click();
+    await page.waitForSelector('#city-facts section');
+    await page.waitForTimeout(400);
+    {
+      const { violations } = await new AxeBuilder({ page }).include('.overlay').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+      for (const v of violations) report.push(`modal cidade: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+    }
+    await page.keyboard.press('Escape');
+    await page.waitForSelector('.overlay', { state: 'detached' });
     const dialogs = [
       ['meus-politicos', null, '[data-details]'],
       ['painel', 'governadores', '.painel-open'],

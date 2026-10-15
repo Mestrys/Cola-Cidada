@@ -3,8 +3,8 @@
 Transparência sobre quem ocupa cada cargo público, aberta para qualquer pessoa.
 
 Aplicação web com um **Painel Público** de Presidente e vice, ministros do STF, senadores, deputados federais, governadores,
-deputados estaduais e distritais, prefeitos e vereadores das 26 capitais, mais as **contas** da Presidência, da Câmara, do Senado,
-do STF, dos 27 governos e assembleias e das 26 prefeituras e câmaras de capitais. Nada é escolhido antes: a pessoa consulta
+deputados estaduais e distritais, prefeitos e vereadores das 26 capitais e das duas maiores cidades de cada estado, mais as **contas** da Presidência, da Câmara, do Senado,
+do STF, dos 27 governos e assembleias e das prefeituras e câmaras dessas cidades. Nada é escolhido antes: a pessoa consulta
 qualquer perfil e, só depois de vê-lo, pode **acompanhar** quem quiser (votações, gastos e alertas).
 
 ## Privacidade (LGPD)
@@ -148,9 +148,17 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   disputar 2026, sucessões, interinos e a eleição indireta do Amazonas). Quem assumiu no lugar do eleito aparece sem a ficha do TSE, com a
   data de posse e o nome de quem venceu a eleição. A data da conferência aparece no Painel. Para atualizar, edite `titulares.json` e rode
   `node scripts/build-executive-data.mjs <consulta_cand_2022> <consulta_cand_2024>`.
+- **Cidades-polo (as duas maiores economias de cada estado, fora a capital):** `scripts/build-cidades.mjs` consulta o IBGE (SIDRA: PIB dos
+  Municípios, tabela 5938, e população do Censo 2022, tabela 4709), escolhe as duas maiores cidades por PIB em cada um dos 26 estados com
+  capital municipal (o DF é uma cidade só) e junta os prefeitos e vereadores eleitos em 2024 (TSE). Gera `src/data/cidades.json` (catálogo
+  de capitais e polos, com PIB, população, PIB por habitante e posição no estado), `src/data/cidades/{uf}.json` (vereadores) e
+  `src/data/prefeitos-cidades.json`. Os arquivos das capitais não são tocados. Nas cidades-polo o nome do prefeito é o de quem foi eleito:
+  só as capitais têm o ocupante de hoje conferido em `titulares.json`. Uso: `node scripts/build-cidades.mjs <consulta_cand_2024> <bem_candidato_2024>`.
+- **Frentes parlamentares e comissões:** o perfil do deputado federal lista as frentes da legislatura atual (API da Câmara) e o do senador
+  mostra as comissões em que atua hoje (API do Senado), ambas consultadas ao vivo.
 - **STF:** `src/data/stf.json` (composição, posse, quem indicou e ano da aposentadoria compulsória). Ministros não têm mandato nem ficha eleitoral.
 - **Contas (aba Contas do Painel):** consultadas ao vivo no Siconfi (`apidatalake.tesouro.gov.br`), sem chave. Governo Federal, estados e
-  capitais mostram receita arrecadada e despesa empenhada, liquidada e paga no período mais recente entregue; Câmara, Senado, STF,
+  capitais e cidades-polo mostram receita arrecadada e despesa empenhada, liquidada e paga no período mais recente entregue; Câmara, Senado, STF,
   assembleias e câmaras municipais mostram o gasto com pessoal em 12 meses e o peso na receita corrente líquida. Os códigos IBGE ficam em
   `src/data/entes.json`. Dois cuidados com o Siconfi: o espaço da URL vai como `%20` (com `+` a resposta vem sem CORS), e cada
   consulta leva `&origem=<host do app>`, porque a CDN deles guarda o cabeçalho CORS de quem pediu a URL primeiro e o repete para todos.

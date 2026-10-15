@@ -3,6 +3,10 @@ import {
   deputyPropositions,
   deputyExpenses,
   deputyProfile,
+  deputyFronts,
+  senatorCommittees,
+  cityFacts,
+  loadCidades,
   senatorVotes,
   getTseElectoralProfile,
 } from '../api.js';
@@ -148,6 +152,25 @@ function officeHtml(p, isStf) {
     </div>`;
 }
 
+const compactBrl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1 });
+
+// Contexto da cidade (IBGE): ajuda a ler o tamanho do orçamento e da câmara. Vale para capitais e cidades-polo.
+function cityFactsHtml(c, ano, popAno) {
+  const place = c.kind === 'capital' ? `Capital · ${c.rankPib}ª economia do estado` : `${c.rankPib}ª maior economia do estado`;
+  const rows = [
+    ['Posição no estado (PIB)', place],
+    [`PIB (${ano})`, compactBrl.format(c.pib)],
+    [`População (Censo ${popAno})`, c.populacao ? c.populacao.toLocaleString('pt-BR') : 'não informada'],
+    ['PIB por habitante', c.pibPerCapita ? brl(c.pibPerCapita) : 'não informado'],
+  ];
+  return `
+    <section class="card soft stack u-gap-8 u-p-14" aria-labelledby="city-facts-title">
+      <h3 class="sm u-fw-700" id="city-facts-title">A cidade: ${esc(c.nome)}</h3>
+      <dl class="office-list">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+      <p class="xs muted">Fonte: IBGE (PIB dos Municípios e Censo Demográfico).</p>
+    </section>`;
+}
+
 const EXEC_ROLES = new Set(['presidente', 'governador', 'prefeito']);
 
 // Acompanhar é uma escolha feita aqui, depois de ver o perfil; fica só neste aparelho.
@@ -244,6 +267,8 @@ export async function openPoliticianDetails(p) {
       </div>
     </div>
 
+    ${p.roleKey === 'prefeito' || isCouncilor ? '<div id="city-facts" aria-live="polite"></div>' : ''}
+
     <!-- Navegação de Abas MD3 -->
     <div class="tabs u-ovx-auto u-maxw-100pct u-white-space-nowrap u-p-4" id="pol-tabs" aria-label="Seções da ficha">
       ${
@@ -257,6 +282,7 @@ export async function openPoliticianDetails(p) {
           : isSenator
           ? `
         <button class="on" data-tab="senado">Votações no Senado</button>
+        <button data-tab="comissoes">Comissões</button>
         <button data-tab="plenario">Presença & Fidelidade</button>
       `
           : `
@@ -287,6 +313,9 @@ export async function openPoliticianDetails(p) {
         ? `
       <div id="tab-senado" class="stack pol-pane u-mt-4">
         ${skeleton('Carregando votações nominais no Senado…', 2)}
+      </div>
+      <div id="tab-comissoes" class="stack pol-pane hidden u-mt-4">
+        ${skeleton('Consultando as comissões do Senado…', 1)}
       </div>
       <div id="tab-plenario" class="stack pol-pane hidden u-mt-4">
         ${skeleton('Calculando presença e fidelidade a partir das votações oficiais do Senado…', 1)}
@@ -416,6 +445,15 @@ export async function openPoliticianDetails(p) {
   });
   tablist(el.querySelector('#pol-tabs'), (b) => el.querySelector(`#tab-${b.dataset.tab}`));
   bindFollow(el, p);
+
+  const factsBox = el.querySelector('#city-facts');
+  if (factsBox) {
+    Promise.all([cityFacts(p.state || p.uf, p.city), loadCidades()])
+      .then(([c, meta]) => {
+        if (c) factsBox.innerHTML = cityFactsHtml(c, meta.pibAno, meta.populacaoAno);
+      })
+      .catch(() => {});
+  }
 
   if (isDeputy) {
     const paneGastos = el.querySelector('#tab-gastos');
@@ -603,9 +641,38 @@ export async function openPoliticianDetails(p) {
     } catch (err) {
       panePerfil.innerHTML = `<p class="muted">Erro ao carregar dados do gabinete: ${esc(err.message)}</p>`;
     }
+    deputyFronts(p.camaraId)
+      .then((fronts) => {
+        if (!fronts.length) return;
+        panePerfil.insertAdjacentHTML(
+          'beforeend',
+          `<section class="card soft stack u-gap-8 u-p-14" aria-labelledby="fronts-title">
+            <h3 class="sm u-fw-700" id="fronts-title">Frentes parlamentares (${fronts.length})</h3>
+            <p class="xs muted">Grupos suprapartidários de apoio a um tema. Participar de uma frente não é voto, mas mostra os temas a que o mandato se associa.</p>
+            <ul class="stack u-gap-4 sm">${fronts.map((f) => `<li>${esc(f.title)}</li>`).join('')}</ul>
+          </section>`
+        );
+      })
+      .catch(() => {});
   } else if (isSenator) {
     const paneSenator = el.querySelector('#tab-senado');
     const panePlenario = el.querySelector('#tab-plenario');
+    const paneComissoes = el.querySelector('#tab-comissoes');
+    senatorCommittees(p.senadoId)
+      .then((list) => {
+        paneComissoes.innerHTML = list.length
+          ? `<div class="row between"><span class="chip blue">Comissões em que atua hoje (${list.length})</span><span class="xs muted">Fonte: API Senado Federal</span></div>
+            <ul class="stack u-gap-8">${list
+              .map(
+                (c) => `<li class="card soft u-p-12 stack u-gap-4">
+                  <b class="sm">${esc(c.name)}${c.acronym ? ` (${esc(c.acronym)})` : ''}</b>
+                  <span class="xs muted">${esc(c.role)}${c.since ? ` · desde ${fmtDate(c.since)}` : ''}</span>
+                </li>`
+              )
+              .join('')}</ul>`
+          : '<p class="muted">Nenhuma comissão ativa registrada para este senador.</p>';
+      })
+      .catch(() => (paneComissoes.innerHTML = '<p class="muted">Não foi possível consultar as comissões agora.</p>'));
     senatorPlenaryStats(p.senadoId)
       .then((stats) => (panePlenario.innerHTML = plenaryPanelHtml(stats)))
       .catch((err) => (panePlenario.innerHTML = `<p class="muted">Não foi possível calcular agora: ${esc(err.message)}</p>`));

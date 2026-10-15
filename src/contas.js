@@ -140,7 +140,8 @@ export function federalBodies() {
   ];
 }
 
-export function stateBodies(uf, entes) {
+// `cidades` é o catálogo de src/data/cidades.json: com ele, as duas cidades-polo do estado entram depois da capital.
+export function stateBodies(uf, entes, cidades = []) {
   const u = FEDERATION_UNITS.find((x) => x.uf === uf);
   const ids = entes.ufs[uf];
   if (!u || !ids) return [];
@@ -164,6 +165,14 @@ export function stateBodies(uf, entes) {
         key: `cm-${uf}`, name: u.councilName || `Câmara Municipal de ${u.capital}`, icon: 'diversity_3',
         ente: municipio, poder: 'L', match: /^C[âa]mara/i,
       }
+    );
+  }
+  for (const c of cidades.filter((x) => x.uf === uf && x.kind === 'polo')) {
+    const municipio = { kind: 'municipio', ibge: c.ibge };
+    const note = `${c.rankPib}ª maior economia do estado`;
+    list.push(
+      { key: `pref-${c.ibge}`, name: `Prefeitura de ${c.nome}`, icon: 'location_city', ente: municipio, budget: true, note },
+      { key: `cm-${c.ibge}`, name: `Câmara Municipal de ${c.nome}`, icon: 'diversity_3', ente: municipio, poder: 'L', match: /^C[âa]mara/i, note }
     );
   }
   return list;
