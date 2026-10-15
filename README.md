@@ -168,6 +168,9 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   todos os tribunais do Judiciário) e grava `src/data/poderes.json` (~80 KB). Município não tem Judiciário. É gasto com pessoal, não o gasto total do Poder.
   O Executivo federal vem sem comparação: o relatório dele no Siconfi cobre só uma parcela. Para atualizar: `node scripts/build-poderes.mjs` (~2 min) e,
   no Expo, `node expo-app/scripts/sync-data.mjs`.
+  **Fase 2 (despesa total por função):** o mesmo `poderes.json` traz, por ente, a despesa liquidada por função de governo (DCA, Anexo I-E, ano mais recente:
+  2025 em 105 dos 106 entes): Legislativa, Judiciária, Essencial à Justiça, Encargos especiais e as demais funções. É o gasto total, mas função não é Poder
+  (aposentadorias e outros gastos de um Poder podem estar em outras funções), e a tela diz isso. O comparativo entre estados ganhou essas medidas.
 - **Frentes parlamentares e comissões:** o perfil do deputado federal lista as frentes da legislatura atual (API da Câmara) e o do senador
   mostra as comissões em que atua hoje (API do Senado), ambas consultadas ao vivo.
 - **STF:** `src/data/stf.json` (composição, posse, quem indicou e ano da aposentadoria compulsória). Ministros não têm mandato nem ficha eleitoral.

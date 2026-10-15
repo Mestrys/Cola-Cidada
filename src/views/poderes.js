@@ -2,10 +2,10 @@
 // e quanto do limite da LRF isso representa. Dados abertos, sem cadastro; instantâneo do RGF (Siconfi).
 import { store } from '../store.js';
 import { FEDERATION_UNITS, loadPoderes } from '../api.js';
-import { POWERS, STATE_LIMITS, status, kindLabel, entesOfState, rankStates, summaryOf } from '../poderes.js';
+import { POWERS, FUNCTIONS, STATE_LIMITS, status, kindLabel, entesOfState, rankStates, rankFunction, functionRows } from '../poderes.js';
 import { esc, skeleton, tablist, $ } from '../ui.js';
 
-const view = { tab: 'estado', uf: '', poder: 'E' };
+const view = { tab: 'estado', uf: '', measure: 'p:E' };
 
 const compact = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1 });
 const money = (v) => (v == null ? 'não informado' : compact.format(v));
@@ -43,6 +43,23 @@ function powerBlock(power, p) {
   </div>`;
 }
 
+const pctShare = (v) => `${(v * 100).toLocaleString('pt-BR', { maximumFractionDigits: v < 0.1 ? 1 : 0 })}%`;
+
+function functionBlock(f) {
+  const rows = functionRows(f);
+  if (!rows.length) return '<p class="sm muted">Despesa por função: sem declaração anual no Tesouro.</p>';
+  return `
+  <div class="stack u-gap-8">
+    <h3 class="u-fw-600">Despesa total por função</h3>
+    <p class="xs muted">Gasto liquidado em ${f.ano}: <b>${money(f.total)}</b>. Função não é Poder: aposentadorias e outros gastos de cada Poder podem estar em outras funções.</p>
+    <dl class="painel-figures">
+      ${rows
+        .map((r) => `<div><dt>${esc(r.name)}<span class="xs muted"> · ${esc(r.hint)}</span></dt><dd><b>${money(r.valor)}</b><span class="xs muted">${pctShare(r.pct)} do total</span></dd></div>`)
+        .join('')}
+    </dl>
+  </div>`;
+}
+
 function enteCard(e) {
   const isCity = e.tipo === 'capital' || e.tipo === 'polo';
   return `
@@ -56,6 +73,8 @@ function enteCard(e) {
     </div>
     ${POWERS.filter((w) => w.key in e.poderes).map((w) => powerBlock(w, e.poderes[w.key])).join('<hr>')}
     ${isCity ? '<p class="xs muted">Município não tem Judiciário próprio: a Justiça local é do estado.</p>' : ''}
+    <hr>
+    ${functionBlock(e.funcoes)}
   </li>`;
 }
 
@@ -68,8 +87,32 @@ function stateTab(data) {
     <ul class="painel-grid painel-bodies" aria-label="Gastos por Poder">${list.map(enteCard).join('')}</ul>`;
 }
 
+const MEASURES = [
+  ...POWERS.map((w) => ({ id: `p:${w.key}`, label: `${w.name}: pessoal sobre a receita (limite da LRF)` })),
+  ...FUNCTIONS.slice(0, 3).map((f) => ({ id: `f:${f.key}`, label: `${f.name}: parcela do gasto total do estado` })),
+];
+
 function compareTab(data) {
-  const power = POWERS.find((w) => w.key === view.poder);
+  const [kind, key] = view.measure.split(':');
+  if (kind === 'f') {
+    const fn = FUNCTIONS.find((f) => f.key === key);
+    const rows = rankFunction(data, key);
+    return `
+    <p class="sm muted">Os 27 estados pela parcela da despesa total (liquidada, DCA) que vai à função <b>${esc(fn.name)}</b> (${esc(fn.hint)}).
+    Função não é Poder: aposentadorias e outros gastos de cada Poder podem estar em outras funções.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Estados por parcela da função ${esc(fn.name)}">
+      <table class="party-table">
+        <caption class="sr-only">Despesa da função ${esc(fn.name)} em cada estado</caption>
+        <thead><tr><th scope="col">Estado</th><th scope="col">Gasto na função</th><th scope="col">% da despesa total</th></tr></thead>
+        <tbody>${rows
+          .map(({ ente, f, valor, pct: share }) =>
+            f ? `<tr><th scope="row">${esc(ente.nome)}</th><td>${money(valor)}</td><td>${pctShare(share)}</td></tr>`
+              : `<tr><th scope="row">${esc(ente.nome)}</th><td colspan="2" class="muted">sem declaração</td></tr>`)
+          .join('')}</tbody>
+      </table>
+    </div>`;
+  }
+  const power = POWERS.find((w) => w.key === key);
   const rows = rankStates(data, power.key);
   const limit = STATE_LIMITS[power.key];
   return `
@@ -138,12 +181,12 @@ export async function render(root) {
           isState
             ? `<div class="painel-field"><label class="label" for="poderes-uf">Estado e cidades</label>
                <select class="input" id="poderes-uf">${FEDERATION_UNITS.map((u) => `<option value="${u.uf}" ${u.uf === view.uf ? 'selected' : ''}>${esc(u.name)}</option>`).join('')}</select></div>`
-            : `<div class="painel-field"><label class="label" for="poderes-poder">Poder</label>
-               <select class="input" id="poderes-poder">${POWERS.map((w) => `<option value="${w.key}" ${w.key === view.poder ? 'selected' : ''}>${w.name}</option>`).join('')}</select></div>`
+            : `<div class="painel-field"><label class="label" for="poderes-poder">O que comparar</label>
+               <select class="input" id="poderes-poder">${MEASURES.map((m) => `<option value="${m.id}" ${m.id === view.measure ? 'selected' : ''}>${esc(m.label)}</option>`).join('')}</select></div>`
         }
       </div>
       <div id="poderes-body" class="stack u-gap-14">${isState ? stateTab(data) : compareTab(data)}</div>
-      <p class="xs muted">Dados do Relatório de Gestão Fiscal (RGF, Anexo 01) que cada ente entrega ao Tesouro Nacional (Siconfi), consultados em ${new Date(data.geradoEm + 'T12:00').toLocaleDateString('pt-BR')}.
+      <p class="xs muted">Dados que cada ente entrega ao Tesouro Nacional (Siconfi): Relatório de Gestão Fiscal (RGF, Anexo 01) para o pessoal de cada Poder e Declaração de Contas Anuais (DCA, Anexo I-E) para a despesa por função, consultados em ${new Date(data.geradoEm + 'T12:00').toLocaleDateString('pt-BR')}.
       É a <b>despesa líquida com pessoal</b> (ativos, aposentados e pensionistas, descontadas as parcelas que a lei exclui), e não o gasto total do Poder:
       custeio e investimentos não entram. Cada ente informa o próprio limite; quando ele aparece acima de 100%, é o que consta no relatório entregue.
       <a href="https://siconfi.tesouro.gov.br/siconfi/index.jsf" target="_blank" rel="noopener noreferrer">Siconfi<span class="sr-only"> (abre em nova aba)</span></a>.</p>`;
@@ -152,7 +195,7 @@ export async function render(root) {
       $('#poderes-body', panel).innerHTML = stateTab(data);
     });
     $('#poderes-poder', panel)?.addEventListener('change', (ev) => {
-      view.poder = ev.target.value;
+      view.measure = ev.target.value;
       $('#poderes-body', panel).innerHTML = compareTab(data);
     });
   }
