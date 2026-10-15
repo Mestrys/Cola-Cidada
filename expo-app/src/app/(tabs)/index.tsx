@@ -11,7 +11,7 @@ import { ScreenHeader, screenContent } from '@/components/ui/screen';
 import { Spacing } from '@/constants/theme';
 import { useAsync } from '@/hooks/use-async';
 import { useTheme } from '@/hooks/use-theme';
-import { budgetSummary, federalBodies, money, personnelSpending, SICONFI_URL, stateBodies, type Body } from '@/lib/contas';
+import { budgetSummary, federalBodies, money, personnelSpending, recentContracts, SICONFI_URL, stateBodies, type Body, type Contract } from '@/lib/contas';
 import { CHECKED_AT, POLOS_CHECKED_AT, loadSection, matches, placeOf, SECTIONS, STF_VACANCY, UNITS, type SectionKey } from '@/lib/directory';
 import { formatDate, ROLES } from '@/lib/mandate';
 import { useStore } from '@/lib/store';
@@ -62,10 +62,69 @@ function Row({ p, followed, onPress }: { p: Politician; followed: boolean; onPre
   );
 }
 
+function ContractRow({ c }: { c: Contract }) {
+  const theme = useTheme();
+  return (
+    <Pressable
+      accessibilityRole="link"
+      accessibilityLabel={`${c.value == null ? 'valor não informado' : money(c.value)}, ${c.object}. Abrir no PNCP`}
+      onPress={() => Linking.openURL(c.url)}
+      style={[styles.contract, { backgroundColor: theme.backgroundSelected }]}>
+      <ThemedText type="smallBold">
+        {c.value == null ? 'valor não informado' : money(c.value)} · {formatDate(c.date)}
+      </ThemedText>
+      <ThemedText type="small" numberOfLines={3}>
+        {c.object}
+      </ThemedText>
+      <ThemedText type="small" themeColor="textSecondary">
+        {c.supplier}
+        {c.kind ? ` · ${c.kind}` : ''}
+        {c.emenda ? ' · emenda parlamentar' : ''}
+      </ThemedText>
+    </Pressable>
+  );
+}
+
+/** Contratos que a prefeitura publicou no PNCP nos últimos 30 dias, consultados na hora ao abrir. */
+function ContractsPanel({ cnpj }: { cnpj: string }) {
+  const [tick, setTick] = useState(0);
+  const res = useAsync(() => recentContracts(cnpj), [cnpj, tick]);
+  if (res.loading) return <ActivityIndicator accessibilityLabel="Consultando o PNCP" />;
+  if (res.error || !res.data) {
+    return (
+      <View style={styles.bodyRows}>
+        <ThemedText type="small">Falha ao consultar o PNCP.</ThemedText>
+        <Button label="Tentar de novo" variant="secondary" onPress={() => setTick(tick + 1)} />
+      </View>
+    );
+  }
+  const d = res.data;
+  if (!d.total) return <ThemedText type="small" themeColor="textSecondary">Nenhum contrato publicado no PNCP nos últimos {d.days} dias por esta prefeitura.</ThemedText>;
+  return (
+    <View style={styles.bodyRows}>
+      <ThemedText type="small">
+        <ThemedText type="smallBold">{d.total.toLocaleString('pt-BR')}</ThemedText> contratos publicados nos últimos {d.days} dias{d.partial ? ' (somados os 500 mais recentes)' : ''}. Soma dos valores informados: <ThemedText type="smallBold">{money(d.sum)}</ThemedText> (empenhos e contratos, sem descontar repetições).
+      </ThemedText>
+      <ThemedText type="smallBold" accessibilityRole="header">Maiores contratos</ThemedText>
+      {d.biggest.map((c) => (
+        <ContractRow key={`b${c.id}`} c={c} />
+      ))}
+      <ThemedText type="smallBold" accessibilityRole="header">Mais recentes</ThemedText>
+      {d.items.map((c) => (
+        <ContractRow key={`r${c.id}`} c={c} />
+      ))}
+      <ThemedText type="small" themeColor="textSecondary">
+        Fonte: Portal Nacional de Contratações Públicas (PNCP). Só o que a prefeitura publicou lá; a Câmara Municipal e outras entidades da cidade têm CNPJ próprio.
+      </ThemedText>
+    </View>
+  );
+}
+
 /** Um órgão da aba Contas: abre as contas sob demanda, direto do Tesouro Nacional. */
 function BodyCard({ body }: { body: Body }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [showContracts, setShowContracts] = useState(false);
   const [tick, setTick] = useState(0);
   const res = useAsync(
     async () => (open ? (body.budget ? await budgetSummary(body.ente) : await personnelSpending(body.ente, body.poder!, body.match!)) : undefined),
@@ -103,6 +162,15 @@ function BodyCard({ body }: { body: Body }) {
         accessibilityState={{ expanded: open }}
         onPress={() => setOpen(!open)}
       />
+      {body.cnpj ? (
+        <Button
+          label={showContracts ? 'Ocultar contratos' : 'Contratos recentes'}
+          variant="secondary"
+          accessibilityState={{ expanded: showContracts }}
+          onPress={() => setShowContracts(!showContracts)}
+        />
+      ) : null}
+      {showContracts && body.cnpj ? <ContractsPanel cnpj={body.cnpj} /> : null}
       {open ? (
         res.loading ? (
           <ActivityIndicator accessibilityLabel="Consultando o Tesouro Nacional" />
@@ -299,4 +367,5 @@ const styles = StyleSheet.create({
   bodies: { gap: Spacing.two },
   bodyCard: { flexDirection: 'column', alignItems: 'stretch', gap: Spacing.two },
   bodyRows: { gap: Spacing.two },
+  contract: { borderRadius: 12, padding: Spacing.two, gap: Spacing.half },
 });

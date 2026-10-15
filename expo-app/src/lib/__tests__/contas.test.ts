@@ -1,4 +1,4 @@
-import { budgetSummary, federalBodies, money, personnelSpending, recentPeriods, stateBodies, UNIAO } from '../contas';
+import { budgetSummary, federalBodies, money, personnelSpending, recentContracts, recentPeriods, stateBodies, toContract, UNIAO } from '../contas';
 import { UNITS } from '../directory';
 
 const ok = (body: unknown) => ({ ok: true, status: 200, json: async () => body });
@@ -65,5 +65,30 @@ describe('contas', () => {
     expect(money(6.3e12)).toBe('R$ 6,3 tri');
     expect(money(624230405)).toBe('R$ 624,2 mi');
     expect(money(900)).toBe('R$ 900');
+  });
+
+  it('prefeituras levam o CNPJ (para o PNCP); governos, assembleias e câmaras não', () => {
+    const sp = stateBodies('SP');
+    expect(sp.filter((b) => b.cnpj).map((b) => b.key)).toEqual(['pref-SP', 'pref-3534401', 'pref-3518800']);
+    expect(sp.filter((b) => b.cnpj).every((b) => /^\d{14}$/.test(b.cnpj!))).toBe(true);
+    expect(stateBodies('DF').some((b) => b.cnpj)).toBe(false);
+  });
+
+  it('contratos do PNCP: lê da última página para trás, soma e separa os maiores dos mais recentes', async () => {
+    const raw = (n: number, date: string) => ({ numeroControlePNCP: `c${n}`, dataPublicacaoPncp: `${date}T10:00:00`, objetoContrato: ` Obra ${n} `, nomeRazaoSocialFornecedor: `E${n}`, valorGlobal: n * 1000, tipoContrato: { nome: 'Contrato' }, orgaoEntidade: { cnpj: '1' }, anoContrato: 2026, sequencialContrato: n, emendaParlamentar: n === 9 ? {} : null });
+    const pages = [[raw(1, '2026-09-20'), raw(9, '2026-09-21')], [raw(3, '2026-09-30'), raw(4, '2026-10-02'), raw(5, '2026-10-01')]];
+    const urls: string[] = [];
+    fetchMock.mockImplementation(async (url: string) => {
+      urls.push(url);
+      const page = Number(new URL(url).searchParams.get('pagina'));
+      return ok({ data: pages[page - 1], totalRegistros: 5, totalPaginas: 2 });
+    });
+    const r = await recentContracts('46523171000104', { keep: 2, now: new Date('2026-10-15T12:00:00Z') });
+    expect(r).toMatchObject({ total: 5, partial: false, sum: 22000 });
+    expect(r.biggest.map((c) => c.value)).toEqual([9000, 5000]);
+    expect(r.biggest[0].emenda).toBe(true);
+    expect(r.items.map((c) => c.date)).toEqual(['2026-10-02', '2026-10-01']);
+    expect(new URL(urls[0]).searchParams.get('cnpjOrgao')).toBe('46523171000104');
+    expect(toContract(raw(3, '2026-01-01')).url).toBe('https://pncp.gov.br/app/contratos/1/2026/3');
   });
 });

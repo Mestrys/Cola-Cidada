@@ -6,7 +6,7 @@ import federation from '@/data/federation.json';
 const PWA = '../../../../src/data';
 
 describe('dados copiados do PWA', () => {
-  it.each(['executivo.json', 'stf.json', 'entes.json', 'cidades.json', 'prefeitos-cidades.json', 'ceaps.json', 'poderes.json', 'emendas.json'])('%s está igual ao do PWA', (f) => {
+  it.each(['executivo.json', 'stf.json', 'entes.json', 'cidades.json', 'prefeitos-cidades.json', 'ceaps.json', 'poderes.json', 'emendas.json', 'cnpjs.json'])('%s está igual ao do PWA', (f) => {
     expect(require(`../../data/${f}`)).toEqual(require(`${PWA}/${f}`));
   });
 

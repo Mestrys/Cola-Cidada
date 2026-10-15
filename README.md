@@ -171,6 +171,11 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   **Fase 2 (despesa total por função):** o mesmo `poderes.json` traz, por ente, a despesa liquidada por função de governo (DCA, Anexo I-E, ano mais recente:
   2025 em 105 dos 106 entes): Legislativa, Judiciária, Essencial à Justiça, Encargos especiais e as demais funções. É o gasto total, mas função não é Poder
   (aposentadorias e outros gastos de um Poder podem estar em outras funções), e a tela diz isso. O comparativo entre estados ganhou essas medidas.
+- **Contratos das prefeituras (PNCP):** na aba Contas, a prefeitura de cada capital e cidade-polo ganha o botão "Contratos recentes": consulta ao vivo o
+  Portal Nacional de Contratações Públicas (`pncp.gov.br`, sem chave, com CORS) pelo CNPJ da prefeitura (`src/data/cnpjs.json`, de `scripts/build-cnpjs.mjs`, a
+  partir do cadastro de entes do Siconfi). Mostra o total dos últimos 30 dias, a soma dos valores informados, os maiores contratos e os mais recentes (com a marca
+  de emenda parlamentar quando o contrato traz uma). A API só filtra por CNPJ do órgão, aceita até 365 dias e devolve do mais antigo ao mais novo: o app lê a
+  última página para trás, até 500 contratos. Só prefeituras: governos estaduais, câmaras e assembleias têm vários CNPJs ou CNPJs próprios e ficam de fora por ora.
 - **Emendas parlamentares:** `scripts/build-emendas.mjs` lê o download aberto do Portal da Transparência (CGU, ~32 MB, sem chave) e grava
   `src/data/emendas.json` (~600 KB): desde 2023, por parlamentar (emendas individuais: empenhado e pago por ano, emendas Pix, municípios e favorecidos
   que mais receberam) e por cidade monitorada (total e autores que mais enviaram). O perfil de deputado e de senador ganha a aba "Emendas" e o bloco
