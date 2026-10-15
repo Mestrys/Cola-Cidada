@@ -127,6 +127,17 @@ async function funcoesOf(ente) {
   return null;
 }
 
+/**
+ * Despesa com pessoal maior que a receita corrente líquida do próprio ente é inconsistência do relatório (a receita informada
+ * pode estar errada): marca todos os Poderes do ente como `atipico`, porque o limite e o % de cada um saem dessa mesma receita.
+ */
+export function flagAtipicos(poderes) {
+  const lista = Object.values(poderes).filter(Boolean);
+  if (!lista.some((p) => p.pctRcl != null && p.pctRcl > 100)) return poderes;
+  for (const p of lista) p.atipico = true;
+  return poderes;
+}
+
 async function poderOf(ente, poder, periods) {
   for (const [ano, periodo] of periods) {
     const items = await rgfItems(ente.esfera, ente.ibge, poder, ano, periodo);
@@ -162,7 +173,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     process.stdout.write('.');
     const funcoes = await funcoesOf(ente);
     const { esfera, ...rest } = ente;
-    return { ...rest, poderes, funcoes };
+    return { ...rest, poderes: flagAtipicos(poderes), funcoes };
   });
   console.log();
 

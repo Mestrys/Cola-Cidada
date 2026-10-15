@@ -52,19 +52,20 @@ function PowerBlock({ name, p }: { name: string; p: PowerData | null | undefined
       </View>
     );
   }
-  const st = status(p.uso);
+  const st = status(p.uso, p.atipico);
   const orgs = p.orgaos.map((o) => o.nome).join(', ') + (p.orgaosTotal > p.orgaos.length ? ` e mais ${p.orgaosTotal - p.orgaos.length}` : '');
   return (
-    <View style={styles.block} accessible accessibilityLabel={`${name}: ${money(p.liquida)} com pessoal, ${pct(p.pctRcl)} da receita corrente líquida, ${st.label}${p.uso != null ? `, usa ${usedPct(p.uso)} do limite` : ''}`}>
+    <View style={styles.block} accessible accessibilityLabel={`${name}: ${money(p.liquida)} com pessoal, ${pct(p.pctRcl)} da receita corrente líquida, ${st.label}${p.uso != null && !p.atipico ? `, usa ${usedPct(p.uso)} do limite` : ''}`}>
       <ThemedText type="smallBold">{name} · {st.label}</ThemedText>
       <ThemedText type="small" themeColor="textSecondary">{orgs}</ThemedText>
       <ThemedText type="small">
         Pessoal (líquida): <ThemedText type="smallBold">{money(p.liquida)}</ThemedText> · {pct(p.pctRcl)} da receita corrente líquida
       </ThemedText>
       {p.limite != null ? <ThemedText type="small">Limite máximo informado: <ThemedText type="smallBold">{money(p.limite)}</ThemedText></ThemedText> : null}
-      {p.uso != null ? <ProgressBar pct={p.uso * 100} label={`${name}: uso do limite`} /> : null}
+      {p.atipico ? <ThemedText type="small" themeColor="textSecondary">O relatório informa uma despesa com pessoal maior que a receita corrente líquida do próprio ente: o dado entregue ao Tesouro parece inconsistente, e o uso do limite não é confiável.</ThemedText> : null}
+      {p.uso != null && !p.atipico ? <ProgressBar pct={p.uso * 100} label={`${name}: uso do limite`} /> : null}
       <ThemedText type="small" themeColor="textSecondary">
-        {p.uso != null ? `Usa ${usedPct(p.uso)} do limite. ` : ''}
+        {p.uso != null && !p.atipico ? `Usa ${usedPct(p.uso)} do limite. ` : ''}
         {period(p)}.
       </ThemedText>
     </View>
@@ -159,16 +160,16 @@ export default function PoderesScreen() {
                 Os 27 estados do que mais para o que menos pesa em {power.name} (despesa líquida com pessoal sobre a receita corrente líquida). O teto da LRF para este Poder nos estados é de {STATE_LIMITS[poder]}% da receita, somando todos os órgãos dele.
               </ThemedText>
               {rankStates(poder).map(({ ente, p }, i) => {
-                const st = p ? status(p.uso) : null;
+                const st = p ? status(p.uso, p.atipico) : null;
                 return (
                   <View
                     key={ente.chave}
                     accessible
-                    accessibilityLabel={p ? `${i + 1}º ${ente.nome}: ${money(p.liquida)}, ${pct(p.pctRcl)} da receita, ${st!.label}${p.uso != null ? `, usa ${usedPct(p.uso)} do limite` : ''}` : `${ente.nome}: sem relatório`}
+                    accessibilityLabel={p ? `${i + 1}º ${ente.nome}: ${money(p.liquida)}, ${pct(p.pctRcl)} da receita, ${st!.label}${p.uso != null && !p.atipico ? `, usa ${usedPct(p.uso)} do limite` : ''}` : `${ente.nome}: sem relatório`}
                     style={[styles.rankRow, { borderColor: theme.border }]}>
                     <ThemedText type="smallBold" style={styles.flex}>{ente.nome}</ThemedText>
                     <ThemedText type="small">{p ? `${money(p.liquida)} · ${pct(p.pctRcl)}` : 'sem relatório'}</ThemedText>
-                    {p ? <ThemedText type="small" themeColor="textSecondary">{p.uso != null ? `${usedPct(p.uso)} do limite · ` : ''}{st!.label}</ThemedText> : null}
+                    {p ? <ThemedText type="small" themeColor="textSecondary">{p.uso != null && !p.atipico ? `${usedPct(p.uso)} do limite · ` : ''}{st!.label}</ThemedText> : null}
                   </View>
                 );
               })}

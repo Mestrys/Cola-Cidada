@@ -19,6 +19,8 @@ export interface PowerData {
   orgaosTotal: number;
   orgaos: Organ[];
   nota?: string;
+  /** pessoal maior que a receita corrente líquida do ente: o relatório entregue parece inconsistente */
+  atipico?: boolean;
 }
 export interface Ente {
   chave: string;
@@ -52,9 +54,10 @@ export const STATE_LIMITS: Record<PowerKey, number> = { E: 49, L: 3, J: 6 };
 const all = data as unknown as { geradoEm: string; entes: Ente[] };
 export const PODERES_GERADO_EM = all.geradoEm;
 
-export type StatusKey = 'dentro' | 'alerta' | 'prudencial' | 'acima' | 'sem';
+export type StatusKey = 'dentro' | 'alerta' | 'prudencial' | 'acima' | 'sem' | 'atipico';
 // A LRF dá o alerta aos 90% do limite, veda novas despesas aos 95% (limite prudencial) e fixa o teto aos 100%.
-export function status(uso: number | null): { key: StatusKey; label: string } {
+export function status(uso: number | null, atipico = false): { key: StatusKey; label: string } {
+  if (atipico) return { key: 'atipico', label: 'valor atípico no relatório' };
   if (uso == null) return { key: 'sem', label: 'limite não informado' };
   if (uso > 1) return { key: 'acima', label: 'acima do limite informado' };
   if (uso >= 0.95) return { key: 'prudencial', label: 'acima do limite prudencial' };

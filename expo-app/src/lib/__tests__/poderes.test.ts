@@ -47,4 +47,12 @@ describe('gastos por Poder', () => {
     expect(pcts).toEqual([...pcts].sort((a, b) => b - a));
     expect(functionRows(null)).toEqual([]);
   });
+
+  it('pessoal maior que a receita do ente é atípico (Santana, AP); acima do limite informado não é', () => {
+    expect(status(6, true).key).toBe('atipico');
+    expect(status(1.2).key).toBe('acima');
+    const santana = entesFor('AP').find((e) => e.nome === 'Santana')!;
+    expect(santana.poderes.E?.atipico).toBe(true);
+    expect(entesFor('SP')[1].poderes.E?.atipico).toBeUndefined();
+  });
 });

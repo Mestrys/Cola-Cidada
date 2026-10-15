@@ -665,6 +665,16 @@ test.describe('fluxos', () => {
     expect(urls[0]).toContain('cnpjOrgao=');
   });
 
+  test('gastos por Poder: o relatório inconsistente de uma prefeitura (Santana, AP) vem marcado como atípico, sem barra de limite', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'poderes');
+    await page.locator('#poderes-uf').selectOption('AP');
+    const santana = page.locator('.poder-card', { hasText: 'Santana' });
+    await expect(santana).toContainText('valor atípico no relatório');
+    await expect(santana).toContainText('parece inconsistente');
+    await expect(santana.locator('.bar')).toHaveCount(0);
+  });
+
   test('perfil do parlamentar mostra as emendas individuais (ligadas pelo nome) e avisa quando o nome não aparece', async ({ page }) => {
     const emendas = JSON.parse((await import('node:fs')).readFileSync(new URL('../../src/data/emendas.json', import.meta.url), 'utf8'));
     const autor = Object.values(emendas.autores).find((a) => a.destinos.length >= 3 && a.favorecidos.length >= 3);

@@ -13,7 +13,8 @@ export const POWERS = [
 export const STATE_LIMITS = { E: 49, L: 3, J: 6 };
 
 // A LRF dá o alerta aos 90% do limite, veda novas despesas aos 95% (limite prudencial) e fixa o teto aos 100%.
-export function status(uso) {
+export function status(uso, atipico = false) {
+  if (atipico) return { key: 'atipico', label: 'valor atípico no relatório', tone: '' };
   if (uso == null) return { key: 'sem', label: 'limite não informado', tone: '' };
   if (uso > 1) return { key: 'acima', label: 'acima do limite informado', tone: 'red' };
   if (uso >= 0.95) return { key: 'prudencial', label: 'acima do limite prudencial', tone: 'red' };

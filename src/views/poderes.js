@@ -24,7 +24,7 @@ function powerBlock(power, p) {
   if (p.nota) {
     return `<div class="stack u-gap-8">${head('<span class="chip">sem comparação</span>')}<p class="sm muted">${esc(p.nota)}</p></div>`;
   }
-  const st = status(p.uso);
+  const st = status(p.uso, p.atipico);
   const orgs = p.orgaos.map((o) => o.nome).join(', ') + (p.orgaosTotal > p.orgaos.length ? ` e mais ${p.orgaosTotal - p.orgaos.length}` : '');
   return `
   <div class="stack u-gap-8">
@@ -34,8 +34,9 @@ function powerBlock(power, p) {
       <div><dt>Pessoal (líquida)</dt><dd><b>${money(p.liquida)}</b><span class="xs muted">${pct(p.pctRcl)} da receita corrente líquida</span></dd></div>
       ${p.limite != null ? `<div><dt>Limite máximo informado</dt><dd><b>${money(p.limite)}</b></dd></div>` : ''}
     </dl>
+    ${p.atipico ? '<p class="xs muted">O relatório informa uma despesa com pessoal maior que a receita corrente líquida do próprio ente: o dado entregue ao Tesouro parece inconsistente, e o uso do limite não é confiável.</p>' : ''}
     ${
-      p.uso != null
+      p.uso != null && !p.atipico
         ? `<div class="bar" aria-hidden="true"><i data-w="${Math.min(100, Math.round(p.uso * 100))}"></i></div>
            <p class="xs">Usa <b>${usePct(p.uso)}</b> do limite. ${esc(period(p))}.</p>`
         : `<p class="xs muted">${esc(period(p))}.</p>`
@@ -125,9 +126,9 @@ function compareTab(data) {
         <tbody>${rows
           .map(({ ente, p }) => {
             if (!p) return `<tr><th scope="row">${esc(ente.nome)}</th><td colspan="3" class="muted">sem relatório</td></tr>`;
-            const st = status(p.uso);
+            const st = status(p.uso, p.atipico);
             return `<tr><th scope="row">${esc(ente.nome)}</th><td>${money(p.liquida)}</td><td>${pct(p.pctRcl)}</td>
-              <td>${p.uso == null ? 'não informado' : `${usePct(p.uso)} <span class="chip ${st.tone}">${esc(st.label)}</span>`}</td></tr>`;
+              <td>${p.uso == null || p.atipico ? 'não confiável' : `${usePct(p.uso)} <span class="chip ${st.tone}">${esc(st.label)}</span>`}</td></tr>`;
           })
           .join('')}</tbody>
       </table>

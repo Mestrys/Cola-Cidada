@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { recentPeriods, readOrgao, sumPoder, summarizePoder, summarizeFuncoes } from '../../scripts/build-poderes.mjs';
+import { recentPeriods, readOrgao, sumPoder, summarizePoder, summarizeFuncoes, flagAtipicos } from '../../scripts/build-poderes.mjs';
 import { status, rankStates, rankFunction, functionRows, entesOfState, POWERS } from '../../src/poderes.js';
 
 const linhas = (instituicao, { liquida, limite, rcl, coluna = 'Valor' }) => [
@@ -110,4 +110,24 @@ test('poderes.json gerado: todo ente traz a despesa por função, e as funções
   assert.equal(rank.length, 27);
   const pcts = rank.map((r) => r.pct);
   assert.deepEqual(pcts, [...pcts].sort((a, b) => b - a));
+});
+
+test('pessoal maior que a receita do próprio ente marca todos os Poderes dele como atípicos; o resto não', () => {
+  const a = flagAtipicos({ E: { pctRcl: 324.8, uso: 6 }, L: { pctRcl: 12.1, uso: 2 }, J: null });
+  assert.equal(a.E.atipico, true);
+  assert.equal(a.L.atipico, true, 'o limite do Legislativo sai da mesma receita suspeita');
+  const b = flagAtipicos({ E: { pctRcl: 55.2, uso: 1.12 }, L: { pctRcl: 2.1, uso: 0.9 } });
+  assert.equal(b.E.atipico, undefined, 'acima do limite informado não é atípico: é o que o ente declarou');
+  assert.equal(status(6, true).key, 'atipico');
+  assert.equal(status(1.2).key, 'acima');
+});
+
+test('poderes.json gerado: só Santana (AP) é atípico hoje, e nenhum ente atípico traz pessoal abaixo da receita', () => {
+  const data = JSON.parse(readFileSync(new URL('../../src/data/poderes.json', import.meta.url), 'utf8'));
+  for (const e of data.entes) {
+    const marcado = Object.values(e.poderes).some((p) => p?.atipico);
+    const impossivel = Object.values(e.poderes).some((p) => p?.pctRcl > 100);
+    assert.equal(marcado, impossivel, e.nome);
+  }
+  assert.ok(data.entes.find((e) => e.nome === 'Santana').poderes.E.atipico);
 });
