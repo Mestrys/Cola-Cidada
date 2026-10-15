@@ -50,7 +50,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https://www.camara.leg.br https://www.senado.leg.br https://legis.senado.leg.br; connect-src 'self' https://dadosabertos.camara.leg.br https://legis.senado.leg.br https://apidatalake.tesouro.gov.br; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https://www.camara.leg.br https://www.senado.leg.br https://legis.senado.leg.br; connect-src 'self' https://dadosabertos.camara.leg.br https://legis.senado.leg.br https://apidatalake.tesouro.gov.br https://pncp.gov.br; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
         }
       ]
     }

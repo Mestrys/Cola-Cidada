@@ -1,10 +1,10 @@
 // Painel público: todos os cargos abertos para consulta, sem cadastro. Acompanhar alguém é opcional
 // e só acontece dentro do perfil, depois de a pessoa ver os dados.
 import { store } from '../store.js';
-import { FEDERATION_UNITS, loadStf, loadExecutive, loadCidades } from '../api.js';
+import { FEDERATION_UNITS, loadStf, loadExecutive, loadCidades, loadCnpjs } from '../api.js';
 import { SECTIONS, loadSection, placeOf, matches } from '../directory.js';
-import { budgetSummary, personnelSpending, federalBodies, stateBodies, SICONFI_URL } from '../contas.js';
-import { esc, avatar, ROLES, skeleton, tablist, $ } from '../ui.js';
+import { budgetSummary, personnelSpending, federalBodies, stateBodies, recentContracts, SICONFI_URL } from '../contas.js';
+import { esc, avatar, ROLES, skeleton, tablist, brl, $ } from '../ui.js';
 import { openPoliticianDetails } from './politicos.js';
 
 const PAGE = 24;
@@ -84,13 +84,45 @@ function bodyCard(b, i) {
         Ver contas<span class="sr-only"> de ${esc(b.name)}</span>
       </button>
       ${
+        b.cnpj
+          ? `<button class="btn outlined sm" data-contracts="${i}" aria-expanded="false" aria-controls="ct-${i}">Contratos recentes<span class="sr-only"> de ${esc(b.name)}</span></button>`
+          : ''
+      }
+      ${
         b.portal
           ? `<a class="btn ghost sm" href="${esc(b.portal)}" target="_blank" rel="noopener noreferrer">${esc(b.portalLabel)}<span class="sr-only"> (abre em nova aba)</span><span class="mi u-fs-15" aria-hidden="true">open_in_new</span></a>`
           : ''
       }
     </div>
     <div id="acc-${i}" class="painel-accounts" hidden></div>
+    ${b.cnpj ? `<div id="ct-${i}" class="painel-accounts" hidden></div>` : ''}
   </li>`;
+}
+
+const fmtDay = (d) => (d ? d.split('-').reverse().join('/') : '');
+
+function contractItem(c) {
+  return `<li class="stack u-gap-2 sm u-bg-s2 u-p-8-12 u-br-r-sm">
+    <div class="row between"><b>${c.value == null ? 'valor não informado' : brl(c.value)}</b><span class="xs muted">${fmtDay(c.date)}</span></div>
+    <span>${esc(c.object.slice(0, 220))}${c.object.length > 220 ? '…' : ''}</span>
+    <span class="xs muted">${esc(c.supplier)}${c.kind ? ` · ${esc(c.kind)}` : ''}${c.emenda ? ' · <b>emenda parlamentar</b>' : ''}</span>
+    <a class="xs" href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Ver no PNCP<span class="sr-only"> (abre em nova aba)</span></a>
+  </li>`;
+}
+
+function contractsHtml(b, data) {
+  if (!data.total) return `<p class="sm muted">Nenhum contrato publicado no PNCP nos últimos ${data.days} dias por esta prefeitura.</p>`;
+  return `
+    <dl class="painel-figures">
+      <div><dt>Contratos publicados (${data.days} dias)</dt><dd><b>${data.total.toLocaleString('pt-BR')}</b>${data.partial ? '<span class="xs muted">somados os 500 mais recentes</span>' : ''}</dd></div>
+      <div><dt>Soma dos valores informados</dt><dd><b>${money(data.sum)}</b><span class="xs muted">empenhos e contratos, sem descontar repetições</span></dd></div>
+    </dl>
+    <h3 class="sm u-fw-700">Maiores contratos</h3>
+    <ul class="stack u-gap-8">${data.biggest.map(contractItem).join('')}</ul>
+    <h3 class="sm u-fw-700">Mais recentes</h3>
+    <ul class="stack u-gap-8">${data.items.map(contractItem).join('')}</ul>
+    <p class="xs muted">Fonte: <a href="https://pncp.gov.br/app/contratos" target="_blank" rel="noopener noreferrer">Portal Nacional de Contratações Públicas (PNCP)<span class="sr-only"> (abre em nova aba)</span></a>, consultado agora.
+    Só o que a prefeitura publicou lá; a Câmara Municipal e outras entidades da cidade têm CNPJ próprio.</p>`;
 }
 
 function accountsHtml(b, data) {
@@ -303,7 +335,8 @@ async function renderBodies(results, count, ufSel) {
     return;
   }
   const { cidades } = await loadCidades().catch(() => ({ cidades: [] }));
-  const bodies = [...federalBodies(), ...stateBodies(view.uf, entes, cidades)];
+  const cnpjs = await loadCnpjs().catch(() => ({}));
+  const bodies = [...federalBodies(), ...stateBodies(view.uf, entes, cidades, cnpjs)];
   const uf = FEDERATION_UNITS.find((u) => u.uf === view.uf);
   const hasCities = cidades.some((c) => c.uf === view.uf && c.kind === 'polo');
   count.textContent = `${bodies.length} órgãos: federais, de ${uf?.name || view.uf}${hasCities ? ', da capital e das duas maiores cidades do estado' : ''}`;
@@ -312,6 +345,28 @@ async function renderBodies(results, count, ufSel) {
     <ul class="painel-grid painel-bodies" aria-label="Órgãos e contas">${bodies.map(bodyCard).join('')}</ul>
     <p class="xs muted">As contas vêm dos relatórios que a União, os estados e os municípios entregam ao Tesouro Nacional por exigência da
     Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão.</p>`;
+
+  results.querySelectorAll('[data-contracts]').forEach((btn) => {
+    btn.onclick = async () => {
+      const b = bodies[Number(btn.dataset.contracts)];
+      const box = $(`#ct-${btn.dataset.contracts}`, results);
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      box.hidden = open;
+      if (open || box.dataset.loaded) return;
+      const load = async () => {
+        box.innerHTML = skeleton('Consultando o PNCP…', 1);
+        try {
+          box.innerHTML = contractsHtml(b, await recentContracts(b.cnpj));
+          box.dataset.loaded = '1';
+        } catch {
+          box.innerHTML = `<p class="sm muted" role="status">Falha ao consultar o PNCP.</p><button class="btn outlined sm" data-retry>Tentar de novo</button>`;
+          box.querySelector('[data-retry]').onclick = load;
+        }
+      };
+      await load();
+    };
+  });
 
   results.querySelectorAll('[data-accounts]').forEach((btn) => {
     btn.onclick = async () => {

@@ -509,3 +509,6 @@ export async function cityEmendas(ibge) {
   const c = d.cidades[String(ibge)];
   return c ? { ...c, ...emendasMeta(d) } : { ...emendasMeta(d), vazio: true };
 }
+
+// CNPJ da prefeitura de cada capital e cidade-polo (Siconfi), para consultar os contratos no PNCP: scripts/build-cnpjs.mjs.
+export const loadCnpjs = () => staticJson('/src/data/cnpjs.json');

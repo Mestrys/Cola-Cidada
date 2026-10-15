@@ -633,6 +633,38 @@ test.describe('fluxos', () => {
     await expect(page.locator('#tab-cota')).toContainText('Despesas a partir de');
   });
 
+  test('contas: a prefeitura mostra os contratos mais recentes do PNCP; câmaras e governos não têm o botão', async ({ page }) => {
+    const contratos = (n) => Array.from({ length: n }, (_, i) => ({
+      numeroControlePNCP: `1-2-00${i}/2026`, dataPublicacaoPncp: `2026-10-${String(i + 1).padStart(2, '0')}T09:00:00`, objetoContrato: `Reforma da escola ${i}`,
+      nomeRazaoSocialFornecedor: `CONSTRUTORA ${i}`, valorGlobal: 1000 * (i + 1), tipoContrato: { nome: 'Contrato' }, orgaoEntidade: { cnpj: '1' }, anoContrato: 2026, sequencialContrato: i,
+      emendaParlamentar: i === 11 ? { numero: 9 } : null,
+    }));
+    const urls = [];
+    await page.route('https://pncp.gov.br/**', (route) => {
+      urls.push(route.request().url());
+      route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ data: contratos(12), totalRegistros: 12, totalPaginas: 1 }) });
+    });
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=orgaos]').click();
+    await page.waitForSelector('[data-accounts]');
+    await expect(page.locator('.painel-card:has([data-contracts])')).toHaveCount(3); // prefeitura da capital e das duas cidades-polo
+    await expect(page.locator('.painel-card', { hasText: 'Câmara Municipal' }).locator('[data-contracts]')).toHaveCount(0);
+    await expect(page.locator('.painel-card', { hasText: 'Governo do Estado' }).locator('[data-contracts]')).toHaveCount(0);
+    const card = page.locator('.painel-card:has([data-contracts])').first();
+    // pelo teclado: no celular a barra fixa de cima ou a de baixo cobre o botão depois da rolagem automática do clique
+    await card.locator('[data-contracts]').focus();
+    await page.keyboard.press('Enter');
+    await expect(card).toContainText('Contratos publicados (30 dias)');
+    await expect(card.locator('[id^=ct-] li')).toHaveCount(10); // 5 maiores e 5 mais recentes
+    await expect(card.locator('[id^=ct-] li').first()).toContainText('Reforma da escola 11');
+    await expect(card).toContainText('Maiores contratos');
+    await expect(card).toContainText('Soma dos valores informados');
+    await expect(card).toContainText('emenda parlamentar');
+    await expect(card.locator('[id^=ct-] a[href^="https://pncp.gov.br/app/contratos/"]').first()).toBeVisible();
+    expect(urls[0]).toContain('cnpjOrgao=');
+  });
+
   test('perfil do parlamentar mostra as emendas individuais (ligadas pelo nome) e avisa quando o nome não aparece', async ({ page }) => {
     const emendas = JSON.parse((await import('node:fs')).readFileSync(new URL('../../src/data/emendas.json', import.meta.url), 'utf8'));
     const autor = Object.values(emendas.autores).find((a) => a.destinos.length >= 3 && a.favorecidos.length >= 3);

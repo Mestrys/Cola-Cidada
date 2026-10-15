@@ -4,7 +4,7 @@ import { test, expect, seed, go, ROUTES, ICONS } from './fixtures.mjs';
 // WCAG 2.1 AA (e boas práticas do axe nas telas): contraste e regras básicas em todas as telas, nos dois temas.
 for (const theme of ['light', 'dark']) {
   test(`acessibilidade WCAG AA (${theme})`, async ({ page, isMobile }) => {
-    test.setTimeout(60_000); // cinco telas e três diálogos com axe: ~17 s sozinho, folga para CI lento
+    test.setTimeout(120_000); // telas, painéis e diálogos com axe: ~40 s sozinho no celular, folga para CI lento
     await seed(page, { theme });
     const report = [];
     for (const r of ROUTES) {
@@ -21,6 +21,20 @@ for (const theme of ['light', 'dark']) {
     {
       const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
       for (const v of violations) report.push(`painel contas: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+    }
+    // contratos da prefeitura (PNCP) abertos: a resposta é simulada, sem rede
+    await page.route('https://pncp.gov.br/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ data: [{ numeroControlePNCP: '1', dataPublicacaoPncp: '2026-10-01T09:00:00', objetoContrato: 'Reforma da escola', nomeRazaoSocialFornecedor: 'CONSTRUTORA X', valorGlobal: 5000, tipoContrato: { nome: 'Contrato' }, orgaoEntidade: { cnpj: '1' }, anoContrato: 2026, sequencialContrato: 1 }], totalRegistros: 1, totalPaginas: 1 }) })
+    );
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=orgaos]').click();
+    await page.locator('[data-contracts]').first().focus(); // pelo teclado: as barras fixas do celular cobrem o botão no clique
+    await page.keyboard.press('Enter');
+    await page.locator('[id^=ct-] li').first().waitFor();
+    await page.waitForTimeout(300);
+    {
+      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
+      for (const v of violations) report.push(`painel contratos: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
     }
     // vereadores com o filtro de cidade (cidades-polo)
     await go(page, 'painel');

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'monitor-cidadao-v28';
+const CACHE_NAME = 'monitor-cidadao-v29';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -29,6 +29,7 @@ const APP_SHELL = [
   '/src/data/prefeitos-cidades.json',
   '/src/data/ceaps.json',
   '/src/data/poderes.json',
+  '/src/data/cnpjs.json',
   '/src/directory.js',
   '/src/contas.js',
   '/src/alerts.js',

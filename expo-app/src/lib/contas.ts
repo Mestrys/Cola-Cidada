@@ -1,5 +1,6 @@
 // Contas públicas pelo Siconfi (Tesouro Nacional): o que cada ente arrecadou e gastou (RREO) e quanto cada órgão gasta
 // com pessoal (RGF). Mesmos dados que União, estados e municípios entregam por lei (LRF), sem chave. Lógica do PWA.
+import cnpjs from '@/data/cnpjs.json';
 import entes from '@/data/entes.json';
 
 import { CITIES, UNITS } from './directory';
@@ -123,7 +124,11 @@ export interface Body {
   portalLabel?: string;
   /** linha de apoio, ex.: a posição da cidade-polo no estado */
   note?: string;
+  /** CNPJ da prefeitura (Siconfi): liga o órgão aos contratos do PNCP */
+  cnpj?: string;
 }
+
+const cnpjOf = (ibge: number) => (cnpjs as Record<string, string>)[String(ibge)];
 
 export const UNIAO: Ente = { kind: 'uniao', ibge: 1 };
 
@@ -146,7 +151,7 @@ export function stateBodies(uf: string): Body[] {
   if (ids.capital) {
     const municipio: Ente = { kind: 'municipio', ibge: ids.capital };
     list.push(
-      { key: `pref-${uf}`, name: `Prefeitura de ${u.capital}`, ente: municipio, budget: true },
+      { key: `pref-${uf}`, name: `Prefeitura de ${u.capital}`, ente: municipio, budget: true, cnpj: cnpjOf(ids.capital) },
       { key: `cm-${uf}`, name: u.councilName || `Câmara Municipal de ${u.capital}`, ente: municipio, poder: 'L', match: /^C[âa]mara/i }
     );
   }
@@ -154,11 +159,103 @@ export function stateBodies(uf: string): Body[] {
     const municipio: Ente = { kind: 'municipio', ibge: c.ibge };
     const note = `${c.rankPib}ª maior economia do estado`;
     list.push(
-      { key: `pref-${c.ibge}`, name: `Prefeitura de ${c.nome}`, ente: municipio, budget: true, note },
+      { key: `pref-${c.ibge}`, name: `Prefeitura de ${c.nome}`, ente: municipio, budget: true, note, cnpj: cnpjOf(c.ibge) },
       { key: `cm-${c.ibge}`, name: `Câmara Municipal de ${c.nome}`, ente: municipio, poder: 'L', match: /^C[âa]mara/i, note }
     );
   }
   return list;
+}
+
+/* ================= Contratos (PNCP) ================= */
+
+// Portal Nacional de Contratações Públicas: contratos que a prefeitura publicou, consultados na hora (sem chave).
+// A API só filtra contratos pelo CNPJ do órgão, aceita no máximo 365 dias e devolve do mais antigo para o mais novo:
+// por isso lê a primeira página (para saber quantas há) e depois da última para trás. Lógica do PWA.
+const PNCP = 'https://pncp.gov.br/api/consulta/v1';
+const MAX_PAGES = 10;
+const contractCache = new Map<string, Contracts>();
+const ymd = (d: Date) => d.toISOString().slice(0, 10).replace(/-/g, '');
+
+export interface Contract {
+  id: string;
+  date: string;
+  object: string;
+  supplier: string;
+  value: number | null;
+  kind: string;
+  emenda: boolean;
+  url: string;
+}
+export interface Contracts {
+  days: number;
+  total: number;
+  partial: boolean;
+  sum: number;
+  biggest: Contract[];
+  items: Contract[];
+}
+
+async function pncpPage(cnpj: string, from: string, to: string, page: number, size: number): Promise<any> {
+  const url = `${PNCP}/contratos?dataInicial=${from}&dataFinal=${to}&cnpjOrgao=${cnpj}&pagina=${page}&tamanhoPagina=${size}`;
+  let last: unknown;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if (attempt) await new Promise((r) => setTimeout(r, 800));
+    try {
+      const res = await fetch(url, { headers: { Accept: 'application/json' } });
+      if (res.status === 204) return { data: [], totalRegistros: 0, totalPaginas: 0 };
+      if (!res.ok) throw new Error(`PNCP respondeu ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      last = err;
+    }
+  }
+  throw last;
+}
+
+export function toContract(c: any): Contract {
+  return {
+    id: c.numeroControlePNCP,
+    date: (c.dataPublicacaoPncp || '').slice(0, 10),
+    object: (c.objetoContrato || '').trim(),
+    supplier: c.nomeRazaoSocialFornecedor || '',
+    value: typeof c.valorGlobal === 'number' ? c.valorGlobal : null,
+    kind: c.tipoContrato?.nome || '',
+    emenda: Boolean(c.emendaParlamentar),
+    url: `https://pncp.gov.br/app/contratos/${c.orgaoEntidade?.cnpj}/${c.anoContrato}/${c.sequencialContrato}`,
+  };
+}
+
+/** Contratos publicados nos últimos `days` dias: o total, a soma dos valores informados, os maiores e os mais recentes. */
+export async function recentContracts(cnpj: string, opts: { days?: number; keep?: number; size?: number; now?: Date } = {}): Promise<Contracts> {
+  const { days = 30, keep = 5, size = 50, now = new Date() } = opts;
+  const key = `${cnpj}:${days}`;
+  const hit = contractCache.get(key);
+  if (hit) return hit;
+  const from = ymd(new Date(now.getTime() - days * 864e5));
+  const to = ymd(now);
+  const first = await pncpPage(cnpj, from, to, 1, size);
+  const total: number = first.totalRegistros || 0;
+  const pages: number = first.totalPaginas || 1;
+  const rows: any[] = pages === 1 ? [...(first.data || [])] : [];
+  if (pages > 1) {
+    const wanted: number[] = [];
+    for (let p = pages; p >= Math.max(1, pages - MAX_PAGES + 1); p--) wanted.push(p);
+    for (let i = 0; i < wanted.length; i += 3) {
+      const got = await Promise.all(wanted.slice(i, i + 3).map((p) => (p === 1 ? first : pncpPage(cnpj, from, to, p, size))));
+      for (const g of got) rows.push(...(g.data || []));
+    }
+  }
+  const all = rows.map(toContract);
+  const out: Contracts = {
+    days,
+    total,
+    partial: all.length < total,
+    sum: all.reduce((acc, c) => acc + (c.value || 0), 0),
+    biggest: all.filter((c) => c.value != null).sort((a, b) => (b.value as number) - (a.value as number)).slice(0, keep),
+    items: [...all].sort((a, b) => b.date.localeCompare(a.date)).slice(0, keep),
+  };
+  contractCache.set(key, out);
+  return out;
 }
 
 export const SICONFI_URL = 'https://siconfi.tesouro.gov.br/siconfi/index.jsf';
