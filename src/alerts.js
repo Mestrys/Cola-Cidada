@@ -54,7 +54,7 @@ export async function collectAlerts({ politicians = [], prefs = {} }, deps = {})
         const ts = v.date || new Date().toISOString();
         if (wantPlenary && i < 6) {
           const placar = v.secret ? 'votação secreta' : `Sim ${v.yes}, Não ${v.no}`;
-          out.push({ id: `plen-senado:${v.key}`, ts, kind: 'plenario', text: `Senado — ${v.matter}: ${v.result || 'votado'} (${placar}). ${short(v.summary, 110)}` });
+          out.push({ id: `plen-senado:${v.key}`, ts, kind: 'plenario', text: `Senado — ${v.matter}${v.round ? ` (${v.round})` : ''}: ${v.result || 'votado'} (${placar}). ${short(v.summary, 110)}` });
         }
         if (wantVotes)
           for (const s of senators) {
@@ -62,7 +62,7 @@ export async function collectAlerts({ politicians = [], prefs = {} }, deps = {})
             if (vote)
               out.push({
                 id: `senado:${v.key}:${s.id}`, ts, kind: 'votacao', politicianId: s.id,
-                text: `${s.name} (${s.party}/${s.uf}) votou ${vote.toUpperCase()} no Senado — ${v.matter}: ${short(v.summary, 90)}`,
+                text: `${s.name} (${s.party}/${s.uf}) votou ${vote.toUpperCase()} no Senado — ${v.matter}${v.round ? ` (${v.round})` : ''}: ${short(v.summary, 90)}`,
               });
           }
       });

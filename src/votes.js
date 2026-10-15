@@ -62,6 +62,12 @@ export async function loadComparison(politicians = [], limit = 8) {
 
 const SENATE_RESULT = { A: 'Aprovado', R: 'Rejeitado' };
 
+// "…, em primeiro turno." → "1º turno": a mesma matéria tem votações diferentes por turno.
+export function roundOf(description = '') {
+  const m = String(description).match(/em (primeiro|segundo|terceiro|único) turno/i)?.[1]?.toLowerCase();
+  return m ? { primeiro: '1º turno', segundo: '2º turno', terceiro: '3º turno', único: 'turno único' }[m] : '';
+}
+
 // Votações nominais recentes do Plenário do Senado com o voto de todos os senadores presentes.
 // Voto secreto aparece como tal; quem não estava (NA) fica de fora.
 export async function loadSenatePublic(politicians = [], limit = 10) {
@@ -89,6 +95,7 @@ export async function loadSenatePublic(politicians = [], limit = 10) {
       return {
         key: v.codigoSessaoVotacao,
         matter: v.identificacao || 'Matéria',
+        round: roundOf(v.descricaoVotacao),
         summary: v.ementa || v.descricaoVotacao || '',
         date: v.dataSessao || '',
         result: SENATE_RESULT[v.resultadoVotacao] || v.resultadoVotacao || '',
