@@ -2595,3 +2595,15 @@ a.card:active {
 .alert-item[hidden] {
   display: none;
 }
+
+/* Gastos por Poder: separador fino entre os três Poderes do mesmo ente */
+.poder-card hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+  width: 100%;
+}
+.poder-card h3 {
+  font-size: 1rem;
+  margin: 0;
+}

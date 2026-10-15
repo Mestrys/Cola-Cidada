@@ -308,6 +308,7 @@ async function renderBodies(results, count, ufSel) {
   const hasCities = cidades.some((c) => c.uf === view.uf && c.kind === 'polo');
   count.textContent = `${bodies.length} órgãos: federais, de ${uf?.name || view.uf}${hasCities ? ', da capital e das duas maiores cidades do estado' : ''}`;
   results.innerHTML = `
+    <a class="btn outlined sm" href="#/poderes"><span class="mi u-fs-18" aria-hidden="true">balance</span>Ver gastos por Poder: Executivo, Legislativo e Judiciário</a>
     <ul class="painel-grid painel-bodies" aria-label="Órgãos e contas">${bodies.map(bodyCard).join('')}</ul>
     <p class="xs muted">As contas vêm dos relatórios que a União, os estados e os municípios entregam ao Tesouro Nacional por exigência da
     Lei de Responsabilidade Fiscal (RREO e RGF). Valores acumulados no período indicado em cada órgão.</p>`;

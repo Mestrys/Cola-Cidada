@@ -28,6 +28,7 @@ src/
     api.ts                APIs de Dados Abertos da Câmara e do Senado (retry e cache)
     directory.ts          diretório do Painel (APIs + dados locais do TSE, Executivo e STF)
     contas.ts             contas públicas pelo Siconfi (RREO e RGF): aba Contas do Painel
+    poderes.ts            gastos por Poder (Executivo, Legislativo, Judiciário): pessoal e limite da LRF, do instantâneo poderes.json
     votes.ts, alerts.ts   votações abertas e alertas (mesma lógica do PWA)
   data/                   cópia dos dados públicos do PWA (../src/data): rode `node scripts/sync-data.mjs` ao atualizá-los
     state.ts, store.tsx   estado (reducer) e persistência no AsyncStorage

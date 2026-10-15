@@ -31,6 +31,7 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="politico/[id]" options={{ title: 'Ficha' }} />
+            <Stack.Screen name="poderes" options={{ title: 'Gastos por Poder' }} />
           </Stack>
         </SnackbarProvider>
       </StoreProvider>

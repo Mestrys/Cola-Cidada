@@ -8,12 +8,14 @@ import * as politicos from './views/politicos.js';
 import * as comparador from './views/comparador.js';
 import * as alertas from './views/alertas.js';
 import * as perfil from './views/perfil.js';
+import * as poderes from './views/poderes.js';
 
 // nav: false — a tela existe (links internos levam a ela), mas não ocupa lugar na navegação.
 const routes = {
   painel: { icon: 'account_balance', label: 'Painel Público', short: 'Painel', view: painel },
   inicio: { icon: 'feed', label: 'Acompanhamento', short: 'Início', view: inicio },
   'meus-politicos': { icon: 'bookmark_added', label: 'Quem Acompanho', short: 'Acompanho', view: politicos, nav: false },
+  poderes: { icon: 'balance', label: 'Gastos por Poder', short: 'Poderes', view: poderes, nav: false },
   comparador: { icon: 'compare_arrows', label: 'Comparador Cívico', short: 'Comparar', view: comparador },
   alertas: { icon: 'notifications', label: 'Alertas', short: 'Alertas', view: alertas },
   perfil: { icon: 'person', label: 'Perfil', short: 'Perfil', view: perfil },

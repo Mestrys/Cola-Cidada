@@ -45,6 +45,15 @@ for (const theme of ['light', 'dark']) {
     }
     await page.keyboard.press('Escape');
     await page.waitForSelector('.overlay', { state: 'detached' });
+    // gastos por Poder: o comparativo entre estados (a lista por estado já foi coberta pelo laço das telas)
+    await go(page, 'poderes');
+    await page.locator('#poderes-tabs [data-tab=comparar]').click();
+    await page.locator('tbody tr').first().waitFor();
+    await page.waitForTimeout(300);
+    {
+      const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
+      for (const v of violations) report.push(`poderes comparar: ${v.id} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
+    }
     const dialogs = [
       ['meus-politicos', null, '[data-details]'],
       ['painel', 'governadores', '.painel-open'],

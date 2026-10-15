@@ -39,10 +39,12 @@ how_to_reg
 how_to_vote
 info
 install_mobile
+leaderboard
 light_mode
 lightbulb
 location_city
 lock
+map
 menu_book
 notifications
 notifications_active

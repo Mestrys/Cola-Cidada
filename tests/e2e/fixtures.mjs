@@ -9,7 +9,7 @@ export const POLITICIANS = [
   { id: 'mg-1', source: 'al-mg', name: 'Dep. Estadual Teste', party: 'PT', uf: 'MG', roleKey: 'dep-estadual', house: 'Assembleia Legislativa de Minas Gerais (ALMG)', mandate: ['2023-03-15', '2027-03-14'] },
 ];
 
-export const ROUTES = ['painel', 'inicio', 'meus-politicos', 'comparador', 'alertas', 'perfil'];
+export const ROUTES = ['painel', 'inicio', 'meus-politicos', 'comparador', 'alertas', 'perfil', 'poderes'];
 
 const vercel = JSON.parse(readFileSync(new URL('../../vercel.json', import.meta.url)));
 export const CSP = vercel.headers.flatMap((h) => h.headers).find((h) => h.key === 'Content-Security-Policy').value;

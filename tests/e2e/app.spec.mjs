@@ -631,6 +631,31 @@ test.describe('fluxos', () => {
     await expect(page.locator('#tab-cota')).toContainText('Despesas a partir de');
   });
 
+  test('gastos por Poder: estado com a União, a capital e as cidades-polo; e o comparativo entre estados', async ({ page }) => {
+    await seed(page);
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=orgaos]').click();
+    await page.locator('a[href="#/poderes"]').click();
+    await expect(page.locator('h1')).toHaveText('Gastos por Poder');
+    await page.locator('#poderes-uf').selectOption('SP');
+    await expect(page.locator('.poder-card .painel-name')).toHaveText(['União (Governo Federal)', 'São Paulo', 'São Paulo — SP', 'Guarulhos — SP', 'Osasco — SP']);
+    const uniao = page.locator('.poder-card').first();
+    await expect(uniao).toContainText('não é comparável');
+    const sp = page.locator('.poder-card').nth(1);
+    for (const poder of ['Executivo', 'Legislativo', 'Judiciário']) await expect(sp.getByRole('heading', { name: poder })).toBeVisible();
+    await expect(sp).toContainText('do limite');
+    // município: sem Judiciário
+    const osasco = page.locator('.poder-card').nth(4);
+    await expect(osasco.getByRole('heading', { name: 'Judiciário' })).toHaveCount(0);
+    await expect(osasco).toContainText('não tem Judiciário próprio');
+
+    await page.locator('#poderes-tabs [data-tab=comparar]').click();
+    await expect(page.locator('tbody tr')).toHaveCount(27);
+    await page.locator('#poderes-poder').selectOption('J');
+    await expect(page.locator('#poderes-body')).toContainText('6%');
+    await expect(page.locator('#poderes-body')).toContainText('Judiciário');
+  });
+
   test('cadastro antigo com data da ALESP exibe o mandato correto', async ({ page }) => {
     await seed(page);
     await go(page, 'meus-politicos');
