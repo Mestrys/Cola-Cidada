@@ -168,6 +168,9 @@ node scripts/build-regional-data.mjs <cand2022> <cand2024> <bem2022> <bem2024>
   todos os tribunais do Judiciário) e grava `src/data/poderes.json` (~80 KB). Município não tem Judiciário. É gasto com pessoal, não o gasto total do Poder.
   O Executivo federal vem sem comparação: o relatório dele no Siconfi cobre só uma parcela. Para atualizar: `node scripts/build-poderes.mjs` (~2 min) e,
   no Expo, `node expo-app/scripts/sync-data.mjs`.
+  **Fase 2 (despesa total por função):** o mesmo `poderes.json` traz, por ente, a despesa liquidada por função de governo (DCA, Anexo I-E, ano mais recente:
+  2025 em 105 dos 106 entes): Legislativa, Judiciária, Essencial à Justiça, Encargos especiais e as demais funções. É o gasto total, mas função não é Poder
+  (aposentadorias e outros gastos de um Poder podem estar em outras funções), e a tela diz isso. O comparativo entre estados ganhou essas medidas.
 - **Emendas parlamentares:** `scripts/build-emendas.mjs` lê o download aberto do Portal da Transparência (CGU, ~32 MB, sem chave) e grava
   `src/data/emendas.json` (~600 KB): desde 2023, por parlamentar (emendas individuais: empenhado e pago por ano, emendas Pix, municípios e favorecidos
   que mais receberam) e por cidade monitorada (total e autores que mais enviaram). O perfil de deputado e de senador ganha a aba "Emendas" e o bloco

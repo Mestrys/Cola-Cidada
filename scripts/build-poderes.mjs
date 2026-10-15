@@ -3,6 +3,10 @@
 // Nacional (Siconfi). O app lê este resumo em vez de paginar o Siconfi no aparelho (o Judiciário da União tem milhares
 // de linhas). Município não tem Judiciário próprio.
 //
+// Também grava, por ente, a despesa liquidada por função de governo (DCA, Anexo I-E): Legislativa, Judiciária, Essencial à
+// Justiça, Encargos Especiais e as demais. É o gasto total (não só pessoal), mas por função, que não coincide com o Poder:
+// aposentadorias e outros gastos de um Poder podem estar em outras funções.
+//
 // Uso: node scripts/build-poderes.mjs
 // Por Poder: soma dos órgãos (ex.: Assembleia + Tribunal de Contas no Legislativo estadual; todos os tribunais na União).
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -100,6 +104,29 @@ async function rgfItems(esfera, ibge, poder, ano, periodo) {
   }
 }
 
+const FUNCOES_ANOS = (now = new Date()) => [now.getUTCFullYear() - 1, now.getUTCFullYear() - 2];
+
+/** Despesa liquidada (exceto intraorçamentária) por função, do DCA-Anexo I-E: o que vai para cada grupo de funções. */
+export function summarizeFuncoes(items) {
+  const rows = items.filter((i) => i.coluna === 'Despesas Liquidadas' && i.rotulo?.startsWith('Total Geral'));
+  const fn = rows.filter((i) => /^\d\d - /.test(i.conta));
+  if (!fn.length) return null;
+  const of = (code) => round(fn.filter((i) => i.conta.startsWith(`${code} - `)).reduce((a, i) => a + i.valor, 0));
+  const total = round(fn.reduce((a, i) => a + i.valor, 0));
+  const legislativa = of('01'), judiciaria = of('02'), essencial = of('03'), encargos = of('28');
+  return { total, legislativa, judiciaria, essencial, encargos, demais: round(total - legislativa - judiciaria - essencial - encargos) };
+}
+
+async function funcoesOf(ente) {
+  for (const ano of FUNCOES_ANOS()) {
+    const q = `an_exercicio=${ano}&id_ente=${ente.ibge}&no_anexo=${encodeURIComponent('DCA-Anexo I-E')}`;
+    const page = await getJson(`${SICONFI}/dca?${q}&origem=node`);
+    const s = page.items?.length ? summarizeFuncoes(page.items) : null;
+    if (s) return { ano, ...s };
+  }
+  return null;
+}
+
 async function poderOf(ente, poder, periods) {
   for (const [ano, periodo] of periods) {
     const items = await rgfItems(ente.esfera, ente.ibge, poder, ano, periodo);
@@ -133,16 +160,17 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const poderes = {};
     for (const p of ente.esfera === 'M' ? ['E', 'L'] : PODERES) poderes[p] = await poderOf(ente, p, periods);
     process.stdout.write('.');
+    const funcoes = await funcoesOf(ente);
     const { esfera, ...rest } = ente;
-    return { ...rest, poderes };
+    return { ...rest, poderes, funcoes };
   });
   console.log();
 
-  const faltas = result.flatMap((e) => Object.entries(e.poderes).filter(([, v]) => !v).map(([p]) => `${e.nome}/${p}`));
+  const faltas = result.flatMap((e) => [...Object.entries(e.poderes).filter(([, v]) => !v).map(([p]) => `${e.nome}/${p}`), ...(e.funcoes ? [] : [`${e.nome}/funções`])]);
   if (faltas.length) console.log('sem relatório:', faltas.join(', '));
   const out = {
     geradoEm,
-    fonte: 'Tesouro Nacional — Siconfi, Relatório de Gestão Fiscal (RGF), Anexo 01',
+    fonte: 'Tesouro Nacional — Siconfi: RGF (Anexo 01) para pessoal por Poder e DCA (Anexo I-E) para despesa por função',
     entes: result,
   };
   writeFileSync(join(root, 'poderes.json'), JSON.stringify(out));

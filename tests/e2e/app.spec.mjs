@@ -664,6 +664,8 @@ test.describe('fluxos', () => {
     const sp = page.locator('.poder-card').nth(1);
     for (const poder of ['Executivo', 'Legislativo', 'Judiciário']) await expect(sp.getByRole('heading', { name: poder })).toBeVisible();
     await expect(sp).toContainText('do limite');
+    await expect(sp).toContainText('Despesa total por função');
+    await expect(sp).toContainText('Encargos especiais');
     // município: sem Judiciário
     const osasco = page.locator('.poder-card').nth(4);
     await expect(osasco.getByRole('heading', { name: 'Judiciário' })).toHaveCount(0);
@@ -671,9 +673,13 @@ test.describe('fluxos', () => {
 
     await page.locator('#poderes-tabs [data-tab=comparar]').click();
     await expect(page.locator('tbody tr')).toHaveCount(27);
-    await page.locator('#poderes-poder').selectOption('J');
+    await page.locator('#poderes-poder').selectOption('p:J');
     await expect(page.locator('#poderes-body')).toContainText('6%');
     await expect(page.locator('#poderes-body')).toContainText('Judiciário');
+    await page.locator('#poderes-poder').selectOption('f:legislativa');
+    await expect(page.locator('tbody tr')).toHaveCount(27);
+    await expect(page.locator('#poderes-body')).toContainText('% da despesa total');
+    await expect(page.locator('#poderes-body')).toContainText('Função não é Poder');
   });
 
   test('cadastro antigo com data da ALESP exibe o mandato correto', async ({ page }) => {

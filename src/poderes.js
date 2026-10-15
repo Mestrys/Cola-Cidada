@@ -37,7 +37,26 @@ export function rankStates(data, poder) {
     .sort((a, b) => (b.p?.pctRcl ?? -1) - (a.p?.pctRcl ?? -1));
 }
 
-/** Resumo das três faixas de um ente, para a lista: cada Poder com seu estado. */
-export function summaryOf(ente) {
-  return Object.entries(ente.poderes).map(([key, p]) => ({ key, p, st: p ? (p.nota ? { key: 'nota', label: 'sem comparação', tone: '' } : status(p.uso)) : null }));
+// Despesa liquidada por função de governo (DCA, Anexo I-E): o gasto total, não só pessoal. Função não é Poder: aposentadorias
+// e outros gastos de um Poder podem estar em outras funções, então estes valores são "o que foi gasto nessa função".
+export const FUNCTIONS = [
+  { key: 'legislativa', name: 'Legislativa', hint: 'casas legislativas e tribunais de contas' },
+  { key: 'judiciaria', name: 'Judiciária', hint: 'tribunais e justiça' },
+  { key: 'essencial', name: 'Essencial à Justiça', hint: 'Ministério Público e Defensoria' },
+  { key: 'encargos', name: 'Encargos especiais', hint: 'dívida e transferências' },
+  { key: 'demais', name: 'Demais funções', hint: 'saúde, educação, segurança, administração… (o Executivo)' },
+];
+
+/** Linhas de um ente: valor e fatia do total de cada função (só as que têm gasto). */
+export function functionRows(f) {
+  if (!f?.total) return [];
+  return FUNCTIONS.map((fn) => ({ ...fn, valor: f[fn.key], pct: f[fn.key] / f.total })).filter((r) => r.valor > 0);
+}
+
+/** Estados pela fatia da despesa total que vai a uma função, da maior para a menor. */
+export function rankFunction(data, key) {
+  return data.entes
+    .filter((e) => e.tipo === 'estado')
+    .map((e) => ({ ente: e, f: e.funcoes || null, valor: e.funcoes?.[key] ?? null, pct: e.funcoes?.total ? e.funcoes[key] / e.funcoes.total : null }))
+    .sort((a, b) => (b.pct ?? -1) - (a.pct ?? -1));
 }

@@ -1,0 +1,46 @@
+name: Atualizar dados públicos
+
+# Refaz os resumos gerados de dados abertos (cota dos senadores, gastos por Poder e emendas) e abre um PR com a diferença.
+# Rode também à mão: Actions > Atualizar dados públicos > Run workflow.
+on:
+  schedule:
+    - cron: '17 6 1 * *' # dia 1 de cada mês, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  atualizar:
+    name: Atualizar ceaps.json, poderes.json e emendas.json
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/build-ceaps.mjs
+      - run: node scripts/build-poderes.mjs
+      - run: node scripts/build-emendas.mjs
+      - run: node expo-app/scripts/sync-data.mjs
+      - run: npm run test:unit
+      - name: Abrir PR se algo mudou
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- src/data expo-app/src/data; then
+            echo "Nada mudou."
+            exit 0
+          fi
+          branch="dados/atualizacao-$(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add src/data expo-app/src/data
+          git commit -m "Atualiza cota dos senadores, gastos por Poder e emendas ($(date -u +%Y-%m-%d))"
+          git push -u origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Atualiza cota dos senadores, gastos por Poder e emendas ($(date -u +%Y-%m-%d))" \
+            --body "Atualização automática dos resumos gerados (CEAPS, RGF por Poder e emendas). Confira a diferença em src/data. Os testes unitários passaram neste fluxo; rode o CI completo antes de mesclar (feche e reabra o PR, ou empurre um commit, pois PRs abertos pelo GITHUB_TOKEN não disparam o CI)."

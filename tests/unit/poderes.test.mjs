@@ -2,8 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { recentPeriods, readOrgao, sumPoder, summarizePoder } from '../../scripts/build-poderes.mjs';
-import { status, rankStates, entesOfState, POWERS } from '../../src/poderes.js';
+import { recentPeriods, readOrgao, sumPoder, summarizePoder, summarizeFuncoes } from '../../scripts/build-poderes.mjs';
+import { status, rankStates, rankFunction, functionRows, entesOfState, POWERS } from '../../src/poderes.js';
 
 const linhas = (instituicao, { liquida, limite, rcl, coluna = 'Valor' }) => [
   { instituicao, cod_conta: 'DespesaComPessoalBruta', coluna: 'TOTAL (ÚLTIMOS 12 MESES) (a)', valor: liquida * 1.2 },
@@ -71,4 +71,43 @@ test('poderes.json gerado: União, 27 estados, 26 capitais e 52 cidades-polo; mu
   const sp = entesOfState(data, 'SP');
   assert.deepEqual(sp.map((e) => e.tipo), ['estado', 'capital', 'polo', 'polo']);
   assert.equal(POWERS.length, 3);
+});
+
+const fn = (conta, valor, coluna = 'Despesas Liquidadas', rotulo = 'Total Geral da Despesa por Função') => ({ conta, valor, coluna, rotulo });
+
+test('despesa por função (DCA): soma por grupo, só as liquidadas, e as subfunções não entram em dobro', () => {
+  const s = summarizeFuncoes([
+    fn('01 - Legislativa', 100),
+    fn('01.031 - Ação Legislativa', 60), // subfunção: já está em 01
+    fn('02 - Judiciária', 300),
+    fn('03 - Essencial à Justiça', 50),
+    fn('10 - Saúde', 400),
+    fn('28 - Encargos Especiais', 150),
+    fn('10 - Saúde', 999, 'Despesas Empenhadas'),
+    fn('Despesas Exceto Intraorçamentárias', 1000),
+  ]);
+  assert.deepEqual(s, { total: 1000, legislativa: 100, judiciaria: 300, essencial: 50, encargos: 150, demais: 400 });
+  assert.equal(summarizeFuncoes([fn('Despesas Exceto Intraorçamentárias', 1)]), null);
+});
+
+test('linhas por função só trazem o que teve gasto, com a fatia do total', () => {
+  const rows = functionRows({ total: 1000, legislativa: 100, judiciaria: 0, essencial: 0, encargos: 150, demais: 750 });
+  assert.deepEqual(rows.map((r) => r.key), ['legislativa', 'encargos', 'demais']);
+  assert.equal(rows[0].pct, 0.1);
+  assert.deepEqual(functionRows(null), []);
+});
+
+test('poderes.json gerado: todo ente traz a despesa por função, e as funções fecham o total', () => {
+  const data = JSON.parse(readFileSync(new URL('../../src/data/poderes.json', import.meta.url), 'utf8'));
+  for (const e of data.entes) {
+    const f = e.funcoes;
+    assert.ok(f && f.ano >= 2024 && f.total > 0, e.nome);
+    const soma = f.legislativa + f.judiciaria + f.essencial + f.encargos + f.demais;
+    assert.ok(Math.abs(soma - f.total) < 1, `${e.nome}: as funções somam ${soma}, o total é ${f.total}`);
+    assert.ok(f.demais >= 0, e.nome);
+  }
+  const rank = rankFunction(data, 'legislativa');
+  assert.equal(rank.length, 27);
+  const pcts = rank.map((r) => r.pct);
+  assert.deepEqual(pcts, [...pcts].sort((a, b) => b - a));
 });

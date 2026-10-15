@@ -1,4 +1,4 @@
-import { entesFor, kindLabel, POWERS, rankStates, status } from '../poderes';
+import { entesFor, FUNCTIONS, functionRows, kindLabel, POWERS, rankFunction, rankStates, status } from '../poderes';
 import data from '@/data/poderes.json';
 
 describe('gastos por Poder', () => {
@@ -31,5 +31,20 @@ describe('gastos por Poder', () => {
       const vals = rank.map((r) => r.p?.pctRcl ?? -1);
       expect(vals).toEqual([...vals].sort((a, b) => b - a));
     }
+  });
+
+  it('despesa por função: as funções fecham o total de cada ente e o comparativo ordena pela fatia', () => {
+    for (const e of (data as any).entes) {
+      const f = e.funcoes;
+      expect(f.total).toBeGreaterThan(0);
+      expect(Math.abs(f.legislativa + f.judiciaria + f.essencial + f.encargos + f.demais - f.total)).toBeLessThan(1);
+    }
+    const rows = functionRows(entesFor('SP')[1].funcoes);
+    expect(rows.map((r) => r.key)).toEqual(FUNCTIONS.map((f) => f.key));
+    const rank = rankFunction('legislativa');
+    expect(rank).toHaveLength(27);
+    const pcts = rank.map((r) => r.pct ?? -1);
+    expect(pcts).toEqual([...pcts].sort((a, b) => b - a));
+    expect(functionRows(null)).toEqual([]);
   });
 });
