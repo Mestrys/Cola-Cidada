@@ -9,14 +9,15 @@ import { useTheme } from '@/hooks/use-theme';
 import { money, SICONFI_URL } from '@/lib/contas';
 import { ufName, UNITS } from '@/lib/directory';
 import {
-  entesFor, kindLabel, PODERES_GERADO_EM, POWERS, rankStates, STATE_LIMITS, status,
-  type Ente, type PowerData, type PowerKey,
+  entesFor, FUNCTIONS, functionRows, kindLabel, PODERES_GERADO_EM, POWERS, rankFunction, rankStates, STATE_LIMITS, status,
+  type Ente, type FunctionKey, type PowerData, type PowerKey,
 } from '@/lib/poderes';
 import { formatDate } from '@/lib/mandate';
 import { useStore } from '@/lib/store';
 
 const pct = (v: number | null) => (v == null ? 'não informado' : `${v.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`);
 const usedPct = (v: number) => `${Math.round(v * 100)}%`;
+const share = (v: number) => `${(v * 100).toLocaleString('pt-BR', { maximumFractionDigits: v < 0.1 ? 1 : 0 })}%`;
 const period = (p: PowerData) => `12 meses até o ${p.periodo}º quadrimestre de ${p.ano}`;
 
 function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () => void }) {
@@ -70,6 +71,27 @@ function PowerBlock({ name, p }: { name: string; p: PowerData | null | undefined
   );
 }
 
+function FunctionBlock({ f }: { f: Ente['funcoes'] }) {
+  const rows = functionRows(f);
+  if (!f || !rows.length) return <ThemedText type="small" themeColor="textSecondary">Despesa por função: sem declaração anual no Tesouro.</ThemedText>;
+  return (
+    <View style={styles.block}>
+      <ThemedText type="smallBold" accessibilityRole="header">Despesa total por função</ThemedText>
+      <ThemedText type="small" themeColor="textSecondary">
+        Gasto liquidado em {f.ano}: {money(f.total)}. Função não é Poder: aposentadorias e outros gastos de cada Poder podem estar em outras funções.
+      </ThemedText>
+      {rows.map((r) => (
+        <View key={r.key} accessible accessibilityLabel={`${r.name}: ${money(r.valor)}, ${share(r.pct)} do total`}>
+          <ThemedText type="small">
+            <ThemedText type="smallBold">{r.name}</ThemedText> · {money(r.valor)} · {share(r.pct)} do total
+          </ThemedText>
+          <ThemedText type="small" themeColor="textSecondary">{r.hint}</ThemedText>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 function EnteCard({ e }: { e: Ente }) {
   const theme = useTheme();
   const city = e.tipo === 'capital' || e.tipo === 'polo';
@@ -83,6 +105,7 @@ function EnteCard({ e }: { e: Ente }) {
         <PowerBlock key={w.key} name={w.name} p={e.poderes[w.key]} />
       ))}
       {city ? <ThemedText type="small" themeColor="textSecondary">Município não tem Judiciário próprio: a Justiça local é do estado.</ThemedText> : null}
+      <FunctionBlock f={e.funcoes} />
     </View>
   );
 }
@@ -93,8 +116,11 @@ export default function PoderesScreen() {
   const home = (state.domicile?.state || 'SP').toUpperCase();
   const [tab, setTab] = useState<'estado' | 'comparar'>('estado');
   const [uf, setUf] = useState(home);
-  const [poder, setPoder] = useState<PowerKey>('E');
-  const power = POWERS.find((w) => w.key === poder)!;
+  const [measure, setMeasure] = useState<string>('p:E');
+  const [kind, key] = measure.split(':') as ['p' | 'f', string];
+  const poder = key as PowerKey;
+  const power = POWERS.find((w) => w.key === poder);
+  const fn = FUNCTIONS.find((f) => f.key === key);
 
   return (
     <Screen
@@ -121,31 +147,54 @@ export default function PoderesScreen() {
         <>
           <View style={styles.row}>
             {POWERS.map((w) => (
-              <Chip key={w.key} label={w.name} on={w.key === poder} onPress={() => setPoder(w.key)} />
+              <Chip key={w.key} label={`${w.name}: pessoal`} on={measure === `p:${w.key}`} onPress={() => setMeasure(`p:${w.key}`)} />
+            ))}
+            {FUNCTIONS.slice(0, 3).map((f) => (
+              <Chip key={f.key} label={`${f.name}: total`} on={measure === `f:${f.key}`} onPress={() => setMeasure(`f:${f.key}`)} />
             ))}
           </View>
-          <ThemedText type="small" themeColor="textSecondary">
-            Os 27 estados do que mais para o que menos pesa em {power.name} (despesa líquida com pessoal sobre a receita corrente líquida). O teto da LRF para este Poder nos estados é de {STATE_LIMITS[poder]}% da receita, somando todos os órgãos dele.
-          </ThemedText>
-          {rankStates(poder).map(({ ente, p }, i) => {
-            const st = p ? status(p.uso) : null;
-            return (
-              <View
-                key={ente.chave}
-                accessible
-                accessibilityLabel={p ? `${i + 1}º ${ente.nome}: ${money(p.liquida)}, ${pct(p.pctRcl)} da receita, ${st!.label}${p.uso != null ? `, usa ${usedPct(p.uso)} do limite` : ''}` : `${ente.nome}: sem relatório`}
-                style={[styles.rankRow, { borderColor: theme.border }]}>
-                <ThemedText type="smallBold" style={styles.flex}>{ente.nome}</ThemedText>
-                <ThemedText type="small">{p ? `${money(p.liquida)} · ${pct(p.pctRcl)}` : 'sem relatório'}</ThemedText>
-                {p ? <ThemedText type="small" themeColor="textSecondary">{p.uso != null ? `${usedPct(p.uso)} do limite · ` : ''}{st!.label}</ThemedText> : null}
-              </View>
-            );
-          })}
+          {kind === 'p' && power ? (
+            <>
+              <ThemedText type="small" themeColor="textSecondary">
+                Os 27 estados do que mais para o que menos pesa em {power.name} (despesa líquida com pessoal sobre a receita corrente líquida). O teto da LRF para este Poder nos estados é de {STATE_LIMITS[poder]}% da receita, somando todos os órgãos dele.
+              </ThemedText>
+              {rankStates(poder).map(({ ente, p }, i) => {
+                const st = p ? status(p.uso) : null;
+                return (
+                  <View
+                    key={ente.chave}
+                    accessible
+                    accessibilityLabel={p ? `${i + 1}º ${ente.nome}: ${money(p.liquida)}, ${pct(p.pctRcl)} da receita, ${st!.label}${p.uso != null ? `, usa ${usedPct(p.uso)} do limite` : ''}` : `${ente.nome}: sem relatório`}
+                    style={[styles.rankRow, { borderColor: theme.border }]}>
+                    <ThemedText type="smallBold" style={styles.flex}>{ente.nome}</ThemedText>
+                    <ThemedText type="small">{p ? `${money(p.liquida)} · ${pct(p.pctRcl)}` : 'sem relatório'}</ThemedText>
+                    {p ? <ThemedText type="small" themeColor="textSecondary">{p.uso != null ? `${usedPct(p.uso)} do limite · ` : ''}{st!.label}</ThemedText> : null}
+                  </View>
+                );
+              })}
+            </>
+          ) : fn ? (
+            <>
+              <ThemedText type="small" themeColor="textSecondary">
+                Os 27 estados pela parcela da despesa total (liquidada, DCA) que vai à função {fn.name} ({fn.hint}). Função não é Poder: aposentadorias e outros gastos de cada Poder podem estar em outras funções.
+              </ThemedText>
+              {rankFunction(fn.key as FunctionKey).map(({ ente, f, valor, pct: s }, i) => (
+                <View
+                  key={ente.chave}
+                  accessible
+                  accessibilityLabel={f ? `${i + 1}º ${ente.nome}: ${money(valor)}, ${share(s!)} da despesa total` : `${ente.nome}: sem declaração`}
+                  style={[styles.rankRow, { borderColor: theme.border }]}>
+                  <ThemedText type="smallBold" style={styles.flex}>{ente.nome}</ThemedText>
+                  <ThemedText type="small">{f ? `${money(valor)} · ${share(s!)} da despesa total` : 'sem declaração'}</ThemedText>
+                </View>
+              ))}
+            </>
+          ) : null}
         </>
       )}
 
       <ThemedText type="small" themeColor="textSecondary" onPress={() => Linking.openURL(SICONFI_URL)} accessibilityRole="link">
-        Dados do Relatório de Gestão Fiscal (RGF, Anexo 01) que cada ente entrega ao Tesouro Nacional (Siconfi), consultados em {formatDate(PODERES_GERADO_EM)}. É a despesa líquida com pessoal (ativos, aposentados e pensionistas, descontadas as parcelas que a lei exclui), e não o gasto total do Poder: custeio e investimentos não entram. Cada ente informa o próprio limite; quando ele aparece acima de 100%, é o que consta no relatório entregue. Toque para abrir o Siconfi.
+        Dados que cada ente entrega ao Tesouro Nacional (Siconfi): Relatório de Gestão Fiscal (RGF, Anexo 01) para o pessoal de cada Poder e Declaração de Contas Anuais (DCA, Anexo I-E) para a despesa por função, consultados em {formatDate(PODERES_GERADO_EM)}. É a despesa líquida com pessoal (ativos, aposentados e pensionistas, descontadas as parcelas que a lei exclui), e não o gasto total do Poder: custeio e investimentos não entram. Cada ente informa o próprio limite; quando ele aparece acima de 100%, é o que consta no relatório entregue. Toque para abrir o Siconfi.
       </ThemedText>
     </Screen>
   );
