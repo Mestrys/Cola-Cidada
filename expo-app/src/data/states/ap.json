@@ -1,0 +1,482 @@
+[
+ {
+  "id": "ap-30001604014",
+  "name": "Dep. Aldilene Souza",
+  "fullName": "Aldilene Matos de Souza",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001604014",
+   "ballotNumber": "12456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001604014"
+ },
+ {
+  "id": "ap-30001606514",
+  "name": "Dep. Alliny Serrão",
+  "fullName": "Alliny Sousa da Rocha Serrao",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001606514",
+   "ballotNumber": "44123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 450000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001606514"
+ },
+ {
+  "id": "ap-30001619661",
+  "name": "Dep. Cel Flexa",
+  "fullName": "Arnóbio Flexa Nascimento",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001619661",
+   "ballotNumber": "19500",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1315000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001619661"
+ },
+ {
+  "id": "ap-30001636448",
+  "name": "Dep. Dayse Marques",
+  "fullName": "Dayse Marques",
+  "party": "SOLIDARIEDADE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001636448",
+   "ballotNumber": "77789",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001636448"
+ },
+ {
+  "id": "ap-30001604018",
+  "name": "Dep. Delegado Inacio",
+  "fullName": "Inacio Monteiro Maciel",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001604018",
+   "ballotNumber": "12123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 426566.13,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001604018"
+ },
+ {
+  "id": "ap-30001605443",
+  "name": "Dep. Diogo Senior",
+  "fullName": "Diogo Wenceslau Vilhena Senior",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001605443",
+   "ballotNumber": "15123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 111293,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001605443"
+ },
+ {
+  "id": "ap-30001604789",
+  "name": "Dep. Dr Victor Amoras",
+  "fullName": "Victor Andre de Freitas Amoras",
+  "party": "REDE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001604789",
+   "ballotNumber": "18001",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001604789"
+ },
+ {
+  "id": "ap-30001615060",
+  "name": "Dep. Edna Auzier",
+  "fullName": "Edna Auzier",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001615060",
+   "ballotNumber": "55123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 141440,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001615060"
+ },
+ {
+  "id": "ap-30001604794",
+  "name": "Dep. Fabricio Furlan",
+  "fullName": "Fabricio Bevilacqua Furlan",
+  "party": "REDE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001604794",
+   "ballotNumber": "18000",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001604794"
+ },
+ {
+  "id": "ap-30001606520",
+  "name": "Dep. Hildegard",
+  "fullName": "Hildegard de Azevedo Gurgel",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001606520",
+   "ballotNumber": "44000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 20000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001606520"
+ },
+ {
+  "id": "ap-30001636455",
+  "name": "Dep. Jack Jk",
+  "fullName": "Jack Houat Harb",
+  "party": "SOLIDARIEDADE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001636455",
+   "ballotNumber": "77123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 152400,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001636455"
+ },
+ {
+  "id": "ap-30001643383",
+  "name": "Dep. Jaime Perez",
+  "fullName": "Jaime da Silva Perez",
+  "party": "PTB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001643383",
+   "ballotNumber": "14999",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 660000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001643383"
+ },
+ {
+  "id": "ap-30001604007",
+  "name": "Dep. Jesus Pontes",
+  "fullName": "Ruziely de Jesus Pontes da Silva",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001604007",
+   "ballotNumber": "12369",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 56000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001604007"
+ },
+ {
+  "id": "ap-30001600726",
+  "name": "Dep. Jory Oeiras",
+  "fullName": "Joryosvaldo Queiroz Oeiras",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001600726",
+   "ballotNumber": "11300",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 201000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001600726"
+ },
+ {
+  "id": "ap-30001605447",
+  "name": "Dep. Junior Favacho",
+  "fullName": "Amiraldo da Silva Favacho Junior",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001605447",
+   "ballotNumber": "15699",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001605447"
+ },
+ {
+  "id": "ap-30001607459",
+  "name": "Dep. Liliane Abreu",
+  "fullName": "Liliane Cordeiro de Abreu",
+  "party": "PV",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001607459",
+   "ballotNumber": "43456",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 97500,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001607459"
+ },
+ {
+  "id": "ap-30001615063",
+  "name": "Dep. Lorran Barreto",
+  "fullName": "Lorran Damasceno Barreto",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001615063",
+   "ballotNumber": "55000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 779409.48,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001615063"
+ },
+ {
+  "id": "ap-30001595396",
+  "name": "Dep. Pastor Oliveira",
+  "fullName": "Carlos Antonio Oliveira Santos",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001595396",
+   "ballotNumber": "10147",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 706369.51,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001595396"
+ },
+ {
+  "id": "ap-30001607454",
+  "name": "Dep. Paulo Nogueira",
+  "fullName": "Francisco Paulo Nogueira de Souza",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001607454",
+   "ballotNumber": "13123",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 260000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001607454"
+ },
+ {
+  "id": "ap-30001648127",
+  "name": "Dep. R Nelson",
+  "fullName": "Errinelson Vieira Pimentel",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001648127",
+   "ballotNumber": "22193",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001648127"
+ },
+ {
+  "id": "ap-30001596679",
+  "name": "Dep. Rayfran Beirão",
+  "fullName": "Rayfran Macedo Barroso",
+  "party": "PROS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001596679",
+   "ballotNumber": "90678",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001596679"
+ },
+ {
+  "id": "ap-30001606516",
+  "name": "Dep. Roberto",
+  "fullName": "Antonio Roberto Rodrigues Goes da Silva",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001606516",
+   "ballotNumber": "44111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1200000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001606516"
+ },
+ {
+  "id": "ap-30001640013",
+  "name": "Dep. Telma Nery",
+  "fullName": "Telma Adriana Nery Paiva",
+  "party": "CIDADANIA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001640013",
+   "ballotNumber": "23000",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001640013"
+ },
+ {
+  "id": "ap-30001619655",
+  "name": "Dep. Zeneide Costa",
+  "fullName": "Zeneide da Silva Costa",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Amapá (ALAP)",
+  "source": "al-ap",
+  "state": "AP",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "30001619655",
+   "ballotNumber": "19000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 170000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001619655"
+ }
+]

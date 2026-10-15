@@ -1,0 +1,1501 @@
+{
+ "consultadoEm": "2026-10-14",
+ "fonteOcupantes": "Wikipédia (Lista de governadores das unidades federativas do Brasil; Lista de prefeitos das capitais do Brasil), conferida com o TSE",
+ "presidente": [
+  {
+   "id": "exe-presidente",
+   "name": "Presidente Lula",
+   "fullName": "Luiz Inácio Lula da Silva",
+   "party": "PT",
+   "role": "Presidente da República",
+   "roleKey": "presidente",
+   "house": "Presidência da República",
+   "source": "executivo",
+   "state": "BR",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Geraldo Alckmin",
+    "fullName": "Geraldo José Rodrigues Alckmin Filho",
+    "party": "PSB"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "280001607829",
+    "ballotNumber": "13",
+    "coalition": "PT/PC do B/PV",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/545/BR/280001607829"
+  }
+ ],
+ "governadores": [
+  {
+   "id": "exe-gov-ma",
+   "name": "Gov. Carlos Brandão Júnior",
+   "fullName": "Carlos Orleans Brandão Júnior",
+   "party": "MDB",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Maranhão",
+   "source": "executivo",
+   "state": "MA",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Felipe Camarão"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "100001667487",
+    "ballotNumber": "40",
+    "coalition": "PARA O BEM DO MARANHÃO",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/MA/100001667487",
+   "desde": "2022-04-02"
+  },
+  {
+   "id": "exe-gov-df-celina-leao",
+   "name": "Gov. Celina Leão",
+   "fullName": "Celina Leão",
+   "party": "PP",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Distrito Federal",
+   "source": "executivo",
+   "state": "DF",
+   "situacao": "Governador(a) desde 30/03/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-03-30",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-30",
+   "eleitoPeloTse": {
+    "name": "Ibaneis Rocha",
+    "party": "MDB",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-ap",
+   "name": "Gov. Clécio Luís",
+   "fullName": "Clécio Luís Vilhena Vieira",
+   "party": "UNIÃO",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Amapá",
+   "source": "executivo",
+   "state": "AP",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Teles Junior"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "30001619676",
+    "ballotNumber": "77",
+    "coalition": "AMAPÁ PARA TODOS ",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AP/30001619676",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-go-daniel-vilela",
+   "name": "Gov. Daniel Vilela",
+   "fullName": "Daniel Vilela",
+   "party": "MDB",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Goiás",
+   "source": "executivo",
+   "state": "GO",
+   "situacao": "Governador(a) desde 31/03/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-03-31",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-31",
+   "eleitoPeloTse": {
+    "name": "Ronaldo Caiado",
+    "party": "UNIÃO",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-rs",
+   "name": "Gov. Eduardo Leite",
+   "fullName": "Eduardo Figueiredo Cavalheiro Leite",
+   "party": "PSD",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Rio Grande do Sul",
+   "source": "executivo",
+   "state": "RS",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Gabriel Souza"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "210001609847",
+    "ballotNumber": "45",
+    "coalition": "PSDB/CIDADANIA",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/RS/210001609847",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-ms",
+   "name": "Gov. Eduardo Riedel",
+   "fullName": "Eduardo Correa Riedel",
+   "party": "PP",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Mato Grosso do Sul",
+   "source": "executivo",
+   "state": "MS",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Barbosinha"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "120001635628",
+    "ballotNumber": "45",
+    "coalition": "PSDB/CIDADANIA",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/MS/120001635628",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-ce",
+   "name": "Gov. Elmano de Freitas",
+   "fullName": "Elmano de Freitas da Costa",
+   "party": "PT",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Ceará",
+   "source": "executivo",
+   "state": "CE",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Jade Romero"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "60001633585",
+    "ballotNumber": "13",
+    "coalition": "PT/PC do B/PV",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/CE/60001633585",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-se",
+   "name": "Gov. Fábio Mitidieri",
+   "fullName": "Fábio Cruz Mitidieri",
+   "party": "PSD",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Sergipe",
+   "source": "executivo",
+   "state": "SE",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Zezinho Sobral"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "260001612779",
+    "ballotNumber": "55",
+    "coalition": "NOVO TEMPO PRA SERGIPE",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/SE/260001612779",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-rn",
+   "name": "Gov. Fátima Bezerra",
+   "fullName": "Maria de Fatima Bezerra",
+   "party": "PT",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Rio Grande do Norte",
+   "source": "executivo",
+   "state": "RN",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Walter Alves"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "200001608810",
+    "ballotNumber": "13",
+    "coalition": "PT/PC do B/PV",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/RN/200001608810",
+   "desde": "2019-01-01"
+  },
+  {
+   "id": "exe-gov-pa-hana-ghassan",
+   "name": "Gov. Hana Ghassan",
+   "fullName": "Hana Ghassan",
+   "party": "MDB",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Pará",
+   "source": "executivo",
+   "state": "PA",
+   "situacao": "Governador(a) desde 02/04/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-04-02",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-02",
+   "eleitoPeloTse": {
+    "name": "Helder",
+    "party": "MDB",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-ba",
+   "name": "Gov. Jerônimo Rodrigues",
+   "fullName": "Jerônimo Rodrigues Souza",
+   "party": "PT",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Bahia",
+   "source": "executivo",
+   "state": "BA",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Geraldo Júnior"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "50001603638",
+    "ballotNumber": "13",
+    "coalition": "PT/PC do B/PV",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/BA/50001603638",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-sc",
+   "name": "Gov. Jorginho Mello",
+   "fullName": "Jorginho dos Santos Mello",
+   "party": "PL",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Santa Catarina",
+   "source": "executivo",
+   "state": "SC",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Delegada Marilisa"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "240001611127",
+    "ballotNumber": "22",
+    "coalition": "PARTIDO ISOLADO",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/SC/240001611127",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-pb-lucas-ribeiro",
+   "name": "Gov. Lucas Ribeiro",
+   "fullName": "Lucas Ribeiro",
+   "party": "PP",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Paraíba",
+   "source": "executivo",
+   "state": "PB",
+   "situacao": "Governador(a) desde 02/04/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-04-02",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-02",
+   "eleitoPeloTse": {
+    "name": "João",
+    "party": "PSB",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-ac-mailza-assis",
+   "name": "Gov. Mailza Assis",
+   "fullName": "Mailza Assis",
+   "party": "PP",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Acre",
+   "source": "executivo",
+   "state": "AC",
+   "situacao": "Governador(a) desde 02/04/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-04-02",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-02",
+   "eleitoPeloTse": {
+    "name": "Gladson Cameli",
+    "party": "PP",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-ro",
+   "name": "Gov. Marcos Rocha",
+   "fullName": "Marcos José Rocha dos Santos",
+   "party": "PSD",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Rondônia",
+   "source": "executivo",
+   "state": "RO",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Sérgio Alves"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "220001609511",
+    "ballotNumber": "44",
+    "coalition": "COMPROMISSO, TRABALHO E FÉ",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/RO/220001609511",
+   "desde": "2019-01-01"
+  },
+  {
+   "id": "exe-gov-mg-mateus-simoes",
+   "name": "Gov. Mateus Simões",
+   "fullName": "Mateus Simões",
+   "party": "PSD",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Minas Gerais",
+   "source": "executivo",
+   "state": "MG",
+   "situacao": "Governador(a) desde 22/03/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-03-22",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-22",
+   "eleitoPeloTse": {
+    "name": "Zema",
+    "party": "NOVO",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-mt-otaviano-pivetta",
+   "name": "Gov. Otaviano Pivetta",
+   "fullName": "Otaviano Pivetta",
+   "party": "REPUBLICANOS",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Mato Grosso",
+   "source": "executivo",
+   "state": "MT",
+   "situacao": "Governador(a) desde 31/03/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-03-31",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-31",
+   "eleitoPeloTse": {
+    "name": "Mauro Mendes",
+    "party": "UNIÃO",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-al",
+   "name": "Gov. Paulo Dantas",
+   "fullName": "Paulo Suruagy do Amaral Dantas",
+   "party": "MDB",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Alagoas",
+   "source": "executivo",
+   "state": "AL",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Ronaldo Lessa"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "20001697934",
+    "ballotNumber": "15",
+    "coalition": "ALAGOAS DAQUI PRA MELHOR",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/AL/20001697934",
+   "desde": "2022-05-15"
+  },
+  {
+   "id": "exe-gov-pi",
+   "name": "Gov. Rafael Fonteles",
+   "fullName": "Rafael Tajra Fonteles",
+   "party": "PT",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Piauí",
+   "source": "executivo",
+   "state": "PI",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Themístocles Filho"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "180001604027",
+    "ballotNumber": "13",
+    "coalition": "PT/PC do B/PV",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PI/180001604027",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-pe",
+   "name": "Gov. Raquel Lyra",
+   "fullName": "Raquel Teixeira Lyra Lucena",
+   "party": "PSD",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Pernambuco",
+   "source": "executivo",
+   "state": "PE",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Priscila Krause"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "170001604087",
+    "ballotNumber": "45",
+    "coalition": "PSDB/CIDADANIA",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/PE/170001604087",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-pr",
+   "name": "Gov. Ratinho Júnior",
+   "fullName": "Carlos Roberto Massa Junior",
+   "party": "PSD",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Paraná",
+   "source": "executivo",
+   "state": "PR",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Darci Piana"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "160001614467",
+    "ballotNumber": "55",
+    "coalition": "A MUDANÇA NÃO PARA. PRA FRENTE PARANÁ",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/PR/160001614467",
+   "desde": "2019-01-01"
+  },
+  {
+   "id": "exe-gov-rj-ricardo-couto",
+   "name": "Gov. Ricardo Couto",
+   "fullName": "Ricardo Couto",
+   "party": "S/PARTIDO",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Rio de Janeiro",
+   "source": "executivo",
+   "state": "RJ",
+   "situacao": "Governador(a) interino(a) desde 23/03/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-03-23",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "condicao": "interino",
+   "desde": "2026-03-23",
+   "nota": "Governador(a) interino(a), na linha de sucessão.",
+   "eleitoPeloTse": {
+    "name": "Cláudio Castro",
+    "party": "PL",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-es-ricardo-ferraco",
+   "name": "Gov. Ricardo Ferraço",
+   "fullName": "Ricardo Ferraço",
+   "party": "MDB",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Espírito Santo",
+   "source": "executivo",
+   "state": "ES",
+   "situacao": "Governador(a) desde 02/03/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-03-02",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-02",
+   "eleitoPeloTse": {
+    "name": "Renato Casagrande",
+    "party": "PSB",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-am-roberto-cidade",
+   "name": "Gov. Roberto Cidade",
+   "fullName": "Roberto Cidade",
+   "party": "UNIÃO",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Amazonas",
+   "source": "executivo",
+   "state": "AM",
+   "situacao": "Governador(a) desde 04/04/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-04-04",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Serafim Corrêa"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "condicao": "eleito pela Assembleia",
+   "desde": "2026-04-04",
+   "nota": "Eleito pela Assembleia Legislativa em eleição indireta, em maio de 2026, para completar o mandato.",
+   "eleitoPeloTse": {
+    "name": "Wilson Lima",
+    "party": "UNIÃO",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-rr-soldado-sampaio",
+   "name": "Gov. Soldado Sampaio",
+   "fullName": "Soldado Sampaio",
+   "party": "REPUBLICANOS",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Roraima",
+   "source": "executivo",
+   "state": "RR",
+   "situacao": "Governador(a) interino(a) desde 30/04/2026 (substituiu quem foi eleito em 2022)",
+   "mandate": [
+    "2026-04-30",
+    "2027-01-05"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "condicao": "interino",
+   "desde": "2026-04-30",
+   "nota": "Governador(a) interino(a), na linha de sucessão.",
+   "eleitoPeloTse": {
+    "name": "Antonio Denarium",
+    "party": "PP",
+    "year": 2022
+   }
+  },
+  {
+   "id": "exe-gov-sp",
+   "name": "Gov. Tarcísio de Freitas",
+   "fullName": "Tarcisio Gomes de Freitas",
+   "party": "REPUBLICANOS",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — São Paulo",
+   "source": "executivo",
+   "state": "SP",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Felicio Ramuth"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "250001615967",
+    "ballotNumber": "10",
+    "coalition": "SÃO PAULO PODE MAIS",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/547/SP/250001615967",
+   "desde": "2023-01-01"
+  },
+  {
+   "id": "exe-gov-to",
+   "name": "Gov. Wanderlei Barbosa",
+   "fullName": "Wanderlei Barbosa Castro",
+   "party": "REPUBLICANOS",
+   "role": "Governador",
+   "roleKey": "governador",
+   "house": "Governo do Estado — Tocantins",
+   "source": "executivo",
+   "state": "TO",
+   "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+   "mandate": [
+    "2023-01-01",
+    "2027-01-05"
+   ],
+   "vice": {
+    "name": "Laurez Moreira"
+   },
+   "tse": {
+    "year": 2022,
+    "sq": "270001652198",
+    "ballotNumber": "10",
+    "coalition": "União pelo Tocantins",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/TO/270001652198",
+   "desde": "2022-03-11"
+  }
+ ],
+ "prefeitos": [
+  {
+   "id": "exe-pref-mt",
+   "name": "Pref. Abilio Brunini",
+   "fullName": "Abilio Jacques Brunini Moumer",
+   "party": "PL",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Cuiabá",
+   "source": "executivo",
+   "state": "MT",
+   "city": "Cuiabá",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Vânia Garcia Rosa"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "110002118922",
+    "ballotNumber": "22",
+    "coalition": "RESGATANDO CUIABÁ",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/90670/110002118922",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-ms",
+   "name": "Pref. Adriane Lopes",
+   "fullName": "Adriane Barbosa Nogueira Lopes",
+   "party": "PP",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Campo Grande",
+   "source": "executivo",
+   "state": "MS",
+   "city": "Campo Grande",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Dra Camilla",
+    "fullName": "Camilla Nascimento de Oliveira",
+    "party": "AVANTE"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "120002167893",
+    "ballotNumber": "11",
+    "coalition": "COLIGAÇÃO SEM MEDO DE FAZER O CERTO",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/90514/120002167893",
+   "desde": "2022-04-02",
+   "nota": "Vice-Prefeita que assumiu o mandato após a renuncia de Marquinhos Trad para concorrer ao Governo do Estado em 2022. Assumiu a prefeitura pelo Patriota."
+  },
+  {
+   "id": "exe-pref-mg-alvaro-damiao",
+   "name": "Pref. Álvaro Damião",
+   "fullName": "Álvaro Damião",
+   "party": "UNIÃO",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Belo Horizonte",
+   "source": "executivo",
+   "state": "MG",
+   "city": "Belo Horizonte",
+   "situacao": "Prefeito(a) desde 26/03/2025 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2025-03-26",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2025-03-26",
+   "nota": "Vice-prefeito que assumiu a titularidade após o falecimento de Fuad Noman.",
+   "eleitoPeloTse": {
+    "name": "Fuad Noman",
+    "party": "PSD",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-ac-alysson-bestene",
+   "name": "Pref. Alysson Bestene",
+   "fullName": "Alysson Bestene",
+   "party": "PP",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Rio Branco",
+   "source": "executivo",
+   "state": "AC",
+   "city": "Rio Branco",
+   "situacao": "Prefeito(a) desde 03/04/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-04-03",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-03",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Tião Bocalom para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "Tião Bocalom",
+    "party": "PL",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-ba",
+   "name": "Pref. Bruno Reis",
+   "fullName": "Bruno Soares Reis",
+   "party": "UNIÃO",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Salvador",
+   "source": "executivo",
+   "state": "BA",
+   "city": "Salvador",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Ana Paula Matos"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "50001907549",
+    "ballotNumber": "44",
+    "coalition": "O TRABALHO NÃO PARA",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/38490/50001907549",
+   "desde": "2021-01-01"
+  },
+  {
+   "id": "exe-pref-es-cris-samorini",
+   "name": "Pref. Cris Samorini",
+   "fullName": "Cris Samorini",
+   "party": "PP",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Vitória",
+   "source": "executivo",
+   "state": "ES",
+   "city": "Vitória",
+   "situacao": "Prefeito(a) desde 01/04/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-04-01",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-01",
+   "nota": "Vice-Prefeita que assumiu o mandato após a renuncia de Lorenzo Pazolini para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "Lorenzo Pazolini",
+    "party": "REPUBLICANOS",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-rj-eduardo-cavaliere",
+   "name": "Pref. Eduardo Cavaliere",
+   "fullName": "Eduardo Cavaliere",
+   "party": "PSD",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Rio de Janeiro",
+   "source": "executivo",
+   "state": "RJ",
+   "city": "Rio de Janeiro",
+   "situacao": "Prefeito(a) desde 20/03/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-03-20",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-20",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Eduardo Paes para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "Eduardo Paes",
+    "party": "PSD",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-pr",
+   "name": "Pref. Eduardo Pimentel",
+   "fullName": "Eduardo Pimentel Slaviero",
+   "party": "PSD",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Curitiba",
+   "source": "executivo",
+   "state": "PR",
+   "city": "Curitiba",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Paulo Eduardo Martins"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "160001990123",
+    "ballotNumber": "55",
+    "coalition": "Curitiba Amor e Inovação",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/75353/160001990123",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-to",
+   "name": "Pref. Eduardo Siqueira Campos",
+   "fullName": "José Eduardo de Siqueira Campos",
+   "party": "PODE",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Palmas",
+   "source": "executivo",
+   "state": "TO",
+   "city": "Palmas",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Carlos Eduardo"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "270002318894",
+    "ballotNumber": "20",
+    "coalition": "JUNTOS PODEMOS AGIR",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/73440/270002318894",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-se",
+   "name": "Pref. Emília Corrêa",
+   "fullName": "Emília Corrêa Santos Bezerra",
+   "party": "REPUBLICANOS",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Aracaju",
+   "source": "executivo",
+   "state": "SE",
+   "city": "Aracaju",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Ricardo Marques"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "260001926362",
+    "ballotNumber": "22",
+    "coalition": "POR UMA NOVA ARACAJU",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/31054/260001926362",
+   "desde": "2025-01-01",
+   "nota": "Eleita pelo PL."
+  },
+  {
+   "id": "exe-pref-ma-esmenia-miranda",
+   "name": "Pref. Esmênia Miranda",
+   "fullName": "Esmênia Miranda",
+   "party": "PSD",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de São Luís",
+   "source": "executivo",
+   "state": "MA",
+   "city": "São Luís",
+   "situacao": "Prefeito(a) desde 31/03/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-03-31",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-31",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Eduardo Braide para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "Eduardo Braide",
+    "party": "PSD",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-ce",
+   "name": "Pref. Evandro Leitão",
+   "fullName": "Evandro Sa Barreto Leitao",
+   "party": "PT",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Fortaleza",
+   "source": "executivo",
+   "state": "CE",
+   "city": "Fortaleza",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Gabriella Aguiar"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "60002129518",
+    "ballotNumber": "13",
+    "coalition": "13-PT/65-PC do B/43-PV",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/13897/60002129518",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-pa",
+   "name": "Pref. Igor Normando",
+   "fullName": "Igor Wander Centeno Normando",
+   "party": "PSDB",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Belém",
+   "source": "executivo",
+   "state": "PA",
+   "city": "Belém",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Cássio Andrade"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "140002181381",
+    "ballotNumber": "15",
+    "coalition": "LEVANTA BELEM",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/04278/140002181381",
+   "desde": "2025-01-01",
+   "nota": "Eleito pelo MDB"
+  },
+  {
+   "id": "exe-pref-pb-leo-bezerra",
+   "name": "Pref. Leo Bezerra",
+   "fullName": "Leo Bezerra",
+   "party": "PSDB",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de João Pessoa",
+   "source": "executivo",
+   "state": "PB",
+   "city": "João Pessoa",
+   "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-04-02",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-02",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Cícero Lucena para concorrer ao Governo do Estado. Eleito vice pelo PSB.",
+   "eleitoPeloTse": {
+    "name": "Cicero Lucena",
+    "party": "PP",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-ro",
+   "name": "Pref. Léo Moraes",
+   "fullName": "Leonardo Barreto de Moraes",
+   "party": "PODE",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Porto Velho",
+   "source": "executivo",
+   "state": "RO",
+   "city": "Porto Velho",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Magna dos Anjos Queiroz"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "220002250040",
+    "ballotNumber": "20",
+    "coalition": "PARTIDO ISOLADO",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/00035/220002250040",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-rr-marcelo-zeitoune",
+   "name": "Pref. Marcelo Zeitoune",
+   "fullName": "Marcelo Zeitoune",
+   "party": "PL",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Boa Vista",
+   "source": "executivo",
+   "state": "RR",
+   "city": "Boa Vista",
+   "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-04-02",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-02",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de Arthur Henrique para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "Arthur Henrique",
+    "party": "MDB",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-rn",
+   "name": "Pref. Paulinho Freire",
+   "fullName": "Paulo Eduardo da Costa Freire",
+   "party": "UNIÃO",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Natal",
+   "source": "executivo",
+   "state": "RN",
+   "city": "Natal",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Joanna Guerra"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "200002186707",
+    "ballotNumber": "44",
+    "coalition": "BORA NATAL",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/17612/200002186707",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-ap-pedro-da-lua",
+   "name": "Pref. Pedro da Lua",
+   "fullName": "Pedro da Lua",
+   "party": "UNIÃO",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Macapá",
+   "source": "executivo",
+   "state": "AP",
+   "city": "Macapá",
+   "situacao": "Prefeito(a) desde 04/03/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-03-04",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-04",
+   "nota": "Presidente da Câmara Municipal que assumiu o mandato após a renuncia de Antônio Furlan para concorrer ao Governo do Estado, seguido do afastamento do vice-prefeito pelo STF por 60 dias.",
+   "eleitoPeloTse": {
+    "name": "Dr Furlan",
+    "party": "MDB",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-am-renato-junior",
+   "name": "Pref. Renato Junior",
+   "fullName": "Renato Junior",
+   "party": "AVANTE",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Manaus",
+   "source": "executivo",
+   "state": "AM",
+   "city": "Manaus",
+   "situacao": "Prefeito(a) desde 31/03/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-03-31",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-03-31",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de David Almeida para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "David Almeida",
+    "party": "AVANTE",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-sp",
+   "name": "Pref. Ricardo Nunes",
+   "fullName": "Ricardo Luis Reis Nunes",
+   "party": "MDB",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de São Paulo",
+   "source": "executivo",
+   "state": "SP",
+   "city": "São Paulo",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Coronel Mello Araujo",
+    "fullName": "Ricardo Augusto Nascimento de Mello Araujo",
+    "party": "PL"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "250002098117",
+    "ballotNumber": "15",
+    "coalition": "CAMINHO SEGURO PRA SÃO PAULO",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/71072/250002098117",
+   "desde": "2021-05-16",
+   "nota": "Vice-Prefeito que assumiu inicialmente de forma interina após afastamento do titular Bruno Covas, para tratamento contra o câncer. Efetivado em 16 de maio de 2021, após o falecimento do titular e reeleito para o mandato em 2024."
+  },
+  {
+   "id": "exe-pref-al-rodrigo-cunha",
+   "name": "Pref. Rodrigo Cunha",
+   "fullName": "Rodrigo Cunha",
+   "party": "PODE",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Maceió",
+   "source": "executivo",
+   "state": "AL",
+   "city": "Maceió",
+   "situacao": "Prefeito(a) desde 04/04/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-04-04",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-04",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de João Henrique Caldas (JHC) para concorrer nas eleições de 2026.",
+   "eleitoPeloTse": {
+    "name": "Jhc",
+    "party": "PL",
+    "year": 2024
+   }
+  },
+  {
+   "id": "exe-pref-go",
+   "name": "Pref. Sandro Mabel",
+   "fullName": "Sandro da Mabel Antônio Scodro",
+   "party": "UNIÃO",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Goiânia",
+   "source": "executivo",
+   "state": "GO",
+   "city": "Goiânia",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Coronel Cláudia"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "90002002544",
+    "ballotNumber": "44",
+    "coalition": "UNIÃO POR GOIÂNIA",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/93734/90002002544",
+   "desde": "2025-01-01"
+  },
+  {
+   "id": "exe-pref-rs",
+   "name": "Pref. Sebastião Melo",
+   "fullName": "Sebastião de Araújo Melo",
+   "party": "MDB",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Porto Alegre",
+   "source": "executivo",
+   "state": "RS",
+   "city": "Porto Alegre",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Ricardo Gomes"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "210002029933",
+    "ballotNumber": "15",
+    "coalition": "ESTAMOS JUNTOS, PORTO ALEGRE",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/88013/210002029933",
+   "desde": "2021-01-01"
+  },
+  {
+   "id": "exe-pref-pi",
+   "name": "Pref. Silvio Mendes",
+   "fullName": "Silvio Mendes de Oliveira Filho",
+   "party": "UNIÃO",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Teresina",
+   "source": "executivo",
+   "state": "PI",
+   "city": "Teresina",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Jeová Alencar"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "180001882991",
+    "ballotNumber": "44",
+    "coalition": "TERESINA NO CAMINHO CERTO ",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/12190/180001882991"
+  },
+  {
+   "id": "exe-pref-sc",
+   "name": "Pref. Topázio Neto",
+   "fullName": "Topazio Silveira Neto",
+   "party": "PODE",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Florianópolis",
+   "source": "executivo",
+   "state": "SC",
+   "city": "Florianópolis",
+   "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+   "mandate": [
+    "2025-01-01",
+    "2028-12-31"
+   ],
+   "vice": {
+    "name": "Maryanne Mattos",
+    "fullName": "Maryanne Terezinha Mattos",
+    "party": "PL"
+   },
+   "tse": {
+    "year": 2024,
+    "sq": "240002028915",
+    "ballotNumber": "55",
+    "coalition": "PRA FRENTE MINHA GENTE",
+    "declaredAssets": null,
+    "status": "ELEITO"
+   },
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/81051/240002028915",
+   "desde": "2022-03-31",
+   "nota": "Vice-Prefeito que assumiu a titularidade após a renuncia de Gean Loureiro para concorrer ao Governo do Estado em 2022. Assumiu a prefeitura e foi reeleito pelo PSD."
+  },
+  {
+   "id": "exe-pref-pe-victor-marques",
+   "name": "Pref. Victor Marques",
+   "fullName": "Victor Marques",
+   "party": "PCdoB",
+   "role": "Prefeito",
+   "roleKey": "prefeito",
+   "house": "Prefeitura de Recife",
+   "source": "executivo",
+   "state": "PE",
+   "city": "Recife",
+   "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+   "mandate": [
+    "2026-04-02",
+    "2028-12-31"
+   ],
+   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+   "desde": "2026-04-02",
+   "nota": "Vice-Prefeito que assumiu o mandato após a renuncia de João Campos para concorrer ao Governo do Estado.",
+   "eleitoPeloTse": {
+    "name": "João Campos",
+    "party": "PSB",
+    "year": 2024
+   }
+  }
+ ]
+}

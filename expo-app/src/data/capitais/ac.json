@@ -1,0 +1,443 @@
+[
+ {
+  "id": "cm-ac-10001932346",
+  "name": "Ver. Aiache",
+  "fullName": "José Augusto Soares Aiache",
+  "party": "PP",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001932346",
+   "ballotNumber": "11222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001932346"
+ },
+ {
+  "id": "cm-ac-10001984745",
+  "name": "Ver. André Kamai",
+  "fullName": "André Kamai da Silva Soares",
+  "party": "PT",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001984745",
+   "ballotNumber": "13131",
+   "coalition": "13-PT/65-PC do B/43-PV",
+   "declaredAssets": 560037.96,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001984745"
+ },
+ {
+  "id": "cm-ac-10002197056",
+  "name": "Ver. Antonio Morais",
+  "fullName": "Antonio Lira de Morais",
+  "party": "PL",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10002197056",
+   "ballotNumber": "22222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 206238.99,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10002197056"
+ },
+ {
+  "id": "cm-ac-10001932353",
+  "name": "Ver. Bruno Moraes",
+  "fullName": "Bruno Moraes Cardoso",
+  "party": "PP",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001932353",
+   "ballotNumber": "11000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001932353"
+ },
+ {
+  "id": "cm-ac-10001991086",
+  "name": "Ver. Eber Machado",
+  "fullName": "Eber Silva Machado",
+  "party": "MDB",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001991086",
+   "ballotNumber": "15000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 202681.32,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001991086"
+ },
+ {
+  "id": "cm-ac-10001932351",
+  "name": "Ver. Elzinha Mendonça",
+  "fullName": "Elza Teixeira de Mendonça",
+  "party": "PP",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001932351",
+   "ballotNumber": "11122",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001932351"
+ },
+ {
+  "id": "cm-ac-10001991099",
+  "name": "Ver. Fábio Araújo",
+  "fullName": "Fábio de Araújo Freitas",
+  "party": "MDB",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001991099",
+   "ballotNumber": "15612",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 316357,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001991099"
+ },
+ {
+  "id": "cm-ac-10001932354",
+  "name": "Ver. Felipe Tchê",
+  "fullName": "Felipe Sandri Schafer",
+  "party": "PP",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001932354",
+   "ballotNumber": "11123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 3215704.69,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001932354"
+ },
+ {
+  "id": "cm-ac-10001922366",
+  "name": "Ver. Joabe Lira",
+  "fullName": "Joabe Lira de Queiroz",
+  "party": "UNIÃO",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001922366",
+   "ballotNumber": "44444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 50000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001922366"
+ },
+ {
+  "id": "cm-ac-10001916940",
+  "name": "Ver. João Paulo Silva",
+  "fullName": "Joao Paulo Silva e Silva",
+  "party": "PODE",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001916940",
+   "ballotNumber": "20121",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 147652.65,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001916940"
+ },
+ {
+  "id": "cm-ac-10002197046",
+  "name": "Ver. Joaquim Florencio",
+  "fullName": "Joaquim Florencio da Silva",
+  "party": "PL",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10002197046",
+   "ballotNumber": "22133",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10002197046"
+ },
+ {
+  "id": "cm-ac-10001985039",
+  "name": "Ver. Leôncio Castro",
+  "fullName": "Leoncio Temoteo de Castro",
+  "party": "PSDB",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001985039",
+   "ballotNumber": "45444",
+   "coalition": "45-PSDB/23-CIDADANIA",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001985039"
+ },
+ {
+  "id": "cm-ac-10001932360",
+  "name": "Ver. Lucilene da Droga Vale",
+  "fullName": "Lucilene de Sousa Rodrigues Vale",
+  "party": "PP",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001932360",
+   "ballotNumber": "11444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001932360"
+ },
+ {
+  "id": "cm-ac-10001985055",
+  "name": "Ver. Marcio Mustafá",
+  "fullName": "Marcio Mustafá Silveira",
+  "party": "PSDB",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001985055",
+   "ballotNumber": "45222",
+   "coalition": "45-PSDB/23-CIDADANIA",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001985055"
+ },
+ {
+  "id": "cm-ac-10001922383",
+  "name": "Ver. Matheus Paiva",
+  "fullName": "José Matheus do Nascimento Paiva",
+  "party": "UNIÃO",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001922383",
+   "ballotNumber": "44111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001922383"
+ },
+ {
+  "id": "cm-ac-10001922458",
+  "name": "Ver. Moacir Junior",
+  "fullName": "Moacir Pereira dos Santos Junior",
+  "party": "SOLIDARIEDADE",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001922458",
+   "ballotNumber": "77321",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 301000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001922458"
+ },
+ {
+  "id": "cm-ac-10001991098",
+  "name": "Ver. Nenem Almeida",
+  "fullName": "Edvaldo Almeida de Oliveira",
+  "party": "MDB",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001991098",
+   "ballotNumber": "15123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 515000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001991098"
+ },
+ {
+  "id": "cm-ac-10002197042",
+  "name": "Ver. Raimundo Nenem",
+  "fullName": "Raimundo Nonato Ferreira da Silva",
+  "party": "PL",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10002197042",
+   "ballotNumber": "22555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10002197042"
+ },
+ {
+  "id": "cm-ac-10001922378",
+  "name": "Ver. Rutênio Sá",
+  "fullName": "Rutênio Sá de Oliveira",
+  "party": "UNIÃO",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001922378",
+   "ballotNumber": "44800",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 156000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001922378"
+ },
+ {
+  "id": "cm-ac-10001932347",
+  "name": "Ver. Samir Bestene",
+  "fullName": "Samir Figueiredo Bestene",
+  "party": "PP",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001932347",
+   "ballotNumber": "11106",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 445399.28,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001932347"
+ },
+ {
+  "id": "cm-ac-10001902478",
+  "name": "Ver. Zé Lopes",
+  "fullName": "José Lopes Junior",
+  "party": "REPUBLICANOS",
+  "role": "Vereador",
+  "house": "Câmara Municipal de Rio Branco (CMRB)",
+  "source": "cm-ac",
+  "state": "AC",
+  "city": "Rio Branco",
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "tse": {
+   "year": 2024,
+   "sq": "10001902478",
+   "ballotNumber": "10300",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 31535718.14,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01392/10001902478"
+ }
+]

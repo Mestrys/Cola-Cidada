@@ -1,0 +1,482 @@
+[
+ {
+  "id": "ac-10001643315",
+  "name": "Dep. Adailton Cruz",
+  "fullName": "José Adailton Cruz Pereira",
+  "party": "PSB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001643315",
+   "ballotNumber": "40222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 12399.94,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001643315"
+ },
+ {
+  "id": "ac-10001649310",
+  "name": "Dep. Afonso Fernandes",
+  "fullName": "José Afonso Vasconcelos Fernandes",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001649310",
+   "ballotNumber": "22223",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 185760,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001649310"
+ },
+ {
+  "id": "ac-10001650030",
+  "name": "Dep. André da Droga Vale",
+  "fullName": "André Roberto Rogério Vale dos Santos",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001650030",
+   "ballotNumber": "19444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 800000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001650030"
+ },
+ {
+  "id": "ac-10001642319",
+  "name": "Dep. Antonia Sales",
+  "fullName": "Antonia Rojas Sales",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001642319",
+   "ballotNumber": "15122",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2200000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001642319"
+ },
+ {
+  "id": "ac-10001649326",
+  "name": "Dep. Arlenilson Cunha",
+  "fullName": "Arlenilson Barbosa Cunha",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001649326",
+   "ballotNumber": "22333",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 50000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001649326"
+ },
+ {
+  "id": "ac-10001622772",
+  "name": "Dep. Chico Viga",
+  "fullName": "Francisco de Oliveira Viga",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001622772",
+   "ballotNumber": "12456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2698678.3,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001622772"
+ },
+ {
+  "id": "ac-10001635537",
+  "name": "Dep. Clodoaldo Rodrigues",
+  "fullName": "Francisco Clodoaldo de Souza Rodrigues",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001635537",
+   "ballotNumber": "10555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001635537"
+ },
+ {
+  "id": "ac-10001622769",
+  "name": "Dep. Dr. Michelle Melo",
+  "fullName": "Michelle de Oliveira Melo Wiciuk",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001622769",
+   "ballotNumber": "12555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001622769"
+ },
+ {
+  "id": "ac-10001601430",
+  "name": "Dep. Eduardo Ribeiro",
+  "fullName": "Eduardo Ambros Ribeiro",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001601430",
+   "ballotNumber": "55888",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 435000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001601430"
+ },
+ {
+  "id": "ac-10001635777",
+  "name": "Dep. Edvaldo Magalhães",
+  "fullName": "Edvaldo Soares de Magalhães",
+  "party": "PC do B",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001635777",
+   "ballotNumber": "65123",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 1113500,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001635777"
+ },
+ {
+  "id": "ac-10001642327",
+  "name": "Dep. Emerson Jarude",
+  "fullName": "Emerson Oliveira Jarude Thomaz",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001642327",
+   "ballotNumber": "15000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 194516.54,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001642327"
+ },
+ {
+  "id": "ac-10001650033",
+  "name": "Dep. Fagner Calegário",
+  "fullName": "Fagner Calegario do Nascimento",
+  "party": "PODE",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001650033",
+   "ballotNumber": "19999",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 375000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001650033"
+ },
+ {
+  "id": "ac-10001635539",
+  "name": "Dep. Gene Diniz",
+  "fullName": "Gene Glenn Diniz Andrade",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001635539",
+   "ballotNumber": "10111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 644000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001635539"
+ },
+ {
+  "id": "ac-10001623533",
+  "name": "Dep. Gilberto Lira",
+  "fullName": "Gilberto Lira de Almeida",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001623533",
+   "ballotNumber": "44444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001623533"
+ },
+ {
+  "id": "ac-10001723800",
+  "name": "Dep. Luiz Gonzaga",
+  "fullName": "Luiz Gonzaga Alves Filho",
+  "party": "PSDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001723800",
+   "ballotNumber": "45121",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 1929794.74,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001723800"
+ },
+ {
+  "id": "ac-10001643440",
+  "name": "Dep. Manoel Moraes",
+  "fullName": "Manoel Moraes de Sales",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001643440",
+   "ballotNumber": "11234",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1405000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001643440"
+ },
+ {
+  "id": "ac-10001643427",
+  "name": "Dep. Maria Antônia",
+  "fullName": "Maria Antônia Pinheiro Barbosa",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001643427",
+   "ballotNumber": "11133",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 730000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001643427"
+ },
+ {
+  "id": "ac-10001643428",
+  "name": "Dep. Nicolau Junior",
+  "fullName": "Nicolau Candido da Silva Junior",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001643428",
+   "ballotNumber": "11122",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1741476.66,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001643428"
+ },
+ {
+  "id": "ac-10001601427",
+  "name": "Dep. Pablo Bregense",
+  "fullName": "Pablo Thyago Bregense de Souza",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001601427",
+   "ballotNumber": "55777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 274105.12,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001601427"
+ },
+ {
+  "id": "ac-10001622763",
+  "name": "Dep. Pedro Longo",
+  "fullName": "Pedro Luís Longo",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001622763",
+   "ballotNumber": "12333",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1018000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001622763"
+ },
+ {
+  "id": "ac-10001635531",
+  "name": "Dep. Tadeu Hassem",
+  "fullName": "Licurgo Tadeu de Souza Hassem",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001635531",
+   "ballotNumber": "10456",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 682000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001635531"
+ },
+ {
+  "id": "ac-10001642313",
+  "name": "Dep. Tanizio Sá",
+  "fullName": "José Altanizio Taumaturgo Sá",
+  "party": "MDB",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001642313",
+   "ballotNumber": "15555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1438500,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001642313"
+ },
+ {
+  "id": "ac-10001622761",
+  "name": "Dep. Tchê",
+  "fullName": "José Luis Schafer",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001622761",
+   "ballotNumber": "12123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001622761"
+ },
+ {
+  "id": "ac-10001623552",
+  "name": "Dep. Whendy Lima",
+  "fullName": "Whendy Snanky Praxedes Ponciano da Silva Lima",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa do Estado do Acre (ALEAC)",
+  "source": "al-ac",
+  "state": "AC",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "10001623552",
+   "ballotNumber": "44555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 54407.69,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/AC/10001623552"
+ }
+]

@@ -1,0 +1,156 @@
+export type RoleKey = 'presidente' | 'ministro-stf' | 'governador' | 'prefeito' | 'senador' | 'dep-federal' | 'dep-estadual' | 'vereador';
+
+/** Ficha eleitoral do TSE (só de quem foi eleito; sucessores e ministros do STF não têm). */
+export interface TseRecord {
+  year: number;
+  sq: string;
+  ballotNumber: string;
+  coalition: string | null;
+  declaredAssets: number | null;
+  status: string;
+}
+
+/**
+ * Agente público no formato do PWA: o mesmo objeto aparece no Painel e, se a pessoa quiser, é guardado ao
+ * acompanhar. Os campos opcionais existem só para alguns cargos (Executivo, STF, assembleias, câmaras).
+ */
+export interface Politician {
+  id: string; // 'camara-160561' | 'senado-5012' | 'exe-gov-sp' | 'stf-…' | 'sp-…' | 'cm-sp-…'
+  source: 'camara' | 'senado' | 'executivo' | 'stf' | string;
+  camaraId?: number;
+  senadoId?: number;
+  name: string;
+  fullName?: string;
+  party: string;
+  uf: string;
+  city?: string;
+  photo?: string;
+  roleKey: RoleKey;
+  /** [início, fim] do mandato em AAAA-MM-DD */
+  mandate?: [string, string] | null;
+  house?: string;
+  situacao?: string;
+  pageUrl?: string;
+  tse?: TseRecord;
+  // Executivo: ocupante atual (titulares.json do PWA)
+  vice?: { name: string; party?: string };
+  condicao?: string;
+  desde?: string;
+  nota?: string;
+  eleitoPeloTse?: { name: string; party: string; year: number };
+  // STF
+  cargo?: string | null;
+  posse?: string;
+  indicadoPor?: string;
+  aposentadoriaCompulsoria?: number;
+}
+
+export type AlertKind = 'plenario' | 'votacao' | 'gasto' | 'proposicao';
+
+export interface Alert {
+  id: string;
+  /** AAAA-MM-DD…; alertas do PWA antigo, sem tipo, contam como 'votacao' */
+  ts: string | number;
+  kind?: AlertKind;
+  politicianId?: string;
+  text: string;
+  url?: string;
+}
+
+export interface Prefs {
+  plenario: boolean;
+  rollcall: boolean;
+  expenses: boolean;
+  bills: boolean;
+}
+
+export interface AppState {
+  politicians: Politician[];
+  alerts: Alert[];
+  prefs: Prefs;
+  domicile: { state: string; city: string };
+}
+
+export interface DeputyResult {
+  camaraId: number;
+  name: string;
+  party: string;
+  uf: string;
+  photo?: string;
+}
+
+export interface SenatorResult {
+  senadoId: number;
+  name: string;
+  fullName?: string;
+  party: string;
+  uf: string;
+  photo?: string;
+  email?: string;
+  mandate: [string, string];
+}
+
+export interface DeputyProfile {
+  civilName: string;
+  electoralName: string;
+  electoralCondition: string;
+  status: string;
+  birthDate?: string;
+  birthCity: string;
+  schooling: string;
+  cabinet: { room?: string; building?: string; floor?: string; phone?: string; email?: string } | null;
+}
+
+export interface Proposition {
+  id: number;
+  type: string;
+  number: number;
+  year: number;
+  summary: string;
+  date?: string;
+  url: string;
+}
+
+/** Voto de um parlamentar numa votação (dado público, de todos os que votaram). */
+export interface CastVote {
+  id?: number;
+  name: string;
+  party: string;
+  uf: string;
+  vote: string;
+}
+
+export interface CamaraVoting {
+  id: string;
+  descricao: string;
+  data: string;
+  siglaOrgao: string;
+  approved: boolean;
+  tally: { Sim: number; Não: number; Outros: number };
+  /** voto de todos os deputados que votaram */
+  votes: CastVote[];
+  /** voto de cada político acompanhado (id do app); null = ausente */
+  byPol: Record<string, string | null>;
+  category: Category;
+}
+
+export interface SenateVoting {
+  key: string;
+  matter: string;
+  summary: string;
+  date: string;
+  result: string;
+  secret: boolean;
+  /** "1º turno", "2º turno"… quando a descrição da votação diz; vazio nas demais */
+  round: string;
+  yes: number;
+  no: number;
+  /** voto de todos os senadores presentes */
+  votes: CastVote[];
+  tally: { Sim: number; Não: number; Outros: number };
+  /** voto de cada senador acompanhado (id do app); null = ausente */
+  bySenator: Record<string, string | null>;
+  category: Category;
+}
+
+export type Category = 'economia' | 'tecnologia' | 'meio-ambiente' | 'social-saude' | 'seguranca' | 'geral';

@@ -1,0 +1,138 @@
+{
+ "uniao": 1,
+ "ufs": {
+  "AC": {
+   "estado": 12,
+   "capital": 1200401,
+   "capitalNome": "Rio Branco"
+  },
+  "AL": {
+   "estado": 27,
+   "capital": 2704302,
+   "capitalNome": "Maceió"
+  },
+  "AP": {
+   "estado": 16,
+   "capital": 1600303,
+   "capitalNome": "Macapá"
+  },
+  "AM": {
+   "estado": 13,
+   "capital": 1302603,
+   "capitalNome": "Manaus"
+  },
+  "BA": {
+   "estado": 29,
+   "capital": 2927408,
+   "capitalNome": "Salvador"
+  },
+  "CE": {
+   "estado": 23,
+   "capital": 2304400,
+   "capitalNome": "Fortaleza"
+  },
+  "DF": {
+   "estado": 53
+  },
+  "ES": {
+   "estado": 32,
+   "capital": 3205309,
+   "capitalNome": "Vitória"
+  },
+  "GO": {
+   "estado": 52,
+   "capital": 5208707,
+   "capitalNome": "Goiânia"
+  },
+  "MA": {
+   "estado": 21,
+   "capital": 2111300,
+   "capitalNome": "São Luís"
+  },
+  "MT": {
+   "estado": 51,
+   "capital": 5103403,
+   "capitalNome": "Cuiabá"
+  },
+  "MS": {
+   "estado": 50,
+   "capital": 5002704,
+   "capitalNome": "Campo Grande"
+  },
+  "MG": {
+   "estado": 31,
+   "capital": 3106200,
+   "capitalNome": "Belo Horizonte"
+  },
+  "PA": {
+   "estado": 15,
+   "capital": 1501402,
+   "capitalNome": "Belém"
+  },
+  "PB": {
+   "estado": 25,
+   "capital": 2507507,
+   "capitalNome": "João Pessoa"
+  },
+  "PR": {
+   "estado": 41,
+   "capital": 4106902,
+   "capitalNome": "Curitiba"
+  },
+  "PE": {
+   "estado": 26,
+   "capital": 2611606,
+   "capitalNome": "Recife"
+  },
+  "PI": {
+   "estado": 22,
+   "capital": 2211001,
+   "capitalNome": "Teresina"
+  },
+  "RJ": {
+   "estado": 33,
+   "capital": 3304557,
+   "capitalNome": "Rio de Janeiro"
+  },
+  "RN": {
+   "estado": 24,
+   "capital": 2408102,
+   "capitalNome": "Natal"
+  },
+  "RS": {
+   "estado": 43,
+   "capital": 4314902,
+   "capitalNome": "Porto Alegre"
+  },
+  "RO": {
+   "estado": 11,
+   "capital": 1100205,
+   "capitalNome": "Porto Velho"
+  },
+  "RR": {
+   "estado": 14,
+   "capital": 1400100,
+   "capitalNome": "Boa Vista"
+  },
+  "SC": {
+   "estado": 42,
+   "capital": 4205407,
+   "capitalNome": "Florianópolis"
+  },
+  "SP": {
+   "estado": 35,
+   "capital": 3550308,
+   "capitalNome": "São Paulo"
+  },
+  "SE": {
+   "estado": 28,
+   "capital": 2800308,
+   "capitalNome": "Aracaju"
+  },
+  "TO": {
+   "estado": 17,
+   "capital": 1721000,
+   "capitalNome": "Palmas"
+  }
+ }
+}

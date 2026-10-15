@@ -1,0 +1,482 @@
+[
+ {
+  "id": "se-260001636403",
+  "name": "Dep. Adailton Martins",
+  "fullName": "Adailton Martins de Oliveira Filho",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001636403",
+   "ballotNumber": "55123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1698154.13,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001636403"
+ },
+ {
+  "id": "se-260001618227",
+  "name": "Dep. Aurea Ribeiro",
+  "fullName": "Josefa Aurea de Souza Ribeiro",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001618227",
+   "ballotNumber": "10777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001618227"
+ },
+ {
+  "id": "se-260001618237",
+  "name": "Dep. Carminha",
+  "fullName": "Maria do Carmo Paiva da Silva",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001618237",
+   "ballotNumber": "10200",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001618237"
+ },
+ {
+  "id": "se-260001668323",
+  "name": "Dep. Chico do Correio",
+  "fullName": "Francisco Carlos Nogueira Nascimento",
+  "party": "PT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001668323",
+   "ballotNumber": "13333",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 62500,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001668323"
+ },
+ {
+  "id": "se-260001646915",
+  "name": "Dep. Cristiano Cavalcante",
+  "fullName": "Christiano Rogério Rêgo Cavalcante",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001646915",
+   "ballotNumber": "44444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1445000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001646915"
+ },
+ {
+  "id": "se-260001600221",
+  "name": "Dep. Dr. Samuel Carvalho",
+  "fullName": "Samuel Carvalho dos Santos Junior",
+  "party": "CIDADANIA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001600221",
+   "ballotNumber": "23456",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 510000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001600221"
+ },
+ {
+  "id": "se-260001618235",
+  "name": "Dep. Dra Lidiane Lucena",
+  "fullName": "Lidiane Cecilia Azevedo Carvalho Lucena",
+  "party": "REPUBLICANOS",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001618235",
+   "ballotNumber": "10000",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 534175,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001618235"
+ },
+ {
+  "id": "se-260001669431",
+  "name": "Dep. Garibalde",
+  "fullName": "Luiz Garibalde Rabelo de Mendonça",
+  "party": "PDT",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001669431",
+   "ballotNumber": "12111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1416629.11,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001669431"
+ },
+ {
+  "id": "se-260001600214",
+  "name": "Dep. Georgeo Passos",
+  "fullName": "Georgeo Antonio Cespedes Passos",
+  "party": "CIDADANIA",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001600214",
+   "ballotNumber": "23777",
+   "coalition": "PSDB/CIDADANIA",
+   "declaredAssets": 531000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001600214"
+ },
+ {
+  "id": "se-260001668315",
+  "name": "Dep. Ibrain de Valmir",
+  "fullName": "Ibrain Silva Monteiro",
+  "party": "PV",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001668315",
+   "ballotNumber": "43000",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 193000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001668315"
+ },
+ {
+  "id": "se-260001636411",
+  "name": "Dep. Jeferson Andrade",
+  "fullName": "Jeferson Luiz de Andrade",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001636411",
+   "ballotNumber": "55250",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2978487.55,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001636411"
+ },
+ {
+  "id": "se-260001636408",
+  "name": "Dep. Jorginho Araujo",
+  "fullName": "Jorge Araujo Filho",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001636408",
+   "ballotNumber": "55777",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 65590,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001636408"
+ },
+ {
+  "id": "se-260001646916",
+  "name": "Dep. Kaká Santos",
+  "fullName": "Clailton Batista dos Santos",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001646916",
+   "ballotNumber": "44555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 135000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001646916"
+ },
+ {
+  "id": "se-260001636118",
+  "name": "Dep. Linda Brasil",
+  "fullName": "Linda Brasil Azevedo Santos",
+  "party": "PSOL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001636118",
+   "ballotNumber": "50180",
+   "coalition": "PSOL/REDE",
+   "declaredAssets": 338000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001636118"
+ },
+ {
+  "id": "se-260001636402",
+  "name": "Dep. Luciano Bispo",
+  "fullName": "Luciano Bispo de Lima",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001636402",
+   "ballotNumber": "55015",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 415000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001636402"
+ },
+ {
+  "id": "se-260001644231",
+  "name": "Dep. Luciano Pimentel",
+  "fullName": "Luciano Azevedo Pimentel",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001644231",
+   "ballotNumber": "11123",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 2315846.91,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001644231"
+ },
+ {
+  "id": "se-260001646927",
+  "name": "Dep. Luizao Dona Trampi",
+  "fullName": "Jose Luiz da Mota Cruz",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001646927",
+   "ballotNumber": "44022",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 204300,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001646927"
+ },
+ {
+  "id": "se-260001636409",
+  "name": "Dep. Maisa Mitidieri",
+  "fullName": "Maisa Cruz Mitidieri",
+  "party": "PSD",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001636409",
+   "ballotNumber": "55555",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 1126652.26,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001636409"
+ },
+ {
+  "id": "se-260001646921",
+  "name": "Dep. Marcelo Sobral",
+  "fullName": "Marcelo Oliveira Sobral",
+  "party": "UNIÃO",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001646921",
+   "ballotNumber": "44111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": null,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001646921"
+ },
+ {
+  "id": "se-260001712248",
+  "name": "Dep. Marcos Oliveira",
+  "fullName": "Marcos Vinicius Lima de Oliveira",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001712248",
+   "ballotNumber": "22444",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 25000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001712248"
+ },
+ {
+  "id": "se-260001712262",
+  "name": "Dep. Netinho Guimarães",
+  "fullName": "Leudes Alves dos Santos Neto",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001712262",
+   "ballotNumber": "22111",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 759000,
+   "status": "ELEITO POR MÉDIA"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001712262"
+ },
+ {
+  "id": "se-260001644221",
+  "name": "Dep. Neto Batalha",
+  "fullName": "José Batalha de Goes Neto",
+  "party": "PP",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001644221",
+   "ballotNumber": "11888",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 650999.11,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001644221"
+ },
+ {
+  "id": "se-260001712249",
+  "name": "Dep. Pato Maravilha",
+  "fullName": "Carlos Alexandre Santos Costa",
+  "party": "PL",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001712249",
+   "ballotNumber": "22222",
+   "coalition": "PARTIDO ISOLADO",
+   "declaredAssets": 177167.95,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001712249"
+ },
+ {
+  "id": "se-260001668327",
+  "name": "Dep. Paulo Jr",
+  "fullName": "Paulo Roberto de Santana Junior",
+  "party": "PV",
+  "role": "Deputado Estadual",
+  "house": "Assembleia Legislativa de Sergipe (ALESE)",
+  "source": "al-se",
+  "state": "SE",
+  "situacao": "Eleito(a) em 2022 · mandato 2023–2027 (TSE)",
+  "tse": {
+   "year": 2022,
+   "sq": "260001668327",
+   "ballotNumber": "43777",
+   "coalition": "PT/PC do B/PV",
+   "declaredAssets": 230000,
+   "status": "ELEITO POR QP"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2022/546/SE/260001668327"
+ }
+]
