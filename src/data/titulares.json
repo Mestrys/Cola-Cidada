@@ -378,5 +378,75 @@
    "vice": null,
    "nota": "Vice-Prefeita que assumiu o mandato após a renuncia de Lorenzo Pazolini para concorrer ao Governo do Estado."
   }
+ },
+ "prefeitosCidades": {
+  "consultadoEm": "2026-10-15",
+  "fonte": "Notícias e sites oficiais, pesquisados cidade por cidade (veja a nota de cada perfil). Cidades que não aparecem aqui não tiveram mudança encontrada.",
+  "ocupantes": {
+   "2503209": {
+    "name": "Evilásio Cavalcanti Neto",
+    "party": "AVANTE",
+    "desde": "2026-05-25",
+    "condicao": "interino",
+    "vice": null,
+    "nota": "Edvaldo Neto venceu a eleição suplementar de 12/04/2026 (após a cassação de André Coutinho), foi afastado em 14/04/2026 e diplomado em 25/05 sem tomar posse; o vice, Evilásio, exerce a prefeitura interinamente."
+   },
+   "4209102": {
+    "name": "Rejane Gambin",
+    "party": "NOVO",
+    "desde": "2026-04-02",
+    "condicao": "titular",
+    "vice": null,
+    "nota": "Adriano Silva deixou o cargo em abril de 2026 para ser pré-candidato a vice-governador; a vice, Rejane Gambin, assumiu e governa até 2028."
+   },
+   "5008305": {
+    "name": "Cassiano Rojas Maia",
+    "party": "PP",
+    "condicao": "titular",
+    "vice": "Vera Helena Arsioli Pinho",
+    "nota": "O TSE registra a eleição pelo PSDB; reportagens recentes o listam como PP. Confira a filiação no TSE."
+   },
+   "2408003": {
+    "name": "Marcos Medeiros",
+    "party": "REPUBLICANOS",
+    "desde": "2026-03-27",
+    "condicao": "titular",
+    "vice": null,
+    "nota": "Allyson Bezerra renunciou para disputar o governo do RN e o vice, Marcos Medeiros, assumiu. O partido dele varia entre as fontes (PSD ou Republicanos)."
+   },
+   "1301209": {
+    "name": "Jeany de Paula Amaral Pinheiro",
+    "party": "—",
+    "desde": "2026-09-17",
+    "condicao": "interino",
+    "vice": null,
+    "nota": "Adail Pinheiro foi afastado por 90 dias por decisão do STF (Operação Dinastia do Lago, da PF); a presidente da Câmara Municipal assumiu como prefeita interina. O afastamento termina por volta de dezembro de 2026."
+   },
+   "2802908": {
+    "name": "José Paes dos Santos (Zequinha da Cenoura)",
+    "party": "—",
+    "desde": "2026-04-02",
+    "condicao": "titular",
+    "vice": null,
+    "nota": "Valmir de Francisquinho renunciou em abril de 2026 para disputar o governo de Sergipe e o vice assumiu. A posse não foi confirmada em fonte direta."
+   },
+   "3170206": {
+    "name": "Paulo Sérgio Ferreira",
+    "party": "PL",
+    "condicao": "titular",
+    "vice": "Vanderlei Pelizer Pereira",
+    "nota": "Continua prefeito, mas trocou o PP pelo PL em 07/10/2026."
+   },
+   "2307650": {
+    "name": "Roberto Soares Pessoa",
+    "party": "PSD",
+    "condicao": "titular",
+    "vice": "Gerson Cecchini de Souza",
+    "nota": "Continua prefeito, mas trocou o União Brasil pelo PSD em 2026."
+   },
+   "1200450": {
+    "nota": "Não foi possível conferir quem ocupa a prefeitura hoje; o nome é o de quem foi eleito em 2024."
+   }
+  }
  }
 }

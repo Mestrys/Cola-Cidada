@@ -14,7 +14,15 @@ const expenses = async () => [
   { value: 120, type: 'Combustível', supplier: 'Posto', date: '2026-08-21', docNumber: '100' },
 ];
 const bills = async () => [{ id: 55, type: 'PL', number: 10, year: 2026, summary: 'Cria o programa Y.', date: '2026-08-15', url: 'https://exemplo/pl' }];
-const deps = { camara, senado, expenses, bills };
+const recent = (days) => new Date(Date.now() - days * 864e5).toISOString().slice(0, 10);
+const ceaps = async (id) => ({
+  grandes: [
+    { id: 1, data: recent(10), valor: 9100, tipo: 'Divulgação da atividade parlamentar', fornecedor: 'Gráfica Y' },
+    { id: 2, data: recent(200), valor: 8000, tipo: 'Aluguel', fornecedor: 'Imobiliária Z' }, // fora da janela de 90 dias
+    { id: 3, data: recent(5), valor: 4000, tipo: 'Combustível', fornecedor: 'Posto' }, // abaixo do limite
+  ].map((e) => ({ ...e, id: `${id}-${e.id}` })),
+});
+const deps = { camara, senado, expenses, bills, ceaps };
 const DEP = { id: 'camara-1', camaraId: 1, name: 'Dep. A', party: 'PT', uf: 'SP' };
 const SEN = { id: 'senado-2', senadoId: '2', name: 'Sen. B', party: 'PL', uf: 'RJ' };
 
@@ -29,9 +37,13 @@ test('acompanhando, chegam votos, gastos acima do limite e projetos, mais recent
   const { alerts } = await collectAlerts({ politicians: [DEP, SEN], prefs: {} }, deps);
   const kinds = alerts.map((a) => a.kind);
   assert.equal(kinds.filter((k) => k === 'votacao').length, 2);
-  assert.equal(kinds.filter((k) => k === 'gasto').length, 1, 'a nota de R$ 120 fica de fora');
+  assert.equal(kinds.filter((k) => k === 'gasto').length, 2, 'a nota de R$ 120 fica de fora; entra a despesa grande do senador');
   assert.equal(kinds.filter((k) => k === 'proposicao').length, 1);
-  assert.equal(alerts.find((a) => a.kind === 'gasto').url, 'https://exemplo/nota.pdf');
+  assert.equal(alerts.find((a) => a.kind === 'gasto' && a.politicianId === DEP.id).url, 'https://exemplo/nota.pdf');
+  const sen = alerts.filter((a) => a.kind === 'gasto' && a.politicianId === SEN.id);
+  assert.equal(sen.length, 1, 'só a despesa grande e recente');
+  assert.match(sen[0].text, /Sen\. B \(PL\/RJ\) usou R\$\s9\.100,00 da cota parlamentar .* Gráfica Y/);
+  assert.equal(sen[0].id, 'ceaps:2:2-1');
   assert.deepEqual([...alerts.map((a) => a.ts)], [...alerts.map((a) => a.ts)].sort().reverse());
 });
 

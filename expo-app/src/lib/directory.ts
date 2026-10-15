@@ -56,6 +56,8 @@ export interface City {
 }
 const CITY_DATA = cidades as unknown as { pibAno: number; populacaoAno: number; cidades: City[] };
 export const CITIES = CITY_DATA.cidades;
+/** Data em que os ocupantes das cidades-polo foram conferidos em notícias. */
+export const POLOS_CHECKED_AT = (cidades as { ocupantesConsultadosEm?: string }).ocupantesConsultadosEm ?? '';
 export const CITY_YEARS = { pib: CITY_DATA.pibAno, populacao: CITY_DATA.populacaoAno };
 /** Contexto da cidade (IBGE): vale para capitais e cidades-polo. */
 export const cityFacts = (uf: string, name?: string) => CITIES.find((c) => c.uf === uf && c.nome === name);

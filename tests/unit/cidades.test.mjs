@@ -41,7 +41,8 @@ test('prefeitos dos polos: um por cidade, com ficha do TSE e mandato 2025–2028
     assert.equal(p.city, c.nome);
     assert.equal(p.state, c.uf);
     assert.equal(p.roleKey, 'prefeito');
-    assert.deepEqual(p.mandate, ['2025-01-01', '2028-12-31']);
+    // quem assumiu depois começa na data da posse; o fim é sempre o do mandato de 2024
+    assert.ok(p.mandate[0] >= '2025-01-01' && p.mandate[1] === '2028-12-31', `${c.nome}: mandato ${p.mandate}`);
     assert.match(p.pageUrl, /^https:\/\/divulgacandcontas\.tse\.jus\.br\//);
   }
 });
@@ -91,4 +92,20 @@ test('contas: órgãos da capital vêm primeiro e as duas cidades-polo entram em
   // sem o catálogo, o resultado é o de antes
   assert.equal(stateBodies('SP', entes).length, 4);
   assert.equal(stateBodies('DF', entes, catalogo.cidades).length, 2);
+});
+
+test('titulares das cidades-polo: ocupante de hoje vale mais que o eleito, e a mesma pessoa mantém a ficha do TSE', () => {
+  const byCity = Object.fromEntries(prefeitos.map((p) => [p.city, p]));
+  // quem assumiu no lugar do eleito não herda a ficha do TSE nem o vice da chapa
+  for (const c of ['Cabedelo', 'Coari', 'Itabaiana', 'Mossoró', 'Joinville']) {
+    assert.equal(byCity[c].tse, undefined, `${c} manteve a ficha do eleito`);
+    assert.ok(byCity[c].eleitoPeloTse && byCity[c].desde && byCity[c].nota, `${c} sem origem, data ou nota`);
+  }
+  // mesma pessoa, partido novo: a ficha continua
+  assert.equal(byCity['Uberlândia'].party, 'PL');
+  assert.ok(byCity['Uberlândia'].tse);
+  assert.equal(byCity['Coari'].condicao, 'interino');
+  assert.equal(byCity['Cabedelo'].eleitoPeloTse.year, 2026, 'a eleição suplementar de 2026 está no arquivo do TSE');
+  assert.match(byCity['Senador Guiomard'].nota, /Não foi possível conferir/);
+  assert.match(catalogo.ocupantesConsultadosEm, /^\d{4}-\d{2}-\d{2}$/);
 });

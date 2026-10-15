@@ -27,6 +27,7 @@ const APP_SHELL = [
   '/src/data/entes.json',
   '/src/data/cidades.json',
   '/src/data/prefeitos-cidades.json',
+  '/src/data/ceaps.json',
   '/src/directory.js',
   '/src/contas.js',
   '/src/alerts.js',

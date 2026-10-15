@@ -12,6 +12,7 @@ import { useAsync } from '@/hooks/use-async';
 import { useTheme } from '@/hooks/use-theme';
 import { deputyProfile, deputyPropositions } from '@/lib/api';
 import { formatDate, mandateProgress, ROLES } from '@/lib/mandate';
+import { senatorCeaps } from '@/lib/ceaps';
 import { money } from '@/lib/contas';
 import { CITY_YEARS, cityFacts, findSeen, placeOf } from '@/lib/directory';
 import { useStore } from '@/lib/store';
@@ -65,6 +66,38 @@ function CityCard({ c }: { c: NonNullable<ReturnType<typeof cityFacts>> }) {
       <Row label="PIB por habitante" value={c.pibPerCapita ? brl(c.pibPerCapita) : 'Não informado'} />
       <ThemedText type="small" themeColor="textSecondary">
         Fonte: IBGE (PIB dos Municípios e Censo Demográfico).
+      </ThemedText>
+    </View>
+  );
+}
+
+// Cota parlamentar (CEAPS) do senador, a partir do resumo gerado do dado aberto do Senado.
+function CeapsCard({ c }: { c: NonNullable<ReturnType<typeof senatorCeaps>> }) {
+  const theme = useTheme();
+  const years = Object.keys(c.anos).sort().reverse();
+  return (
+    <View style={[styles.card, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+      <ThemedText type="smallBold" accessibilityRole="header">
+        Cota parlamentar (CEAPS)
+      </ThemedText>
+      {years.map((y) => (
+        <View key={y} style={styles.gap}>
+          <Row label={y === c.geradoEm.slice(0, 4) ? `${y} (até ${formatDate(c.geradoEm)})` : y} value={brl(c.anos[y].total)} />
+          {c.anos[y].tipos.slice(0, 3).map((t) => (
+            <Row key={t.tipo} label={t.tipo} value={brl(t.valor)} />
+          ))}
+        </View>
+      ))}
+      {c.grandes.length ? (
+        <View style={styles.gap}>
+          <ThemedText type="smallBold">Despesas a partir de {brl(c.limite)}, as mais recentes</ThemedText>
+          {c.grandes.slice(0, 5).map((e) => (
+            <Row key={e.id} label={`${formatDate(e.data)} · ${e.tipo}${e.fornecedor ? ` · ${e.fornecedor}` : ''}`} value={brl(e.valor)} />
+          ))}
+        </View>
+      ) : null}
+      <ThemedText type="small" themeColor="textSecondary">
+        Fonte: dados abertos do Senado, resumo de {formatDate(c.geradoEm)}. Pode não ter as despesas dos últimos dias.
       </ThemedText>
     </View>
   );
@@ -261,6 +294,8 @@ export default function PoliticoScreen() {
           )}
         </View>
       ) : null}
+
+      {p.senadoId && senatorCeaps(p.senadoId) ? <CeapsCard c={senatorCeaps(p.senadoId)!} /> : null}
 
       {url ? <Button label="Ver página oficial" variant="secondary" onPress={() => Linking.openURL(url)} /> : null}
     </Screen>

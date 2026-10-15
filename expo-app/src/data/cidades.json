@@ -2,6 +2,8 @@
  "pibAno": 2023,
  "populacaoAno": 2022,
  "fonte": "IBGE — PIB dos Municípios (SIDRA 5938) e Censo 2022 (SIDRA 4709)",
+ "ocupantesConsultadosEm": "2026-10-15",
+ "fonteOcupantes": "Notícias e sites oficiais, pesquisados cidade por cidade (veja a nota de cada perfil). Cidades que não aparecem aqui não tiveram mudança encontrada.",
  "criterio": "Cidades-polo: as duas maiores de cada estado por PIB, fora a capital. O DF não tem outras cidades.",
  "cidades": [
   {

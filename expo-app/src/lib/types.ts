@@ -62,6 +62,8 @@ export interface Prefs {
   rollcall: boolean;
   expenses: boolean;
   bills: boolean;
+  /** avisar no aparelho quando houver alerta novo (opt-in: ausente conta como desligado) */
+  notify?: boolean;
 }
 
 export interface AppState {

@@ -55,8 +55,14 @@ O CI (`.github/workflows/ci.yml`, job "App Expo") roda tipos, lint, testes e con
 
 ## Notificações
 
-Os alertas aparecem na tela e são consultados quando a pessoa toca em "Verificar agora". Notificações do aparelho exigem
-`expo-notifications` e uma decisão sobre aviso em segundo plano (tarefa agendada), que ainda não foi tomada.
+Os alertas aparecem na tela e são consultados quando a pessoa toca em "Verificar agora". Os avisos no aparelho são **opt-in**:
+em Alertas, "Avisar quando houver alerta novo" pede a permissão do sistema, guarda sem avisar o que já existe e agenda uma
+tarefa em segundo plano (`expo-background-task`, no mínimo a cada 15 minutos no Android; o sistema decide o horário, então o
+aviso pode atrasar). A tarefa consulta as APIs públicas no próprio aparelho, guarda o que é novo e dispara uma notificação
+local: até 3 avisos, ou um resumo se forem mais. Nada vai a servidor. A decisão do que avisar fica em `src/lib/notify-core.ts`
+(testada em Node); o envio e a tarefa, em `src/lib/notifications.ts`. No navegador o interruptor fica desligado.
+
+Verificado só no build web e em Node: a tarefa em segundo plano precisa de um aparelho (ou de um build de desenvolvimento) para ser testada.
 
 ## Scripts
 

@@ -13,6 +13,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FEDERATION_UNITS } from '../src/data/federation.js';
 import { parseCsv, norm, titleCase, isElected, clean } from './lib/tse.mjs';
+import { applyHolder } from './lib/titulares.mjs';
 
 const [cand24, bem24] = process.argv.slice(2);
 if (!bem24) {
@@ -21,6 +22,7 @@ if (!bem24) {
 }
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data');
 const entes = JSON.parse(readFileSync(join(root, 'entes.json'), 'utf8'));
+const titulares = JSON.parse(readFileSync(join(root, 'titulares.json'), 'utf8')).prefeitosCidades;
 
 async function sidra(path) {
   const r = await fetch(`https://apisidra.ibge.gov.br/values/${path}`, { signal: AbortSignal.timeout(180000) });
@@ -71,7 +73,7 @@ const assetsBySq = (path) => {
 };
 const urna = (r) => titleCase(clean(r.NM_URNA_CANDIDATO) || r.NM_CANDIDATO);
 const tse = (r, assets) => ({
-  year: 2024,
+  year: Number(r.DT_ELEICAO.slice(-4)), // a eleição suplementar de 2026 está no mesmo arquivo de 2024
   sq: r.SQ_CANDIDATO,
   ballotNumber: r.NR_CANDIDATO,
   coalition: clean(r.SG_FEDERACAO) || clean(r.NM_COLIGACAO),
@@ -143,6 +145,13 @@ for (const [lc, list] of vereadoresPorUf) {
   list.sort((a, b) => a.city.localeCompare(b.city, 'pt-BR') || bySort(a, b));
   writeFileSync(join(root, 'cidades', `${lc}.json`), JSON.stringify(list, null, 1));
 }
+// Quem ocupa a prefeitura hoje (titulares.json) vale mais do que quem foi eleito; cidades sem registro ali não tiveram mudança.
+for (let i = 0; i < prefeitos.length; i++) {
+  const h = titulares.ocupantes[prefeitos[i].ibge];
+  if (h) prefeitos[i] = applyHolder(prefeitos[i], h, 'Prefeito(a)');
+}
+const sobrando = Object.keys(titulares.ocupantes).filter((k) => !prefeitos.some((p) => String(p.ibge) === k));
+if (sobrando.length) throw new Error(`titulares.json cita cidades-polo que não existem: ${sobrando}`);
 prefeitos.sort(bySort);
 writeFileSync(join(root, 'prefeitos-cidades.json'), JSON.stringify(prefeitos, null, 1));
 writeFileSync(
@@ -151,6 +160,8 @@ writeFileSync(
     {
       pibAno, populacaoAno: popAno,
       fonte: 'IBGE — PIB dos Municípios (SIDRA 5938) e Censo 2022 (SIDRA 4709)',
+      ocupantesConsultadosEm: titulares.consultadoEm,
+      fonteOcupantes: titulares.fonte,
       criterio: 'Cidades-polo: as duas maiores de cada estado por PIB, fora a capital. O DF não tem outras cidades.',
       cidades,
     },

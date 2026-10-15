@@ -5,6 +5,7 @@ import {
   deputyProfile,
   deputyFronts,
   senatorCommittees,
+  senatorCeaps,
   cityFacts,
   loadCidades,
   senatorVotes,
@@ -171,6 +172,43 @@ function cityFactsHtml(c, ano, popAno) {
     </section>`;
 }
 
+// Cota para o exercício da atividade parlamentar (CEAPS) do senador, a partir do resumo gerado do dado aberto do Senado.
+function ceapsHtml(c) {
+  if (!c) return '<p class="muted">Não há despesas da cota registradas para este senador no período do resumo.</p>';
+  const years = Object.keys(c.anos).sort().reverse();
+  return `
+    <div class="row between">
+      <span class="chip blue">Cota parlamentar (CEAPS)</span>
+      <span class="xs muted">Resumo de ${fmtDate(c.geradoEm)}</span>
+    </div>
+    ${years
+      .map((y) => {
+        const a = c.anos[y];
+        return `<section class="card soft stack u-gap-8 u-p-14" aria-labelledby="ceaps-${y}">
+          <div class="row between"><h3 class="sm u-fw-700" id="ceaps-${y}">${esc(y)}${Number(y) === Number(c.geradoEm.slice(0, 4)) ? ' (até a data do resumo)' : ''}</h3><b class="u-fs-18 u-c-primary">${brl(a.total)}</b></div>
+          <span class="sm muted u-fw-700">Principais tipos de despesa:</span>
+          <ul class="stack u-gap-6">${a.tipos
+            .map((t) => `<li class="row between sm u-bg-s2 u-p-6-12 u-br-r-sm"><span class="muted truncate u-maxw-240">${esc(t.tipo)}</span><b>${brl(t.valor)}</b></li>`)
+            .join('')}</ul>
+        </section>`;
+      })
+      .join('')}
+    ${
+      c.grandes.length
+        ? `<section class="card soft stack u-gap-8 u-p-14" aria-labelledby="ceaps-big">
+          <h3 class="sm u-fw-700" id="ceaps-big">Despesas a partir de ${brl(c.limite)}, as mais recentes</h3>
+          <ul class="stack u-gap-6">${c.grandes
+            .map(
+              (e) => `<li class="stack u-gap-2 sm u-bg-s2 u-p-8-12 u-br-r-sm"><div class="row between"><b>${brl(e.valor)}</b><span class="xs muted">${fmtDate(e.data)}</span></div>
+              <span class="xs muted">${esc(e.tipo)}${e.fornecedor ? ` · ${esc(e.fornecedor)}` : ''}</span></li>`
+            )
+            .join('')}</ul>
+        </section>`
+        : ''
+    }
+    <p class="xs muted">Fonte: dados abertos do Senado (CEAPS). O resumo é gerado de tempos em tempos e pode não ter as despesas dos últimos dias. Notas e recibos: <a href="https://www12.senado.leg.br/transparencia" target="_blank" rel="noopener noreferrer">Transparência do Senado<span class="sr-only"> (abre em nova aba)</span></a>.</p>`;
+}
+
 const EXEC_ROLES = new Set(['presidente', 'governador', 'prefeito']);
 
 // Acompanhar é uma escolha feita aqui, depois de ver o perfil; fica só neste aparelho.
@@ -282,6 +320,7 @@ export async function openPoliticianDetails(p) {
           : isSenator
           ? `
         <button class="on" data-tab="senado">Votações no Senado</button>
+        <button data-tab="cota">Cota (CEAPS)</button>
         <button data-tab="comissoes">Comissões</button>
         <button data-tab="plenario">Presença & Fidelidade</button>
       `
@@ -313,6 +352,9 @@ export async function openPoliticianDetails(p) {
         ? `
       <div id="tab-senado" class="stack pol-pane u-mt-4">
         ${skeleton('Carregando votações nominais no Senado…', 2)}
+      </div>
+      <div id="tab-cota" class="stack pol-pane hidden u-mt-4">
+        ${skeleton('Carregando o resumo da cota parlamentar…', 1)}
       </div>
       <div id="tab-comissoes" class="stack pol-pane hidden u-mt-4">
         ${skeleton('Consultando as comissões do Senado…', 1)}
@@ -658,6 +700,10 @@ export async function openPoliticianDetails(p) {
     const paneSenator = el.querySelector('#tab-senado');
     const panePlenario = el.querySelector('#tab-plenario');
     const paneComissoes = el.querySelector('#tab-comissoes');
+    const paneCota = el.querySelector('#tab-cota');
+    senatorCeaps(p.senadoId)
+      .then((c) => (paneCota.innerHTML = ceapsHtml(c)))
+      .catch(() => (paneCota.innerHTML = '<p class="muted">Não foi possível carregar o resumo da cota agora.</p>'));
     senatorCommittees(p.senadoId)
       .then((list) => {
         paneComissoes.innerHTML = list.length

@@ -270,6 +270,15 @@ export async function senatorVotes(senadoId, limit = 10) {
   }
 }
 
+// Resumo da cota dos senadores (CEAPS), gerado por scripts/build-ceaps.mjs: a API do Senado devolve ~10 MB por ano
+// e não filtra por senador, então o app lê este resumo. A data de geração aparece na tela.
+export const loadCeaps = () => staticJson('/src/data/ceaps.json');
+export async function senatorCeaps(senadoId) {
+  const data = await loadCeaps();
+  const s = data.senadores[String(senadoId)];
+  return s ? { ...s, geradoEm: data.geradoEm, ultimaDespesa: data.ultimaDespesa, limite: data.limiteDespesaGrande } : null;
+}
+
 // Comissões em que o senador atua hoje (sem data de fim), com a função (titular, suplente, presidente...).
 export async function senatorCommittees(senadoId) {
   const data = await getJson(`${SENADO_BASE}/senador/${senadoId}/comissoes.json`);

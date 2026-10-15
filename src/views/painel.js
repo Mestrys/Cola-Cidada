@@ -213,7 +213,7 @@ async function renderPanel(panel) {
       <ul class="painel-grid" aria-label="${esc(section.label)}">${visible.map(card).join('')}</ul>
       ${filtered.length > visible.length ? `<button class="btn outlined painel-more" id="painel-more">Mostrar mais ${Math.min(PAGE, filtered.length - visible.length)}</button>` : ''}
       ${section.key === 'stf' ? `<p class="sm muted">${esc(stfNote)}</p>` : ''}
-      ${['governadores', 'prefeitos'].includes(section.key) ? `<p class="xs muted">Ocupantes atuais conferidos em ${esc(checkedAt)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.${section.key === 'prefeitos' ? ' Nas cidades que não são capitais, o nome é o de quem foi eleito em 2024 (TSE): o ocupante de hoje pode ser outro.' : ''}</p>` : ''}`;
+      ${['governadores', 'prefeitos'].includes(section.key) ? `<p class="xs muted">Ocupantes atuais conferidos em ${esc(checkedAt)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.${section.key === 'prefeitos' ? ` Nas cidades que não são capitais, os ocupantes foram conferidos em notícias de ${esc(polosCheckedAt)} (veja a nota de cada perfil) e podem ter mudado depois.` : ''}</p>` : ''}`;
     results.querySelectorAll('[data-open]').forEach((b) => {
       b.onclick = () => {
         const p = list.find((x) => x.id === b.dataset.open);
@@ -231,8 +231,32 @@ async function renderPanel(panel) {
       };
   };
 
+  // Os controles já valem enquanto a lista carrega: trocar o estado nesse intervalo não pode ser ignorado.
+  let loaded = false;
+  let timer;
+  if (search)
+    search.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        view.q = search.value;
+        view.shown = PAGE;
+        if (loaded) paint();
+      }, 200);
+    });
+  if (ufSel)
+    ufSel.onchange = async () => {
+      view.uf = ufSel.value;
+      view.city = '';
+      view.shown = PAGE;
+      if (section.requiresUf) {
+        await renderPanel(panel);
+        $('#painel-uf', panel)?.focus();
+      } else if (loaded) paint();
+    };
+
   let stfNote = '';
   let checkedAt = '';
+  let polosCheckedAt = '';
   try {
     list = await loadSection(section.key, view.uf);
     if (section.key === 'stf') {
@@ -241,6 +265,10 @@ async function renderPanel(panel) {
     if (['governadores', 'prefeitos'].includes(section.key)) {
       const { consultadoEm } = await loadExecutive();
       checkedAt = consultadoEm ? new Date(`${consultadoEm}T12:00:00`).toLocaleDateString('pt-BR') : 'data não informada';
+      if (section.key === 'prefeitos') {
+        const { ocupantesConsultadosEm: d } = await loadCidades();
+        polosCheckedAt = d ? new Date(`${d}T12:00:00`).toLocaleDateString('pt-BR') : 'data não informada';
+      }
     }
   } catch {
     count.textContent = '';
@@ -264,28 +292,8 @@ async function renderPanel(panel) {
       paint();
     };
   }
+  loaded = true;
   paint();
-
-  let timer;
-  if (search)
-    search.addEventListener('input', () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        view.q = search.value;
-        view.shown = PAGE;
-        paint();
-      }, 200);
-    });
-  if (ufSel)
-    ufSel.onchange = async () => {
-      view.uf = ufSel.value;
-      view.city = '';
-      view.shown = PAGE;
-      if (section.requiresUf) {
-        await renderPanel(panel);
-        $('#painel-uf', panel)?.focus();
-      } else paint();
-    };
 }
 
 async function renderBodies(results, count, ufSel) {

@@ -6,6 +6,7 @@ import { useColorScheme } from 'react-native';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { SnackbarProvider } from '@/components/ui/snackbar';
 import { Colors } from '@/constants/theme';
+import '@/lib/notifications'; // define a tarefa de verificação em segundo plano (precisa existir antes de o app montar)
 import { StoreProvider } from '@/lib/store';
 
 SplashScreen.preventAutoHideAsync();

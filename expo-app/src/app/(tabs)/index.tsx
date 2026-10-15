@@ -12,7 +12,7 @@ import { Spacing } from '@/constants/theme';
 import { useAsync } from '@/hooks/use-async';
 import { useTheme } from '@/hooks/use-theme';
 import { budgetSummary, federalBodies, money, personnelSpending, SICONFI_URL, stateBodies, type Body } from '@/lib/contas';
-import { CHECKED_AT, loadSection, matches, placeOf, SECTIONS, STF_VACANCY, UNITS, type SectionKey } from '@/lib/directory';
+import { CHECKED_AT, POLOS_CHECKED_AT, loadSection, matches, placeOf, SECTIONS, STF_VACANCY, UNITS, type SectionKey } from '@/lib/directory';
 import { formatDate, ROLES } from '@/lib/mandate';
 import { useStore } from '@/lib/store';
 import type { Politician } from '@/lib/types';
@@ -244,7 +244,7 @@ export default function PainelScreen() {
     ) : section === 'governadores' || section === 'prefeitos' ? (
       <ThemedText type="small" themeColor="textSecondary">
         Ocupantes atuais conferidos em {formatDate(CHECKED_AT)}. Renúncias e afastamentos mudam esses cargos: confira também o site oficial.
-        {section === 'prefeitos' ? ' Nas cidades que não são capitais, o nome é o de quem foi eleito em 2024 (TSE): o ocupante de hoje pode ser outro.' : ''}
+        {section === 'prefeitos' ? ` Nas cidades que não são capitais, os ocupantes foram conferidos em notícias de ${formatDate(POLOS_CHECKED_AT)} (veja a nota de cada perfil) e podem ter mudado depois.` : ''}
       </ThemedText>
     ) : null;
 

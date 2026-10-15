@@ -1,11 +1,13 @@
 // Alertas: o que mudou no Congresso desde a última verificação, calculado no aparelho a partir das APIs públicas.
 // Mesma lógica do PWA (src/alerts.js).
 import { deputyExpenses, deputyPropositions, type Expense } from './api';
+import { senatorCeaps, type Ceaps } from './ceaps';
 import { formatDate } from './mandate';
 import { loadCamaraComparison, loadSenateVotings, mapLimit } from './votes';
 import type { Alert, CamaraVoting, Politician, Prefs, Proposition, SenateVoting } from './types';
 
 export const EXPENSE_THRESHOLD = 5000;
+const CEAPS_WINDOW_DAYS = 90;
 
 const brl = (v: number) => `R$ ${v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
 const short = (s: string | undefined, n = 140) => (s && s.length > n ? `${s.slice(0, n - 1)}…` : (s ?? ''));
@@ -19,9 +21,11 @@ export interface Sources {
   senado: (p: Politician[], limit: number) => Promise<SenateVoting[]>;
   expenses: (camaraId: number, limit: number) => Promise<Expense[]>;
   bills: (camaraId: number, limit: number) => Promise<Proposition[]>;
+  /** resumo da cota do senador (CEAPS); `null` se não há registro */
+  ceaps: (senadoId: number) => Ceaps | null;
 }
 
-const REAL: Sources = { camara: loadCamaraComparison, senado: loadSenateVotings, expenses: deputyExpenses, bills: deputyPropositions };
+const REAL: Sources = { camara: loadCamaraComparison, senado: loadSenateVotings, expenses: deputyExpenses, bills: deputyPropositions, ceaps: senatorCeaps };
 
 export async function collectAlerts(
   { politicians, prefs }: { politicians: Politician[]; prefs: Partial<Prefs> },
@@ -71,7 +75,7 @@ export async function collectAlerts(
     } else failures.push('Senado');
   }
 
-  // Gastos e projetos só existem na API da Câmara (deputados federais).
+  // Projetos só existem na API da Câmara (deputados federais); gastos dos deputados também (os dos senadores vêm do resumo, abaixo).
   if (deputies.length && (prefOn(prefs, 'expenses') || prefOn(prefs, 'bills'))) {
     await mapLimit(deputies, 3, async (d) => {
       const camaraId = d.camaraId!;
@@ -102,6 +106,20 @@ export async function collectAlerts(
         }
       }
     });
+  }
+
+  // Cota dos senadores: o resumo traz as despesas grandes mais recentes.
+  if (senators.length && prefOn(prefs, 'expenses')) {
+    const since = new Date(Date.now() - CEAPS_WINDOW_DAYS * 864e5).toISOString().slice(0, 10);
+    for (const s of senators) {
+      for (const e of src.ceaps(s.senadoId!)?.grandes ?? []) {
+        if (e.data < since || !(e.valor >= EXPENSE_THRESHOLD)) continue;
+        out.push({
+          id: `ceaps:${s.senadoId}:${e.id}`, ts: e.data, kind: 'gasto', politicianId: s.id,
+          text: `${s.name} (${s.party}/${s.uf}) usou ${brl(e.valor)} da cota parlamentar em ${day(e.data)} — ${e.tipo}${e.fornecedor ? `, ${e.fornecedor}` : ''}`,
+        });
+      }
+    }
   }
 
   out.sort((a, b) => String(b.ts).localeCompare(String(a.ts)));

@@ -1,37 +1,5 @@
 [
  {
-  "id": "exe-pref-am-1301209",
-  "name": "Pref. Adail Pinheiro",
-  "fullName": "Manoel Adail Amaral Pinheiro",
-  "party": "REPUBLICANOS",
-  "role": "Prefeito",
-  "roleKey": "prefeito",
-  "house": "Prefeitura de Coari",
-  "source": "executivo",
-  "state": "AM",
-  "city": "Coari",
-  "ibge": 1301209,
-  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
-  "mandate": [
-   "2025-01-01",
-   "2028-12-31"
-  ],
-  "vice": {
-   "name": "Emanoel Pinheiro",
-   "fullName": "Emanoel da Costa Pinheiro",
-   "party": "UNIÃO"
-  },
-  "tse": {
-   "year": 2024,
-   "sq": "40002083955",
-   "ballotNumber": "10",
-   "coalition": "COARI RUMO AO FUTURO",
-   "declaredAssets": null,
-   "status": "ELEITO"
-  },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/02259/40002083955"
- },
- {
   "id": "exe-pref-rs-4305108",
   "name": "Pref. Adiló",
   "fullName": "Adilo Angelo Didomenico",
@@ -62,38 +30,6 @@
    "status": "ELEITO"
   },
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/85995/210002216782"
- },
- {
-  "id": "exe-pref-sc-4209102",
-  "name": "Pref. Adriano Silva",
-  "fullName": "Adriano Bornschein Silva",
-  "party": "NOVO",
-  "role": "Prefeito",
-  "roleKey": "prefeito",
-  "house": "Prefeitura de Joinville",
-  "source": "executivo",
-  "state": "SC",
-  "city": "Joinville",
-  "ibge": 4209102,
-  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
-  "mandate": [
-   "2025-01-01",
-   "2028-12-31"
-  ],
-  "vice": {
-   "name": "Rejane Gambin",
-   "fullName": "Rejane Gambin",
-   "party": "NOVO"
-  },
-  "tse": {
-   "year": 2024,
-   "sq": "240001904814",
-   "ballotNumber": "30",
-   "coalition": "UNIDOS POR JOINVILLE",
-   "declaredAssets": 16270304.84,
-   "status": "ELEITO"
-  },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/81795/240001904814"
  },
  {
   "id": "exe-pref-ro-1100122",
@@ -190,38 +126,6 @@
    "status": "ELEITO"
   },
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/07277/100001982013"
- },
- {
-  "id": "exe-pref-rn-2408003",
-  "name": "Pref. Allyson",
-  "fullName": "Allyson Leandro Bezerra Silva",
-  "party": "UNIÃO",
-  "role": "Prefeito",
-  "roleKey": "prefeito",
-  "house": "Prefeitura de Mossoró",
-  "source": "executivo",
-  "state": "RN",
-  "city": "Mossoró",
-  "ibge": 2408003,
-  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
-  "mandate": [
-   "2025-01-01",
-   "2028-12-31"
-  ],
-  "vice": {
-   "name": "Marcos",
-   "fullName": "Marcos Antonio Bezerra de Medeiros",
-   "party": "PSD"
-  },
-  "tse": {
-   "year": 2024,
-   "sq": "200001959098",
-   "ballotNumber": "44",
-   "coalition": "MOSSORO DO POVO",
-   "declaredAssets": 582092.31,
-   "status": "ELEITO"
-  },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/17590/200001959098"
  },
  {
   "id": "exe-pref-al-2704708",
@@ -480,6 +384,37 @@
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/24430/170001915023"
  },
  {
+  "id": "exe-pref-ms-5008305",
+  "name": "Pref. Cassiano Rojas Maia",
+  "fullName": "Cassiano Rojas Maia",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Três Lagoas",
+  "source": "executivo",
+  "state": "MS",
+  "city": "Três Lagoas",
+  "ibge": 5008305,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Vera Helena Arsioli Pinho"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "120001968862",
+   "ballotNumber": "45",
+   "coalition": "45-PSDB/23-CIDADANIA",
+   "declaredAssets": 3967171.32,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/91650/120001968862",
+  "nota": "O TSE registra a eleição pelo PSDB; reportagens recentes o listam como PP. Confira a filiação no TSE."
+ },
+ {
   "id": "exe-pref-mt-5107602",
   "name": "Pref. Claudio Ferreira",
   "fullName": "Claudio Ferreira de Souza",
@@ -542,38 +477,6 @@
    "status": "ELEITO"
   },
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/00132/220002284317"
- },
- {
-  "id": "exe-pref-ms-5008305",
-  "name": "Pref. Dr Cassiano Maia",
-  "fullName": "Cassiano Rojas Maia",
-  "party": "PSDB",
-  "role": "Prefeito",
-  "roleKey": "prefeito",
-  "house": "Prefeitura de Três Lagoas",
-  "source": "executivo",
-  "state": "MS",
-  "city": "Três Lagoas",
-  "ibge": 5008305,
-  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
-  "mandate": [
-   "2025-01-01",
-   "2028-12-31"
-  ],
-  "vice": {
-   "name": "Vera Helena",
-   "fullName": "Vera Helena Arsioli Pinho",
-   "party": "PP"
-  },
-  "tse": {
-   "year": 2024,
-   "sq": "120001968862",
-   "ballotNumber": "45",
-   "coalition": "45-PSDB/23-CIDADANIA",
-   "declaredAssets": 3967171.32,
-   "status": "ELEITO"
-  },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/91650/120001968862"
  },
  {
   "id": "exe-pref-pr-4101804",
@@ -640,9 +543,9 @@
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/12238/180001929748"
  },
  {
-  "id": "exe-pref-pb-2503209",
-  "name": "Pref. Edvaldo Neto",
-  "fullName": "Edvaldo Manoel de Lima Neto",
+  "id": "exe-pref-pb-2503209-evilasio-cavalcanti-neto",
+  "name": "Pref. Evilásio Cavalcanti Neto",
+  "fullName": "Evilásio Cavalcanti Neto",
   "party": "AVANTE",
   "role": "Prefeito",
   "roleKey": "prefeito",
@@ -651,25 +554,20 @@
   "state": "PB",
   "city": "Cabedelo",
   "ibge": 2503209,
-  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "situacao": "Prefeito(a) desde 25/05/2026 (substituiu quem foi eleito em 2026)",
   "mandate": [
-   "2025-01-01",
+   "2026-05-25",
    "2028-12-31"
   ],
-  "vice": {
-   "name": "Evilasio Cavalcanti",
-   "fullName": "Evilásio Cavalcanti Neto",
-   "party": "AVANTE"
-  },
-  "tse": {
-   "year": 2024,
-   "sq": "150002527994",
-   "ballotNumber": "70",
-   "coalition": "CABEDELO PARA OS CABEDELENSES",
-   "declaredAssets": 540500,
-   "status": "ELEITO"
-  },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/6265/19658/150002527994"
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "condicao": "interino",
+  "desde": "2026-05-25",
+  "nota": "Edvaldo Neto venceu a eleição suplementar de 12/04/2026 (após a cassação de André Coutinho), foi afastado em 14/04/2026 e diplomado em 25/05 sem tomar posse; o vice, Evilásio, exerce a prefeitura interinamente.",
+  "eleitoPeloTse": {
+   "name": "Edvaldo Neto",
+   "party": "AVANTE",
+   "year": 2026
+  }
  },
  {
   "id": "exe-pref-mt-5108402",
@@ -766,6 +664,59 @@
    "status": "ELEITO"
   },
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/41335/130001882197"
+ },
+ {
+  "id": "exe-pref-am-1301209-jeany-de-paula-amaral-pinheiro",
+  "name": "Pref. Jeany de Paula Amaral Pinheiro",
+  "fullName": "Jeany de Paula Amaral Pinheiro",
+  "party": "—",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Coari",
+  "source": "executivo",
+  "state": "AM",
+  "city": "Coari",
+  "ibge": 1301209,
+  "situacao": "Prefeito(a) desde 17/09/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-09-17",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "condicao": "interino",
+  "desde": "2026-09-17",
+  "nota": "Adail Pinheiro foi afastado por 90 dias por decisão do STF (Operação Dinastia do Lago, da PF); a presidente da Câmara Municipal assumiu como prefeita interina. O afastamento termina por volta de dezembro de 2026.",
+  "eleitoPeloTse": {
+   "name": "Adail Pinheiro",
+   "party": "REPUBLICANOS",
+   "year": 2024
+  }
+ },
+ {
+  "id": "exe-pref-se-2802908-jose-paes-dos-santos-zequinha-da-cenoura",
+  "name": "Pref. José Paes dos Santos (Zequinha da Cenoura)",
+  "fullName": "José Paes dos Santos (Zequinha da Cenoura)",
+  "party": "—",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Itabaiana",
+  "source": "executivo",
+  "state": "SE",
+  "city": "Itabaiana",
+  "ibge": 2802908,
+  "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-04-02",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "desde": "2026-04-02",
+  "nota": "Valmir de Francisquinho renunciou em abril de 2026 para disputar o governo de Sergipe e o vice assumiu. A posse não foi confirmada em fonte direta.",
+  "eleitoPeloTse": {
+   "name": "Valmir de Francisquinho",
+   "party": "PL",
+   "year": 2024
+  }
  },
  {
   "id": "exe-pref-pa-1502152",
@@ -1024,6 +975,32 @@
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/90735/120002046321"
  },
  {
+  "id": "exe-pref-rn-2408003-marcos-medeiros",
+  "name": "Pref. Marcos Medeiros",
+  "fullName": "Marcos Medeiros",
+  "party": "REPUBLICANOS",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Mossoró",
+  "source": "executivo",
+  "state": "RN",
+  "city": "Mossoró",
+  "ibge": 2408003,
+  "situacao": "Prefeito(a) desde 27/03/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-03-27",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "desde": "2026-03-27",
+  "nota": "Allyson Bezerra renunciou para disputar o governo do RN e o vice, Marcos Medeiros, assumiu. O partido dele varia entre as fontes (PSD ou Republicanos).",
+  "eleitoPeloTse": {
+   "name": "Allyson",
+   "party": "UNIÃO",
+   "year": 2024
+  }
+ },
+ {
   "id": "exe-pref-am-1301902",
   "name": "Pref. Mário Abrahim",
   "fullName": "Mario Jorge Bouez Abrahim",
@@ -1153,9 +1130,9 @@
  },
  {
   "id": "exe-pref-mg-3170206",
-  "name": "Pref. Paulo Sérgio",
+  "name": "Pref. Paulo Sérgio Ferreira",
   "fullName": "Paulo Sérgio Ferreira",
-  "party": "PP",
+  "party": "PL",
   "role": "Prefeito",
   "roleKey": "prefeito",
   "house": "Prefeitura de Uberlândia",
@@ -1169,9 +1146,7 @@
    "2028-12-31"
   ],
   "vice": {
-   "name": "Pelizer",
-   "fullName": "Vanderlei Pelizer Pereira",
-   "party": "PL"
+   "name": "Vanderlei Pelizer Pereira"
   },
   "tse": {
    "year": 2024,
@@ -1181,7 +1156,8 @@
    "declaredAssets": 22199652.03,
    "status": "ELEITO"
   },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/54038/130002203676"
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/54038/130002203676",
+  "nota": "Continua prefeito, mas trocou o PP pelo PL em 07/10/2026."
  },
  {
   "id": "exe-pref-rr-1400472",
@@ -1280,6 +1256,32 @@
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/58530/190002218644"
  },
  {
+  "id": "exe-pref-sc-4209102-rejane-gambin",
+  "name": "Pref. Rejane Gambin",
+  "fullName": "Rejane Gambin",
+  "party": "NOVO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Joinville",
+  "source": "executivo",
+  "state": "SC",
+  "city": "Joinville",
+  "ibge": 4209102,
+  "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-04-02",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "desde": "2026-04-02",
+  "nota": "Adriano Silva deixou o cargo em abril de 2026 para ser pré-candidato a vice-governador; a vice, Rejane Gambin, assumiu e governa até 2028.",
+  "eleitoPeloTse": {
+   "name": "Adriano Silva",
+   "party": "NOVO",
+   "year": 2024
+  }
+ },
+ {
   "id": "exe-pref-ma-2105302",
   "name": "Pref. Rildo Amaral",
   "fullName": "Rildo de Oliveira Amaral",
@@ -1313,9 +1315,9 @@
  },
  {
   "id": "exe-pref-ce-2307650",
-  "name": "Pref. Roberto Pessoa",
+  "name": "Pref. Roberto Soares Pessoa",
   "fullName": "Roberto Soares Pessoa",
-  "party": "UNIÃO",
+  "party": "PSD",
   "role": "Prefeito",
   "roleKey": "prefeito",
   "house": "Prefeitura de Maracanaú",
@@ -1329,9 +1331,7 @@
    "2028-12-31"
   ],
   "vice": {
-   "name": "Gerson Cecchini",
-   "fullName": "Gerson Cecchini de Souza",
-   "party": "PT"
+   "name": "Gerson Cecchini de Souza"
   },
   "tse": {
    "year": 2024,
@@ -1341,7 +1341,8 @@
    "declaredAssets": 13826010.7,
    "status": "ELEITO"
   },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/15857/60001981084"
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/15857/60001981084",
+  "nota": "Continua prefeito, mas trocou o União Brasil pelo PSD em 2026."
  },
  {
   "id": "exe-pref-sc-4208203",
@@ -1437,7 +1438,8 @@
    "declaredAssets": 539345,
    "status": "ELEITO"
   },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01538/10002090455"
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01538/10002090455",
+  "nota": "Não foi possível conferir quem ocupa a prefeitura hoje; o nome é o de quem foi eleito em 2024."
  },
  {
   "id": "exe-pref-ap-1600279",
@@ -1470,38 +1472,6 @@
    "status": "ELEITO"
   },
   "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/06130/30002100262"
- },
- {
-  "id": "exe-pref-se-2802908",
-  "name": "Pref. Valmir de Francisquinho",
-  "fullName": "Valmir dos Santos Costa",
-  "party": "PL",
-  "role": "Prefeito",
-  "roleKey": "prefeito",
-  "house": "Prefeitura de Itabaiana",
-  "source": "executivo",
-  "state": "SE",
-  "city": "Itabaiana",
-  "ibge": 2802908,
-  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
-  "mandate": [
-   "2025-01-01",
-   "2028-12-31"
-  ],
-  "vice": {
-   "name": "Zequinha da Cenoura",
-   "fullName": "José Paes dos Santos",
-   "party": "PL"
-  },
-  "tse": {
-   "year": 2024,
-   "sq": "260001935426",
-   "ballotNumber": "22",
-   "coalition": "ITABAIANA É DO POVO",
-   "declaredAssets": 50000,
-   "status": "ELEITO"
-  },
-  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/31577/260001935426"
  },
  {
   "id": "exe-pref-rr-1400050",
