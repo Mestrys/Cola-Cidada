@@ -1,0 +1,1636 @@
+[
+ {
+  "id": "exe-pref-rs-4305108",
+  "name": "Pref. Adiló",
+  "fullName": "Adilo Angelo Didomenico",
+  "party": "PSDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Caxias do Sul",
+  "source": "executivo",
+  "state": "RS",
+  "city": "Caxias do Sul",
+  "ibge": 4305108,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Néspolo",
+   "fullName": "Edson Humberto Nespolo",
+   "party": "UNIÃO"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "210002216782",
+   "ballotNumber": "45",
+   "coalition": "45-PSDB/23-CIDADANIA",
+   "declaredAssets": 1187241.56,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/85995/210002216782"
+ },
+ {
+  "id": "exe-pref-ro-1100122",
+  "name": "Pref. Affonso Cândido",
+  "fullName": "Affonso Antônio Cândido",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Ji-Paraná",
+  "source": "executivo",
+  "state": "RO",
+  "city": "Ji-Paraná",
+  "ibge": 1100122,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Marley Muniz",
+   "fullName": "Marley Muniz",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "220002219710",
+   "ballotNumber": "22",
+   "coalition": "AMOR E RESPEITO POR JI-PARANÁ",
+   "declaredAssets": 710026.14,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/00051/220002219710"
+ },
+ {
+  "id": "exe-pref-rs-4304606",
+  "name": "Pref. Airton Souza",
+  "fullName": "Airton Jose de Souza",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Canoas",
+  "source": "executivo",
+  "state": "RS",
+  "city": "Canoas",
+  "ibge": 4304606,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Rodrigo Busato",
+   "fullName": "Rodrigo Luiz Busato",
+   "party": "UNIÃO"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "210002225770",
+   "ballotNumber": "22",
+   "coalition": "UNIÃO POR CANOAS",
+   "declaredAssets": 370000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/85898/210002225770"
+ },
+ {
+  "id": "exe-pref-ma-2101400",
+  "name": "Pref. Alan da Marissol",
+  "fullName": "Alan Douglas de Oliveira",
+  "party": "PRD",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Balsas",
+  "source": "executivo",
+  "state": "MA",
+  "city": "Balsas",
+  "ibge": 2101400,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Coronel Medeiros",
+   "fullName": "Juarez Medeiros Sobrinho",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "100001982013",
+   "ballotNumber": "25",
+   "coalition": "QUEM MANDA É O POVO",
+   "declaredAssets": 1023448.84,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/07277/100001982013"
+ },
+ {
+  "id": "exe-pref-al-2704708",
+  "name": "Pref. André Bocão",
+  "fullName": "André Luiz Barros da Silva",
+  "party": "MDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Marechal Deodoro",
+  "source": "executivo",
+  "state": "AL",
+  "city": "Marechal Deodoro",
+  "ibge": 2704708,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Neilson do Supergiro",
+   "fullName": "Neilson Costa da Silva",
+   "party": "PSB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "20002044508",
+   "ballotNumber": "15",
+   "coalition": "A MUDANÇA TEM QUE CONTINUAR",
+   "declaredAssets": 1182348.42,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/27936/20002044508"
+ },
+ {
+  "id": "exe-pref-es-3205200",
+  "name": "Pref. Arnaldinho Borgo",
+  "fullName": "Arnaldo Borgo Filho",
+  "party": "PODE",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Vila Velha",
+  "source": "executivo",
+  "state": "ES",
+  "city": "Vila Velha",
+  "ibge": 3205200,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Cael Linhalis",
+   "fullName": "Carlos Aurélio Linhalis",
+   "party": "PSB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "80001977519",
+   "ballotNumber": "20",
+   "coalition": "AVANÇA VILA VELHA",
+   "declaredAssets": 420000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/57037/80001977519"
+ },
+ {
+  "id": "exe-pref-pa-1505536",
+  "name": "Pref. Aurélio Goiano",
+  "fullName": "Aurélio Ramos de Oliveira Neto",
+  "party": "AVANTE",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Parauapebas",
+  "source": "executivo",
+  "state": "PA",
+  "city": "Parauapebas",
+  "ibge": 1505536,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Chico das Cortinas",
+   "fullName": "Francisco Alves de de Souza",
+   "party": "PRD"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "140001900003",
+   "ballotNumber": "70",
+   "coalition": "RECONSTRUINDO A ESPERANÇA",
+   "declaredAssets": 810000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/05835/140001900003"
+ },
+ {
+  "id": "exe-pref-ap-1600600",
+  "name": "Pref. Bala Rocha",
+  "fullName": "Sebastião Ferreira da Rocha",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Santana",
+  "source": "executivo",
+  "state": "AP",
+  "city": "Santana",
+  "ibge": 1600600,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Isabel Nogueira",
+   "fullName": "Maria Isabel Nogueira de Sousa",
+   "party": "PT"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "30002048495",
+   "ballotNumber": "11",
+   "coalition": "SANTANA É DAQUI PRA MELHOR",
+   "declaredAssets": 509329.04,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/06157/30002048495"
+ },
+ {
+  "id": "exe-pref-pb-2504009",
+  "name": "Pref. Bruno Cunha Lima",
+  "fullName": "Bruno Cunha Lima Branco",
+  "party": "UNIÃO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Campina Grande",
+  "source": "executivo",
+  "state": "PB",
+  "city": "Campina Grande",
+  "ibge": 2504009,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Alcindor Villarim",
+   "fullName": "Alcindor Villarim Filho",
+   "party": "PODE"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "150002201749",
+   "ballotNumber": "44",
+   "coalition": "UNIÃO POR AMOR A CAMPINA",
+   "declaredAssets": 1016393.83,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/19810/150002201749"
+ },
+ {
+  "id": "exe-pref-ba-2905701",
+  "name": "Pref. Caetano",
+  "fullName": "Luiz Carlos Caetano",
+  "party": "PT",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Camaçari",
+  "source": "executivo",
+  "state": "BA",
+  "city": "Camaçari",
+  "ibge": 2905701,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Pastora Déa",
+   "fullName": "Edeilza Sousa dos Santos",
+   "party": "PSB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "50001941127",
+   "ballotNumber": "13",
+   "coalition": "13-PT/65-PC do B/43-PV",
+   "declaredAssets": 232807.04,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/34134/50001941127"
+ },
+ {
+  "id": "exe-pref-ba-2929206",
+  "name": "Pref. Calmon",
+  "fullName": "Antonio Carlos Vasconcelos Calmon",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de São Francisco do Conde",
+  "source": "executivo",
+  "state": "BA",
+  "city": "São Francisco do Conde",
+  "ibge": 2929206,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Marivaldo do Amaral",
+   "fullName": "Marivaldo Cruz do Amaral",
+   "party": "PSB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "50002002471",
+   "ballotNumber": "11",
+   "coalition": "JUNTOS PARA FAZER MAIS",
+   "declaredAssets": 48000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/38830/50002002471"
+ },
+ {
+  "id": "exe-pref-pe-2607208",
+  "name": "Pref. Carlos Santana",
+  "fullName": "Carlos José de Santana",
+  "party": "REPUBLICANOS",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Ipojuca",
+  "source": "executivo",
+  "state": "PE",
+  "city": "Ipojuca",
+  "ibge": 2607208,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Irmã Marinalva",
+   "fullName": "Marinalva Maria Santos de Jesus",
+   "party": "PT"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "170001915023",
+   "ballotNumber": "10",
+   "coalition": "IPOJUCA PODE MUITO MAIS",
+   "declaredAssets": 6921204.35,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/24430/170001915023"
+ },
+ {
+  "id": "exe-pref-ms-5008305",
+  "name": "Pref. Cassiano Rojas Maia",
+  "fullName": "Cassiano Rojas Maia",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Três Lagoas",
+  "source": "executivo",
+  "state": "MS",
+  "city": "Três Lagoas",
+  "ibge": 5008305,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Vera Helena Arsioli Pinho"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "120001968862",
+   "ballotNumber": "45",
+   "coalition": "45-PSDB/23-CIDADANIA",
+   "declaredAssets": 3967171.32,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/91650/120001968862",
+  "nota": "O TSE registra a eleição pelo PSDB; reportagens recentes o listam como PP. Confira a filiação no TSE."
+ },
+ {
+  "id": "exe-pref-mt-5107602",
+  "name": "Pref. Claudio Ferreira",
+  "fullName": "Claudio Ferreira de Souza",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Rondonópolis",
+  "source": "executivo",
+  "state": "MT",
+  "city": "Rondonópolis",
+  "ibge": 5107602,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Dr Altemar ",
+   "fullName": "Altemar Lopes da Silva",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "110002105396",
+   "ballotNumber": "22",
+   "coalition": "MUDANÇA DE VERDADE QUE RONDONÓPOLIS PRECISA",
+   "declaredAssets": 1005362.45,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/91510/110002105396"
+ },
+ {
+  "id": "exe-pref-ro-1100304",
+  "name": "Pref. Delegado Flori",
+  "fullName": "Flori Cordeiro de Miranda Junior",
+  "party": "PODE",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Vilhena",
+  "source": "executivo",
+  "state": "RO",
+  "city": "Vilhena",
+  "ibge": 1100304,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Aparecido Donadoni",
+   "fullName": "Aparecido Donadoni",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "220002284317",
+   "ballotNumber": "20",
+   "coalition": "VILHENA NOS TRILHOS, O TRABALHO CONTINUA",
+   "declaredAssets": 1277745.68,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/00132/220002284317"
+ },
+ {
+  "id": "exe-pref-pr-4101804",
+  "name": "Pref. Dr Gustavo",
+  "fullName": "Luiz Gustavo Botogoski",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Araucária",
+  "source": "executivo",
+  "state": "PR",
+  "city": "Araucária",
+  "ibge": 4101804,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Tati",
+   "fullName": "Tatiana Assuiti",
+   "party": "SOLIDARIEDADE"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "160002066703",
+   "ballotNumber": "22",
+   "coalition": "Araucária cada vez melhor",
+   "declaredAssets": 1300478.82,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/74357/160002066703"
+ },
+ {
+  "id": "exe-pref-pi-2211209",
+  "name": "Pref. Dr. Gilberto Jr",
+  "fullName": "Gilberto Gonçalves Silva Junior",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Uruçuí",
+  "source": "executivo",
+  "state": "PI",
+  "city": "Uruçuí",
+  "ibge": 2211209,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Pedro Moreira",
+   "fullName": "Pedro Moreira Rodrigues",
+   "party": "PSB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "180001929748",
+   "ballotNumber": "11",
+   "coalition": "URUÇUÍ É DAQUI PARA FRENTE",
+   "declaredAssets": 1916710.32,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/12238/180001929748"
+ },
+ {
+  "id": "exe-pref-pb-2503209-evilasio-cavalcanti-neto",
+  "name": "Pref. Evilásio Cavalcanti Neto",
+  "fullName": "Evilásio Cavalcanti Neto",
+  "party": "AVANTE",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Cabedelo",
+  "source": "executivo",
+  "state": "PB",
+  "city": "Cabedelo",
+  "ibge": 2503209,
+  "situacao": "Prefeito(a) desde 25/05/2026 (substituiu quem foi eleito em 2026)",
+  "mandate": [
+   "2026-05-25",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "condicao": "interino",
+  "desde": "2026-05-25",
+  "nota": "Edvaldo Neto venceu a eleição suplementar de 12/04/2026 (após a cassação de André Coutinho), foi afastado em 14/04/2026 e diplomado em 25/05 sem tomar posse; o vice, Evilásio, exerce a prefeitura interinamente.",
+  "eleitoPeloTse": {
+   "name": "Edvaldo Neto",
+   "party": "AVANTE",
+   "year": 2026
+  }
+ },
+ {
+  "id": "exe-pref-mt-5108402",
+  "name": "Pref. Flávia Moretti",
+  "fullName": "Flavia Petersen Moretti de Araujo",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Várzea Grande",
+  "source": "executivo",
+  "state": "MT",
+  "city": "Várzea Grande",
+  "ibge": 5108402,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Tião da Zaeli",
+   "fullName": "Sebastião dos Reis Gonçalves",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "110002125932",
+   "ballotNumber": "22",
+   "coalition": "SEDE POR MUDANÇA",
+   "declaredAssets": 1581600,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/91677/110002125932"
+ },
+ {
+  "id": "exe-pref-sp-3534401",
+  "name": "Pref. Gerson Pessoa",
+  "fullName": "Gerson Dias Pessoa",
+  "party": "PODE",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Osasco",
+  "source": "executivo",
+  "state": "SP",
+  "city": "Osasco",
+  "ibge": 3534401,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Lau Alencar",
+   "fullName": "Laudemir Lino de Alencar",
+   "party": "PSD"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "250001905071",
+   "ballotNumber": "20",
+   "coalition": "COLIGAÇÃO PRA SEGUIR CUIDANDO DE OSASCO",
+   "declaredAssets": 3457719.15,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/67890/250001905071"
+ },
+ {
+  "id": "exe-pref-mg-3106705",
+  "name": "Pref. Heron Guimaraes",
+  "fullName": "Heron Domingues Guimaraes",
+  "party": "UNIÃO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Betim",
+  "source": "executivo",
+  "state": "MG",
+  "city": "Betim",
+  "ibge": 3106705,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Cleusa Lara",
+   "fullName": "Cleusa Bernadeth Lara Correa",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "130001882197",
+   "ballotNumber": "44",
+   "coalition": "COLIGAÇÃO BETIM DO BEM",
+   "declaredAssets": 2806526.23,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/41335/130001882197"
+ },
+ {
+  "id": "exe-pref-am-1301209-jeany-de-paula-amaral-pinheiro",
+  "name": "Pref. Jeany de Paula Amaral Pinheiro",
+  "fullName": "Jeany de Paula Amaral Pinheiro",
+  "party": "—",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Coari",
+  "source": "executivo",
+  "state": "AM",
+  "city": "Coari",
+  "ibge": 1301209,
+  "situacao": "Prefeito(a) desde 17/09/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-09-17",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "condicao": "interino",
+  "desde": "2026-09-17",
+  "nota": "Adail Pinheiro foi afastado por 90 dias por decisão do STF (Operação Dinastia do Lago, da PF); a presidente da Câmara Municipal assumiu como prefeita interina. O afastamento termina por volta de dezembro de 2026.",
+  "eleitoPeloTse": {
+   "name": "Adail Pinheiro",
+   "party": "REPUBLICANOS",
+   "year": 2024
+  }
+ },
+ {
+  "id": "exe-pref-se-2802908-jose-paes-dos-santos-zequinha-da-cenoura",
+  "name": "Pref. José Paes dos Santos (Zequinha da Cenoura)",
+  "fullName": "José Paes dos Santos (Zequinha da Cenoura)",
+  "party": "—",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Itabaiana",
+  "source": "executivo",
+  "state": "SE",
+  "city": "Itabaiana",
+  "ibge": 2802908,
+  "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-04-02",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "desde": "2026-04-02",
+  "nota": "Valmir de Francisquinho renunciou em abril de 2026 para disputar o governo de Sergipe e o vice assumiu. A posse não foi confirmada em fonte direta.",
+  "eleitoPeloTse": {
+   "name": "Valmir de Francisquinho",
+   "party": "PL",
+   "year": 2024
+  }
+ },
+ {
+  "id": "exe-pref-pa-1502152",
+  "name": "Pref. Josemira",
+  "fullName": "Josemira Raimunda Diniz Gadelha",
+  "party": "MDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Canaã dos Carajás",
+  "source": "executivo",
+  "state": "PA",
+  "city": "Canaã dos Carajás",
+  "ibge": 1502152,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Dinilson José",
+   "fullName": "Dinilson Jose dos Santos",
+   "party": "MDB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "140002008061",
+   "ballotNumber": "15",
+   "coalition": "UNIÃO E CORAÇÃO",
+   "declaredAssets": 1988608.83,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/04707/140002008061"
+ },
+ {
+  "id": "exe-pref-to-1709500",
+  "name": "Pref. Josi Nunes",
+  "fullName": "Josiniane Braga Nunes",
+  "party": "UNIÃO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Gurupi",
+  "source": "executivo",
+  "state": "TO",
+  "city": "Gurupi",
+  "ibge": 1709500,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Adailton Fonseca",
+   "fullName": "Adailton Batista da Fonseca",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "270002068541",
+   "ballotNumber": "44",
+   "coalition": "GURUPI ESTÁ EM BOAS MÃOS",
+   "declaredAssets": 713708.85,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/93858/270002068541"
+ },
+ {
+  "id": "exe-pref-go-5201405",
+  "name": "Pref. Leandro Vilela",
+  "fullName": "Leandro Vilela Velloso",
+  "party": "MDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Aparecida de Goiânia",
+  "source": "executivo",
+  "state": "GO",
+  "city": "Aparecida de Goiânia",
+  "ibge": 5201405,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "João Campos",
+   "fullName": "Joao Campos de Araujo",
+   "party": "PODE"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "90001991831",
+   "ballotNumber": "15",
+   "coalition": "PARA APARECIDA SEGUIR AVANÇANDO",
+   "declaredAssets": 12689411.15,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/92274/90001991831"
+ },
+ {
+  "id": "exe-pref-sp-3518800",
+  "name": "Pref. Lucas Sanches",
+  "fullName": "Lucas Sanches Promessia",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Guarulhos",
+  "source": "executivo",
+  "state": "SP",
+  "city": "Guarulhos",
+  "ibge": 3518800,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Thiago Surfista",
+   "fullName": "Thiago de Azevedo Lopes Fonseca",
+   "party": "NOVO"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "250001921615",
+   "ballotNumber": "22",
+   "coalition": "A MUDANÇA COMEÇA AGORA",
+   "declaredAssets": 430500,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/64777/250001921615"
+ },
+ {
+  "id": "exe-pref-al-2700300",
+  "name": "Pref. Luciano Barbosa",
+  "fullName": "Jose Luciano Barbosa da Silva",
+  "party": "MDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Arapiraca",
+  "source": "executivo",
+  "state": "AL",
+  "city": "Arapiraca",
+  "ibge": 2700300,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Rute Nezinho",
+   "fullName": "Rutineide Pereira Melo de Lira",
+   "party": "PP"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "20002009772",
+   "ballotNumber": "15",
+   "coalition": "ARAPIRACA 100 ANOS, JUNTOS VAMOS FAZER MUITO MAIS",
+   "declaredAssets": 949928.24,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/27057/20002009772"
+ },
+ {
+  "id": "exe-pref-se-2801207",
+  "name": "Pref. Machadinho",
+  "fullName": "Jose Machado Feitosa Neto",
+  "party": "UNIÃO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Canindé de São Francisco",
+  "source": "executivo",
+  "state": "SE",
+  "city": "Canindé de São Francisco",
+  "ibge": 2801207,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Pank",
+   "fullName": "Joselildo Almeida Pank do Nascimento",
+   "party": "PSDB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "260001934394",
+   "ballotNumber": "44",
+   "coalition": "UNIDOS POR CANINDÉ",
+   "declaredAssets": 5205000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/31232/260001934394"
+ },
+ {
+  "id": "exe-pref-pe-2607901",
+  "name": "Pref. Mano Medeiros",
+  "fullName": "Luiz José Inojosa de Medeiros",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Jaboatão dos Guararapes",
+  "source": "executivo",
+  "state": "PE",
+  "city": "Jaboatão dos Guararapes",
+  "ibge": 2607901,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Irmã Babate",
+   "fullName": "Josabete Maria da Silva",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "170001935254",
+   "ballotNumber": "22",
+   "coalition": "A MUDANÇA CONTINUA",
+   "declaredAssets": 481199.35,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/24570/170001935254"
+ },
+ {
+  "id": "exe-pref-ms-5003702",
+  "name": "Pref. Marçal Filho",
+  "fullName": "Marçal Gonçalves Leite Filho",
+  "party": "PSDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Dourados",
+  "source": "executivo",
+  "state": "MS",
+  "city": "Dourados",
+  "ibge": 5003702,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Gianni Nogueira",
+   "fullName": "Gianni Dias Aguillar Nogueira",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "120002046321",
+   "ballotNumber": "45",
+   "coalition": "45-PSDB/23-CIDADANIA",
+   "declaredAssets": 11575658.53,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/90735/120002046321"
+ },
+ {
+  "id": "exe-pref-rn-2408003-marcos-medeiros",
+  "name": "Pref. Marcos Medeiros",
+  "fullName": "Marcos Medeiros",
+  "party": "REPUBLICANOS",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Mossoró",
+  "source": "executivo",
+  "state": "RN",
+  "city": "Mossoró",
+  "ibge": 2408003,
+  "situacao": "Prefeito(a) desde 27/03/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-03-27",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "desde": "2026-03-27",
+  "nota": "Allyson Bezerra renunciou para disputar o governo do RN e o vice, Marcos Medeiros, assumiu. O partido dele varia entre as fontes (PSD ou Republicanos).",
+  "eleitoPeloTse": {
+   "name": "Allyson",
+   "party": "UNIÃO",
+   "year": 2024
+  }
+ },
+ {
+  "id": "exe-pref-am-1301902",
+  "name": "Pref. Mário Abrahim",
+  "fullName": "Mario Jorge Bouez Abrahim",
+  "party": "REPUBLICANOS",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Itacoatiara",
+  "source": "executivo",
+  "state": "AM",
+  "city": "Itacoatiara",
+  "ibge": 1301902,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Marcela Cristine",
+   "fullName": "Marcela Cristine Andrade da Costa",
+   "party": "MDB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "40002148732",
+   "ballotNumber": "10",
+   "coalition": "COMPROMISSO, RESPEITO E PROGRESSO",
+   "declaredAssets": 230000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/02410/40002148732"
+ },
+ {
+  "id": "exe-pref-ce-2303709",
+  "name": "Pref. Naumi Amorim",
+  "fullName": "Naumi Gomes de Amorim",
+  "party": "PSD",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Caucaia",
+  "source": "executivo",
+  "state": "CE",
+  "city": "Caucaia",
+  "ibge": 2303709,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Priscila Menezes",
+   "fullName": "Ana Priscila Gois Menezes de Sousa",
+   "party": "MDB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "60002309363",
+   "ballotNumber": "55",
+   "coalition": "PRA CAUCAIA VOLTAR A CRESCER",
+   "declaredAssets": 3135933.45,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/13730/60002309363"
+ },
+ {
+  "id": "exe-pref-pr-4125506",
+  "name": "Pref. Nina Singer",
+  "fullName": "Margarida Maria Singer",
+  "party": "PSD",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de São José dos Pinhais",
+  "source": "executivo",
+  "state": "PR",
+  "city": "São José dos Pinhais",
+  "ibge": 4125506,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Delegado Michel",
+   "fullName": "Michel Teixeira de Carvalho",
+   "party": "PODE"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "160001964576",
+   "ballotNumber": "55",
+   "coalition": "Coligação PSD, PSDB/Cidadania, Avante, PRD, Agir DC, Mobiliza e Podem",
+   "declaredAssets": 421022.84,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/78859/160001964576"
+ },
+ {
+  "id": "exe-pref-pi-2207702",
+  "name": "Pref. Novo Francisco",
+  "fullName": "Francisco Emanuel Cunha de Brito",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Parnaíba",
+  "source": "executivo",
+  "state": "PI",
+  "city": "Parnaíba",
+  "ibge": 2207702,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Darllan Barros",
+   "fullName": "Darllan de Almeida Vieira Barros",
+   "party": "PP"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "180002118882",
+   "ballotNumber": "11",
+   "coalition": "DE MÃOS DADAS COM O FUTURO",
+   "declaredAssets": 197380.8,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/11533/180002118882"
+ },
+ {
+  "id": "exe-pref-mg-3170206",
+  "name": "Pref. Paulo Sérgio Ferreira",
+  "fullName": "Paulo Sérgio Ferreira",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Uberlândia",
+  "source": "executivo",
+  "state": "MG",
+  "city": "Uberlândia",
+  "ibge": 3170206,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Vanderlei Pelizer Pereira"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "130002203676",
+   "ballotNumber": "11",
+   "coalition": "UBERLÂNDIA PRA FRENTE",
+   "declaredAssets": 22199652.03,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/54038/130002203676",
+  "nota": "Continua prefeito, mas trocou o PP pelo PL em 07/10/2026."
+ },
+ {
+  "id": "exe-pref-rr-1400472",
+  "name": "Pref. Pinto do Equador",
+  "fullName": "Alessandro Daltro Sousa",
+  "party": "REPUBLICANOS",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Rorainópolis",
+  "source": "executivo",
+  "state": "RR",
+  "city": "Rorainópolis",
+  "ibge": 1400472,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Dr. Athila",
+   "fullName": "Athila Ferreira Bessa",
+   "party": "PDT"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "230002031448",
+   "ballotNumber": "10",
+   "coalition": "Somos Rorainópolis de Verdade",
+   "declaredAssets": 350000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/03085/230002031448"
+ },
+ {
+  "id": "exe-pref-rn-2403251",
+  "name": "Pref. Professora Nilda",
+  "fullName": "Raimunda Nilda da Silva Cruz",
+  "party": "SOLIDARIEDADE",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Parnamirim",
+  "source": "executivo",
+  "state": "RN",
+  "city": "Parnamirim",
+  "ibge": 2403251,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Kátia Pires",
+   "fullName": "Kátia Carvalho de Lima",
+   "party": "UNIÃO"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "200001923142",
+   "ballotNumber": "77",
+   "coalition": "PARNAMIRIM NAS MÃOS DO POVO",
+   "declaredAssets": 389425.38,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/17795/200001923142"
+ },
+ {
+  "id": "exe-pref-rj-3302700",
+  "name": "Pref. Quaquá",
+  "fullName": "Washington Luiz Cardoso Siqueira",
+  "party": "PT",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Maricá",
+  "source": "executivo",
+  "state": "RJ",
+  "city": "Maricá",
+  "ibge": 3302700,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Joãozinho",
+   "fullName": "João Maurício de Freitas",
+   "party": "PT"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "190002218644",
+   "ballotNumber": "13",
+   "coalition": "13-PT/65-PC do B/43-PV",
+   "declaredAssets": 207858.03,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/58530/190002218644"
+ },
+ {
+  "id": "exe-pref-sc-4209102-rejane-gambin",
+  "name": "Pref. Rejane Gambin",
+  "fullName": "Rejane Gambin",
+  "party": "NOVO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Joinville",
+  "source": "executivo",
+  "state": "SC",
+  "city": "Joinville",
+  "ibge": 4209102,
+  "situacao": "Prefeito(a) desde 02/04/2026 (substituiu quem foi eleito em 2024)",
+  "mandate": [
+   "2026-04-02",
+   "2028-12-31"
+  ],
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/",
+  "desde": "2026-04-02",
+  "nota": "Adriano Silva deixou o cargo em abril de 2026 para ser pré-candidato a vice-governador; a vice, Rejane Gambin, assumiu e governa até 2028.",
+  "eleitoPeloTse": {
+   "name": "Adriano Silva",
+   "party": "NOVO",
+   "year": 2024
+  }
+ },
+ {
+  "id": "exe-pref-ma-2105302",
+  "name": "Pref. Rildo Amaral",
+  "fullName": "Rildo de Oliveira Amaral",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Imperatriz",
+  "source": "executivo",
+  "state": "MA",
+  "city": "Imperatriz",
+  "ibge": 2105302,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Carol Pereira",
+   "fullName": "Maria Caroline Duailibe Barros Gomes",
+   "party": "UNIÃO"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "100002337183",
+   "ballotNumber": "11",
+   "coalition": "IMPERATRIZ VAI RENASCER",
+   "declaredAssets": 143758.48,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/08036/100002337183"
+ },
+ {
+  "id": "exe-pref-ce-2307650",
+  "name": "Pref. Roberto Soares Pessoa",
+  "fullName": "Roberto Soares Pessoa",
+  "party": "PSD",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Maracanaú",
+  "source": "executivo",
+  "state": "CE",
+  "city": "Maracanaú",
+  "ibge": 2307650,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Gerson Cecchini de Souza"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "60001981084",
+   "ballotNumber": "44",
+   "coalition": "MARACANAÚ SEMPRE FORTE PARA VOCÊ",
+   "declaredAssets": 13826010.7,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/15857/60001981084",
+  "nota": "Continua prefeito, mas trocou o União Brasil pelo PSD em 2026."
+ },
+ {
+  "id": "exe-pref-sc-4208203",
+  "name": "Pref. Robison Coelho",
+  "fullName": "Robison José Coelho",
+  "party": "PL",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Itajaí",
+  "source": "executivo",
+  "state": "SC",
+  "city": "Itajaí",
+  "ibge": 4208203,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Rubens Angioletti",
+   "fullName": "Rubens Angioletti",
+   "party": "PL"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "240002045112",
+   "ballotNumber": "22",
+   "coalition": "ITAJAÍ QUER AÇÃO",
+   "declaredAssets": 600000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/81612/240002045112"
+ },
+ {
+  "id": "exe-pref-rj-3303302",
+  "name": "Pref. Rodrigo Neves",
+  "fullName": "Rodrigo Neves Barreto",
+  "party": "PDT",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Niterói",
+  "source": "executivo",
+  "state": "RJ",
+  "city": "Niterói",
+  "ibge": 3303302,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Isabel Swan",
+   "fullName": "Isabel Marques Swan",
+   "party": "PV"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "190001901706",
+   "ballotNumber": "12",
+   "coalition": "Por Amor a Niterói",
+   "declaredAssets": 717378.63,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/58653/190001901706"
+ },
+ {
+  "id": "exe-pref-ac-1200450",
+  "name": "Pref. Rosana Gomes",
+  "fullName": "Rosana Pereira da Silva",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Senador Guiomard",
+  "source": "executivo",
+  "state": "AC",
+  "city": "Senador Guiomard",
+  "ibge": 1200450,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Ney do Miltão",
+   "fullName": "José Claudinei Rabelo Martins",
+   "party": "REPUBLICANOS"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "10002090455",
+   "ballotNumber": "11",
+   "coalition": "QUINARI PRÓSPERO E FELIZ",
+   "declaredAssets": 539345,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01538/10002090455",
+  "nota": "Não foi possível conferir quem ocupa a prefeitura hoje; o nome é o de quem foi eleito em 2024."
+ },
+ {
+  "id": "exe-pref-ap-1600279",
+  "name": "Pref. Teddy",
+  "fullName": "Marcel Jandson Menezes",
+  "party": "UNIÃO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Laranjal do Jari",
+  "source": "executivo",
+  "state": "AP",
+  "city": "Laranjal do Jari",
+  "ibge": 1600279,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Pastor Eliá",
+   "fullName": "Eliá Conrado de Araujo",
+   "party": "SOLIDARIEDADE"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "30002100262",
+   "ballotNumber": "44",
+   "coalition": "UNIDOS PELO LARANJAL, CONTINUAÇÃO DE FORÇA, TRABALHO E COMPROMISSO",
+   "declaredAssets": 400000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/06130/30002100262"
+ },
+ {
+  "id": "exe-pref-rr-1400050",
+  "name": "Pref. Wagner Nunes",
+  "fullName": "Wagner de Oliveira Nunes",
+  "party": "REPUBLICANOS",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Alto Alegre",
+  "source": "executivo",
+  "state": "RR",
+  "city": "Alto Alegre",
+  "ibge": 1400050,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Diogo do Paredão",
+   "fullName": "Diogo Araujo Coelho",
+   "party": "PSD"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "230002174595",
+   "ballotNumber": "10",
+   "coalition": "AVANÇA ALTO ALEGRE",
+   "declaredAssets": 300000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/03050/230002174595"
+ },
+ {
+  "id": "exe-pref-to-1702109",
+  "name": "Pref. Wagner Rodrigues",
+  "fullName": "Wagner Rodrigues Barros",
+  "party": "UNIÃO",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Araguaína",
+  "source": "executivo",
+  "state": "TO",
+  "city": "Araguaína",
+  "ibge": 1702109,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Israel Guimarães",
+   "fullName": "Israel Domingues Guimarães Junior",
+   "party": "MDB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "270002029455",
+   "ballotNumber": "44",
+   "coalition": "ARAGUAÍNA CAMINHA PRA FRENTE",
+   "declaredAssets": 1648550.15,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/92410/270002029455"
+ },
+ {
+  "id": "exe-pref-go-5218805",
+  "name": "Pref. Wellington Carrijo",
+  "fullName": "Wellington Soares Carrijo Filho",
+  "party": "MDB",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Rio Verde",
+  "source": "executivo",
+  "state": "GO",
+  "city": "Rio Verde",
+  "ibge": 5218805,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Walter Baylão",
+   "fullName": "Walter Baylão Júnior",
+   "party": "UNIÃO"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "90001986539",
+   "ballotNumber": "15",
+   "coalition": "VALE A PENA CONTINUAR",
+   "declaredAssets": 2611081.51,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/95710/90001986539"
+ },
+ {
+  "id": "exe-pref-es-3205002",
+  "name": "Pref. Weverson Meireles",
+  "fullName": "Weverson Valcker Meireles",
+  "party": "PDT",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Serra",
+  "source": "executivo",
+  "state": "ES",
+  "city": "Serra",
+  "ibge": 3205002,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Delegada Gracimeri",
+   "fullName": "Gracimeri Vieira Soeiro de Castro Gaviorno",
+   "party": "MDB"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "80002165282",
+   "ballotNumber": "12",
+   "coalition": "AMOR PELA SERRA ",
+   "declaredAssets": 676000,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/620/56995/80002165282"
+ },
+ {
+  "id": "exe-pref-ac-1200203",
+  "name": "Pref. Zequinha Lima",
+  "fullName": "José de Souza Lima",
+  "party": "PP",
+  "role": "Prefeito",
+  "roleKey": "prefeito",
+  "house": "Prefeitura de Cruzeiro do Sul",
+  "source": "executivo",
+  "state": "AC",
+  "city": "Cruzeiro do Sul",
+  "ibge": 1200203,
+  "situacao": "Eleito(a) em 2024 · mandato 2025–2028 (TSE)",
+  "mandate": [
+   "2025-01-01",
+   "2028-12-31"
+  ],
+  "vice": {
+   "name": "Delcimar Leite",
+   "fullName": "Delcimar da Silva Leite",
+   "party": "REPUBLICANOS"
+  },
+  "tse": {
+   "year": 2024,
+   "sq": "10002077093",
+   "ballotNumber": "11",
+   "coalition": "TAMO JUNTO CRUZEIRO",
+   "declaredAssets": 752673.16,
+   "status": "ELEITO"
+  },
+  "pageUrl": "https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2024/619/01074/10002077093"
+ }
+]

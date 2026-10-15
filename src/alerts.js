@@ -1,9 +1,10 @@
 // Alertas: o que mudou no Congresso desde a última verificação. Tudo é calculado neste aparelho a partir das APIs
 // públicas; quem a pessoa acompanha nunca sai daqui.
-import { deputyExpenses, deputyPropositions } from './api.js';
+import { deputyExpenses, deputyPropositions, senatorCeaps } from './api.js';
 import { loadComparison, loadSenatePublic, mapLimit } from './votes.js';
 
 export const EXPENSE_THRESHOLD = 5000;
+const CEAPS_WINDOW_DAYS = 90;
 
 const brl = (v) => Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const dateBr = (iso) => new Date(String(iso).slice(0, 10) + 'T12:00:00').toLocaleDateString('pt-BR');
@@ -22,6 +23,7 @@ export async function collectAlerts({ politicians = [], prefs = {} }, deps = {})
     senado = loadSenatePublic,
     expenses = deputyExpenses,
     bills = deputyPropositions,
+    ceaps = senatorCeaps,
   } = deps;
   const deputies = politicians.filter((p) => p.camaraId);
   const senators = politicians.filter((p) => p.senadoId);
@@ -69,7 +71,8 @@ export async function collectAlerts({ politicians = [], prefs = {} }, deps = {})
     } else failures.push('Senado');
   }
 
-  // Gastos e projetos só existem na API da Câmara (deputados federais).
+  // Projetos só existem na API da Câmara (deputados federais); gastos dos deputados também.
+  // (Os gastos dos senadores vêm do resumo da cota, mais abaixo.)
   if (deputies.length && (prefOn(prefs, 'expenses') || prefOn(prefs, 'bills'))) {
     await mapLimit(deputies, 3, async (d) => {
       if (prefOn(prefs, 'expenses')) {
@@ -100,6 +103,25 @@ export async function collectAlerts({ politicians = [], prefs = {} }, deps = {})
         }
       }
     });
+  }
+
+  // Cota dos senadores: o resumo do app traz as despesas grandes mais recentes (scripts/build-ceaps.mjs).
+  if (senators.length && prefOn(prefs, 'expenses')) {
+    const since = new Date(Date.now() - CEAPS_WINDOW_DAYS * 864e5).toISOString().slice(0, 10);
+    for (const s of senators) {
+      try {
+        const entry = await ceaps(s.senadoId);
+        for (const e of entry?.grandes || []) {
+          if (e.data < since || !(e.valor >= EXPENSE_THRESHOLD)) continue;
+          out.push({
+            id: `ceaps:${s.senadoId}:${e.id}`, ts: e.data, kind: 'gasto', politicianId: s.id,
+            text: `${s.name} (${s.party}/${s.uf}) usou ${brl(e.valor)} da cota parlamentar em ${dateBr(e.data)} — ${e.tipo}${e.fornecedor ? `, ${e.fornecedor}` : ''}`,
+          });
+        }
+      } catch {
+        failures.push(`cota de ${s.name}`);
+      }
+    }
   }
 
   out.sort((a, b) => String(b.ts).localeCompare(String(a.ts)));

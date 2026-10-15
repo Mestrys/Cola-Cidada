@@ -2,7 +2,9 @@
 // formato guardado ao acompanhar (Politician), então abrir o perfil e acompanhar usam o mesmo objeto.
 import executivo from '@/data/executivo.json';
 import federation from '@/data/federation.json';
-import { CAPITALS, STATES } from '@/data';
+import cidades from '@/data/cidades.json';
+import { CAPITALS, POLOS, STATES } from '@/data';
+import poloMayors from '@/data/prefeitos-cidades.json';
 import stf from '@/data/stf.json';
 
 import { allDeputies, allSenators } from './api';
@@ -28,8 +30,8 @@ export const SECTIONS: Section[] = [
   { key: 'camara', label: 'Câmara', hint: 'Deputados federais em exercício', byUf: true },
   { key: 'governadores', label: 'Governadores', hint: 'Governadores dos 26 estados e do DF', byUf: true },
   { key: 'assembleias', label: 'Assembleias', hint: 'Deputados estaduais e distritais', byUf: true, requiresUf: true },
-  { key: 'prefeitos', label: 'Prefeitos', hint: 'Prefeitos das 26 capitais', byUf: true },
-  { key: 'vereadores', label: 'Vereadores', hint: 'Vereadores das câmaras das capitais', byUf: true, requiresUf: true },
+  { key: 'prefeitos', label: 'Prefeitos', hint: 'Prefeitos das 26 capitais e das duas maiores cidades de cada estado (por PIB)', byUf: true },
+  { key: 'vereadores', label: 'Vereadores', hint: 'Vereadores das capitais e das duas maiores cidades de cada estado (por PIB)', byUf: true, requiresUf: true },
   { key: 'orgaos', label: 'Contas', hint: 'Receitas, despesas e gasto com pessoal de cada órgão, direto do Tesouro Nacional', byUf: true, requiresUf: true },
 ];
 
@@ -41,6 +43,24 @@ export interface FederationUnit {
 }
 export const UNITS = federation as unknown as FederationUnit[];
 export const ufName = (uf: string) => UNITS.find((u) => u.uf === uf)?.name ?? uf;
+
+export interface City {
+  ibge: number;
+  nome: string;
+  uf: string;
+  kind: 'capital' | 'polo';
+  rankPib: number;
+  pib: number;
+  populacao: number | null;
+  pibPerCapita: number | null;
+}
+const CITY_DATA = cidades as unknown as { pibAno: number; populacaoAno: number; cidades: City[] };
+export const CITIES = CITY_DATA.cidades;
+/** Data em que os ocupantes das cidades-polo foram conferidos em notícias. */
+export const POLOS_CHECKED_AT = (cidades as { ocupantesConsultadosEm?: string }).ocupantesConsultadosEm ?? '';
+export const CITY_YEARS = { pib: CITY_DATA.pibAno, populacao: CITY_DATA.populacaoAno };
+/** Contexto da cidade (IBGE): vale para capitais e cidades-polo. */
+export const cityFacts = (uf: string, name?: string) => CITIES.find((c) => c.uf === uf && c.nome === name);
 
 export const CHECKED_AT = (executivo as { consultadoEm?: string }).consultadoEm ?? '';
 export const STF_VACANCY = (stf as { vaga?: string }).vaga ?? '';
@@ -66,7 +86,7 @@ export async function loadSection(key: SectionKey, uf = ''): Promise<Politician[
     case 'governadores':
       return remember(exe.governadores.map(fromExecutive));
     case 'prefeitos':
-      return remember(exe.prefeitos.map(fromExecutive));
+      return remember([...exe.prefeitos, ...(poloMayors as any[])].map(fromExecutive));
     case 'stf':
       return remember((stf as any).ministros.map((m: any) => ({ ...m, uf: 'BR', mandate: null })));
     case 'senado':
@@ -108,9 +128,10 @@ export async function loadSection(key: SectionKey, uf = ''): Promise<Politician[
     case 'orgaos':
       return []; // a aba Contas lista órgãos, não pessoas (src/lib/contas.ts)
     case 'vereadores': {
-      const load = CAPITALS[uf.toLowerCase()];
-      if (!load) return [];
-      return remember(load().map((c: any) => ({ ...c, uf: c.state || uf, roleKey: 'vereador', mandate: defaultMandate('vereador') })));
+      const capital = CAPITALS[uf.toLowerCase()];
+      if (!capital) return [];
+      const polos = POLOS[uf.toLowerCase()];
+      return remember([...capital(), ...(polos ? polos() : [])].map((c: any) => ({ ...c, uf: c.state || uf, roleKey: 'vereador', mandate: defaultMandate('vereador') })));
     }
   }
 }

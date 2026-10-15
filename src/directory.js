@@ -6,6 +6,8 @@ import {
   allStateDeputies,
   allCapitalCouncilors,
   loadExecutive,
+  loadPoloMayors,
+  poloCouncilors,
   loadStf,
   FEDERATION_UNITS,
 } from './api.js';
@@ -18,8 +20,8 @@ export const SECTIONS = [
   { key: 'camara', label: 'Câmara', icon: 'how_to_vote', hint: 'Deputados federais em exercício', filter: 'uf' },
   { key: 'governadores', label: 'Governadores', icon: 'flag', hint: 'Governadores dos 26 estados e do DF', filter: 'uf' },
   { key: 'assembleias', label: 'Assembleias', icon: 'apartment', hint: 'Deputados estaduais e distritais', filter: 'uf', requiresUf: true },
-  { key: 'prefeitos', label: 'Prefeitos', icon: 'location_city', hint: 'Prefeitos das 26 capitais', filter: 'uf' },
-  { key: 'vereadores', label: 'Vereadores', icon: 'diversity_3', hint: 'Vereadores das câmaras das capitais', filter: 'uf', requiresUf: true },
+  { key: 'prefeitos', label: 'Prefeitos', icon: 'location_city', hint: 'Prefeitos das 26 capitais e das duas maiores cidades de cada estado (por PIB)', filter: 'uf' },
+  { key: 'vereadores', label: 'Vereadores', icon: 'diversity_3', hint: 'Vereadores das capitais e das duas maiores cidades de cada estado (por PIB)', filter: 'uf', requiresUf: true },
   { key: 'orgaos', label: 'Contas', icon: 'receipt_long', hint: 'Transparência e contas de cada órgão' },
 ];
 
@@ -74,8 +76,8 @@ export async function loadSection(key, uf = '') {
       return governadores.map(fromExecutive);
     }
     case 'prefeitos': {
-      const { prefeitos } = await loadExecutive();
-      return prefeitos.map(fromExecutive);
+      const [{ prefeitos }, polos] = await Promise.all([loadExecutive(), loadPoloMayors()]);
+      return [...prefeitos, ...polos].map(fromExecutive);
     }
     case 'assembleias': {
       const list = await allStateDeputies(uf);
@@ -88,8 +90,8 @@ export async function loadSection(key, uf = '') {
       }));
     }
     case 'vereadores': {
-      const list = await allCapitalCouncilors(uf);
-      return list.map((c) => ({
+      const [capital, polos] = await Promise.all([allCapitalCouncilors(uf), poloCouncilors(uf)]);
+      return [...capital, ...polos].map((c) => ({
         ...c,
         source: c.source || `cm-${uf.toLowerCase()}`,
         uf: c.state || uf,

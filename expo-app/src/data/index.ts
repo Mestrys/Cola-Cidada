@@ -57,3 +57,33 @@ export const CAPITALS: Record<string, () => any[]> = {
   se: () => require('./capitais/se.json'),
   to: () => require('./capitais/to.json'),
 };
+
+// vereadores das cidades-polo (as duas maiores economias de cada estado, fora a capital)
+export const POLOS: Record<string, () => any[]> = {
+  ac: () => require('./cidades/ac.json'),
+  al: () => require('./cidades/al.json'),
+  ap: () => require('./cidades/ap.json'),
+  am: () => require('./cidades/am.json'),
+  ba: () => require('./cidades/ba.json'),
+  ce: () => require('./cidades/ce.json'),
+  es: () => require('./cidades/es.json'),
+  go: () => require('./cidades/go.json'),
+  ma: () => require('./cidades/ma.json'),
+  mt: () => require('./cidades/mt.json'),
+  ms: () => require('./cidades/ms.json'),
+  mg: () => require('./cidades/mg.json'),
+  pa: () => require('./cidades/pa.json'),
+  pb: () => require('./cidades/pb.json'),
+  pr: () => require('./cidades/pr.json'),
+  pe: () => require('./cidades/pe.json'),
+  pi: () => require('./cidades/pi.json'),
+  rj: () => require('./cidades/rj.json'),
+  rn: () => require('./cidades/rn.json'),
+  rs: () => require('./cidades/rs.json'),
+  ro: () => require('./cidades/ro.json'),
+  rr: () => require('./cidades/rr.json'),
+  sc: () => require('./cidades/sc.json'),
+  sp: () => require('./cidades/sp.json'),
+  se: () => require('./cidades/se.json'),
+  to: () => require('./cidades/to.json'),
+};

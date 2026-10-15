@@ -70,6 +70,16 @@ export async function deputyProfile(camaraId) {
   };
 }
 
+// Frentes parlamentares de que o deputado participa na legislatura atual (Câmara, dados abertos).
+export async function deputyFronts(camaraId) {
+  const { dados } = await getJson(`${CAMARA_BASE}/deputados/${camaraId}/frentes`);
+  const current = Math.max(0, ...(dados || []).map((f) => f.idLegislatura || 0));
+  return (dados || [])
+    .filter((f) => f.idLegislatura === current)
+    .map((f) => ({ id: f.id, title: String(f.titulo || '').replace(/\s+/g, ' ').trim() }))
+    .sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
+}
+
 export async function deputyPropositions(camaraId, limit = 8) {
   const { dados } = await getJson(
     `${CAMARA_BASE}/proposicoes?idDeputadoAutor=${camaraId}&siglaTipo=PL,PEC&ordem=DESC&ordenarPor=id&itens=${limit}`
@@ -260,6 +270,33 @@ export async function senatorVotes(senadoId, limit = 10) {
   }
 }
 
+// Resumo da cota dos senadores (CEAPS), gerado por scripts/build-ceaps.mjs: a API do Senado devolve ~10 MB por ano
+// e não filtra por senador, então o app lê este resumo. A data de geração aparece na tela.
+export const loadCeaps = () => staticJson('/src/data/ceaps.json');
+export async function senatorCeaps(senadoId) {
+  const data = await loadCeaps();
+  const s = data.senadores[String(senadoId)];
+  return s ? { ...s, geradoEm: data.geradoEm, ultimaDespesa: data.ultimaDespesa, limite: data.limiteDespesaGrande } : null;
+}
+
+// Comissões em que o senador atua hoje (sem data de fim), com a função (titular, suplente, presidente...).
+export async function senatorCommittees(senadoId) {
+  const data = await getJson(`${SENADO_BASE}/senador/${senadoId}/comissoes.json`);
+  const raw = data?.MembroComissaoParlamentar?.Parlamentar?.MembroComissoes?.Comissao;
+  const list = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  return list
+    .filter((c) => !c.DataFim)
+    .map((c) => ({
+      code: c.IdentificacaoComissao?.CodigoComissao,
+      acronym: c.IdentificacaoComissao?.SiglaComissao || '',
+      name: c.IdentificacaoComissao?.NomeComissao || '',
+      house: c.IdentificacaoComissao?.SiglaCasaComissao || '',
+      role: c.DescricaoParticipacao || '',
+      since: c.DataInicio || '',
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+}
+
 // Votações nominais do Plenário do Senado com a situação de cada senador (voto, presença, licença...).
 export async function senateNominalVotings(sinceIso, untilIso) {
   const list = await getJson(`${SENADO_BASE}/votacao?dataInicio=${sinceIso}&dataFim=${untilIso}`);
@@ -399,6 +436,36 @@ async function staticJson(path) {
 // Presidente, governadores e prefeitos das capitais (TSE, com os ocupantes atuais por cima: scripts/build-executive-data.mjs).
 export const loadExecutive = () => staticJson('/src/data/executivo.json');
 export const loadStf = () => staticJson('/src/data/stf.json');
+
+/* ================= CIDADES-POLO (as duas maiores economias de cada estado, fora a capital) ================= */
+
+// Catálogo com PIB, população e posição no estado (IBGE), de capitais e polos: scripts/build-cidades.mjs.
+export const loadCidades = () => staticJson('/src/data/cidades.json');
+// Prefeitos dos polos (TSE 2024), no mesmo formato dos prefeitos das capitais.
+export const loadPoloMayors = () => staticJson('/src/data/prefeitos-cidades.json');
+
+const poloCouncilCache = new Map();
+export async function poloCouncilors(uf) {
+  const key = String(uf || '').toLowerCase();
+  if (!key) return [];
+  if (poloCouncilCache.has(key)) return poloCouncilCache.get(key);
+  try {
+    const res = await fetch(`/src/data/cidades/${key}.json`);
+    if (res.ok) {
+      const data = await res.json();
+      poloCouncilCache.set(key, data);
+      return data;
+    }
+  } catch (err) {
+    console.warn(`Fallback para cidades-polo ${key}:`, err);
+  }
+  return [];
+}
+
+export async function cityFacts(uf, name) {
+  const { cidades } = await loadCidades();
+  return cidades.find((c) => c.uf === uf && c.nome === name) || null;
+}
 
 /* ================= DADOS ELEITORAIS DO TSE (DIVULGACANDCONTAS) ================= */
 

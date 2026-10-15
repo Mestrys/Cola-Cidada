@@ -22,7 +22,17 @@ const src: Sources = {
     { value: 120, type: 'Combustível', supplier: 'Posto', date: '2026-08-21', docNumber: '100' },
   ],
   bills: async () => [{ id: 55, type: 'PL', number: 10, year: 2026, summary: 'Cria o programa Y.', date: '2026-08-15', url: 'https://exemplo/pl' }],
+  ceaps: () => null,
 };
+const recent = (days: number) => new Date(Date.now() - days * 864e5).toISOString().slice(0, 10);
+src.ceaps = (id) => ({
+  nome: 'Sen. B', anos: {}, geradoEm: '2026-10-15', ultimaDespesa: '2026-10-15', limite: 5000,
+  grandes: [
+    { id: 1, data: recent(10), valor: 9100, tipo: 'Divulgação da atividade parlamentar', fornecedor: 'Gráfica Y', documento: '1' },
+    { id: 2, data: recent(200), valor: 8000, tipo: 'Aluguel', fornecedor: 'Imobiliária Z', documento: '2' }, // fora da janela de 90 dias
+    { id: 3, data: recent(5), valor: 4000, tipo: 'Combustível', fornecedor: 'Posto', documento: '3' }, // abaixo do limite
+  ].map((e) => ({ ...e, id: id * 100 + e.id })),
+});
 const prefs = { plenario: true, rollcall: true, expenses: true, bills: true };
 
 describe('collectAlerts', () => {
@@ -37,9 +47,13 @@ describe('collectAlerts', () => {
     const { alerts } = await collectAlerts({ politicians: [DEP, SEN], prefs }, src);
     const kinds = alerts.map((a) => a.kind);
     expect(kinds.filter((k) => k === 'votacao')).toHaveLength(2);
-    expect(kinds.filter((k) => k === 'gasto')).toHaveLength(1); // a nota de R$ 120 fica de fora
+    expect(kinds.filter((k) => k === 'gasto')).toHaveLength(2); // a nota de R$ 120 fica de fora; entra a despesa grande do senador
     expect(kinds.filter((k) => k === 'proposicao')).toHaveLength(1);
-    const gasto = alerts.find((a) => a.kind === 'gasto')!;
+    const gasto = alerts.find((a) => a.kind === 'gasto' && a.politicianId === DEP.id)!;
+    const sen = alerts.filter((a) => a.kind === 'gasto' && a.politicianId === SEN.id);
+    expect(sen).toHaveLength(1); // só a despesa grande e recente
+    expect(sen[0].text).toMatch(/Sen\. B \(PL\/RJ\) usou R\$ 9\.100,00 da cota parlamentar .* Gráfica Y/);
+    expect(sen[0].id).toBe('ceaps:2:201');
     expect(gasto.url).toBe('https://exemplo/nota.pdf');
     expect(gasto.text).toMatch(/R\$ 7\.200,50 .* em 20\/08\/2026/);
     const ts = alerts.map((a) => String(a.ts));

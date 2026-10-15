@@ -13,7 +13,8 @@ describe('contas', () => {
     expect(federalBodies().map((b) => b.key)).toEqual(['presidencia', 'camara', 'senado', 'stf']);
     for (const u of UNITS) {
       const keys = stateBodies(u.uf).map((b) => b.key.split('-')[0]);
-      expect(keys).toEqual(u.hasCouncil ? ['gov', 'al', 'pref', 'cm'] : ['gov', 'al']);
+      // a capital vem primeiro; depois a prefeitura e a câmara de cada uma das duas cidades-polo
+      expect(keys).toEqual(u.hasCouncil ? ['gov', 'al', 'pref', 'cm', 'pref', 'cm', 'pref', 'cm'] : ['gov', 'al']);
     }
     // o filtro separa a Casa do Tribunal de Contas que vem no mesmo relatório do Legislativo
     const al = stateBodies('SP')[1];

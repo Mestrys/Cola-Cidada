@@ -2,7 +2,7 @@
 // com pessoal (RGF). Mesmos dados que União, estados e municípios entregam por lei (LRF), sem chave. Lógica do PWA.
 import entes from '@/data/entes.json';
 
-import { UNITS } from './directory';
+import { CITIES, UNITS } from './directory';
 
 const SICONFI = 'https://apidatalake.tesouro.gov.br/ords/siconfi/tt';
 const cache = new Map<string, any>();
@@ -121,6 +121,8 @@ export interface Body {
   heavy?: boolean;
   portal?: string;
   portalLabel?: string;
+  /** linha de apoio, ex.: a posição da cidade-polo no estado */
+  note?: string;
 }
 
 export const UNIAO: Ente = { kind: 'uniao', ibge: 1 };
@@ -146,6 +148,14 @@ export function stateBodies(uf: string): Body[] {
     list.push(
       { key: `pref-${uf}`, name: `Prefeitura de ${u.capital}`, ente: municipio, budget: true },
       { key: `cm-${uf}`, name: u.councilName || `Câmara Municipal de ${u.capital}`, ente: municipio, poder: 'L', match: /^C[âa]mara/i }
+    );
+  }
+  for (const c of CITIES.filter((x) => x.uf === uf && x.kind === 'polo')) {
+    const municipio: Ente = { kind: 'municipio', ibge: c.ibge };
+    const note = `${c.rankPib}ª maior economia do estado`;
+    list.push(
+      { key: `pref-${c.ibge}`, name: `Prefeitura de ${c.nome}`, ente: municipio, budget: true, note },
+      { key: `cm-${c.ibge}`, name: `Câmara Municipal de ${c.nome}`, ente: municipio, poder: 'L', match: /^C[âa]mara/i, note }
     );
   }
   return list;

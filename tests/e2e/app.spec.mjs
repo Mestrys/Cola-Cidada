@@ -566,6 +566,71 @@ test.describe('fluxos', () => {
     await expect(page.locator('.office-list')).toContainText('Aposentadoria compulsória');
   });
 
+  test('painel: prefeitos e vereadores incluem as duas maiores cidades de cada estado, com o contexto da cidade no perfil', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=prefeitos]').click();
+    await expect(page.locator('#painel-count')).toContainText('78 resultados');
+    await page.locator('#painel-uf').selectOption('SC');
+    await expect(page.locator('#painel-count')).toHaveText('3 resultados');
+    await expect(page.locator('.painel-grid')).toContainText('Joinville');
+    await expect(page.locator('.painel-grid')).toContainText('Itajaí');
+    await expect(page.locator('.painel-grid')).toContainText('Florianópolis');
+
+    await page.locator('#painel-tabs [data-section=vereadores]').click();
+    await expect(page.locator('#painel-city-field')).toBeVisible();
+    await expect(page.locator('#painel-city option')).toHaveText(['Todas as cidades (3)', 'Florianópolis', 'Itajaí', 'Joinville']);
+    await page.locator('#painel-city').selectOption('Itajaí');
+    await expect(page.locator('#painel-count')).toContainText('17 resultados');
+    await page.locator('.painel-open').first().click();
+    await expect(page.locator('#city-facts')).toContainText('2ª maior economia do estado');
+    await expect(page.locator('#city-facts')).toContainText('264.054');
+    await page.keyboard.press('Escape');
+
+    // trocar de estado zera a cidade escolhida
+    await page.locator('#painel-uf').selectOption('SP');
+    await expect(page.locator('#painel-city')).toHaveValue('');
+    await expect(page.locator('#painel-city option')).toContainText(['Guarulhos', 'Osasco', 'São Paulo']);
+  });
+
+  test('painel: prefeito interino de cidade-polo mostra a nota, quem foi eleito e o aviso de data da conferência', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=prefeitos]').click();
+    await expect(page.locator('#painel-results')).toContainText('conferidos em notícias de 15/10/2026');
+    await page.locator('#painel-q').fill('coari');
+    await expect(page.locator('#painel-count')).toHaveText('1 resultado');
+    await expect(page.locator('.painel-card')).toContainText('interino');
+    await page.locator('.painel-open').click();
+    await expect(page.locator('#tab-local .office-list')).toContainText('Eleito(a) na chapa original');
+    await expect(page.locator('.modal')).toContainText('afastado por 90 dias');
+  });
+
+  test('painel: Contas lista a prefeitura e a câmara de cada cidade-polo depois das da capital; o DF não tem polos', async ({ page }) => {
+    await seed(page, { politicians: [] });
+    await go(page, 'painel');
+    await page.locator('#painel-tabs [data-section=orgaos]').click();
+    await page.locator('#painel-uf').selectOption('SP');
+    await expect(page.locator('#painel-count')).toContainText('12 órgãos');
+    await expect(page.locator('.painel-name').nth(8)).toHaveText('Prefeitura de Osasco');
+    await expect(page.locator('.painel-card').nth(8)).toContainText('2ª maior economia do estado');
+    await page.locator('#painel-uf').selectOption('DF');
+    await expect(page.locator('#painel-count')).toHaveText('6 órgãos: federais, de Distrito Federal');
+  });
+
+  test('perfil do senador mostra o resumo da cota (CEAPS) gerado do dado aberto, com a data do resumo', async ({ page }) => {
+    const ceaps = JSON.parse((await import('node:fs')).readFileSync(new URL('../../src/data/ceaps.json', import.meta.url), 'utf8'));
+    const [id, s] = Object.entries(ceaps.senadores).find(([, x]) => x.grandes.length >= 2);
+    await seed(page, { politicians: [{ id: `senado-${id}`, source: 'senado', senadoId: id, name: 'Senador Real', party: 'MDB', uf: 'SE', roleKey: 'senador', mandate: ['2023-02-01', '2031-01-31'] }] });
+    await go(page, 'meus-politicos');
+    await page.locator('[data-details]').first().click();
+    await page.locator('#pol-tabs [data-tab=cota]').click();
+    await expect(page.locator('#tab-cota')).toContainText('Cota parlamentar (CEAPS)');
+    await expect(page.locator('#tab-cota')).toContainText('Resumo de');
+    await expect(page.locator('#tab-cota')).toContainText(Object.keys(s.anos).sort().reverse()[0]);
+    await expect(page.locator('#tab-cota')).toContainText('Despesas a partir de');
+  });
+
   test('cadastro antigo com data da ALESP exibe o mandato correto', async ({ page }) => {
     await seed(page);
     await go(page, 'meus-politicos');

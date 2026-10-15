@@ -9,6 +9,7 @@ import { useSnackbar } from '@/components/ui/snackbar';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { collectAlerts, EXPENSE_THRESHOLD, prefOn } from '@/lib/alerts';
+import { disableNotifications, enableNotifications, notificationsSupported } from '@/lib/notifications';
 import { useStore } from '@/lib/store';
 import type { Alert, AlertKind, Prefs } from '@/lib/types';
 
@@ -26,7 +27,7 @@ const money = EXPENSE_THRESHOLD.toLocaleString('pt-BR');
 const TOGGLES: { key: keyof Prefs; title: string; hint: string }[] = [
   { key: 'plenario', title: 'Votações do Plenário', hint: 'Novas votações nominais na Câmara e no Senado, para qualquer pessoa, sem acompanhar ninguém.' },
   { key: 'rollcall', title: 'Votos de quem você acompanha', hint: 'Como cada deputado ou senador que você acompanha votou nessas votações.' },
-  { key: 'expenses', title: `Gastos da cota acima de R$ ${money}`, hint: 'Notas da cota parlamentar (CEAP) dos deputados federais que você acompanha.' },
+  { key: 'expenses', title: `Gastos da cota acima de R$ ${money}`, hint: 'Despesas grandes da cota parlamentar dos deputados federais (CEAP) e dos senadores (CEAPS) que você acompanha.' },
   { key: 'bills', title: 'Projetos de lei apresentados', hint: 'PLs e PECs de autoria dos deputados federais que você acompanha.' },
 ];
 
@@ -69,6 +70,23 @@ export default function AlertasScreen() {
       snackbar.show('Erro temporário ao consultar as bases de dados abertas.');
     }
     setChecking(false);
+  };
+
+  const toggleNotify = async (on: boolean) => {
+    if (!on) {
+      setPref('notify', false);
+      await disableNotifications().catch(() => {});
+      return;
+    }
+    try {
+      const result = await enableNotifications();
+      setPref('notify', result === 'on');
+      if (result === 'denied') snackbar.show('Sem permissão para avisar. Libere as notificações nos ajustes do aparelho.');
+      else if (result === 'on') snackbar.show('Avisos ligados. Só o que for novo daqui em diante vai avisar.');
+    } catch {
+      setPref('notify', false);
+      snackbar.show('Não foi possível ligar os avisos agora.');
+    }
   };
 
   return (
@@ -118,6 +136,29 @@ export default function AlertasScreen() {
 
       <View style={card}>
         <ThemedText type="smallBold" accessibilityRole="header">
+          Avisos no aparelho
+        </ThemedText>
+        <View style={styles.toggle}>
+          <View style={styles.flex}>
+            <ThemedText type="smallBold">Avisar quando houver alerta novo</ThemedText>
+            <ThemedText type="small" themeColor="textSecondary">
+              {notificationsSupported
+                ? 'Desligado por padrão. O aparelho confere as bases públicas de tempos em tempos e avisa aqui mesmo: nada é enviado a servidor. O sistema decide quando conferir (no mínimo a cada 15 minutos, sem horário garantido), então o aviso pode atrasar.'
+                : 'Disponível só no aplicativo para Android e iOS.'}
+            </ThemedText>
+          </View>
+          <Switch
+            value={state.prefs.notify === true}
+            disabled={!notificationsSupported}
+            onValueChange={toggleNotify}
+            accessibilityLabel="Avisar quando houver alerta novo"
+            trackColor={{ true: theme.primary }}
+          />
+        </View>
+      </View>
+
+      <View style={card}>
+        <ThemedText type="smallBold" accessibilityRole="header">
           O que gera alertas
         </ThemedText>
         {TOGGLES.map((t) => (
@@ -137,7 +178,7 @@ export default function AlertasScreen() {
           </View>
         ))}
         <ThemedText type="small" themeColor="textSecondary">
-          Tudo é calculado neste aparelho, a partir das APIs públicas. Gastos e projetos só existem para deputados federais.
+          Tudo é calculado neste aparelho, a partir das APIs públicas. Projetos só existem para deputados federais; a cota dos senadores vem de um resumo do dado aberto do Senado, atualizado de tempos em tempos.
         </ThemedText>
       </View>
     </Screen>
