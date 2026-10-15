@@ -120,7 +120,7 @@ function senadoVotingCard(v, senators, i) {
   <article class="card stack u-gap-14" data-text="${esc((v.matter + ' ' + v.summary).toLowerCase())}" data-category="${v.category || 'geral'}">
     <div class="row between">
       <div class="row u-gap-8">
-        <span class="chip blue">${esc(v.matter)}</span>
+        <span class="chip blue">${esc(v.matter)}${v.round ? ` (${esc(v.round)})` : ''}</span>
         <span class="chip ${isAprov ? 'green' : 'gold'}">${esc(v.result || 'Deliberado')}</span>
         <span class="chip xs">Senado Federal</span>
       </div>

@@ -7,7 +7,7 @@ const camara = async (pols) => [
   { id: 'v1', data: '2026-09-02', descricao: 'Aprovado o PL do saneamento.', byPol: Object.fromEntries(pols.filter((p) => p.camaraId).map((p) => [p.id, 'Sim'])) },
 ];
 const senado = async (pols) => [
-  { key: 7, date: '2026-09-01', matter: 'PEC 1/2026', summary: 'Dispõe sobre a saúde.', result: 'Aprovado', yes: 60, no: 10, secret: false, bySenator: Object.fromEntries(pols.filter((p) => p.senadoId).map((p) => [p.id, 'Não'])) },
+  { key: 7, date: '2026-09-01', matter: 'PEC 1/2026', round: '2º turno', summary: 'Dispõe sobre a saúde.', result: 'Aprovado', yes: 60, no: 10, secret: false, bySenator: Object.fromEntries(pols.filter((p) => p.senadoId).map((p) => [p.id, 'Não'])) },
 ];
 const expenses = async () => [
   { value: 7200.5, type: 'Divulgação', supplier: 'Gráfica X', date: '2026-08-20', docNumber: '99', receiptUrl: 'https://exemplo/nota.pdf' },
@@ -22,7 +22,7 @@ test('sem acompanhar ninguém, só chegam as votações do Plenário (Câmara e 
   const { alerts, failures } = await collectAlerts({ politicians: [], prefs: {} }, deps);
   assert.deepEqual(failures, []);
   assert.deepEqual(alerts.map((a) => a.kind), ['plenario', 'plenario']);
-  assert.match(alerts.find((a) => a.id === 'plen-senado:7').text, /Sim 60, Não 10/);
+  assert.match(alerts.find((a) => a.id === 'plen-senado:7').text, /PEC 1\/2026 \(2º turno\): Aprovado \(Sim 60, Não 10\)/);
 });
 
 test('acompanhando, chegam votos, gastos acima do limite e projetos, mais recentes primeiro', async () => {
