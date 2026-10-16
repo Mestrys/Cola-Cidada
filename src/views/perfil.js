@@ -1,5 +1,6 @@
 import { store } from '../store.js';
 import { toast, esc, brl, $, ROLES } from '../ui.js';
+import { partyOrBirth } from '../simbolos.js';
 import { FEDERATION_UNITS } from '../api.js';
 
 export function render(root) {
@@ -92,7 +93,7 @@ export function render(root) {
                     </div>
                     <div>
                       <b class="u-fs-13_5">${esc(p.name)}</b><br>
-                      <span class="xs muted">${esc(p.party)}/${esc(p.uf)} • ${esc(ROLES[p.roleKey]?.label || 'Mandato')}</span>
+                      <span class="xs muted">${esc([partyOrBirth(p), ROLES[p.roleKey]?.label || 'Mandato'].filter(Boolean).join(' • '))}</span>
                     </div>
                   </div>
                   <div class="row u-gap-6">

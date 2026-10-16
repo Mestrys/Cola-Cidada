@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/avatar';
+import { PartyChip } from '@/components/party-chip';
 import { Button } from '@/components/ui/button';
 import { ScreenHeader, screenContent } from '@/components/ui/screen';
 import { Spacing } from '@/constants/theme';
@@ -14,6 +15,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { budgetSummary, federalBodies, money, personnelSpending, recentContracts, SICONFI_URL, stateBodies, type Body, type Contract } from '@/lib/contas';
 import { CHECKED_AT, POLOS_CHECKED_AT, loadSection, matches, placeOf, SECTIONS, STF_VACANCY, UNITS, type SectionKey } from '@/lib/directory';
 import { formatDate, ROLES } from '@/lib/mandate';
+import { partyOrBirth } from '@/lib/simbolos';
 import { useStore } from '@/lib/store';
 import type { Politician } from '@/lib/types';
 
@@ -37,11 +39,10 @@ function Chip({ label, a11y, on, onPress, role = 'button' }: { label: string; a1
 function Row({ p, followed, onPress }: { p: Politician; followed: boolean; onPress: () => void }) {
   const theme = useTheme();
   const role = ROLES[p.roleKey]?.label ?? 'Agente público';
-  const party = p.party && p.party !== '—' ? p.party : '';
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={`${p.name}, ${role}, ${[party, placeOf(p)].filter(Boolean).join(', ')}${followed ? ', você acompanha' : ''}. Ver perfil`}
+      accessibilityLabel={`${p.name}, ${role}, ${[partyOrBirth(p).replace('/', ' '), placeOf(p)].filter(Boolean).join(', ')}${followed ? ', você acompanha' : ''}. Ver perfil`}
       onPress={onPress}
       style={({ pressed }) => [styles.row, { backgroundColor: theme.backgroundElement, borderColor: theme.border }, pressed && styles.pressed]}>
       <Avatar name={p.name} uri={p.photo} />
@@ -50,8 +51,9 @@ function Row({ p, followed, onPress }: { p: Politician; followed: boolean; onPre
           {p.name}
         </ThemedText>
         <ThemedText type="small" themeColor="textSecondary">
-          {[role, party, placeOf(p)].filter(Boolean).join(' · ')}
+          {[role, placeOf(p)].filter(Boolean).join(' · ')}
         </ThemedText>
+        <PartyChip politician={p} />
         {p.condicao || followed ? (
           <ThemedText type="small" style={{ color: theme.primary }}>
             {[p.condicao, followed ? 'Você acompanha' : ''].filter(Boolean).join(' · ')}

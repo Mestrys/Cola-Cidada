@@ -9,6 +9,7 @@ import * as comparador from './views/comparador.js';
 import * as alertas from './views/alertas.js';
 import * as perfil from './views/perfil.js';
 import * as poderes from './views/poderes.js';
+import { refreshFollowed } from './refresh.js';
 
 // nav: false — a tela existe (links internos levam a ela), mas não ocupa lugar na navegação.
 const routes = {
@@ -418,4 +419,6 @@ window.addEventListener('hashchange', () => {
 });
 
 // Nada a escolher no primeiro acesso: o Painel abre direto, com tudo público.
+// fichas antigas de ministros do STF ganham o estado de nascimento e a foto antes da primeira tela
+await refreshFollowed().catch(() => {});
 render();

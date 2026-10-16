@@ -3,6 +3,7 @@ import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { Avatar } from '@/components/ui/avatar';
+import { PartyChip } from '@/components/party-chip';
 import { Button } from '@/components/ui/button';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { Screen } from '@/components/ui/screen';
@@ -16,6 +17,7 @@ import { senatorCeaps } from '@/lib/ceaps';
 import { money } from '@/lib/contas';
 import { authorEmendas, cityEmendas, EMENDAS_DESDE, type AuthorEmendas } from '@/lib/emendas';
 import { CITY_YEARS, cityFacts, findSeen, placeOf } from '@/lib/directory';
+import { birthplace, photoCredit } from '@/lib/simbolos';
 import { useStore } from '@/lib/store';
 import type { Politician } from '@/lib/types';
 
@@ -36,6 +38,7 @@ function officeRows(p: Politician): [string, string | undefined][] {
     return [
       ['Cargo', p.cargo || 'Ministro(a)'],
       ['Nome completo', p.fullName],
+      ['Natural de', birthplace(p)?.texto],
       ['No STF desde', formatDate(p.posse)],
       ['Indicado(a) por', p.indicadoPor],
       ['Aposentadoria compulsória (75 anos)', p.aposentadoriaCompulsoria ? String(p.aposentadoriaCompulsoria) : undefined],
@@ -213,6 +216,7 @@ export default function PoliticoScreen() {
   const m = mandateProgress(p);
   const card = [styles.card, { backgroundColor: theme.backgroundElement, borderColor: theme.border }];
   const url = officialPage(p);
+  const credit = photoCredit(p);
   const prof = dossier.data?.profile && 'value' in dossier.data.profile ? dossier.data.profile.value : undefined;
 
   return (
@@ -225,8 +229,14 @@ export default function PoliticoScreen() {
             {p.name}
           </ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
-            {[ROLES[p.roleKey]?.label, p.party && p.party !== '—' ? p.party : '', placeOf(p)].filter(Boolean).join(' • ')}
+            {[ROLES[p.roleKey]?.label, placeOf(p)].filter(Boolean).join(' • ')}
           </ThemedText>
+          <PartyChip politician={p} />
+          {credit ? (
+            <ThemedText type="small" themeColor="textSecondary" accessibilityRole={credit.url ? 'link' : undefined} onPress={credit.url ? () => Linking.openURL(credit.url) : undefined}>
+              {credit.texto}
+            </ThemedText>
+          ) : null}
         </View>
       </View>
 

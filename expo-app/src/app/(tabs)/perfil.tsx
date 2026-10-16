@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Linking, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -7,7 +7,50 @@ import { Screen } from '@/components/ui/screen';
 import { useSnackbar } from '@/components/ui/snackbar';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { credits, type Credit } from '@/lib/creditos';
 import { useStore } from '@/lib/store';
+
+function CreditList({ title, items }: { title: string; items: Credit[] }) {
+  return (
+    <View style={styles.list}>
+      <ThemedText type="smallBold" accessibilityRole="header">
+        {title}
+      </ThemedText>
+      {items.map((c) => (
+        <ThemedText key={c.titulo} type="small" themeColor="textSecondary" accessibilityRole="link" onPress={() => Linking.openURL(c.url)}>
+          {c.titulo}: {c.texto}
+        </ThemedText>
+      ))}
+    </View>
+  );
+}
+
+/** Créditos das imagens: fotos do STF (autor e licença), bandeiras dos partidos e dos estados. */
+function CreditsCard({ style }: { style: object[] }) {
+  const [open, setOpen] = useState(false);
+  const c = open ? credits() : null;
+  return (
+    <View style={style}>
+      <ThemedText type="smallBold" accessibilityRole="header">
+        Créditos das imagens
+      </ThemedText>
+      <ThemedText type="small" themeColor="textSecondary">
+        Fotos dos governadores, prefeitos, deputados estaduais e vereadores: Tribunal Superior Eleitoral (dados abertos de 2022 e 2024). Fotos dos deputados federais e senadores: Câmara dos Deputados e Senado Federal. Ministros do STF não têm vínculo partidário: no lugar do partido, o app mostra o estado onde nasceram (Wikidata, conferido pela data de nascimento).
+      </ThemedText>
+      <Button label={open ? 'Ocultar a lista' : 'Ver fotos do STF e bandeiras'} variant="secondary" accessibilityState={{ expanded: open }} onPress={() => setOpen(!open)} />
+      {c ? (
+        <>
+          <CreditList title="Fotos dos ministros do STF (Wikimedia Commons)" items={c.ministros} />
+          <CreditList title="Bandeiras dos partidos (Wikimedia Commons, domínio público)" items={c.partidos} />
+          <CreditList title="Bandeiras dos estados (Wikimedia Commons, domínio público)" items={c.estados} />
+          <ThemedText type="small" themeColor="textSecondary">
+            Nomes, logos e bandeiras de partidos podem ser marcas registradas dos respectivos partidos; aparecem aqui apenas para identificá-los.
+          </ThemedText>
+        </>
+      ) : null}
+    </View>
+  );
+}
 
 export default function PerfilScreen() {
   const theme = useTheme();
@@ -30,6 +73,8 @@ export default function PerfilScreen() {
           Acompanhando agora: {state.politicians.length} {state.politicians.length === 1 ? 'político' : 'políticos'}.
         </ThemedText>
       </View>
+
+      <CreditsCard style={card} />
 
       <View style={card}>
         <ThemedText type="smallBold" accessibilityRole="header">
@@ -62,4 +107,5 @@ export default function PerfilScreen() {
 const styles = StyleSheet.create({
   card: { borderRadius: 16, borderWidth: 1, padding: Spacing.three, gap: Spacing.two },
   row: { flexDirection: 'row', gap: Spacing.two, flexWrap: 'wrap' },
+  list: { gap: Spacing.one },
 });

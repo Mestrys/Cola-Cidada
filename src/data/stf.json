@@ -17,7 +17,17 @@
    "posse": "2002-06-20",
    "indicadoPor": "Fernando Henrique Cardoso",
    "aposentadoriaCompulsoria": 2030,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Diamantino",
+    "uf": "MT"
+   },
+   "photo": "/fotos/stf/gilmar-mendes.jpg",
+   "fotoCredito": {
+    "autor": "Fabio Rodrigues Pozzebom/ABr",
+    "licenca": "CC BY 3.0 br",
+    "url": "https://commons.wikimedia.org/wiki/File:Gilmar_Mendes_(cropped).jpg"
+   }
   },
   {
    "id": "stf-carmen-lucia",
@@ -33,7 +43,17 @@
    "posse": "2006-06-21",
    "indicadoPor": "Luiz Inácio Lula da Silva",
    "aposentadoriaCompulsoria": 2029,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Montes Claros",
+    "uf": "MG"
+   },
+   "photo": "/fotos/stf/carmen-lucia.jpg",
+   "fotoCredito": {
+    "autor": "Marcelo Camargo/Agência Brasil",
+    "licenca": "CC BY 3.0 br",
+    "url": "https://commons.wikimedia.org/wiki/File:C%C3%A1rmen_L%C3%BAcia_em_2016_02_(cropped_3x4).jpg"
+   }
   },
   {
    "id": "stf-dias-toffoli",
@@ -49,7 +69,17 @@
    "posse": "2009-10-23",
    "indicadoPor": "Luiz Inácio Lula da Silva",
    "aposentadoriaCompulsoria": 2042,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Marília",
+    "uf": "SP"
+   },
+   "photo": "/fotos/stf/dias-toffoli.jpg",
+   "fotoCredito": {
+    "autor": "Geraldo Magela/Agência Senado",
+    "licenca": "CC BY 2.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Toffoli_aniversario_da_constitui%C3%A7%C3%A3o.jpg"
+   }
   },
   {
    "id": "stf-luiz-fux",
@@ -65,7 +95,17 @@
    "posse": "2011-03-03",
    "indicadoPor": "Dilma Rousseff",
    "aposentadoriaCompulsoria": 2028,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Rio de Janeiro",
+    "uf": "RJ"
+   },
+   "photo": "/fotos/stf/luiz-fux.jpg",
+   "fotoCredito": {
+    "autor": "Rosinei Coutinho/STF",
+    "licenca": "Public domain",
+    "url": "https://commons.wikimedia.org/wiki/File:19.12.2025_-_Luiz_Fux.jpg"
+   }
   },
   {
    "id": "stf-edson-fachin",
@@ -81,7 +121,17 @@
    "posse": "2015-06-16",
    "indicadoPor": "Dilma Rousseff",
    "aposentadoriaCompulsoria": 2033,
-   "cargo": "Presidente do STF"
+   "cargo": "Presidente do STF",
+   "naturalidade": {
+    "cidade": "Rondinha",
+    "uf": "RS"
+   },
+   "photo": "/fotos/stf/edson-fachin.jpg",
+   "fotoCredito": {
+    "autor": "Marcelo Camargo/Agência Brasil",
+    "licenca": "CC BY 3.0 br",
+    "url": "https://commons.wikimedia.org/wiki/File:Luiz_Edson_Fachin-12-05.2015.jpg"
+   }
   },
   {
    "id": "stf-alexandre-de-moraes",
@@ -97,7 +147,17 @@
    "posse": "2017-03-22",
    "indicadoPor": "Michel Temer",
    "aposentadoriaCompulsoria": 2043,
-   "cargo": "Vice-presidente do STF"
+   "cargo": "Vice-presidente do STF",
+   "naturalidade": {
+    "cidade": "São Paulo",
+    "uf": "SP"
+   },
+   "photo": "/fotos/stf/alexandre-de-moraes.jpg",
+   "fotoCredito": {
+    "autor": "Isac Nóbrega",
+    "licenca": "CC BY 2.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Ministro_Alexandre_de_Moraes_como_presidente_do_TSE.jpg"
+   }
   },
   {
    "id": "stf-nunes-marques",
@@ -113,7 +173,17 @@
    "posse": "2020-11-05",
    "indicadoPor": "Jair Bolsonaro",
    "aposentadoriaCompulsoria": 2047,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Teresina",
+    "uf": "PI"
+   },
+   "photo": "/fotos/stf/nunes-marques.jpg",
+   "fotoCredito": {
+    "autor": "TSE - Tribunal Superior Eleitoral",
+    "licenca": "Public domain",
+    "url": "https://commons.wikimedia.org/wiki/File:Nunes_Marques,_February_2025_(cropped).jpg"
+   }
   },
   {
    "id": "stf-andre-mendonca",
@@ -129,7 +199,17 @@
    "posse": "2021-12-16",
    "indicadoPor": "Jair Bolsonaro",
    "aposentadoriaCompulsoria": 2047,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Santos",
+    "uf": "SP"
+   },
+   "photo": "/fotos/stf/andre-mendonca.jpg",
+   "fotoCredito": {
+    "autor": "Rosinei Coutinho/STF",
+    "licenca": "Attribution",
+    "url": "https://commons.wikimedia.org/wiki/File:Ministro_Andr%C3%A9_Mendon%C3%A7a_em_outubro_de_2025_(3x4).jpg"
+   }
   },
   {
    "id": "stf-cristiano-zanin",
@@ -145,7 +225,17 @@
    "posse": "2023-08-03",
    "indicadoPor": "Luiz Inácio Lula da Silva",
    "aposentadoriaCompulsoria": 2050,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "Piracicaba",
+    "uf": "SP"
+   },
+   "photo": "/fotos/stf/cristiano-zanin.jpg",
+   "fotoCredito": {
+    "autor": "Rosinei Coutinho/STF",
+    "licenca": "Public domain",
+    "url": "https://commons.wikimedia.org/wiki/File:17.06.2026_-_Cristiano_Zanin_(cropped).jpg"
+   }
   },
   {
    "id": "stf-flavio-dino",
@@ -161,7 +251,18 @@
    "posse": "2024-02-22",
    "indicadoPor": "Luiz Inácio Lula da Silva",
    "aposentadoriaCompulsoria": 2043,
-   "cargo": null
+   "cargo": null,
+   "naturalidade": {
+    "cidade": "São Luís",
+    "uf": "MA"
+   },
+   "photo": "/fotos/stf/flavio-dino.jpg",
+   "fotoCredito": {
+    "autor": "Gustavo Moreno/STF",
+    "licenca": "Attribution",
+    "url": "https://commons.wikimedia.org/wiki/File:Fl%C3%A1vio_Dino_no_voto_da_A%C3%A7%C3%A3o_Penal_(AP)_2668_(cropped).jpg"
+   }
   }
- ]
+ ],
+ "fonteNaturalidade": "Wikidata (CC0), conferida pela data de nascimento; fotos do Wikimedia Commons (créditos em cada ministro)"
 }

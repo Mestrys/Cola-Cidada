@@ -1,4 +1,4 @@
-const CACHE_NAME = 'monitor-cidadao-v29';
+const CACHE_NAME = 'monitor-cidadao-v30';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -22,6 +22,10 @@ const APP_SHELL = [
   '/src/glossary.js',
   '/src/analysis.js',
   '/src/data/federation.js',
+  '/src/data/simbolos.js',
+  '/src/simbolos.js',
+  '/src/creditos.js',
+  '/src/refresh.js',
   '/src/data/executivo.json',
   '/src/data/stf.json',
   '/src/data/entes.json',

@@ -41,3 +41,7 @@ example
 # generated native folders
 /ios
 /android
+
+# cópias das imagens do PWA, geradas por scripts/sync-data.mjs
+/assets/fotos/
+/assets/simbolos/

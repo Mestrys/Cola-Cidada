@@ -43,6 +43,10 @@ export interface Politician {
   posse?: string;
   indicadoPor?: string;
   aposentadoriaCompulsoria?: number;
+  /** onde nasceu (ministros do STF, que não têm partido: o app mostra o estado no lugar dele) */
+  naturalidade?: { cidade: string; uf: string };
+  /** autoria e licença da foto, quando a licença pede crédito (fotos do Wikimedia Commons) */
+  fotoCredito?: { autor: string; licenca: string; url: string };
 }
 
 export type AlertKind = 'plenario' | 'votacao' | 'gasto' | 'proposicao';

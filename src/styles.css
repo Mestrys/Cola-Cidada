@@ -2607,3 +2607,29 @@ a.card:active {
   font-size: 1rem;
   margin: 0;
 }
+
+/* Bandeira do partido (ou do estado de nascimento do magistrado) ao lado da sigla, num retângulo claro que serve aos dois temas */
+.flag {
+  flex: none;
+  width: 1.375rem;
+  height: 1rem;
+  object-fit: contain;
+  border-radius: 2px;
+  background: #fff;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* Créditos das imagens, no fim do Painel */
+.creditos ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.creditos a {
+  text-decoration: underline; /* link dentro de texto: não só pela cor */
+}
+
+/* Fotos são retratos 3:4 e o avatar é redondo: o corte fica no alto, onde está o rosto */
+img.avatar {
+  object-position: 50% 15%;
+}

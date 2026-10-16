@@ -1,5 +1,6 @@
 // Geração de cards visuais cívicos para redes sociais (WhatsApp, Stories, Instagram)
 import { modal, esc, toast, brl, fmtDate, photoUrl } from './ui.js';
+import { partyOrBirth } from './simbolos.js';
 
 export async function createCardImage({ politician, title, highlight, badge, badgeColor = '#006c27', detailText }) {
   const canvas = document.createElement('canvas');
@@ -88,8 +89,10 @@ export async function createCardImage({ politician, title, highlight, badge, bad
       ? 'Senador da República'
       : politician.roleKey === 'dep-estadual'
       ? 'Deputado Estadual'
+      : politician.roleKey === 'ministro-stf'
+      ? 'Ministro do STF'
       : 'Parlamentar';
-  ctx.fillText(`${roleLabel} · ${politician.party || ''}${politician.uf ? '/' + politician.uf : ''}`, textStartX, 340);
+  ctx.fillText([roleLabel, partyOrBirth(politician)].filter(Boolean).join(' · '), textStartX, 340);
 
   // 5. Bloco de Conteúdo / Matéria Fiscalizada
   ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';

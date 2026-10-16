@@ -13,8 +13,9 @@ import {
   senatorVotes,
   getTseElectoralProfile,
 } from '../api.js';
-import { ROLES, avatar, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist, skeleton } from '../ui.js';
+import { ROLES, avatar, partyChip, esc, mandateProgress, modal, fmtDate, VOTE_CLASS, brl, toast, tablist, skeleton } from '../ui.js';
 import { deputyPlenaryStats, senatorPlenaryStats } from '../plenary.js';
+import { birthplace, isMagistrate, partyOrBirth, photoCredit } from '../simbolos.js';
 import { plenaryPanelHtml } from './plenaryPanel.js';
 import { openDossierModal } from '../dossier.js';
 import { openShareModal } from '../share.js';
@@ -71,10 +72,10 @@ export function politicianCard(p, { heading = 3 } = {}) {
       <div class="pol-head-text">
         <h${heading} class="h2 u-fs-15_5 u-fw-700">${esc(p.name)}</h${heading}>
         <span class="sm muted u-d-block u-mt-2">
-          ${ROLES[p.roleKey]?.label || 'Parlamentar'} • ${esc(p.uf || 'BR')}
+          ${ROLES[p.roleKey]?.label || 'Parlamentar'}${isMagistrate(p) ? '' : ` • ${esc(p.uf || 'BR')}`}
         </span>
         <div class="row u-gap-6 u-mt-8">
-          <span class="chip ${sourceChipClass} xs">${esc(p.party || '—')}</span>
+          ${partyChip(p, sourceChipClass)}
           <span class="chip ${sourceChipClass} xs">${sourceLabel}</span>
         </div>
       </div>
@@ -115,6 +116,13 @@ export function politicianCard(p, { heading = 3 } = {}) {
   </article>`;
 }
 
+// De onde vem a foto (e, quando a licença pede, quem tirou).
+function creditHtml(p) {
+  const c = photoCredit(p);
+  if (!c) return '';
+  return `<span class="xs muted u-d-block">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.texto)}<span class="sr-only"> (abre em nova aba)</span></a>` : esc(c.texto)}</span>`;
+}
+
 const longDate = (iso) => (iso ? new Date(`${iso}T12:00:00`).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 
 // Ficha do cargo para quem não é parlamentar: Presidente, governadores, prefeitos e ministros do STF.
@@ -123,6 +131,7 @@ function officeHtml(p, isStf) {
     ? [
         ['Cargo', p.cargo || 'Ministro(a)'],
         ['Nome completo', p.fullName],
+        ['Natural de', birthplace(p)?.texto || ''],
         ['No STF desde', longDate(p.posse)],
         ['Indicado(a) por', p.indicadoPor],
         ['Aposentadoria compulsória (75 anos)', p.aposentadoriaCompulsoria ? String(p.aposentadoriaCompulsoria) : ''],
@@ -333,9 +342,10 @@ export async function openPoliticianDetails(p) {
           <div>
             <div class="row u-gap-6">
               <h3 class="h2 u-fs-18 u-fw-800">${esc(p.name)}</h3>
-              <span class="chip green xs">${esc(p.party || '—')}</span>
+              ${partyChip(p, 'green')}
             </div>
-            <span class="sm muted">${ROLES[p.roleKey]?.label || ''} • ${esc(p.city ? `${p.city}/${p.uf}` : p.uf || 'BR')}</span>
+            <span class="sm muted">${ROLES[p.roleKey]?.label || ''}${isMagistrate(p) ? '' : ` • ${esc(p.city ? `${p.city}/${p.uf}` : p.uf || 'BR')}`}</span>
+            ${creditHtml(p)}
           </div>
         </div>
         <button class="btn icon ghost" data-close aria-label="Fechar"><span class="mi" aria-hidden="true">close</span></button>
@@ -875,7 +885,7 @@ export function bindPoliticianActions(root) {
         openShareModal({
           politician: p,
           title: 'Fiscalização de Mandato',
-          highlight: `Mandato em exercício • ${p.party || ''}/${p.uf || 'BR'}`,
+          highlight: `Mandato em exercício • ${partyOrBirth(p) || p.uf || 'BR'}`,
           badge: 'MONITOR CIDADÃO',
           badgeColor: '#008732',
           detailText: `Término previsto: ${m.end}`,
