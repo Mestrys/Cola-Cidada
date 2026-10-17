@@ -60,7 +60,7 @@ Os testes de navegador bloqueiam as APIs públicas, então rodam offline e não 
   - Cálculo exato de término do mandato de 8 anos a partir dos dados do Senado.
 - **Filtros temáticos:** votações por área (Economia, Tecnologia, Social/Saúde, Meio Ambiente, Segurança).
 - **PWA & Funcionamento Offline:**
-  - Instalável como aplicativo no celular e desktop (`manifest.webmanifest` e `icon.svg`).
+  - Instalável como aplicativo no celular e no desktop (Edge, Chrome): `manifest.webmanifest` com ícones PNG comuns e maskable (`icons/`), capturas de tela (`screenshots/`) e atalhos para Painel, Gastos por Poder, Quem Acompanho e Alertas. No Edge: ícone de instalar na barra de endereço ou `⋯ → Aplicativos → Instalar este site como um aplicativo`. Para regerar: `node scripts/build-icons.mjs` e `node scripts/build-screenshots.mjs` (Chromium do Playwright).
   - `sw.js` (Service Worker) ativo com cache do app shell e estratégia de fallback para dados consultados offline.
   - Botão automático para adicionar à tela inicial no navegador.
 - **Alertas Locais no Dispositivo (Push Local):**

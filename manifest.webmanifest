@@ -1,20 +1,33 @@
 {
+  "id": "/",
   "name": "Monitor Cidadão",
   "short_name": "Monitor Cidadão",
   "description": "Fiscalize o mandato de quem você elegeu. Acompanhe votações, presença e gastos dos seus representantes.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f9f9fc",
   "theme_color": "#006b26",
-  "orientation": "portrait-primary",
   "lang": "pt-BR",
+  "dir": "ltr",
   "icons": [
-    {
-      "src": "/icon.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "screenshots": [
+    { "src": "/screenshots/painel-desktop.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide", "label": "Painel público com os cargos eleitos" },
+    { "src": "/screenshots/poderes-desktop.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide", "label": "Gastos por Poder: Executivo, Legislativo e Judiciário" },
+    { "src": "/screenshots/painel-celular.png", "sizes": "540x960", "type": "image/png", "form_factor": "narrow", "label": "Painel público no celular" },
+    { "src": "/screenshots/poderes-celular.png", "sizes": "540x960", "type": "image/png", "form_factor": "narrow", "label": "Gastos por Poder no celular" }
+  ],
+  "shortcuts": [
+    { "name": "Painel Público", "short_name": "Painel", "url": "/#/painel", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Gastos por Poder", "short_name": "Poderes", "url": "/#/poderes", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Quem Acompanho", "short_name": "Acompanho", "url": "/#/meus-politicos", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Alertas", "short_name": "Alertas", "url": "/#/alertas", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
   ],
   "categories": ["government", "news", "productivity"]
 }
